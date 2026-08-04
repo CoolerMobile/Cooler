@@ -5,9 +5,11 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "bun start",
-    "start": "expo start -c",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "prebuild": "expo prebuild --clean",
+    "clean": "rm -rf .expo node_modules && bun install",
+    "start": "expo run --device",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "lint": "expo lint"
   },
   "dependencies": {
