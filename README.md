@@ -1,56 +1,96 @@
-# Welcome to your Expo app 👋
+# Cooler
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple, user-first mobile manager for [Coolify](https://coolify.io).
 
-## Get started
+Cooler aims to make checking and managing self-hosted infrastructure from a phone feel reliable, focused, and native - without replacing the full Coolify dashboard.
 
-1. Install dependencies
+> [!IMPORTANT]
+> Cooler is currently in early development. The scope and stack below will evolve as the project grows.
 
-   ```bash
-   npm install
-   ```
+## Scope
 
-2. Start the app
+Cooler is being built around the tasks that are most useful away from a desktop:
 
-   ```bash
-   npx expo start
-   ```
+- Connect to one or more Coolify instances
+- View projects, environments, applications, services, and servers
+- Check resource and deployment status at a glance
+- Start, stop, restart, and redeploy resources
+- Follow deployment and application logs
+- Receive useful notifications without losing sessions unexpectedly
 
-In the output, you'll find options to open the app in a
+The first releases will focus on dependable core management. Broader administration features can follow once that foundation is solid.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Stack
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+The project currently uses:
 
-## Get a fresh project
+- [React Native](https://reactnative.dev) with [Expo](https://expo.dev)
+- [Expo Router](https://docs.expo.dev/router/introduction) for file-based navigation
+- [TypeScript](https://www.typescriptlang.org)
+- [Expo Development Builds](https://docs.expo.dev/develop/development-builds/introduction)
+- [Expo UI](https://docs.expo.dev/versions/latest/sdk/ui/) for native platform components
+- [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)
+- [Bun](https://bun.sh) for package management and scripts
 
-When you're ready, run:
+This list intentionally reflects the stack already in the repository. New entries will be added as architectural decisions are made.
+
+## Getting started
+
+### Requirements
+
+- [Bun](https://bun.sh)
+- The platform tooling required by Expo for Android or iOS development
+- A local or remote Coolify instance for integration work
+
+### Install dependencies
 
 ```bash
-npm run reset-project
+bun install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Start the development server
 
-### Other setup steps
+```bash
+bun run dev
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+The project includes `expo-dev-client`. Create and install a development build before opening it for the first time:
 
-## Learn more
+```bash
+bunx expo run:android
+# or
+bunx expo run:ios
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+After the native build is installed, `bun run dev` is enough for regular JavaScript and TypeScript development.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Lint
 
-## Join the community
+```bash
+bun run lint
+```
 
-Join our community of developers creating universal apps.
+## Contributing
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Cooler is at an early stage, so opening an issue before starting a large change is strongly encouraged. It helps avoid duplicated work and keeps implementation decisions aligned with the project's scope.
+
+For contributions:
+
+1. Fork the repository and create a focused branch.
+2. Keep each pull request limited to one feature or fix.
+3. Follow the existing code style and project structure.
+4. Run `bun run lint` before submitting.
+5. Explain what changed, why it changed, and how it was tested.
+6. Include screenshots or recordings for visible UI changes.
+
+Bug reports should include the platform, app version or commit, Coolify version, reproduction steps, expected behavior, and any relevant sanitized logs.
+
+Never include Coolify API tokens, instance credentials, private URLs, or other secrets in issues, logs, screenshots, commits, or pull requests.
+
+## Project status
+
+Cooler is not ready for production use yet. APIs, storage decisions, navigation, and supported Coolify versions may change while the initial architecture is established.
+
+## Disclaimer
+
+Cooler is an independent project. It is not affiliated with, endorsed by, or sponsored by Coolify.
