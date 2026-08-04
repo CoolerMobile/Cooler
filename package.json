@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "bun start",
-    "start": "expo start -c --go",
+    "start": "expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "lint": "expo lint"
@@ -14,6 +14,7 @@
     "@expo/ui": "~57.0.8",
     "expo": "~57.0.9",
     "expo-constants": "~57.0.8",
+    "expo-dev-client": "~57.0.10",
     "expo-device": "~57.0.1",
     "expo-font": "~57.0.1",
     "expo-glass-effect": "~57.0.1",
