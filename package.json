@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "bun start",
+    "dev:go": "expo start --go",
     "prebuild": "expo prebuild --clean",
     "clean": "rm -rf .expo node_modules && bun install",
     "start": "expo run --device",
