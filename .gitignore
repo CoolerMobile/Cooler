@@ -133,7 +133,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-expo-env.d.ts
 
 # Swift
 DerivedData/
@@ -161,3 +160,4 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 iOSInjectionProject/
+
