@@ -3,6 +3,7 @@ import { SettingsSection } from "@/components/custom/settings/section";
 import {
   Bell,
   EyeOff,
+  HardDrive,
   Hourglass,
   Lock,
   ScanFace,
@@ -17,8 +18,14 @@ export default function SettingsScreen() {
       <SettingsSection title="Servers">
         <SettingsItem
           icon={Server}
-          title="Connected Servers"
-          description="Manage connected servers"
+          title="Servers"
+          description="Manage your servers"
+          action={() => {}}
+        />
+        <SettingsItem
+          icon={HardDrive}
+          title="Instances"
+          description="Manage your instances"
           action={() => {}}
         />
       </SettingsSection>
