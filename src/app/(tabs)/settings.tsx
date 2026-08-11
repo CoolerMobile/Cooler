@@ -2,34 +2,24 @@ import { SettingsItem } from "@/components/custom/settings/item";
 import { SettingsSection } from "@/components/custom/settings/section";
 import {
   Bell,
+  BookOpen,
   EyeOff,
-  HardDrive,
+  File,
   Hourglass,
   Lock,
   ScanFace,
-  Server,
 } from "lucide-react-native";
 import { View } from "react-native";
+import { ReactNativeLegal } from "react-native-legal";
 
 export default function SettingsScreen() {
+  const launchNotice = () => {
+    ReactNativeLegal.launchLicenseListScreen("OSS Notice");
+  };
+
+  // ui
   return (
     <View className="p-4 flex flex-col gap-6">
-      {/* connections */}
-      <SettingsSection title="Servers">
-        <SettingsItem
-          icon={Server}
-          title="Servers"
-          description="Manage your servers"
-          action={() => {}}
-        />
-        <SettingsItem
-          icon={HardDrive}
-          title="Instances"
-          description="Manage your instances"
-          action={() => {}}
-        />
-      </SettingsSection>
-
       {/* notifications */}
       <SettingsSection title="Notifications">
         {/* rules */}
@@ -72,6 +62,25 @@ export default function SettingsScreen() {
           icon={EyeOff}
           title="Hide Sensitive Values"
           description="Flip your phone to hide or unhide"
+          action={() => {}}
+        />
+      </SettingsSection>
+
+      {/* legal */}
+      <SettingsSection title="Legal">
+        {/* open-source notices */}
+        <SettingsItem
+          icon={BookOpen}
+          title="Open Source Libraries"
+          description="View the OSS libraries we depend on"
+          action={launchNotice}
+        />
+
+        {/* privacy policy */}
+        <SettingsItem
+          icon={File}
+          title="Privacy Policy"
+          description="How your data is handled"
           action={() => {}}
         />
       </SettingsSection>

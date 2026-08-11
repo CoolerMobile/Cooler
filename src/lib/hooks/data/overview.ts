@@ -1,20 +1,8 @@
-import { useSecureStorage } from "@/lib/hooks/secure";
+import { useDataStore } from "@/lib/stores/data";
+import { HealthStatus, type Resource } from "@/lib/types/coolify";
+export { HealthStatus } from "@/lib/types/coolify";
 
-enum HealthStatus {
-  /** every reachable resource is running and healthy */
-  HEALTHY = "Healthy",
-
-  /** core services are healthy, but some resources need attention */
-  DEGRADED = "Degraded",
-
-  /** at least one critical resource is stopped, failing, or unreachable */
-  UNHEALTHY = "Unhealthy",
-
-  /** not enough information retrieved to decide on a proper status */
-  UNKNOWN = "Unknown",
-}
-
-type OverviewData = {
+export type OverviewData = {
   serverCount: number;
   resourceCount: number;
   instanceCount: number;
@@ -22,65 +10,88 @@ type OverviewData = {
 };
 
 /**
- * overview data hook
+ * derives the overall state from the latest resource reports
+ *
+ * critical failures take priority, and a missing or unknown report cannot be
+ * classified safely, while a known non-critical failure degrades the service
  */
-export const useOverview = () => {
-  // secure store
-  const { get } = useSecureStorage();
-
-  /**
-   * gets the total number of servers
-   */
-  const getServerCount = async (): Promise<number> => {
-    return await get("servers");
-  };
-
-  /**
-   * gets the total number of resources
-   */
-  const getResourceCount = async (): Promise<number> => {
-    return await get("resources");
-  };
-
-  /**
-   * gets the total number of instances
-   */
-  const getInstanceCount = async (): Promise<number> => {
-    return await get("instances");
-  };
-
-  /**
-   * gets the overall health status
-   */
-  const getHealthStatus = async (): Promise<HealthStatus> => {
+export const calculateHealthStatus = (
+  resources: Resource[],
+  hasHydrated: boolean,
+): HealthStatus => {
+  if (!hasHydrated || resources.length === 0) {
     return HealthStatus.UNKNOWN;
+  }
+
+  const hasCriticalFailure = resources.some(
+    (resource) =>
+      resource.isCritical &&
+      (!resource.isReachable ||
+        resource.status === "stopped" ||
+        resource.status === "failed"),
+  );
+
+  if (hasCriticalFailure) {
+    return HealthStatus.UNHEALTHY;
+  }
+
+  const hasIncompleteReport = resources.some(
+    (resource) => resource.status === "unknown",
+  );
+
+  if (hasIncompleteReport) {
+    return HealthStatus.UNKNOWN;
+  }
+
+  const hasNonCriticalFailure = resources.some(
+    (resource) =>
+      !resource.isCritical &&
+      (!resource.isReachable ||
+        resource.status === "stopped" ||
+        resource.status === "failed"),
+  );
+
+  return hasNonCriticalFailure ? HealthStatus.DEGRADED : HealthStatus.HEALTHY;
+};
+
+/** overview data hook backed by the persisted zustand data store */
+export const useOverview = () => {
+  /** gets the total number of servers in the zustand store */
+  const getServerCount = async (): Promise<number> =>
+    useDataStore.getState().servers.length;
+
+  /** gets the total number of resources in the zustand store */
+  const getResourceCount = async (): Promise<number> =>
+    useDataStore.getState().resources.length;
+
+  /** gets the total number of instances in the Zustand store */
+  const getInstanceCount = async (): Promise<number> =>
+    useDataStore.getState().instances.length;
+
+  /** gets the overall health from the latest persisted resource reports */
+  const getHealthStatus = async (): Promise<HealthStatus> => {
+    const { hasHydrated, resources } = useDataStore.getState();
+    return calculateHealthStatus(resources, hasHydrated);
   };
 
-  /**
-   * gets main data points:
-   *
-   * - number of servers
-   * - number of resources
-   * - number of instances
-   * - overall health status
-   */
+  /** gets the overview from one consistent zustand state snapshot */
   const data = async (): Promise<OverviewData> => {
-    const [serverCount, resourceCount, instanceCount, healthStatus] =
-      await Promise.all([
-        getServerCount(),
-        getResourceCount(),
-        getInstanceCount(),
-        getHealthStatus(),
-      ]);
+    const { hasHydrated, instances, resources, servers } =
+      useDataStore.getState();
 
     return {
-      serverCount,
-      resourceCount,
-      instanceCount,
-      healthStatus,
+      serverCount: servers.length,
+      resourceCount: resources.length,
+      instanceCount: instances.length,
+      healthStatus: calculateHealthStatus(resources, hasHydrated),
     };
   };
 
-  // return methods
-  return { data };
+  return {
+    data,
+    getHealthStatus,
+    getInstanceCount,
+    getResourceCount,
+    getServerCount,
+  };
 };

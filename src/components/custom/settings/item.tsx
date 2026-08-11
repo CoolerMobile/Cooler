@@ -86,7 +86,10 @@ export const SettingsItem = ({
 }: SettingsItemProps) => {
   return (
     <Pressable
-      onPress={action}
+      onPress={() => {
+        action;
+        console.log("tap");
+      }}
       accessibilityRole="button"
       className={settingsItemVariants({ variant })}
     >
