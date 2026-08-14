@@ -550,18 +550,8 @@ rename:
   "csstype@3.2.3": csstype
   "hoist-non-react-statics@3.3.2": hoist-non-react-statics
   "react-is@16.13.1": react-is
-  "react-native-legal@1.6.3": react-native-legal
-  "@callstack_licenses@0.3.2": '@callstack/licenses'
-  "glob@7.2.3": glob
-  "fs.realpath@1.0.0": fs.realpath
-  "inflight@1.0.6": inflight
-  "once@1.4.0": once
-  "wrappy@1.0.2": wrappy
-  "minimatch@3.1.5": minimatch
-  "brace-expansion@1.1.18": brace-expansion
-  "balanced-match@1.0.2": balanced-match
-  "concat-map@0.0.1": concat-map
-  "path-is-absolute@1.0.1": path-is-absolute
+  "react-native-legal@1.6.5": react-native-legal
+  "@callstack_licenses@0.3.3": '@callstack/licenses'
   "xml2js@0.6.2": xml2js
   "react-native-reanimated@4.5.1": react-native-reanimated
   "react-native-is-edge-to-edge@1.3.1": react-native-is-edge-to-edge
@@ -602,7 +592,7 @@ rename:
   "@babel_plugin-transform-shorthand-properties@7.29.7": '@babel/plugin-transform-shorthand-properties'
   "@babel_plugin-transform-template-literals@7.29.7": '@babel/plugin-transform-template-literals'
   "tailwind-merge@3.6.0": tailwind-merge
-  "zustand@5.0.14": zustand
+  "zustand@5.0.15": zustand
 manual:
   - name: '@expo_ui@57.0.10'
     version: '57.0.10'
@@ -723,11 +713,11 @@ manual:
   - name: merge-options@3.0.4
     version: '3.0.4'
     source: schnittstabil/merge-options
-    file: '../node_modules/merge-options/license'
+    file: '../node_modules/merge-options/LICENSE'
   - name: is-plain-obj@2.1.0
     version: '2.1.0'
     source: sindresorhus/is-plain-obj
-    file: '../node_modules/is-plain-obj/license'
+    file: '../node_modules/is-plain-obj/LICENSE'
   - name: '@rn-primitives_slot@1.5.2'
     version: '1.5.2'
     file: '../node_modules/@rn-primitives/slot/LICENSE'
@@ -738,7 +728,7 @@ manual:
   - name: clsx@2.1.1
     version: '2.1.1'
     source: lukeed/clsx
-    file: '../node_modules/clsx/license'
+    file: '../node_modules/clsx/LICENSE'
   - name: expo@57.0.12
     version: '57.0.12'
     source: https://github.com/expo/expo
@@ -894,7 +884,7 @@ manual:
   - name: escalade@3.2.0
     version: '3.2.0'
     source: lukeed/escalade
-    file: '../node_modules/escalade/license'
+    file: '../node_modules/escalade/LICENSE'
   - name: lru-cache@5.1.1
     version: '5.1.1'
     source: https://github.com/isaacs/node-lru-cache
@@ -934,7 +924,7 @@ manual:
   - name: ms@2.1.3
     version: '2.1.3'
     source: vercel/ms
-    file: '../node_modules/ms/license.md'
+    file: '../node_modules/ms/LICENSE.md'
   - name: '@babel_helpers@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
@@ -965,11 +955,11 @@ manual:
   - name: chalk@4.1.2
     version: '4.1.2'
     source: chalk/chalk
-    file: '../node_modules/chalk/license'
+    file: '../node_modules/chalk/LICENSE'
   - name: ansi-styles@4.3.0
     version: '4.3.0'
     source: chalk/ansi-styles
-    file: '../node_modules/chalk/node_modules/ansi-styles/license'
+    file: '../node_modules/chalk/node_modules/ansi-styles/LICENSE'
   - name: color-convert@2.0.1
     version: '2.0.1'
     source: Qix-/color-convert
@@ -981,11 +971,11 @@ manual:
   - name: supports-color@7.2.0
     version: '7.2.0'
     source: chalk/supports-color
-    file: '../node_modules/supports-color/license'
+    file: '../node_modules/supports-color/LICENSE'
   - name: has-flag@4.0.0
     version: '4.0.0'
     source: sindresorhus/has-flag
-    file: '../node_modules/has-flag/license'
+    file: '../node_modules/has-flag/LICENSE'
   - name: getenv@2.0.0
     version: '2.0.0'
     source: https://github.com/ctavan/node-getenv
@@ -993,7 +983,7 @@ manual:
   - name: glob@13.0.6
     version: '13.0.6'
     source: https://github.com/isaacs/node-glob
-    file: '../node_modules/@expo/config-plugins/node_modules/glob/LICENSE.md'
+    file: '../node_modules/glob/LICENSE.md'
   - name: minimatch@10.2.6
     version: '10.2.6'
     source: https://github.com/isaacs/minimatch
@@ -1113,15 +1103,15 @@ manual:
   - name: path-key@3.1.1
     version: '3.1.1'
     source: sindresorhus/path-key
-    file: '../node_modules/path-key/license'
+    file: '../node_modules/path-key/LICENSE'
   - name: shebang-command@2.0.0
     version: '2.0.0'
     source: kevva/shebang-command
-    file: '../node_modules/shebang-command/license'
+    file: '../node_modules/shebang-command/LICENSE'
   - name: shebang-regex@3.0.0
     version: '3.0.0'
     source: sindresorhus/shebang-regex
-    file: '../node_modules/shebang-regex/license'
+    file: '../node_modules/shebang-regex/LICENSE'
   - name: which@2.0.2
     version: '2.0.2'
     source: https://github.com/isaacs/node-which
@@ -1137,7 +1127,7 @@ manual:
   - name: parse-png@2.1.0
     version: '2.1.0'
     source: kevva/parse-png
-    file: '../node_modules/parse-png/license'
+    file: '../node_modules/parse-png/LICENSE'
   - name: pngjs@3.4.0
     version: '3.4.0'
     source: https://github.com/lukeapage/pngjs2
@@ -1164,7 +1154,7 @@ manual:
   - name: type-fest@0.7.1
     version: '0.7.1'
     source: sindresorhus/type-fest
-    file: '../node_modules/type-fest/license'
+    file: '../node_modules/type-fest/LICENSE'
   - name: '@expo_metro@56.0.0'
     version: '56.0.0'
     source: https://github.com/expo/expo-metro
@@ -1204,7 +1194,7 @@ manual:
   - name: ms@2.0.0
     version: '2.0.0'
     source: zeit/ms
-    file: '../node_modules/connect/node_modules/debug/node_modules/ms/license.md'
+    file: '../node_modules/connect/node_modules/debug/node_modules/ms/LICENSE.md'
   - name: finalhandler@1.1.2
     version: '1.1.2'
     source: pillarjs/finalhandler
@@ -1312,7 +1302,7 @@ manual:
   - name: '@sinclair_typebox@0.27.12'
     version: '0.27.12'
     source: https://github.com/sinclairzx81/sinclair-typebox
-    file: '../node_modules/@sinclair/typebox/license'
+    file: '../node_modules/@sinclair/typebox/LICENSE'
   - name: '@types_istanbul-lib-coverage@2.0.6'
     version: '2.0.6'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -1340,7 +1330,7 @@ manual:
   - name: picomatch@2.3.2
     version: '2.3.2'
     source: micromatch/picomatch
-    file: '../node_modules/jest-util/node_modules/picomatch/LICENSE'
+    file: '../node_modules/picomatch/LICENSE'
   - name: merge-stream@2.0.0
     version: '2.0.0'
     source: grncdr/merge-stream
@@ -1348,7 +1338,7 @@ manual:
   - name: supports-color@8.1.1
     version: '8.1.1'
     source: chalk/supports-color
-    file: '../node_modules/jest-worker/node_modules/supports-color/license'
+    file: '../node_modules/jest-worker/node_modules/supports-color/LICENSE'
   - name: jsc-safe-url@0.2.4
     version: '0.2.4'
     source: https://github.com/robhogan/jsc-safe-url
@@ -1404,7 +1394,7 @@ manual:
   - name: camelcase@6.3.0
     version: '6.3.0'
     source: sindresorhus/camelcase
-    file: '../node_modules/camelcase/license'
+    file: '../node_modules/camelcase/LICENSE'
   - name: jest-get-type@29.6.3
     version: '29.6.3'
     source: https://github.com/jestjs/jest
@@ -1412,7 +1402,7 @@ manual:
   - name: leven@3.1.0
     version: '3.1.0'
     source: sindresorhus/leven
-    file: '../node_modules/leven/license'
+    file: '../node_modules/leven/LICENSE'
   - name: pretty-format@29.7.0
     version: '29.7.0'
     source: https://github.com/jestjs/jest
@@ -1420,7 +1410,7 @@ manual:
   - name: ansi-styles@5.2.0
     version: '5.2.0'
     source: chalk/ansi-styles
-    file: '../node_modules/pretty-format/node_modules/ansi-styles/license'
+    file: '../node_modules/ansi-styles/license'
   - name: react-is@18.3.1
     version: '18.3.1'
     source: https://github.com/facebook/react
@@ -1476,11 +1466,11 @@ manual:
   - name: makeerror@1.0.12
     version: '1.0.12'
     source: https://github.com/daaku/nodejs-makeerror
-    file: '../node_modules/makeerror/license'
+    file: '../node_modules/makeerror/LICENSE'
   - name: tmpl@1.0.5
     version: '1.0.5'
     source: https://github.com/daaku/nodejs-tmpl
-    file: '../node_modules/tmpl/license'
+    file: '../node_modules/tmpl/LICENSE'
   - name: metro-source-map@0.84.4
     version: '0.84.4'
     source: https://github.com/facebook/metro
@@ -1544,7 +1534,7 @@ manual:
   - name: serialize-error@2.1.0
     version: '2.1.0'
     source: sindresorhus/serialize-error
-    file: '../node_modules/serialize-error/license'
+    file: '../node_modules/serialize-error/LICENSE'
   - name: throat@5.0.0
     version: '5.0.0'
     source: https://github.com/ForbesLindesay/throat
@@ -1564,7 +1554,7 @@ manual:
   - name: string-width@4.2.3
     version: '4.2.3'
     source: sindresorhus/string-width
-    file: '../node_modules/string-width/license'
+    file: '../node_modules/string-width/LICENSE'
   - name: emoji-regex@8.0.0
     version: '8.0.0'
     source: https://github.com/mathiasbynens/emoji-regex
@@ -1572,19 +1562,19 @@ manual:
   - name: is-fullwidth-code-point@3.0.0
     version: '3.0.0'
     source: sindresorhus/is-fullwidth-code-point
-    file: '../node_modules/is-fullwidth-code-point/license'
+    file: '../node_modules/is-fullwidth-code-point/LICENSE'
   - name: strip-ansi@6.0.1
     version: '6.0.1'
     source: chalk/strip-ansi
-    file: '../node_modules/string-width/node_modules/strip-ansi/license'
+    file: '../node_modules/string-width/node_modules/strip-ansi/LICENSE'
   - name: ansi-regex@5.0.1
     version: '5.0.1'
     source: chalk/ansi-regex
-    file: '../node_modules/ansi-regex/license'
+    file: '../node_modules/ansi-regex/LICENSE'
   - name: wrap-ansi@7.0.0
     version: '7.0.0'
     source: chalk/wrap-ansi
-    file: '../node_modules/wrap-ansi/license'
+    file: '../node_modules/wrap-ansi/LICENSE'
   - name: get-caller-file@2.0.5
     version: '2.0.5'
     source: https://github.com/stefanpenner/get-caller-file
@@ -1644,7 +1634,7 @@ manual:
   - name: resolve-from@5.0.0
     version: '5.0.0'
     source: sindresorhus/resolve-from
-    file: '../node_modules/resolve-from/license'
+    file: '../node_modules/resolve-from/LICENSE'
   - name: '@expo_metro-file-map@57.0.1'
     version: '57.0.1'
     source: https://github.com/expo/expo
@@ -1680,15 +1670,15 @@ manual:
   - name: ora@3.4.0
     version: '3.4.0'
     source: sindresorhus/ora
-    file: '../node_modules/ora/license'
+    file: '../node_modules/ora/LICENSE'
   - name: chalk@2.4.2
     version: '2.4.2'
     source: chalk/chalk
-    file: '../node_modules/ora/node_modules/chalk/license'
+    file: '../node_modules/ora/node_modules/chalk/LICENSE'
   - name: ansi-styles@3.2.1
     version: '3.2.1'
     source: chalk/ansi-styles
-    file: '../node_modules/ora/node_modules/chalk/node_modules/ansi-styles/license'
+    file: '../node_modules/ora/node_modules/chalk/node_modules/ansi-styles/LICENSE'
   - name: color-convert@1.9.3
     version: '1.9.3'
     source: Qix-/color-convert
@@ -1700,31 +1690,31 @@ manual:
   - name: escape-string-regexp@1.0.5
     version: '1.0.5'
     source: sindresorhus/escape-string-regexp
-    file: '../node_modules/ora/node_modules/chalk/node_modules/escape-string-regexp/license'
+    file: '../node_modules/ora/node_modules/chalk/node_modules/escape-string-regexp/LICENSE'
   - name: supports-color@5.5.0
     version: '5.5.0'
     source: chalk/supports-color
-    file: '../node_modules/ora/node_modules/chalk/node_modules/supports-color/license'
+    file: '../node_modules/ora/node_modules/chalk/node_modules/supports-color/LICENSE'
   - name: has-flag@3.0.0
     version: '3.0.0'
     source: sindresorhus/has-flag
-    file: '../node_modules/ora/node_modules/chalk/node_modules/supports-color/node_modules/has-flag/license'
+    file: '../node_modules/ora/node_modules/chalk/node_modules/supports-color/node_modules/has-flag/LICENSE'
   - name: cli-cursor@2.1.0
     version: '2.1.0'
     source: sindresorhus/cli-cursor
-    file: '../node_modules/cli-cursor/license'
+    file: '../node_modules/cli-cursor/LICENSE'
   - name: restore-cursor@2.0.0
     version: '2.0.0'
     source: sindresorhus/restore-cursor
-    file: '../node_modules/restore-cursor/license'
+    file: '../node_modules/restore-cursor/LICENSE'
   - name: onetime@2.0.1
     version: '2.0.1'
     source: sindresorhus/onetime
-    file: '../node_modules/onetime/license'
+    file: '../node_modules/onetime/LICENSE'
   - name: mimic-fn@1.2.0
     version: '1.2.0'
     source: sindresorhus/mimic-fn
-    file: '../node_modules/mimic-fn/license'
+    file: '../node_modules/mimic-fn/LICENSE'
   - name: signal-exit@3.0.7
     version: '3.0.7'
     source: https://github.com/tapjs/signal-exit
@@ -1732,19 +1722,19 @@ manual:
   - name: cli-spinners@2.9.2
     version: '2.9.2'
     source: sindresorhus/cli-spinners
-    file: '../node_modules/cli-spinners/license'
+    file: '../node_modules/cli-spinners/LICENSE'
   - name: log-symbols@2.2.0
     version: '2.2.0'
     source: sindresorhus/log-symbols
-    file: '../node_modules/log-symbols/license'
+    file: '../node_modules/log-symbols/LICENSE'
   - name: strip-ansi@5.2.0
     version: '5.2.0'
     source: chalk/strip-ansi
-    file: '../node_modules/strip-ansi/license'
+    file: '../node_modules/strip-ansi/LICENSE'
   - name: ansi-regex@4.1.1
     version: '4.1.1'
     source: chalk/ansi-regex
-    file: '../node_modules/strip-ansi/node_modules/ansi-regex/license'
+    file: '../node_modules/strip-ansi/node_modules/ansi-regex/LICENSE'
   - name: wcwidth@1.0.1
     version: '1.0.1'
     source: https://github.com/timoxley/wcwidth
@@ -1823,15 +1813,15 @@ manual:
   - name: escape-string-regexp@4.0.0
     version: '4.0.0'
     source: sindresorhus/escape-string-regexp
-    file: '../node_modules/escape-string-regexp/license'
+    file: '../node_modules/escape-string-regexp/LICENSE'
   - name: is-wsl@2.2.0
     version: '2.2.0'
     source: sindresorhus/is-wsl
-    file: '../node_modules/is-wsl/license'
+    file: '../node_modules/is-wsl/LICENSE'
   - name: is-docker@2.2.1
     version: '2.2.1'
     source: sindresorhus/is-docker
-    file: '../node_modules/is-docker/license'
+    file: '../node_modules/is-docker/LICENSE'
   - name: lighthouse-logger@1.4.2
     version: '1.4.2'
     file: '../node_modules/lighthouse-logger/LICENSE'
@@ -1850,7 +1840,7 @@ manual:
   - name: open@7.4.2
     version: '7.4.2'
     source: sindresorhus/open
-    file: '../node_modules/open/license'
+    file: '../node_modules/open/LICENSE'
   - name: serve-static@1.16.3
     version: '1.16.3'
     source: expressjs/serve-static
@@ -1990,15 +1980,15 @@ manual:
   - name: prompts@2.4.2
     version: '2.4.2'
     source: terkelg/prompts
-    file: '../node_modules/prompts/license'
+    file: '../node_modules/prompts/LICENSE'
   - name: kleur@3.0.3
     version: '3.0.3'
     source: lukeed/kleur
-    file: '../node_modules/kleur/license'
+    file: '../node_modules/kleur/LICENSE'
   - name: sisteransi@1.0.5
     version: '1.0.5'
     source: https://github.com/terkelg/sisteransi
-    file: '../node_modules/sisteransi/license'
+    file: '../node_modules/sisteransi/LICENSE'
   - name: structured-headers@0.4.1
     version: '0.4.1'
     source: https://github.com/evert/structured-header
@@ -2006,19 +1996,19 @@ manual:
   - name: terminal-link@2.1.1
     version: '2.1.1'
     source: sindresorhus/terminal-link
-    file: '../node_modules/terminal-link/license'
+    file: '../node_modules/terminal-link/LICENSE'
   - name: ansi-escapes@4.3.2
     version: '4.3.2'
     source: sindresorhus/ansi-escapes
-    file: '../node_modules/ansi-escapes/license'
+    file: '../node_modules/ansi-escapes/LICENSE'
   - name: type-fest@0.21.3
     version: '0.21.3'
     source: sindresorhus/type-fest
-    file: '../node_modules/ansi-escapes/node_modules/type-fest/license'
+    file: '../node_modules/ansi-escapes/node_modules/type-fest/LICENSE'
   - name: supports-hyperlinks@2.3.0
     version: '2.3.0'
     source: jamestalmage/supports-hyperlinks
-    file: '../node_modules/supports-hyperlinks/license'
+    file: '../node_modules/supports-hyperlinks/LICENSE'
   - name: toqr@0.1.1
     version: '0.1.1'
     source: https://github.com/kitten/toqr
@@ -2362,7 +2352,7 @@ manual:
   - name: babel-plugin-syntax-hermes-parser@0.36.1
     version: '0.36.1'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/babel-preset-expo/node_modules/babel-plugin-syntax-hermes-parser/LICENSE'
+    file: '../node_modules/babel-plugin-syntax-hermes-parser/LICENSE'
   - name: babel-plugin-transform-flow-enums@0.0.2
     version: '0.0.2'
     source: https://github.com/facebook/flow
@@ -2446,7 +2436,7 @@ manual:
   - name: ua-parser-js@0.7.41
     version: '0.7.41'
     source: https://github.com/faisalman/ua-parser-js
-    file: '../node_modules/ua-parser-js/license.md'
+    file: '../node_modules/ua-parser-js/LICENSE.md'
   - name: expo-glass-effect@57.0.1
     version: '57.0.1'
     source: https://github.com/expo/expo
@@ -2522,19 +2512,19 @@ manual:
   - name: redent@3.0.0
     version: '3.0.0'
     source: sindresorhus/redent
-    file: '../node_modules/redent/license'
+    file: '../node_modules/redent/LICENSE'
   - name: indent-string@4.0.0
     version: '4.0.0'
     source: sindresorhus/indent-string
-    file: '../node_modules/indent-string/license'
+    file: '../node_modules/indent-string/LICENSE'
   - name: strip-indent@3.0.0
     version: '3.0.0'
     source: sindresorhus/strip-indent
-    file: '../node_modules/strip-indent/license'
+    file: '../node_modules/strip-indent/LICENSE'
   - name: min-indent@1.0.1
     version: '1.0.1'
     source: https://github.com/thejameskyle/min-indent
-    file: '../node_modules/min-indent/license'
+    file: '../node_modules/min-indent/LICENSE'
   - name: '@testing-library_user-event@14.6.3'
     version: '14.6.3'
     source: https://github.com/testing-library/user-event
@@ -2573,23 +2563,23 @@ manual:
   - name: query-string@7.1.3
     version: '7.1.3'
     source: sindresorhus/query-string
-    file: '../node_modules/query-string/license'
+    file: '../node_modules/query-string/LICENSE'
   - name: decode-uri-component@0.2.2
     version: '0.2.2'
     source: SamVerschueren/decode-uri-component
-    file: '../node_modules/decode-uri-component/license'
+    file: '../node_modules/decode-uri-component/LICENSE'
   - name: filter-obj@1.1.0
     version: '1.1.0'
     source: sindresorhus/filter-obj
-    file: '../node_modules/filter-obj/license'
+    file: '../node_modules/filter-obj/LICENSE'
   - name: split-on-first@1.1.0
     version: '1.1.0'
     source: sindresorhus/split-on-first
-    file: '../node_modules/split-on-first/license'
+    file: '../node_modules/split-on-first/LICENSE'
   - name: strict-uri-encode@2.0.0
     version: '2.0.0'
     source: kevva/strict-uri-encode
-    file: '../node_modules/strict-uri-encode/license'
+    file: '../node_modules/strict-uri-encode/LICENSE'
   - name: react-fast-compare@3.2.2
     version: '3.2.2'
     source: https://github.com/FormidableLabs/react-fast-compare
@@ -2797,54 +2787,14 @@ manual:
     version: '16.13.1'
     source: https://github.com/facebook/react
     file: '../node_modules/hoist-non-react-statics/node_modules/react-is/LICENSE'
-  - name: react-native-legal@1.6.3
-    version: '1.6.3'
+  - name: react-native-legal@1.6.5
+    version: '1.6.5'
     source: https://github.com/callstackincubator/react-native-legal
     file: '../node_modules/react-native-legal/LICENSE'
-  - name: '@callstack_licenses@0.3.2'
-    version: '0.3.2'
+  - name: '@callstack_licenses@0.3.3'
+    version: '0.3.3'
     source: https://github.com/callstackincubator/react-native-legal
     file: '../node_modules/@callstack/licenses/LICENSE'
-  - name: glob@7.2.3
-    version: '7.2.3'
-    source: https://github.com/isaacs/node-glob
-    file: '../node_modules/glob/LICENSE'
-  - name: fs.realpath@1.0.0
-    version: '1.0.0'
-    source: https://github.com/isaacs/fs.realpath
-    file: '../node_modules/fs.realpath/LICENSE'
-  - name: inflight@1.0.6
-    version: '1.0.6'
-    source: https://github.com/npm/inflight
-    file: '../node_modules/inflight/LICENSE'
-  - name: once@1.4.0
-    version: '1.4.0'
-    source: https://github.com/isaacs/once
-    file: '../node_modules/once/LICENSE'
-  - name: wrappy@1.0.2
-    version: '1.0.2'
-    source: https://github.com/npm/wrappy
-    file: '../node_modules/wrappy/LICENSE'
-  - name: minimatch@3.1.5
-    version: '3.1.5'
-    source: https://github.com/isaacs/minimatch
-    file: '../node_modules/glob/node_modules/minimatch/LICENSE'
-  - name: brace-expansion@1.1.18
-    version: '1.1.18'
-    source: https://github.com/juliangruber/brace-expansion
-    file: '../node_modules/glob/node_modules/minimatch/node_modules/brace-expansion/LICENSE'
-  - name: balanced-match@1.0.2
-    version: '1.0.2'
-    source: https://github.com/juliangruber/balanced-match
-    file: '../node_modules/glob/node_modules/minimatch/node_modules/brace-expansion/node_modules/balanced-match/LICENSE.md'
-  - name: concat-map@0.0.1
-    version: '0.0.1'
-    source: https://github.com/substack/node-concat-map
-    file: '../node_modules/concat-map/LICENSE'
-  - name: path-is-absolute@1.0.1
-    version: '1.0.1'
-    source: sindresorhus/path-is-absolute
-    file: '../node_modules/path-is-absolute/license'
   - name: xml2js@0.6.2
     version: '0.6.2'
     source: https://github.com/Leonidas-from-XIV/node-xml2js
@@ -2948,7 +2898,7 @@ manual:
   - name: object-assign@4.1.1
     version: '4.1.1'
     source: sindresorhus/object-assign
-    file: '../node_modules/object-assign/license'
+    file: '../node_modules/object-assign/LICENSE'
   - name: promise@7.3.1
     version: '7.3.1'
     source: https://github.com/then/promise
@@ -2960,7 +2910,7 @@ manual:
   - name: ua-parser-js@1.0.41
     version: '1.0.41'
     source: https://github.com/faisalman/ua-parser-js
-    file: '../node_modules/fbjs/node_modules/ua-parser-js/license.md'
+    file: '../node_modules/fbjs/node_modules/ua-parser-js/LICENSE.md'
   - name: inline-style-prefixer@7.0.1
     version: '7.0.1'
     source: https://github.com/robinweser/inline-style-prefixer
@@ -3005,24 +2955,24 @@ manual:
     version: '3.6.0'
     source: https://github.com/dcastil/tailwind-merge
     file: '../node_modules/tailwind-merge/LICENSE.md'
-  - name: zustand@5.0.14
-    version: '5.0.14'
+  - name: zustand@5.0.15
+    version: '5.0.15'
     source: https://github.com/pmndrs/zustand
     file: '../node_modules/zustand/LICENSE'
 exclude:
   - name: RNCAsyncStorage
   - name: Expo
   - name: ExpoLogBox
-  - name: ExpoModulesCore
-  - name: ExpoModulesWorklets
   - name: ExpoModulesWorkletsAdapter
+  - name: ExpoModulesWorklets
+  - name: ExpoModulesCore
   - name: expo-dev-launcher
   - name: expo-dev-menu
   - name: RNCMaskedView
   - name: RNScreens
-  - name: React-Core-prebuilt
-  - name: React-Core
   - name: React
+  - name: React-Core
+  - name: React-Core-prebuilt
   - name: RNGestureHandler
   - name: ReactNativeLegal
   - name: RNReanimated

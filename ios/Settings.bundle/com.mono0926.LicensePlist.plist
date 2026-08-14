@@ -572,9 +572,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@callstack_licenses@0.3.2</string>
+			<string>com.mono0926.LicensePlist/@callstack_licenses@0.3.3</string>
 			<key>Title</key>
-			<string>@callstack/licenses (0.3.2)</string>
+			<string>@callstack/licenses (0.3.3)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -1564,14 +1564,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/balanced-match@1.0.2</string>
-			<key>Title</key>
-			<string>balanced-match (1.0.2)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/balanced-match@4.0.4</string>
 			<key>Title</key>
 			<string>balanced-match (4.0.4)</string>
@@ -1631,14 +1623,6 @@
 			<string>com.mono0926.LicensePlist/bplist-parser@0.3.2</string>
 			<key>Title</key>
 			<string>bplist-parser (0.3.2)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/brace-expansion@1.1.18</string>
-			<key>Title</key>
-			<string>brace-expansion (1.1.18)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -1903,14 +1887,6 @@
 			<string>com.mono0926.LicensePlist/compression@1.8.1</string>
 			<key>Title</key>
 			<string>compression (1.8.1)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/concat-map@0.0.1</string>
-			<key>Title</key>
-			<string>concat-map (0.0.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2604,14 +2580,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/fs.realpath@1.0.0</string>
-			<key>Title</key>
-			<string>fs.realpath (1.0.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/function-bind@1.1.2</string>
 			<key>Title</key>
 			<string>function-bind (1.1.2)</string>
@@ -2655,14 +2623,6 @@
 			<string>com.mono0926.LicensePlist/glob@13.0.6</string>
 			<key>Title</key>
 			<string>glob (13.0.6)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/glob@7.2.3</string>
-			<key>Title</key>
-			<string>glob (7.2.3)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2823,14 +2783,6 @@
 			<string>com.mono0926.LicensePlist/indent-string@4.0.0</string>
 			<key>Title</key>
 			<string>indent-string (4.0.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/inflight@1.0.6</string>
-			<key>Title</key>
-			<string>inflight (1.0.6)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -3380,14 +3332,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/minimatch@3.1.5</string>
-			<key>Title</key>
-			<string>minimatch (3.1.5)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/minipass@7.1.3</string>
 			<key>Title</key>
 			<string>minipass (7.1.3)</string>
@@ -3564,14 +3508,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/once@1.4.0</string>
-			<key>Title</key>
-			<string>once (1.4.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/onetime@2.0.1</string>
 			<key>Title</key>
 			<string>onetime (2.0.1)</string>
@@ -3607,14 +3543,6 @@
 			<string>com.mono0926.LicensePlist/parseurl@1.3.3</string>
 			<key>Title</key>
 			<string>parseurl (1.3.3)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/path-is-absolute@1.0.1</string>
-			<key>Title</key>
-			<string>path-is-absolute (1.0.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -3860,9 +3788,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/react-native-legal@1.6.3</string>
+			<string>com.mono0926.LicensePlist/react-native-legal@1.6.5</string>
 			<key>Title</key>
-			<string>react-native-legal (1.6.3)</string>
+			<string>react-native-legal (1.6.5)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -4732,14 +4660,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/wrappy@1.0.2</string>
-			<key>Title</key>
-			<string>wrappy (1.0.2)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/ws@7.5.13</string>
 			<key>Title</key>
 			<string>ws (7.5.13)</string>
@@ -4844,9 +4764,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/zustand@5.0.14</string>
+			<string>com.mono0926.LicensePlist/zustand@5.0.15</string>
 			<key>Title</key>
-			<string>zustand (5.0.14)</string>
+			<string>zustand (5.0.15)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

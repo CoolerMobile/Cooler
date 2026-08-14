@@ -358,7 +358,7 @@ body: MIT License
 
 Copyrig…
 
-name: @callstack_licenses@0.3.2, nameSpecified: @callstack/licenses, version: 0.3.2
+name: @callstack_licenses@0.3.3, nameSpecified: @callstack/licenses, version: 0.3.3
 body: MIT License
 
 Copyrig…
@@ -854,11 +854,6 @@ Copyrig…
 name: babel-preset-expo@57.0.6, nameSpecified: babel-preset-expo, version: 57.0.6
 body: The MIT License (MIT…
 
-name: balanced-match@1.0.2, nameSpecified: balanced-match, version: 1.0.2
-body: (MIT)
-
-Copyright (c)…
-
 name: balanced-match@4.0.4, nameSpecified: balanced-match, version: 4.0.4
 body: (MIT)
 
@@ -886,11 +881,6 @@ body: MIT…
 
 name: bplist-parser@0.3.2, nameSpecified: bplist-parser, version: 0.3.2
 body: MIT…
-
-name: brace-expansion@1.1.18, nameSpecified: brace-expansion, version: 1.1.18
-body: MIT License
-
-Copyrig…
 
 name: brace-expansion@5.0.9, nameSpecified: brace-expansion, version: 5.0.9
 body: MIT License
@@ -1018,9 +1008,6 @@ name: compression@1.8.1, nameSpecified: compression, version: 1.8.1
 body: (The MIT License)
 
 C…
-
-name: concat-map@0.0.1, nameSpecified: concat-map, version: 0.0.1
-body: This software is rel…
 
 name: connect@3.7.0, nameSpecified: connect, version: 3.7.0
 body: (The MIT License)
@@ -1331,11 +1318,6 @@ body: (The MIT License)
 
 C…
 
-name: fs.realpath@1.0.0, nameSpecified: fs.realpath, version: 1.0.0
-body: The ISC License
-
-Cop…
-
 name: function-bind@1.1.2, nameSpecified: function-bind, version: 1.1.2
 body: Copyright (c) 2013 R…
 
@@ -1356,11 +1338,6 @@ body: The MIT License (MIT…
 
 name: glob@13.0.6, nameSpecified: glob, version: 13.0.6
 body: All packages under `…
-
-name: glob@7.2.3, nameSpecified: glob, version: 7.2.3
-body: The ISC License
-
-Cop…
 
 name: graceful-fs@4.2.11, nameSpecified: graceful-fs, version: 4.2.11
 body: The ISC License
@@ -1443,11 +1420,6 @@ name: indent-string@4.0.0, nameSpecified: indent-string, version: 4.0.0
 body: MIT License
 
 Copyrig…
-
-name: inflight@1.0.6, nameSpecified: inflight, version: 1.0.6
-body: The ISC License
-
-Cop…
 
 name: inherits@2.0.4, nameSpecified: inherits, version: 2.0.4
 body: The ISC License
@@ -1710,11 +1682,6 @@ The MIT License (MI…
 name: minimatch@10.2.6, nameSpecified: minimatch, version: 10.2.6
 body: # Blue Oak Model Lic…
 
-name: minimatch@3.1.5, nameSpecified: minimatch, version: 3.1.5
-body: The ISC License
-
-Cop…
-
 name: minipass@7.1.3, nameSpecified: minipass, version: 7.1.3
 body: # Blue Oak Model Lic…
 
@@ -1801,11 +1768,6 @@ body: (The MIT License)
 
 C…
 
-name: once@1.4.0, nameSpecified: once, version: 1.4.0
-body: The ISC License
-
-Cop…
-
 name: onetime@2.0.1, nameSpecified: onetime, version: 2.0.1
 body: The MIT License (MIT…
 
@@ -1829,9 +1791,6 @@ body:
 (The MIT License)
 
 …
-
-name: path-is-absolute@1.0.1, nameSpecified: path-is-absolute, version: 1.0.1
-body: The MIT License (MIT…
 
 name: path-key@3.1.1, nameSpecified: path-key, version: 3.1.1
 body: MIT License
@@ -1957,7 +1916,7 @@ body: MIT License
 
 Copyrig…
 
-name: react-native-legal@1.6.3, nameSpecified: react-native-legal, version: 1.6.3
+name: react-native-legal@1.6.5, nameSpecified: react-native-legal, version: 1.6.5
 body: MIT License
 
 Copyrig…
@@ -2403,11 +2362,6 @@ body: MIT License
 
 Copyrig…
 
-name: wrappy@1.0.2, nameSpecified: wrappy, version: 1.0.2
-body: The ISC License
-
-Cop…
-
 name: ws@7.5.13, nameSpecified: ws, version: 7.5.13
 body: The MIT License (MIT…
 
@@ -2454,7 +2408,7 @@ body: MIT License
 
 Copyrig…
 
-name: zustand@5.0.14, nameSpecified: zustand, version: 5.0.14
+name: zustand@5.0.15, nameSpecified: zustand, version: 5.0.15
 body: MIT License
 
 Copyrig…

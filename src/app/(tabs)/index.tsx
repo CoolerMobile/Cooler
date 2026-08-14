@@ -9,21 +9,11 @@ import { View } from "react-native";
 
 export default function OverviewScreen() {
   // overview data
-  const { data } = useOverview();
-  const [overviewData, setOverviewData] = useState<OverviewData>();
+  const overviewData = useOverview();
   const total =
-    (overviewData?.instanceCount ?? 0) +
-    (overviewData?.resourceCount ?? 0) +
-    (overviewData?.serverCount ?? 0);
-
-  // get data on mount
-  useEffect(() => {
-    const getData = async () => {
-      setOverviewData(await data());
-    };
-
-    getData();
-  }, [data]);
+    overviewData.instanceCount +
+    overviewData.resourceCount +
+    overviewData.serverCount;
 
   // screen
   return (

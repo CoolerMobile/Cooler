@@ -1,6 +1,7 @@
 import { useDataStore } from "@/lib/stores/data";
 import { HealthStatus, type Resource } from "@/lib/types/coolify";
 export { HealthStatus } from "@/lib/types/coolify";
+import { useCallback } from "react";
 
 export type OverviewData = {
   serverCount: number;
@@ -55,43 +56,16 @@ export const calculateHealthStatus = (
 };
 
 /** overview data hook backed by the persisted zustand data store */
-export const useOverview = () => {
-  /** gets the total number of servers in the zustand store */
-  const getServerCount = async (): Promise<number> =>
-    useDataStore.getState().servers.length;
-
-  /** gets the total number of resources in the zustand store */
-  const getResourceCount = async (): Promise<number> =>
-    useDataStore.getState().resources.length;
-
-  /** gets the total number of instances in the Zustand store */
-  const getInstanceCount = async (): Promise<number> =>
-    useDataStore.getState().instances.length;
-
-  /** gets the overall health from the latest persisted resource reports */
-  const getHealthStatus = async (): Promise<HealthStatus> => {
-    const { hasHydrated, resources } = useDataStore.getState();
-    return calculateHealthStatus(resources, hasHydrated);
-  };
-
-  /** gets the overview from one consistent zustand state snapshot */
-  const data = async (): Promise<OverviewData> => {
-    const { hasHydrated, instances, resources, servers } =
-      useDataStore.getState();
-
-    return {
-      serverCount: servers.length,
-      resourceCount: resources.length,
-      instanceCount: instances.length,
-      healthStatus: calculateHealthStatus(resources, hasHydrated),
-    };
-  };
+export const useOverview = (): OverviewData => {
+  const servers = useDataStore((state) => state.servers);
+  const resources = useDataStore((state) => state.resources);
+  const instances = useDataStore((state) => state.instances);
+  const hasHydrated = useDataStore((state) => state.hasHydrated);
 
   return {
-    data,
-    getHealthStatus,
-    getInstanceCount,
-    getResourceCount,
-    getServerCount,
+    serverCount: servers.length,
+    resourceCount: resources.length,
+    instanceCount: instances.length,
+    healthStatus: calculateHealthStatus(resources, hasHydrated),
   };
 };
