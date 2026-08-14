@@ -1,5 +1,7 @@
+import { SettingsAction } from "@/components/custom/settings/action";
 import { SettingsItem } from "@/components/custom/settings/item";
 import { SettingsSection } from "@/components/custom/settings/section";
+import { useSettingsStore } from "@/lib/stores/settings";
 import {
   Bell,
   BookOpen,
@@ -13,9 +15,15 @@ import { View } from "react-native";
 import { ReactNativeLegal } from "react-native-legal";
 
 export default function SettingsScreen() {
+  // launch oss licenses list
   const launchNotice = () => {
     ReactNativeLegal.launchLicenseListScreen("OSS Notice");
   };
+
+  // settings store
+  const settings = useSettingsStore((state) => state.settings);
+  const hasHydrated = useSettingsStore((state) => state.hasHydrated);
+  const setSetting = useSettingsStore((state) => state.set);
 
   // ui
   return (
@@ -46,7 +54,14 @@ export default function SettingsScreen() {
           icon={ScanFace}
           title="App Lock"
           description="Use biometrics to lock the app"
-          action={() => {}}
+          trailingAction={
+            <SettingsAction
+              type="switch"
+              checked={settings.appLock}
+              disabled={!hasHydrated}
+              onCheckedChange={(checked) => setSetting("appLock", checked)}
+            />
+          }
         />
 
         {/* protect actions */}
@@ -54,7 +69,16 @@ export default function SettingsScreen() {
           icon={Lock}
           title="Protect Production Actions"
           description="Prevent unwanted actions"
-          action={() => {}}
+          trailingAction={
+            <SettingsAction
+              type="switch"
+              checked={settings.protectProductionActions}
+              disabled={!hasHydrated}
+              onCheckedChange={(checked) =>
+                setSetting("protectProductionActions", checked)
+              }
+            />
+          }
         />
 
         {/* hide sensitive values */}
@@ -62,7 +86,16 @@ export default function SettingsScreen() {
           icon={EyeOff}
           title="Hide Sensitive Values"
           description="Flip your phone to hide or unhide"
-          action={() => {}}
+          trailingAction={
+            <SettingsAction
+              type="switch"
+              checked={settings.hideSensitiveValues}
+              disabled={!hasHydrated}
+              onCheckedChange={(checked) =>
+                setSetting("hideSensitiveValues", checked)
+              }
+            />
+          }
         />
       </SettingsSection>
 

@@ -72,10 +72,10 @@ const settingsItemDescriptionVariants = cva("text-sm", {
 type SettingsItemProps = {
   variant?: "default" | "secondary" | "destructive" | "ghost";
   trailingAction?: ReactNode;
+  action?: () => void;
   title: string;
   description: string;
   icon: LucideIcon;
-  action: () => void;
 };
 
 export const SettingsItem = ({
