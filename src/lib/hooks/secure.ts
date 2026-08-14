@@ -6,15 +6,6 @@ import { parseError } from "@/lib/utils";
  */
 export const useSecureStorage = () => {
   /**
-   * validate biometrics availability
-   *
-   * @returns true or false
-   */
-  const checkBioSupport = async () => {
-    return await SecureStore.isAvailableAsync();
-  };
-
-  /**
    * set `value` for `key`
    *
    * if `requireAuth` is enabled, the value will only be readable if
@@ -65,5 +56,5 @@ export const useSecureStorage = () => {
   };
 
   // return methods
-  return { get, set, del, checkBioSupport };
+  return { get, set, del };
 };
