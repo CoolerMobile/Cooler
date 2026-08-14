@@ -1,8 +1,10 @@
 import { Icon } from "@/components/ui/icon";
+import { Switch } from "@/components/ui/switch";
 import { Text } from "@/components/ui/text";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import { ChevronRight, type LucideIcon } from "lucide-react-native";
+import { ReactNode } from "react";
 import { Pressable, View } from "react-native";
 
 const settingsItemVariants = cva(
@@ -69,20 +71,20 @@ const settingsItemDescriptionVariants = cva("text-sm", {
 
 type SettingsItemProps = {
   variant?: "default" | "secondary" | "destructive" | "ghost";
+  trailingAction?: ReactNode;
   title: string;
   description: string;
   icon: LucideIcon;
   action: () => void;
-  actionIcon?: LucideIcon;
 };
 
 export const SettingsItem = ({
   variant,
+  trailingAction,
   title,
   description,
   icon,
   action,
-  actionIcon,
 }: SettingsItemProps) => {
   return (
     <Pressable
@@ -110,11 +112,7 @@ export const SettingsItem = ({
           {description}
         </Text>
       </View>
-      <Icon
-        as={actionIcon ?? ChevronRight}
-        className={settingsItemDescriptionVariants({ variant })}
-        size={20}
-      />
+      {trailingAction ?? <Icon as={ChevronRight} />}
     </Pressable>
   );
 };
