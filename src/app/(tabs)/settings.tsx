@@ -1,16 +1,18 @@
 import { SettingsAction } from "@/components/custom/settings/action";
 import { SettingsItem } from "@/components/custom/settings/item";
 import { SettingsSection } from "@/components/custom/settings/section";
+import { useBiometrics } from "@/lib/hooks/security/biometrics";
 import { useSettingsStore } from "@/lib/stores/settings";
 import {
+  BedSingle,
   Bell,
   BookOpen,
   EyeOff,
   File,
-  Hourglass,
   Lock,
   ScanFace,
 } from "lucide-react-native";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { ReactNativeLegal } from "react-native-legal";
 
@@ -19,6 +21,25 @@ export default function SettingsScreen() {
   const launchNotice = () => {
     ReactNativeLegal.launchLicenseListScreen("OSS Notice");
   };
+
+  // validate biometrics on mount
+  const { checkBioSupport, authenticate } = useBiometrics();
+  const [bioSupported, setBioSupported] = useState(false);
+  useEffect(() => {
+    let isMounted = true;
+
+    checkBioSupport()
+      .then((supported) => {
+        if (isMounted) setBioSupported(supported);
+      })
+      .catch(() => {
+        if (isMounted) setBioSupported(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [checkBioSupport]);
 
   // settings store
   const settings = useSettingsStore((state) => state.settings);
@@ -40,7 +61,7 @@ export default function SettingsScreen() {
 
         {/* quiet hours */}
         <SettingsItem
-          icon={Hourglass}
+          icon={BedSingle}
           title="Quiet Hours"
           description="When you shouldn't be notified"
           action={() => {}}
@@ -58,8 +79,24 @@ export default function SettingsScreen() {
             <SettingsAction
               type="switch"
               checked={settings.appLock}
-              disabled={!hasHydrated}
-              onCheckedChange={(checked) => setSetting("appLock", checked)}
+              disabled={!hasHydrated || !bioSupported}
+              onCheckedChange={async (checked) => {
+                // request auth per checked value
+                if (checked) {
+                  const authResult = await authenticate({
+                    promptDescription: "Confirm App Lock via Biometrics",
+                  });
+
+                  // validate result
+                  if (authResult) {
+                    // update setting value
+                    setSetting("appLock", true);
+                  }
+                }
+
+                // update setting value
+                setSetting("appLock", checked);
+              }}
             />
           }
         />
@@ -67,7 +104,7 @@ export default function SettingsScreen() {
         {/* protect actions */}
         <SettingsItem
           icon={Lock}
-          title="Protect Production Actions"
+          title="Protected Actions"
           description="Prevent unwanted actions"
           trailingAction={
             <SettingsAction
@@ -85,7 +122,7 @@ export default function SettingsScreen() {
         <SettingsItem
           icon={EyeOff}
           title="Hide Sensitive Values"
-          description="Flip your phone to hide or unhide"
+          description="Flip your phone to hide"
           trailingAction={
             <SettingsAction
               type="switch"
@@ -113,7 +150,7 @@ export default function SettingsScreen() {
         <SettingsItem
           icon={File}
           title="Privacy Policy"
-          description="How your data is handled"
+          description="How your data is (not) handled"
           action={() => {}}
         />
       </SettingsSection>
