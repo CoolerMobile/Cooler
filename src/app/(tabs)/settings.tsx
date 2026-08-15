@@ -13,7 +13,7 @@ import {
   ScanFace,
 } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { ReactNativeLegal } from "react-native-legal";
 import { BottomSheet } from "@expo/ui/community/bottom-sheet";
 import { Text } from "@/components/ui/text";

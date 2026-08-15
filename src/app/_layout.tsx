@@ -1,10 +1,57 @@
+import { useSecureStorage } from "@/lib/hooks/secure";
 import "../../global.css";
-import { AppThemeProvider, ThemeToggle, useAppTheme } from "@/components/custom/theme";
+import {
+  AppThemeProvider,
+  ThemeToggle,
+  useAppTheme,
+} from "@/components/custom/theme";
 import { NAV_THEME } from "@/lib/theme";
 import { Stack } from "expo-router";
-import { StatusBar } from "react-native";
+import { StatusBar, AppState, type AppStateStatus } from "react-native";
+import { useEffect, useRef } from "react";
+import { useBiometrics } from "@/lib/hooks/security/biometrics";
 
 export default function RootLayout() {
+  // validate auth
+  const { get } = useSecureStorage();
+  const { authenticate } = useBiometrics();
+  const authEnabled = get("appLock");
+
+  // check app state
+  const appState = useRef(AppState.currentState);
+
+  // request auth on app launch if enabled
+  useEffect(() => {
+    if (authEnabled as unknown as boolean) {
+      authenticate({
+        promptMessage: "Unlock with Biometrics",
+      });
+    }
+  }, [authEnabled]);
+
+  // request auth on return from background
+  const wasBackgrounded = useRef(false);
+  useEffect(() => {
+    if (!authEnabled) return;
+
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "background") {
+        wasBackgrounded.current = true;
+      }
+
+      if (state === "active" && wasBackgrounded.current) {
+        wasBackgrounded.current = false;
+
+        authenticate({
+          promptMessage: "Unlock with Biometrics",
+        });
+      }
+    });
+
+    return () => subscription.remove();
+  }, [authEnabled]);
+
+  // return navigator
   return (
     <AppThemeProvider>
       <RootNavigator />
