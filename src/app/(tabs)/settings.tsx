@@ -55,7 +55,7 @@ export default function SettingsScreen() {
       promptDescription: "Confirm App Lock via Biometrics",
     });
 
-    if (authResult) {
+    if (authResult.success) {
       setSetting("appLock", checked);
     }
   };
@@ -69,7 +69,7 @@ export default function SettingsScreen() {
       promptDescription: "Confirm Protected Actions via Biometrics",
     });
 
-    if (authResult) {
+    if (authResult.success) {
       setSetting("protectProductionActions", checked);
     }
   };
@@ -83,7 +83,7 @@ export default function SettingsScreen() {
       promptDescription: "Confirm Hide Sensitive Values via Biometrics",
     });
 
-    if (authResult) {
+    if (authResult.success) {
       setSetting("hideSensitiveValues", checked);
     }
   };

@@ -8,7 +8,8 @@
     "dev:native-build": "expo run --device",
     "dev:native-rebuild": "bun run clean:native && expo run --device",
     "dev:native-build:eas": "eas build --profile development",
-    "clean:native": "rm -rf .expo ios android"
+    "clean:native": "rm -rf .expo ios android",
+    "clean": "rm -rf .expo node_modules && bun install"
   },
   "dependencies": {
     "@expo/ui": "~57.0.11",
@@ -44,7 +45,7 @@
     "react-native-legal": "^1.6.5",
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
-    "react-native-screens": "4.27.0",
+    "react-native-screens": "4.26.0",
     "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.2",
     "react-native-worklets": "0.10.1",
