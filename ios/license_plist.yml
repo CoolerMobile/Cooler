@@ -1,6 +1,6 @@
 # BEGIN Generated NPM license entries
 rename:
-  "@expo_ui@57.0.10": '@expo/ui'
+  "@expo_ui@57.0.11": '@expo/ui'
   "sf-symbols-typescript@2.2.0": sf-symbols-typescript
   "vaul@1.1.2": vaul
   "@radix-ui_react-dialog@1.1.23": '@radix-ui/react-dialog'
@@ -31,12 +31,19 @@ rename:
   "@react-native-async-storage_async-storage@2.2.0": '@react-native-async-storage/async-storage'
   "merge-options@3.0.4": merge-options
   "is-plain-obj@2.1.0": is-plain-obj
+  "@rn-primitives_checkbox@1.5.2": '@rn-primitives/checkbox'
+  "@radix-ui_react-checkbox@1.3.11": '@radix-ui/react-checkbox'
+  "@radix-ui_react-use-size@1.1.4": '@radix-ui/react-use-size'
+  "@rn-primitives_hooks@1.5.2": '@rn-primitives/hooks'
+  "@rn-primitives_types@1.5.2": '@rn-primitives/types'
   "@rn-primitives_slot@1.5.2": '@rn-primitives/slot'
+  "@rn-primitives_switch@1.5.2": '@rn-primitives/switch'
+  "@radix-ui_react-switch@1.3.7": '@radix-ui/react-switch'
   "class-variance-authority@0.7.1": class-variance-authority
   "clsx@2.1.1": clsx
-  "expo@57.0.12": expo
+  "expo@57.0.13": expo
   "@babel_runtime@7.29.7": '@babel/runtime'
-  "@expo_cli@57.0.14": '@expo/cli'
+  "@expo_cli@57.0.15": '@expo/cli'
   "@expo_code-signing-certificates@0.0.6": '@expo/code-signing-certificates'
   "node-forge@1.4.0": node-forge
   "@expo_config@57.0.7": '@expo/config'
@@ -120,6 +127,7 @@ rename:
   "xmlbuilder@11.0.1": xmlbuilder
   "deepmerge@4.3.1": deepmerge
   "resolve-workspace-root@2.0.1": resolve-workspace-root
+  "@expo_config-plugins@57.0.8": '@expo/config-plugins'
   "@expo_devcert@1.2.1": '@expo/devcert'
   "@expo_sudo-prompt@9.3.2": '@expo/sudo-prompt'
   "debug@3.2.7": debug
@@ -289,11 +297,11 @@ rename:
   "wcwidth@1.0.1": wcwidth
   "defaults@1.0.4": defaults
   "clone@1.0.4": clone
-  "@expo_prebuild-config@57.0.11": '@expo/prebuild-config'
+  "@expo_prebuild-config@57.0.12": '@expo/prebuild-config'
   "@react-native_normalize-colors@0.86.2": '@react-native/normalize-colors'
-  "expo-modules-autolinking@57.0.9": expo-modules-autolinking
+  "expo-modules-autolinking@57.0.10": expo-modules-autolinking
   "commander@7.2.0": commander
-  "@expo_router-server@57.0.5": '@expo/router-server'
+  "@expo_router-server@57.0.6": '@expo/router-server'
   "@expo_schema-utils@57.0.2": '@expo/schema-utils'
   "@expo_ws-tunnel@2.0.0": '@expo/ws-tunnel'
   "@expo_xcpretty@4.4.4": '@expo/xcpretty'
@@ -342,14 +350,15 @@ rename:
   "safe-buffer@5.2.1": safe-buffer
   "vary@1.1.2": vary
   "dnssd-advertise@1.1.6": dnssd-advertise
-  "expo-server@57.0.2": expo-server
+  "expo-server@57.0.3": expo-server
   "fetch-nodeshim@0.4.10": fetch-nodeshim
   "lan-network@0.2.1": lan-network
-  "multitars@1.0.0": multitars
+  "multitars@1.0.2": multitars
   "progress@2.0.3": progress
   "prompts@2.4.2": prompts
   "kleur@3.0.3": kleur
   "sisteransi@1.0.5": sisteransi
+  "sandbox-cli-detector@0.2.0": sandbox-cli-detector
   "structured-headers@0.4.1": structured-headers
   "terminal-link@2.1.1": terminal-link
   "ansi-escapes@4.3.2": ansi-escapes
@@ -363,7 +372,7 @@ rename:
   "ignore@5.3.2": ignore
   "@expo_local-build-cache-provider@57.0.6": '@expo/local-build-cache-provider'
   "@ungap_structured-clone@1.3.3": '@ungap/structured-clone'
-  "babel-preset-expo@57.0.6": babel-preset-expo
+  "babel-preset-expo@57.0.7": babel-preset-expo
   "@babel_plugin-proposal-decorators@7.29.7": '@babel/plugin-proposal-decorators'
   "@babel_helper-create-class-features-plugin@7.29.7": '@babel/helper-create-class-features-plugin'
   "@babel_helper-annotate-as-pure@7.29.7": '@babel/helper-annotate-as-pure'
@@ -442,20 +451,21 @@ rename:
   "babel-plugin-react-native-web@0.21.2": babel-plugin-react-native-web
   "babel-plugin-syntax-hermes-parser@0.36.1": babel-plugin-syntax-hermes-parser
   "babel-plugin-transform-flow-enums@0.0.2": babel-plugin-transform-flow-enums
-  "expo-asset@57.0.10": expo-asset
-  "expo-constants@57.0.10": expo-constants
-  "expo-file-system@57.0.2": expo-file-system
+  "expo-asset@57.0.11": expo-asset
+  "expo-constants@57.0.11": expo-constants
+  "expo-file-system@57.0.4": expo-file-system
   "expo-font@57.0.1": expo-font
   "fontfaceobserver@2.3.0": fontfaceobserver
   "expo-keep-awake@57.0.1": expo-keep-awake
-  "expo-modules-core@57.0.10": expo-modules-core
+  "expo-modules-core@57.0.11": expo-modules-core
   "@expo_expo-modules-macros-plugin@0.6.1": '@expo/expo-modules-macros-plugin'
   "expo-modules-jsi@57.0.4": expo-modules-jsi
   "react-refresh@0.14.2": react-refresh
   "whatwg-url-minimum@0.1.2": whatwg-url-minimum
-  "expo-dev-client@57.0.11": expo-dev-client
-  "expo-dev-launcher@57.0.11": expo-dev-launcher
-  "expo-dev-menu@57.0.11": expo-dev-menu
+  "expo-blur@57.0.2": expo-blur
+  "expo-dev-client@57.0.12": expo-dev-client
+  "expo-dev-launcher@57.0.12": expo-dev-launcher
+  "expo-dev-menu@57.0.12": expo-dev-menu
   "expo-dev-menu-interface@57.0.0": expo-dev-menu-interface
   "expo-manifests@57.0.1": expo-manifests
   "expo-json-utils@57.0.1": expo-json-utils
@@ -463,11 +473,11 @@ rename:
   "expo-device@57.0.1": expo-device
   "ua-parser-js@0.7.41": ua-parser-js
   "expo-glass-effect@57.0.1": expo-glass-effect
-  "expo-image@57.0.2": expo-image
-  "expo-linking@57.0.5": expo-linking
-  "expo-constants@57.0.9": expo-constants
-  "expo-router@57.0.12": expo-router
-  "@expo_metro-runtime@57.0.9": '@expo/metro-runtime'
+  "expo-image@57.0.3": expo-image
+  "expo-linking@57.0.6": expo-linking
+  "expo-local-authentication@57.0.2": expo-local-authentication
+  "expo-router@57.0.13": expo-router
+  "@expo_metro-runtime@57.0.10": '@expo/metro-runtime'
   "whatwg-fetch@3.6.20": whatwg-fetch
   "@radix-ui_react-tabs@1.1.21": '@radix-ui/react-tabs'
   "@radix-ui_react-direction@1.1.4": '@radix-ui/react-direction'
@@ -502,13 +512,14 @@ rename:
   "react-is@19.2.8": react-is
   "react-native-drawer-layout@4.2.9": react-native-drawer-layout
   "use-latest-callback@0.2.6": use-latest-callback
-  "react-native-screens@4.26.2": react-native-screens
+  "react-native-screens@4.27.0": react-native-screens
   "react-freeze@1.0.4": react-freeze
   "warn-once@0.1.1": warn-once
   "server-only@0.0.1": server-only
   "shallowequal@1.1.0": shallowequal
   "standard-navigation@0.0.5": standard-navigation
   "expo-secure-store@57.0.1": expo-secure-store
+  "expo-sensors@57.0.2": expo-sensors
   "expo-splash-screen@57.0.6": expo-splash-screen
   "expo-status-bar@57.0.1": expo-status-bar
   "expo-system-ui@57.0.2": expo-system-ui
@@ -522,6 +533,47 @@ rename:
   "lightningcss@1.27.0": lightningcss
   "detect-libc@1.0.3": detect-libc
   "lightningcss-darwin-arm64@1.27.0": lightningcss-darwin-arm64
+  "radix-ui@1.6.7": radix-ui
+  "@radix-ui_react-accessible-icon@1.1.15": '@radix-ui/react-accessible-icon'
+  "@radix-ui_react-visually-hidden@1.2.11": '@radix-ui/react-visually-hidden'
+  "@radix-ui_react-accordion@1.2.20": '@radix-ui/react-accordion'
+  "@radix-ui_react-collapsible@1.1.20": '@radix-ui/react-collapsible'
+  "@radix-ui_react-alert-dialog@1.1.23": '@radix-ui/react-alert-dialog'
+  "@radix-ui_react-arrow@1.1.15": '@radix-ui/react-arrow'
+  "@radix-ui_react-aspect-ratio@1.1.15": '@radix-ui/react-aspect-ratio'
+  "@radix-ui_react-avatar@1.2.6": '@radix-ui/react-avatar'
+  "@radix-ui_react-context-menu@2.3.7": '@radix-ui/react-context-menu'
+  "@radix-ui_react-menu@2.1.24": '@radix-ui/react-menu'
+  "@radix-ui_react-popper@1.3.7": '@radix-ui/react-popper'
+  "@floating-ui_react-dom@2.1.9": '@floating-ui/react-dom'
+  "@floating-ui_dom@1.8.0": '@floating-ui/dom'
+  "@floating-ui_core@1.8.0": '@floating-ui/core'
+  "@floating-ui_utils@0.2.12": '@floating-ui/utils'
+  "@radix-ui_react-use-rect@1.1.4": '@radix-ui/react-use-rect'
+  "@radix-ui_rect@1.1.3": '@radix-ui/rect'
+  "@radix-ui_react-dropdown-menu@2.1.24": '@radix-ui/react-dropdown-menu'
+  "@radix-ui_react-form@0.1.16": '@radix-ui/react-form'
+  "@radix-ui_react-label@2.1.15": '@radix-ui/react-label'
+  "@radix-ui_react-hover-card@1.1.23": '@radix-ui/react-hover-card'
+  "@radix-ui_react-menubar@1.1.24": '@radix-ui/react-menubar'
+  "@radix-ui_react-navigation-menu@1.2.22": '@radix-ui/react-navigation-menu'
+  "@radix-ui_react-use-previous@1.1.4": '@radix-ui/react-use-previous'
+  "@radix-ui_react-one-time-password-field@0.1.16": '@radix-ui/react-one-time-password-field'
+  "@radix-ui_number@1.1.3": '@radix-ui/number'
+  "@radix-ui_react-password-toggle-field@0.1.11": '@radix-ui/react-password-toggle-field'
+  "@radix-ui_react-popover@1.1.23": '@radix-ui/react-popover'
+  "@radix-ui_react-progress@1.1.16": '@radix-ui/react-progress'
+  "@radix-ui_react-radio-group@1.4.7": '@radix-ui/react-radio-group'
+  "@radix-ui_react-scroll-area@1.2.18": '@radix-ui/react-scroll-area'
+  "@radix-ui_react-select@2.3.7": '@radix-ui/react-select'
+  "@radix-ui_react-separator@1.1.15": '@radix-ui/react-separator'
+  "@radix-ui_react-slider@1.4.7": '@radix-ui/react-slider'
+  "@radix-ui_react-toast@1.2.23": '@radix-ui/react-toast'
+  "@radix-ui_react-toggle@1.1.18": '@radix-ui/react-toggle'
+  "@radix-ui_react-toggle-group@1.1.19": '@radix-ui/react-toggle-group'
+  "@radix-ui_react-toolbar@1.1.19": '@radix-ui/react-toolbar'
+  "@radix-ui_react-tooltip@1.2.16": '@radix-ui/react-tooltip'
+  "@radix-ui_react-use-escape-keydown@1.1.5": '@radix-ui/react-use-escape-keydown'
   "react@19.2.3": react
   "react-dom@19.2.3": react-dom
   "scheduler@0.27.0": scheduler
@@ -594,8 +646,8 @@ rename:
   "tailwind-merge@3.6.0": tailwind-merge
   "zustand@5.0.15": zustand
 manual:
-  - name: '@expo_ui@57.0.10'
-    version: '57.0.10'
+  - name: '@expo_ui@57.0.11'
+    version: '57.0.11'
     source: https://github.com/expo/expo
     body: MIT
   - name: sf-symbols-typescript@2.2.0
@@ -718,9 +770,33 @@ manual:
     version: '2.1.0'
     source: sindresorhus/is-plain-obj
     file: '../node_modules/is-plain-obj/LICENSE'
+  - name: '@rn-primitives_checkbox@1.5.2'
+    version: '1.5.2'
+    file: '../node_modules/@rn-primitives/checkbox/LICENSE'
+  - name: '@radix-ui_react-checkbox@1.3.11'
+    version: '1.3.11'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-checkbox/LICENSE'
+  - name: '@radix-ui_react-use-size@1.1.4'
+    version: '1.1.4'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-use-size/LICENSE'
+  - name: '@rn-primitives_hooks@1.5.2'
+    version: '1.5.2'
+    file: '../node_modules/@rn-primitives/hooks/LICENSE'
+  - name: '@rn-primitives_types@1.5.2'
+    version: '1.5.2'
+    file: '../node_modules/@rn-primitives/types/LICENSE'
   - name: '@rn-primitives_slot@1.5.2'
     version: '1.5.2'
     file: '../node_modules/@rn-primitives/slot/LICENSE'
+  - name: '@rn-primitives_switch@1.5.2'
+    version: '1.5.2'
+    file: '../node_modules/@rn-primitives/switch/LICENSE'
+  - name: '@radix-ui_react-switch@1.3.7'
+    version: '1.3.7'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-switch/LICENSE'
   - name: class-variance-authority@0.7.1
     version: '0.7.1'
     source: https://github.com/joe-bell/cva
@@ -729,16 +805,16 @@ manual:
     version: '2.1.1'
     source: lukeed/clsx
     file: '../node_modules/clsx/LICENSE'
-  - name: expo@57.0.12
-    version: '57.0.12'
+  - name: expo@57.0.13
+    version: '57.0.13'
     source: https://github.com/expo/expo
     file: '../node_modules/expo/LICENSE'
   - name: '@babel_runtime@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
     file: '../node_modules/@babel/runtime/LICENSE'
-  - name: '@expo_cli@57.0.14'
-    version: '57.0.14'
+  - name: '@expo_cli@57.0.15'
+    version: '57.0.15'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/cli/LICENSE'
   - name: '@expo_code-signing-certificates@0.0.6'
@@ -756,7 +832,7 @@ manual:
   - name: '@expo_config-plugins@57.0.7'
     version: '57.0.7'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/config-plugins/LICENSE'
+    file: '../node_modules/@expo/config/node_modules/@expo/config-plugins/LICENSE'
   - name: '@expo_config-types@57.0.2'
     version: '57.0.2'
     source: https://github.com/expo/expo
@@ -1072,6 +1148,10 @@ manual:
     version: '2.0.1'
     source: https://github.com/byCedric/resolve-workspace-root
     file: '../node_modules/resolve-workspace-root/LICENSE.md'
+  - name: '@expo_config-plugins@57.0.8'
+    version: '57.0.8'
+    source: https://github.com/expo/expo
+    file: '../node_modules/@expo/config-plugins/LICENSE'
   - name: '@expo_devcert@1.2.1'
     version: '1.2.1'
     source: https://github.com/expo/devcert
@@ -1410,7 +1490,7 @@ manual:
   - name: ansi-styles@5.2.0
     version: '5.2.0'
     source: chalk/ansi-styles
-    file: '../node_modules/ansi-styles/license'
+    file: '../node_modules/ansi-styles/LICENSE'
   - name: react-is@18.3.1
     version: '18.3.1'
     source: https://github.com/facebook/react
@@ -1747,24 +1827,24 @@ manual:
     version: '1.0.4'
     source: https://github.com/pvorb/node-clone
     file: '../node_modules/clone/LICENSE'
-  - name: '@expo_prebuild-config@57.0.11'
-    version: '57.0.11'
+  - name: '@expo_prebuild-config@57.0.12'
+    version: '57.0.12'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/prebuild-config/LICENSE'
   - name: '@react-native_normalize-colors@0.86.2'
     version: '0.86.2'
     source: https://github.com/react/react-native
     body: MIT
-  - name: expo-modules-autolinking@57.0.9
-    version: '57.0.9'
+  - name: expo-modules-autolinking@57.0.10
+    version: '57.0.10'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-modules-autolinking/LICENSE'
   - name: commander@7.2.0
     version: '7.2.0'
     source: https://github.com/tj/commander.js
     file: '../node_modules/expo-modules-autolinking/node_modules/commander/LICENSE'
-  - name: '@expo_router-server@57.0.5'
-    version: '57.0.5'
+  - name: '@expo_router-server@57.0.6'
+    version: '57.0.6'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/router-server/LICENSE'
   - name: '@expo_schema-utils@57.0.2'
@@ -1957,8 +2037,8 @@ manual:
     version: '1.1.6'
     source: https://github.com/kitten/dnssd-advertise
     file: '../node_modules/dnssd-advertise/LICENSE.md'
-  - name: expo-server@57.0.2
-    version: '57.0.2'
+  - name: expo-server@57.0.3
+    version: '57.0.3'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-server/LICENSE'
   - name: fetch-nodeshim@0.4.10
@@ -1969,9 +2049,9 @@ manual:
     version: '0.2.1'
     source: https://github.com/kitten/lan-network
     file: '../node_modules/lan-network/LICENSE.md'
-  - name: multitars@1.0.0
-    version: '1.0.0'
-    source: https://github.com/kitten/multitars
+  - name: multitars@1.0.2
+    version: '1.0.2'
+    source: https://github.com/expo/multitars
     file: '../node_modules/multitars/LICENSE.md'
   - name: progress@2.0.3
     version: '2.0.3'
@@ -1989,6 +2069,10 @@ manual:
     version: '1.0.5'
     source: https://github.com/terkelg/sisteransi
     file: '../node_modules/sisteransi/LICENSE'
+  - name: sandbox-cli-detector@0.2.0
+    version: '0.2.0'
+    source: https://github.com/davidmokos/sandbox-cli-detector
+    file: '../node_modules/sandbox-cli-detector/LICENSE'
   - name: structured-headers@0.4.1
     version: '0.4.1'
     source: https://github.com/evert/structured-header
@@ -2041,8 +2125,8 @@ manual:
     version: '1.3.3'
     source: https://github.com/ungap/structured-clone
     file: '../node_modules/@ungap/structured-clone/LICENSE'
-  - name: babel-preset-expo@57.0.6
-    version: '57.0.6'
+  - name: babel-preset-expo@57.0.7
+    version: '57.0.7'
     source: https://github.com/expo/expo
     file: '../node_modules/babel-preset-expo/LICENSE'
   - name: '@babel_plugin-proposal-decorators@7.29.7'
@@ -2357,16 +2441,16 @@ manual:
     version: '0.0.2'
     source: https://github.com/facebook/flow
     file: '../node_modules/babel-plugin-transform-flow-enums/LICENSE'
-  - name: expo-asset@57.0.10
-    version: '57.0.10'
+  - name: expo-asset@57.0.11
+    version: '57.0.11'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-asset/LICENSE'
-  - name: expo-constants@57.0.10
-    version: '57.0.10'
+  - name: expo-constants@57.0.11
+    version: '57.0.11'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-constants/LICENSE'
-  - name: expo-file-system@57.0.2
-    version: '57.0.2'
+  - name: expo-file-system@57.0.4
+    version: '57.0.4'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-file-system/LICENSE'
   - name: expo-font@57.0.1
@@ -2381,8 +2465,8 @@ manual:
     version: '57.0.1'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-keep-awake/LICENSE'
-  - name: expo-modules-core@57.0.10
-    version: '57.0.10'
+  - name: expo-modules-core@57.0.11
+    version: '57.0.11'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-modules-core/LICENSE'
   - name: '@expo_expo-modules-macros-plugin@0.6.1'
@@ -2401,16 +2485,20 @@ manual:
     version: '0.1.2'
     source: https://github.com/kitten/whatwg-url-minimum
     file: '../node_modules/whatwg-url-minimum/LICENSE.md'
-  - name: expo-dev-client@57.0.11
-    version: '57.0.11'
+  - name: expo-blur@57.0.2
+    version: '57.0.2'
+    source: https://github.com/expo/expo
+    file: '../node_modules/expo-blur/LICENSE'
+  - name: expo-dev-client@57.0.12
+    version: '57.0.12'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-dev-client/LICENSE'
-  - name: expo-dev-launcher@57.0.11
-    version: '57.0.11'
+  - name: expo-dev-launcher@57.0.12
+    version: '57.0.12'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-dev-launcher/LICENSE'
-  - name: expo-dev-menu@57.0.11
-    version: '57.0.11'
+  - name: expo-dev-menu@57.0.12
+    version: '57.0.12'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-dev-menu/LICENSE'
   - name: expo-dev-menu-interface@57.0.0
@@ -2441,24 +2529,24 @@ manual:
     version: '57.0.1'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-glass-effect/LICENSE'
-  - name: expo-image@57.0.2
-    version: '57.0.2'
+  - name: expo-image@57.0.3
+    version: '57.0.3'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-image/LICENSE'
-  - name: expo-linking@57.0.5
-    version: '57.0.5'
+  - name: expo-linking@57.0.6
+    version: '57.0.6'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-linking/LICENSE'
-  - name: expo-constants@57.0.9
-    version: '57.0.9'
+  - name: expo-local-authentication@57.0.2
+    version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-linking/node_modules/expo-constants/LICENSE'
-  - name: expo-router@57.0.12
-    version: '57.0.12'
+    file: '../node_modules/expo-local-authentication/LICENSE'
+  - name: expo-router@57.0.13
+    version: '57.0.13'
     source: https://github.com/expo/expo
     body: MIT
-  - name: '@expo_metro-runtime@57.0.9'
-    version: '57.0.9'
+  - name: '@expo_metro-runtime@57.0.10'
+    version: '57.0.10'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/metro-runtime/LICENSE'
   - name: whatwg-fetch@3.6.20
@@ -2596,8 +2684,8 @@ manual:
     version: '0.2.6'
     source: https://github.com/satya164/use-latest-callback
     file: '../node_modules/use-latest-callback/LICENSE'
-  - name: react-native-screens@4.26.2
-    version: '4.26.2'
+  - name: react-native-screens@4.27.0
+    version: '4.27.0'
     source: https://github.com/software-mansion/react-native-screens
     file: '../node_modules/react-native-screens/LICENSE'
   - name: react-freeze@1.0.4
@@ -2623,6 +2711,10 @@ manual:
     version: '57.0.1'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-secure-store/LICENSE'
+  - name: expo-sensors@57.0.2
+    version: '57.0.2'
+    source: https://github.com/expo/expo
+    file: '../node_modules/expo-sensors/LICENSE'
   - name: expo-splash-screen@57.0.6
     version: '57.0.6'
     source: https://github.com/expo/expo
@@ -2675,6 +2767,170 @@ manual:
     version: '1.27.0'
     source: https://github.com/parcel-bundler/lightningcss
     file: '../node_modules/react-native-css-interop/node_modules/lightningcss/node_modules/lightningcss-darwin-arm64/LICENSE'
+  - name: radix-ui@1.6.7
+    version: '1.6.7'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/radix-ui/LICENSE'
+  - name: '@radix-ui_react-accessible-icon@1.1.15'
+    version: '1.1.15'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-accessible-icon/LICENSE'
+  - name: '@radix-ui_react-visually-hidden@1.2.11'
+    version: '1.2.11'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-visually-hidden/LICENSE'
+  - name: '@radix-ui_react-accordion@1.2.20'
+    version: '1.2.20'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-accordion/LICENSE'
+  - name: '@radix-ui_react-collapsible@1.1.20'
+    version: '1.1.20'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-collapsible/LICENSE'
+  - name: '@radix-ui_react-alert-dialog@1.1.23'
+    version: '1.1.23'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-alert-dialog/LICENSE'
+  - name: '@radix-ui_react-arrow@1.1.15'
+    version: '1.1.15'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-arrow/LICENSE'
+  - name: '@radix-ui_react-aspect-ratio@1.1.15'
+    version: '1.1.15'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-aspect-ratio/LICENSE'
+  - name: '@radix-ui_react-avatar@1.2.6'
+    version: '1.2.6'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-avatar/LICENSE'
+  - name: '@radix-ui_react-context-menu@2.3.7'
+    version: '2.3.7'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-context-menu/LICENSE'
+  - name: '@radix-ui_react-menu@2.1.24'
+    version: '2.1.24'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-menu/LICENSE'
+  - name: '@radix-ui_react-popper@1.3.7'
+    version: '1.3.7'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-popper/LICENSE'
+  - name: '@floating-ui_react-dom@2.1.9'
+    version: '2.1.9'
+    source: https://github.com/floating-ui/floating-ui
+    file: '../node_modules/@floating-ui/react-dom/LICENSE'
+  - name: '@floating-ui_dom@1.8.0'
+    version: '1.8.0'
+    source: https://github.com/floating-ui/floating-ui
+    file: '../node_modules/@floating-ui/dom/LICENSE'
+  - name: '@floating-ui_core@1.8.0'
+    version: '1.8.0'
+    source: https://github.com/floating-ui/floating-ui
+    file: '../node_modules/@floating-ui/core/LICENSE'
+  - name: '@floating-ui_utils@0.2.12'
+    version: '0.2.12'
+    source: https://github.com/floating-ui/floating-ui
+    file: '../node_modules/@floating-ui/utils/LICENSE'
+  - name: '@radix-ui_react-use-rect@1.1.4'
+    version: '1.1.4'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-use-rect/LICENSE'
+  - name: '@radix-ui_rect@1.1.3'
+    version: '1.1.3'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/rect/LICENSE'
+  - name: '@radix-ui_react-dropdown-menu@2.1.24'
+    version: '2.1.24'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-dropdown-menu/LICENSE'
+  - name: '@radix-ui_react-form@0.1.16'
+    version: '0.1.16'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-form/LICENSE'
+  - name: '@radix-ui_react-label@2.1.15'
+    version: '2.1.15'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-label/LICENSE'
+  - name: '@radix-ui_react-hover-card@1.1.23'
+    version: '1.1.23'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-hover-card/LICENSE'
+  - name: '@radix-ui_react-menubar@1.1.24'
+    version: '1.1.24'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-menubar/LICENSE'
+  - name: '@radix-ui_react-navigation-menu@1.2.22'
+    version: '1.2.22'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-navigation-menu/LICENSE'
+  - name: '@radix-ui_react-use-previous@1.1.4'
+    version: '1.1.4'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-use-previous/LICENSE'
+  - name: '@radix-ui_react-one-time-password-field@0.1.16'
+    version: '0.1.16'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-one-time-password-field/LICENSE'
+  - name: '@radix-ui_number@1.1.3'
+    version: '1.1.3'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/number/LICENSE'
+  - name: '@radix-ui_react-password-toggle-field@0.1.11'
+    version: '0.1.11'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-password-toggle-field/LICENSE'
+  - name: '@radix-ui_react-popover@1.1.23'
+    version: '1.1.23'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-popover/LICENSE'
+  - name: '@radix-ui_react-progress@1.1.16'
+    version: '1.1.16'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-progress/LICENSE'
+  - name: '@radix-ui_react-radio-group@1.4.7'
+    version: '1.4.7'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-radio-group/LICENSE'
+  - name: '@radix-ui_react-scroll-area@1.2.18'
+    version: '1.2.18'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-scroll-area/LICENSE'
+  - name: '@radix-ui_react-select@2.3.7'
+    version: '2.3.7'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-select/LICENSE'
+  - name: '@radix-ui_react-separator@1.1.15'
+    version: '1.1.15'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-separator/LICENSE'
+  - name: '@radix-ui_react-slider@1.4.7'
+    version: '1.4.7'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-slider/LICENSE'
+  - name: '@radix-ui_react-toast@1.2.23'
+    version: '1.2.23'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-toast/LICENSE'
+  - name: '@radix-ui_react-toggle@1.1.18'
+    version: '1.1.18'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-toggle/LICENSE'
+  - name: '@radix-ui_react-toggle-group@1.1.19'
+    version: '1.1.19'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-toggle-group/LICENSE'
+  - name: '@radix-ui_react-toolbar@1.1.19'
+    version: '1.1.19'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-toolbar/LICENSE'
+  - name: '@radix-ui_react-tooltip@1.2.16'
+    version: '1.2.16'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-tooltip/LICENSE'
+  - name: '@radix-ui_react-use-escape-keydown@1.1.5'
+    version: '1.1.5'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-use-escape-keydown/LICENSE'
   - name: react@19.2.3
     version: '19.2.3'
     source: https://github.com/facebook/react

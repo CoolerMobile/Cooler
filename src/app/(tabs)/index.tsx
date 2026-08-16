@@ -1,8 +1,10 @@
+import { PrivateValue } from "@/components/custom/private";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { OverviewData, useOverview } from "@/lib/hooks/data/overview";
+import { useFlipPrivacy } from "@/lib/hooks/security/flip-privacy";
 import { Plus } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -15,6 +17,9 @@ export default function OverviewScreen() {
     overviewData.resourceCount +
     overviewData.serverCount;
 
+  // hidden
+  const { isHidden } = useFlipPrivacy();
+
   // screen
   return (
     <View className="flex flex-col gap-2">
@@ -26,7 +31,9 @@ export default function OverviewScreen() {
             <Text className="text-center text-lg">You have no Servers</Text>
             <Button size="sm">
               <Icon as={Plus} />
-              <Text>Add Server</Text>
+              <PrivateValue hidden={isHidden}>
+                <Text>Add Server</Text>
+              </PrivateValue>
             </Button>
           </View>
         )}

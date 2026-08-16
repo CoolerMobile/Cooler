@@ -371,13 +371,16 @@ body: MIT License
 
 Copyrig…
 
-name: @expo_cli@57.0.14, nameSpecified: @expo/cli, version: 57.0.14
+name: @expo_cli@57.0.15, nameSpecified: @expo/cli, version: 57.0.15
 body: The MIT License (MIT…
 
 name: @expo_code-signing-certificates@0.0.6, nameSpecified: @expo/code-signing-certificates, version: 0.0.6
 body: The MIT License (MIT…
 
 name: @expo_config-plugins@57.0.7, nameSpecified: @expo/config-plugins, version: 57.0.7
+body: The MIT License (MIT…
+
+name: @expo_config-plugins@57.0.8, nameSpecified: @expo/config-plugins, version: 57.0.8
 body: The MIT License (MIT…
 
 name: @expo_config-types@57.0.2, nameSpecified: @expo/config-types, version: 57.0.2
@@ -425,7 +428,7 @@ body: The MIT License (MIT…
 name: @expo_metro-file-map@57.0.1, nameSpecified: @expo/metro-file-map, version: 57.0.1
 body: The MIT License (MIT…
 
-name: @expo_metro-runtime@57.0.9, nameSpecified: @expo/metro-runtime, version: 57.0.9
+name: @expo_metro-runtime@57.0.10, nameSpecified: @expo/metro-runtime, version: 57.0.10
 body: The MIT License (MIT…
 
 name: @expo_metro@56.0.0, nameSpecified: @expo/metro, version: 56.0.0
@@ -442,13 +445,13 @@ body: The MIT License (MIT…
 name: @expo_plist@0.8.1, nameSpecified: @expo/plist, version: 0.8.1
 body: The MIT License (MIT…
 
-name: @expo_prebuild-config@57.0.11, nameSpecified: @expo/prebuild-config, version: 57.0.11
+name: @expo_prebuild-config@57.0.12, nameSpecified: @expo/prebuild-config, version: 57.0.12
 body: The MIT License (MIT…
 
 name: @expo_require-utils@57.0.4, nameSpecified: @expo/require-utils, version: 57.0.4
 body: The MIT License (MIT…
 
-name: @expo_router-server@57.0.5, nameSpecified: @expo/router-server, version: 57.0.5
+name: @expo_router-server@57.0.6, nameSpecified: @expo/router-server, version: 57.0.6
 body: The MIT License (MIT…
 
 name: @expo_schema-utils@57.0.2, nameSpecified: @expo/schema-utils, version: 57.0.2
@@ -463,7 +466,7 @@ body: The MIT License (MIT…
 name: @expo_sudo-prompt@9.3.2, nameSpecified: @expo/sudo-prompt, version: 9.3.2
 body: The MIT License (MIT…
 
-name: @expo_ui@57.0.10, nameSpecified: @expo/ui, version: 57.0.10
+name: @expo_ui@57.0.11, nameSpecified: @expo/ui, version: 57.0.11
 body: MIT…
 
 name: @expo_ws-tunnel@2.0.0, nameSpecified: @expo/ws-tunnel, version: 2.0.0
@@ -471,6 +474,26 @@ body: MIT…
 
 name: @expo_xcpretty@4.4.4, nameSpecified: @expo/xcpretty, version: 4.4.4
 body: BSD-3-Clause…
+
+name: @floating-ui_core@1.8.0, nameSpecified: @floating-ui/core, version: 1.8.0
+body: MIT License
+
+Copyrig…
+
+name: @floating-ui_dom@1.8.0, nameSpecified: @floating-ui/dom, version: 1.8.0
+body: MIT License
+
+Copyrig…
+
+name: @floating-ui_react-dom@2.1.9, nameSpecified: @floating-ui/react-dom, version: 2.1.9
+body: MIT License
+
+Copyrig…
+
+name: @floating-ui_utils@0.2.12, nameSpecified: @floating-ui/utils, version: 0.2.12
+body: MIT License
+
+Copyrig…
 
 name: @isaacs_ttlcache@1.4.1, nameSpecified: @isaacs/ttlcache, version: 1.4.1
 body: The ISC License
@@ -505,7 +528,52 @@ body: Copyright 2024 Justi…
 name: @jridgewell_trace-mapping@0.3.31, nameSpecified: @jridgewell/trace-mapping, version: 0.3.31
 body: Copyright 2024 Justi…
 
+name: @radix-ui_number@1.1.3, nameSpecified: @radix-ui/number, version: 1.1.3
+body: MIT License
+
+Copyrig…
+
 name: @radix-ui_primitive@1.1.7, nameSpecified: @radix-ui/primitive, version: 1.1.7
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-accessible-icon@1.1.15, nameSpecified: @radix-ui/react-accessible-icon, version: 1.1.15
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-accordion@1.2.20, nameSpecified: @radix-ui/react-accordion, version: 1.2.20
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-alert-dialog@1.1.23, nameSpecified: @radix-ui/react-alert-dialog, version: 1.1.23
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-arrow@1.1.15, nameSpecified: @radix-ui/react-arrow, version: 1.1.15
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-aspect-ratio@1.1.15, nameSpecified: @radix-ui/react-aspect-ratio, version: 1.1.15
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-avatar@1.2.6, nameSpecified: @radix-ui/react-avatar, version: 1.2.6
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-checkbox@1.3.11, nameSpecified: @radix-ui/react-checkbox, version: 1.3.11
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-collapsible@1.1.20, nameSpecified: @radix-ui/react-collapsible, version: 1.1.20
 body: MIT License
 
 Copyrig…
@@ -516,6 +584,11 @@ body: MIT License
 Copyrig…
 
 name: @radix-ui_react-compose-refs@1.1.5, nameSpecified: @radix-ui/react-compose-refs, version: 1.1.5
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-context-menu@2.3.7, nameSpecified: @radix-ui/react-context-menu, version: 2.3.7
 body: MIT License
 
 Copyrig…
@@ -540,6 +613,11 @@ body: MIT License
 
 Copyrig…
 
+name: @radix-ui_react-dropdown-menu@2.1.24, nameSpecified: @radix-ui/react-dropdown-menu, version: 2.1.24
+body: MIT License
+
+Copyrig…
+
 name: @radix-ui_react-focus-guards@1.1.6, nameSpecified: @radix-ui/react-focus-guards, version: 1.1.6
 body: MIT License
 
@@ -550,7 +628,57 @@ body: MIT License
 
 Copyrig…
 
+name: @radix-ui_react-form@0.1.16, nameSpecified: @radix-ui/react-form, version: 0.1.16
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-hover-card@1.1.23, nameSpecified: @radix-ui/react-hover-card, version: 1.1.23
+body: MIT License
+
+Copyrig…
+
 name: @radix-ui_react-id@1.1.4, nameSpecified: @radix-ui/react-id, version: 1.1.4
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-label@2.1.15, nameSpecified: @radix-ui/react-label, version: 2.1.15
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-menu@2.1.24, nameSpecified: @radix-ui/react-menu, version: 2.1.24
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-menubar@1.1.24, nameSpecified: @radix-ui/react-menubar, version: 1.1.24
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-navigation-menu@1.2.22, nameSpecified: @radix-ui/react-navigation-menu, version: 1.2.22
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-one-time-password-field@0.1.16, nameSpecified: @radix-ui/react-one-time-password-field, version: 0.1.16
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-password-toggle-field@0.1.11, nameSpecified: @radix-ui/react-password-toggle-field, version: 0.1.11
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-popover@1.1.23, nameSpecified: @radix-ui/react-popover, version: 1.1.23
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-popper@1.3.7, nameSpecified: @radix-ui/react-popper, version: 1.3.7
 body: MIT License
 
 Copyrig…
@@ -570,7 +698,37 @@ body: MIT License
 
 Copyrig…
 
+name: @radix-ui_react-progress@1.1.16, nameSpecified: @radix-ui/react-progress, version: 1.1.16
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-radio-group@1.4.7, nameSpecified: @radix-ui/react-radio-group, version: 1.4.7
+body: MIT License
+
+Copyrig…
+
 name: @radix-ui_react-roving-focus@1.1.19, nameSpecified: @radix-ui/react-roving-focus, version: 1.1.19
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-scroll-area@1.2.18, nameSpecified: @radix-ui/react-scroll-area, version: 1.2.18
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-select@2.3.7, nameSpecified: @radix-ui/react-select, version: 2.3.7
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-separator@1.1.15, nameSpecified: @radix-ui/react-separator, version: 1.1.15
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-slider@1.4.7, nameSpecified: @radix-ui/react-slider, version: 1.4.7
 body: MIT License
 
 Copyrig…
@@ -580,7 +738,37 @@ body: MIT License
 
 Copyrig…
 
+name: @radix-ui_react-switch@1.3.7, nameSpecified: @radix-ui/react-switch, version: 1.3.7
+body: MIT License
+
+Copyrig…
+
 name: @radix-ui_react-tabs@1.1.21, nameSpecified: @radix-ui/react-tabs, version: 1.1.21
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-toast@1.2.23, nameSpecified: @radix-ui/react-toast, version: 1.2.23
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-toggle-group@1.1.19, nameSpecified: @radix-ui/react-toggle-group, version: 1.1.19
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-toggle@1.1.18, nameSpecified: @radix-ui/react-toggle, version: 1.1.18
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-toolbar@1.1.19, nameSpecified: @radix-ui/react-toolbar, version: 1.1.19
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-tooltip@1.2.16, nameSpecified: @radix-ui/react-tooltip, version: 1.2.16
 body: MIT License
 
 Copyrig…
@@ -600,12 +788,42 @@ body: MIT License
 
 Copyrig…
 
+name: @radix-ui_react-use-escape-keydown@1.1.5, nameSpecified: @radix-ui/react-use-escape-keydown, version: 1.1.5
+body: MIT License
+
+Copyrig…
+
 name: @radix-ui_react-use-is-hydrated@0.1.3, nameSpecified: @radix-ui/react-use-is-hydrated, version: 0.1.3
 body: MIT License
 
 Copyrig…
 
 name: @radix-ui_react-use-layout-effect@1.1.4, nameSpecified: @radix-ui/react-use-layout-effect, version: 1.1.4
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-use-previous@1.1.4, nameSpecified: @radix-ui/react-use-previous, version: 1.1.4
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-use-rect@1.1.4, nameSpecified: @radix-ui/react-use-rect, version: 1.1.4
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-use-size@1.1.4, nameSpecified: @radix-ui/react-use-size, version: 1.1.4
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_react-visually-hidden@1.2.11, nameSpecified: @radix-ui/react-visually-hidden, version: 1.2.11
+body: MIT License
+
+Copyrig…
+
+name: @radix-ui_rect@1.1.3, nameSpecified: @radix-ui/rect, version: 1.1.3
 body: MIT License
 
 Copyrig…
@@ -656,7 +874,27 @@ body: MIT…
 name: @react-native_virtualized-lists@0.86.2, nameSpecified: @react-native/virtualized-lists, version: 0.86.2
 body: MIT…
 
+name: @rn-primitives_checkbox@1.5.2, nameSpecified: @rn-primitives/checkbox, version: 1.5.2
+body: MIT License
+
+Copyrig…
+
+name: @rn-primitives_hooks@1.5.2, nameSpecified: @rn-primitives/hooks, version: 1.5.2
+body: MIT License
+
+Copyrig…
+
 name: @rn-primitives_slot@1.5.2, nameSpecified: @rn-primitives/slot, version: 1.5.2
+body: MIT License
+
+Copyrig…
+
+name: @rn-primitives_switch@1.5.2, nameSpecified: @rn-primitives/switch, version: 1.5.2
+body: MIT License
+
+Copyrig…
+
+name: @rn-primitives_types@1.5.2, nameSpecified: @rn-primitives/types, version: 1.5.2
 body: MIT License
 
 Copyrig…
@@ -851,7 +1089,7 @@ body: MIT License
 
 Copyrig…
 
-name: babel-preset-expo@57.0.6, nameSpecified: babel-preset-expo, version: 57.0.6
+name: babel-preset-expo@57.0.7, nameSpecified: babel-preset-expo, version: 57.0.7
 body: The MIT License (MIT…
 
 name: balanced-match@4.0.4, nameSpecified: balanced-match, version: 4.0.4
@@ -1174,31 +1412,31 @@ C…
 name: event-target-shim@5.0.1, nameSpecified: event-target-shim, version: 5.0.1
 body: The MIT License (MIT…
 
-name: expo-asset@57.0.10, nameSpecified: expo-asset, version: 57.0.10
+name: expo-asset@57.0.11, nameSpecified: expo-asset, version: 57.0.11
 body: The MIT License (MIT…
 
-name: expo-constants@57.0.10, nameSpecified: expo-constants, version: 57.0.10
+name: expo-blur@57.0.2, nameSpecified: expo-blur, version: 57.0.2
 body: The MIT License (MIT…
 
-name: expo-constants@57.0.9, nameSpecified: expo-constants, version: 57.0.9
+name: expo-constants@57.0.11, nameSpecified: expo-constants, version: 57.0.11
 body: The MIT License (MIT…
 
-name: expo-dev-client@57.0.11, nameSpecified: expo-dev-client, version: 57.0.11
+name: expo-dev-client@57.0.12, nameSpecified: expo-dev-client, version: 57.0.12
 body: The MIT License (MIT…
 
-name: expo-dev-launcher@57.0.11, nameSpecified: expo-dev-launcher, version: 57.0.11
+name: expo-dev-launcher@57.0.12, nameSpecified: expo-dev-launcher, version: 57.0.12
 body: The MIT License (MIT…
 
 name: expo-dev-menu-interface@57.0.0, nameSpecified: expo-dev-menu-interface, version: 57.0.0
 body: The MIT License (MIT…
 
-name: expo-dev-menu@57.0.11, nameSpecified: expo-dev-menu, version: 57.0.11
+name: expo-dev-menu@57.0.12, nameSpecified: expo-dev-menu, version: 57.0.12
 body: The MIT License (MIT…
 
 name: expo-device@57.0.1, nameSpecified: expo-device, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-file-system@57.0.2, nameSpecified: expo-file-system, version: 57.0.2
+name: expo-file-system@57.0.4, nameSpecified: expo-file-system, version: 57.0.4
 body: The MIT License (MIT…
 
 name: expo-font@57.0.1, nameSpecified: expo-font, version: 57.0.1
@@ -1207,7 +1445,7 @@ body: The MIT License (MIT…
 name: expo-glass-effect@57.0.1, nameSpecified: expo-glass-effect, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-image@57.0.2, nameSpecified: expo-image, version: 57.0.2
+name: expo-image@57.0.3, nameSpecified: expo-image, version: 57.0.3
 body: The MIT License (MIT…
 
 name: expo-json-utils@57.0.1, nameSpecified: expo-json-utils, version: 57.0.1
@@ -1216,28 +1454,34 @@ body: The MIT License (MIT…
 name: expo-keep-awake@57.0.1, nameSpecified: expo-keep-awake, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-linking@57.0.5, nameSpecified: expo-linking, version: 57.0.5
+name: expo-linking@57.0.6, nameSpecified: expo-linking, version: 57.0.6
+body: The MIT License (MIT…
+
+name: expo-local-authentication@57.0.2, nameSpecified: expo-local-authentication, version: 57.0.2
 body: The MIT License (MIT…
 
 name: expo-manifests@57.0.1, nameSpecified: expo-manifests, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-modules-autolinking@57.0.9, nameSpecified: expo-modules-autolinking, version: 57.0.9
+name: expo-modules-autolinking@57.0.10, nameSpecified: expo-modules-autolinking, version: 57.0.10
 body: The MIT License (MIT…
 
-name: expo-modules-core@57.0.10, nameSpecified: expo-modules-core, version: 57.0.10
+name: expo-modules-core@57.0.11, nameSpecified: expo-modules-core, version: 57.0.11
 body: The MIT License (MIT…
 
 name: expo-modules-jsi@57.0.4, nameSpecified: expo-modules-jsi, version: 57.0.4
 body: The MIT License (MIT…
 
-name: expo-router@57.0.12, nameSpecified: expo-router, version: 57.0.12
+name: expo-router@57.0.13, nameSpecified: expo-router, version: 57.0.13
 body: MIT…
 
 name: expo-secure-store@57.0.1, nameSpecified: expo-secure-store, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-server@57.0.2, nameSpecified: expo-server, version: 57.0.2
+name: expo-sensors@57.0.2, nameSpecified: expo-sensors, version: 57.0.2
+body: The MIT License (MIT…
+
+name: expo-server@57.0.3, nameSpecified: expo-server, version: 57.0.3
 body: The MIT License (MIT…
 
 name: expo-splash-screen@57.0.6, nameSpecified: expo-splash-screen, version: 57.0.6
@@ -1258,7 +1502,7 @@ body: The MIT License (MIT…
 name: expo-web-browser@57.0.2, nameSpecified: expo-web-browser, version: 57.0.2
 body: The MIT License (MIT…
 
-name: expo@57.0.12, nameSpecified: expo, version: 57.0.12
+name: expo@57.0.13, nameSpecified: expo, version: 57.0.13
 body: The MIT License (MIT…
 
 name: exponential-backoff@3.1.3, nameSpecified: exponential-backoff, version: 3.1.3
@@ -1694,7 +1938,7 @@ body: The MIT License (MIT…
 name: ms@2.1.3, nameSpecified: ms, version: 2.1.3
 body: The MIT License (MIT…
 
-name: multitars@1.0.0, nameSpecified: multitars, version: 1.0.0
+name: multitars@1.0.2, nameSpecified: multitars, version: 1.0.2
 body: MIT License
 
 Copyrig…
@@ -1862,6 +2106,11 @@ Copyrig…
 name: queue@6.0.2, nameSpecified: queue, version: 6.0.2
 body: The MIT License (MIT…
 
+name: radix-ui@1.6.7, nameSpecified: radix-ui, version: 1.6.7
+body: MIT License
+
+Copyrig…
+
 name: range-parser@1.2.1, nameSpecified: range-parser, version: 1.2.1
 body: (The MIT License)
 
@@ -1929,7 +2178,7 @@ body: MIT License
 
 Copyrig…
 
-name: react-native-screens@4.26.2, nameSpecified: react-native-screens, version: 4.26.2
+name: react-native-screens@4.27.0, nameSpecified: react-native-screens, version: 4.27.0
 body: The MIT License (MIT…
 
 name: react-native-svg@15.15.4, nameSpecified: react-native-svg, version: 15.15.4
@@ -2019,6 +2268,11 @@ body: The MIT License (MIT…
 
 name: safe-buffer@5.2.1, nameSpecified: safe-buffer, version: 5.2.1
 body: The MIT License (MIT…
+
+name: sandbox-cli-detector@0.2.0, nameSpecified: sandbox-cli-detector, version: 0.2.0
+body: MIT License
+
+Copyrig…
 
 name: sax@1.6.1, nameSpecified: sax, version: 1.6.1
 body: # Blue Oak Model Lic…
