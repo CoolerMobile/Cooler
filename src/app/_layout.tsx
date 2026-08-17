@@ -10,6 +10,7 @@ import { Stack } from "expo-router";
 import { StatusBar, AppState, type AppStateStatus } from "react-native";
 import { useEffect, useRef } from "react";
 import { useBiometrics } from "@/lib/hooks/security/biometrics";
+import { FlipPrivacyProvider } from "@/lib/hooks/security/flip-privacy";
 
 export default function RootLayout() {
   // validate auth
@@ -54,7 +55,9 @@ export default function RootLayout() {
   // return navigator
   return (
     <AppThemeProvider>
-      <RootNavigator />
+      <FlipPrivacyProvider>
+        <RootNavigator />
+      </FlipPrivacyProvider>
     </AppThemeProvider>
   );
 }

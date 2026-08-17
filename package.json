@@ -19,20 +19,20 @@
     "@rn-primitives/switch": "^1.5.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "expo": "~57.0.13",
+    "expo": "^57.0.14",
     "expo-blur": "~57.0.2",
-    "expo-constants": "~57.0.11",
-    "expo-dev-client": "~57.0.12",
+    "expo-constants": "~57.0.12",
+    "expo-dev-client": "~57.0.13",
     "expo-device": "~57.0.1",
     "expo-font": "~57.0.1",
     "expo-glass-effect": "~57.0.1",
     "expo-image": "~57.0.3",
     "expo-linking": "~57.0.6",
     "expo-local-authentication": "~57.0.2",
-    "expo-router": "~57.0.13",
+    "expo-router": "~57.0.14",
     "expo-secure-store": "~57.0.1",
     "expo-sensors": "~57.0.2",
-    "expo-splash-screen": "~57.0.6",
+    "expo-splash-screen": "~57.0.7",
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.2",
     "expo-system-ui": "~57.0.2",
@@ -47,7 +47,7 @@
     "react-native-legal": "^1.6.5",
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
-    "react-native-screens": "4.26.0",
+    "react-native-screens": "4.27.0",
     "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.2",
     "react-native-worklets": "0.10.1",
@@ -63,5 +63,17 @@
   },
   "overrides": {
     "react-native-screens": "4.27.0"
+  },
+  "expo": {
+    "install": {
+      "exclude": [
+        "react-native-screens"
+      ]
+    },
+    "doctor": {
+      "appConfigFieldsNotSyncedCheck": {
+        "enabled": false
+      }
+    }
   }
 }

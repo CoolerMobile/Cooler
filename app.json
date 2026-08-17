@@ -52,6 +52,12 @@
           "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
         }
       ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Allow $(PRODUCT_NAME) to use motion gestures to hide sensitive values."
+        }
+      ],
       "react-native-legal"
     ],
     "experiments": {

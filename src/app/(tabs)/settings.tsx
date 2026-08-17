@@ -152,7 +152,7 @@ export default function SettingsScreen() {
           <SettingsItem
             icon={EyeOff}
             title="Hide Sensitive Values"
-            description="Flip your phone to hide"
+            description="Flip or shake your phone to hide"
             action={() => toggleSensitiveValues()}
             trailingAction={
               <SettingsAction
