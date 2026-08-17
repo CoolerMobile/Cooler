@@ -13,8 +13,35 @@ type NotificationData = {
   title: string;
   body: string;
   data?: Record<string, any>;
+  channelId?: NotificationChannelId;
   trigger?: Notifications.TimeIntervalTriggerInput;
 };
+
+// Android notification channels mirror Coolify's notification event groups
+const notificationChannels = {
+  deployments: {
+    name: "Deployments",
+    description: "Deployment results and container status changes",
+    importance: Notifications.AndroidImportance.HIGH,
+  },
+  backups: {
+    name: "Backups",
+    description: "Database backup results",
+    importance: Notifications.AndroidImportance.DEFAULT,
+  },
+  "scheduled-tasks": {
+    name: "Scheduled Tasks",
+    description: "Scheduled task results",
+    importance: Notifications.AndroidImportance.DEFAULT,
+  },
+  servers: {
+    name: "Server Alerts",
+    description: "Server availability, disk usage, cleanup, and update alerts",
+    importance: Notifications.AndroidImportance.HIGH,
+  },
+} satisfies Record<string, Notifications.NotificationChannelInput>;
+
+type NotificationChannelId = keyof typeof notificationChannels;
 
 // handler
 Notifications.setNotificationHandler({
@@ -68,6 +95,16 @@ export const useNotifications = () => {
         throw Error("push notifications require a real device");
       }
 
+      // register channels before reusing a token so existing installs receive
+      // newly added channels after an app update
+      if (Platform.OS === "android") {
+        await Promise.all(
+          Object.entries(notificationChannels).map(([id, channel]) =>
+            Notifications.setNotificationChannelAsync(id, channel),
+          ),
+        );
+      }
+
       // reuse an established Expo token
       const storedToken = await get("expoToken");
       if (
@@ -76,14 +113,6 @@ export const useNotifications = () => {
       ) {
         setIsRegistered(true);
         return storedToken;
-      }
-
-      // android channels
-      if (Platform.OS === "android") {
-        await Notifications.setNotificationChannelAsync("deployments", {
-          name: "Deployments",
-          importance: Notifications.AndroidImportance.HIGH,
-        });
       }
 
       // permissions status
@@ -138,6 +167,9 @@ export const useNotifications = () => {
    * @param data notification data
    */
   const sendNotification = async (data: NotificationData) => {
+    const { trigger, ...pushData } = data;
+    const channelId = data.channelId ?? "deployments";
+
     // dev notification
     if (process.env.NODE_ENV === "development") {
       await Notifications.scheduleNotificationAsync({
@@ -149,10 +181,13 @@ export const useNotifications = () => {
             resourceId: "test-resource",
           },
         },
-        trigger: data.trigger ?? {
-          type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-          seconds: 2,
-        },
+        trigger: trigger
+          ? { ...trigger, channelId: trigger.channelId ?? channelId }
+          : {
+              type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+              channelId,
+              seconds: 2,
+            },
       });
     }
 
@@ -164,7 +199,7 @@ export const useNotifications = () => {
         "Accept-encoding": "gzip, deflate",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...pushData, channelId }),
     });
   };
 
