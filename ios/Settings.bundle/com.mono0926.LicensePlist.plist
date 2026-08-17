@@ -1956,6 +1956,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/badgin@1.2.3</string>
+			<key>Title</key>
+			<string>badgin (1.2.3)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/balanced-match@4.0.4</string>
 			<key>Title</key>
 			<string>balanced-match (4.0.4)</string>
@@ -2628,6 +2636,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/expo-application@57.0.2</string>
+			<key>Title</key>
+			<string>expo-application (57.0.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/expo-asset@57.0.12</string>
 			<key>Title</key>
 			<string>expo-asset (57.0.12)</string>
@@ -2783,6 +2799,14 @@
 			<string>com.mono0926.LicensePlist/expo-modules-jsi@57.0.4</string>
 			<key>Title</key>
 			<string>expo-modules-jsi (57.0.4)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/expo-notifications@57.0.12</string>
+			<key>Title</key>
+			<string>expo-notifications (57.0.12)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

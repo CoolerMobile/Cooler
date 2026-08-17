@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "cooler.app"
-               BlueprintName = "cooler"
-               ReferencedContainer = "container:cooler.xcodeproj">
+               BuildableName = "Cooler.app"
+               BlueprintName = "Cooler"
+               ReferencedContainer = "container:Cooler.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "coolerTests.xctest"
-               BlueprintName = "coolerTests"
-               ReferencedContainer = "container:cooler.xcodeproj">
+               BuildableName = "CoolerTests.xctest"
+               BlueprintName = "CoolerTests"
+               ReferencedContainer = "container:Cooler.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "cooler.app"
-            BlueprintName = "cooler"
-            ReferencedContainer = "container:cooler.xcodeproj">
+            BuildableName = "Cooler.app"
+            BlueprintName = "Cooler"
+            ReferencedContainer = "container:Cooler.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "cooler.app"
-            BlueprintName = "cooler"
-            ReferencedContainer = "container:cooler.xcodeproj">
+            BuildableName = "Cooler.app"
+            BlueprintName = "Cooler"
+            ReferencedContainer = "container:Cooler.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

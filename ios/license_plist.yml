@@ -477,6 +477,11 @@ rename:
   "expo-image@57.0.3": expo-image
   "expo-linking@57.0.6": expo-linking
   "expo-local-authentication@57.0.2": expo-local-authentication
+  "expo-notifications@57.0.12": expo-notifications
+  "abort-controller@3.0.0": abort-controller
+  "event-target-shim@5.0.1": event-target-shim
+  "badgin@1.2.3": badgin
+  "expo-application@57.0.2": expo-application
   "expo-router@57.0.14": expo-router
   "@expo_metro-runtime@57.0.11": '@expo/metro-runtime'
   "whatwg-fetch@3.6.20": whatwg-fetch
@@ -584,8 +589,6 @@ rename:
   "@react-native_gradle-plugin@0.86.2": '@react-native/gradle-plugin'
   "@react-native_js-polyfills@0.86.2": '@react-native/js-polyfills'
   "@react-native_virtualized-lists@0.86.2": '@react-native/virtualized-lists'
-  "abort-controller@3.0.0": abort-controller
-  "event-target-shim@5.0.1": event-target-shim
   "babel-plugin-syntax-hermes-parser@0.36.0": babel-plugin-syntax-hermes-parser
   "commander@12.1.0": commander
   "hermes-compiler@250829098.0.16": hermes-compiler
@@ -2546,6 +2549,26 @@ manual:
     version: '57.0.2'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-local-authentication/LICENSE'
+  - name: expo-notifications@57.0.12
+    version: '57.0.12'
+    source: https://github.com/expo/expo
+    file: '../node_modules/expo-notifications/LICENSE'
+  - name: abort-controller@3.0.0
+    version: '3.0.0'
+    source: https://github.com/mysticatea/abort-controller
+    file: '../node_modules/abort-controller/LICENSE'
+  - name: event-target-shim@5.0.1
+    version: '5.0.1'
+    source: https://github.com/mysticatea/event-target-shim
+    file: '../node_modules/event-target-shim/LICENSE'
+  - name: badgin@1.2.3
+    version: '1.2.3'
+    source: https://github.com/jaulz/badgin
+    body: MIT
+  - name: expo-application@57.0.2
+    version: '57.0.2'
+    source: https://github.com/expo/expo
+    file: '../node_modules/expo-application/LICENSE'
   - name: expo-router@57.0.14
     version: '57.0.14'
     source: https://github.com/expo/expo
@@ -2972,14 +2995,6 @@ manual:
     version: '0.86.2'
     source: https://github.com/react/react-native
     body: MIT
-  - name: abort-controller@3.0.0
-    version: '3.0.0'
-    source: https://github.com/mysticatea/abort-controller
-    file: '../node_modules/abort-controller/LICENSE'
-  - name: event-target-shim@5.0.1
-    version: '5.0.1'
-    source: https://github.com/mysticatea/event-target-shim
-    file: '../node_modules/event-target-shim/LICENSE'
   - name: babel-plugin-syntax-hermes-parser@0.36.0
     version: '0.36.0'
     source: https://github.com/facebook/hermes

@@ -1,12 +1,11 @@
-import { PrivateValue } from "@/components/custom/private";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { OverviewData, useOverview } from "@/lib/hooks/data/overview";
-import { useFlipPrivacy } from "@/lib/hooks/security/flip-privacy";
+import { useOverview } from "@/lib/hooks/data/overview";
+import { useNotifications } from "@/lib/hooks/notifications";
+import { useSecureStorage } from "@/lib/hooks/secure";
 import { Plus } from "lucide-react-native";
-import { useEffect, useState } from "react";
 import { View } from "react-native";
 
 export default function OverviewScreen() {
@@ -17,8 +16,9 @@ export default function OverviewScreen() {
     overviewData.resourceCount +
     overviewData.serverCount;
 
-  // hidden
-  const { isHidden } = useFlipPrivacy();
+  // notifications
+  const { get } = useSecureStorage();
+  const { sendNotification } = useNotifications();
 
   // screen
   return (
@@ -29,7 +29,20 @@ export default function OverviewScreen() {
         {!total && (
           <View className="h-full w-full items-center justify-center gap-4">
             <Text className="text-center text-lg">You have no Servers</Text>
-            <Button size="sm">
+            <Button
+              size="sm"
+              onPress={async () => {
+                // token
+                const token = await get("expoToken");
+
+                // send notification
+                await sendNotification({
+                  to: token,
+                  title: "Test Title",
+                  body: "Test Body",
+                });
+              }}
+            >
               <Icon as={Plus} />
               <Text>Add Server</Text>
             </Button>

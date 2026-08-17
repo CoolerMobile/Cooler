@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "cooler",
+    "name": "Cooler",
     "slug": "cooler",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +22,11 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "dev.danfq.cooler"
+      "package": "dev.danfq.cooler",
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ]
     },
     "web": {
       "output": "static",
@@ -58,11 +62,19 @@
           "motionPermission": "Allow $(PRODUCT_NAME) to use motion gestures to hide sensitive values."
         }
       ],
-      "react-native-legal"
+      "react-native-legal",
+      "expo-notifications"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "65bbfc80-4347-47fc-b4c9-d8e73adb132a"
+      }
+    },
+    "owner": "danfq"
   }
 }
