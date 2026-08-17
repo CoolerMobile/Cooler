@@ -28,9 +28,7 @@ export default function OverviewScreen() {
         {/* no data to show */}
         {!total && (
           <View className="h-full w-full items-center justify-center gap-4">
-            <PrivateValue hidden={isHidden}>
-              <Text className="text-center text-lg">You have no Servers</Text>
-            </PrivateValue>
+            <Text className="text-center text-lg">You have no Servers</Text>
             <Button size="sm">
               <Icon as={Plus} />
               <Text>Add Server</Text>
