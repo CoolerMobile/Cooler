@@ -81,7 +81,7 @@ export default function NotificationsScreen() {
           <Text className="text-muted-foreground">
             Every time you get a notification (local or not), it is encrypted
             and stored on your device. This is where you can see all of your
-            notifications, ever since Cooler has been installed.
+            notifications, from the moment Cooler was installed.
           </Text>
 
           <Text className="text-muted-foreground">

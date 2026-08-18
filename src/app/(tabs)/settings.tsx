@@ -21,9 +21,10 @@ import {
   Smartphone,
 } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { ReactNativeLegal } from "react-native-legal";
 import { BottomSheet } from "@/components/ui/bottom-sheet";
+import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import type { SettingKey } from "@/lib/types/settings";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -114,6 +115,9 @@ export default function SettingsScreen() {
   // sheets states
   const [alertOpen, setAlertOpen] = useState(false);
   const [quietOpen, setQuietOpen] = useState(false);
+  const [androidQuietPicker, setAndroidQuietPicker] = useState<
+    "from" | "to" | null
+  >(null);
 
   // quiet hours
   const currentQuietFrom = getSetting("quietFrom");
@@ -122,6 +126,11 @@ export default function SettingsScreen() {
     setSetting("quietFrom", from);
     setSetting("quietTo", to);
   };
+  const formatQuietTime = (date: Date) =>
+    date.toLocaleTimeString(undefined, {
+      hour: "numeric",
+      minute: "2-digit",
+    });
 
   // current theme
   const { colorSchemePreference, setColorScheme } = useAppTheme();
@@ -341,7 +350,10 @@ export default function SettingsScreen() {
       <BottomSheet
         key="quiet-sheet"
         index={quietOpen ? 0 : -1}
-        onDismiss={() => setQuietOpen(false)}
+        onDismiss={() => {
+          setQuietOpen(false);
+          setAndroidQuietPicker(null);
+        }}
         enablePanDownToClose
         snapPoints={["35%"]}
       >
@@ -353,32 +365,78 @@ export default function SettingsScreen() {
             <Text className="text-center text-muted-foreground">From</Text>
 
             {/* from time */}
-            <DateTimePicker
-              key="quiet-from"
-              value={currentQuietFrom}
-              onValueChange={(_event, selectedDate) => {
-                if (currentQuietFrom.getTime() !== selectedDate.getTime()) {
-                  setQuietHours(selectedDate, currentQuietTo);
-                }
-              }}
-              mode="time"
-              display="compact"
-            />
+            {Platform.OS === "android" ? (
+              <Button
+                variant="outline"
+                onPress={() => setAndroidQuietPicker("from")}
+                accessibilityLabel="Set quiet hours start time"
+              >
+                <Text>{formatQuietTime(currentQuietFrom)}</Text>
+              </Button>
+            ) : (
+              <DateTimePicker
+                key="quiet-from"
+                value={currentQuietFrom}
+                onValueChange={(_event, selectedDate) => {
+                  if (currentQuietFrom.getTime() !== selectedDate.getTime()) {
+                    setQuietHours(selectedDate, currentQuietTo);
+                  }
+                }}
+                mode="time"
+                display="compact"
+              />
+            )}
 
             <Text className="text-center text-muted-foreground">to</Text>
 
             {/* to time */}
-            <DateTimePicker
-              key="quiet-to"
-              value={currentQuietTo}
-              onValueChange={(_event, selectedDate) => {
-                if (currentQuietTo.getTime() !== selectedDate.getTime()) {
-                  setQuietHours(currentQuietFrom, selectedDate);
+            {Platform.OS === "android" ? (
+              <Button
+                variant="outline"
+                onPress={() => setAndroidQuietPicker("to")}
+                accessibilityLabel="Set quiet hours end time"
+              >
+                <Text>{formatQuietTime(currentQuietTo)}</Text>
+              </Button>
+            ) : (
+              <DateTimePicker
+                key="quiet-to"
+                value={currentQuietTo}
+                onValueChange={(_event, selectedDate) => {
+                  if (currentQuietTo.getTime() !== selectedDate.getTime()) {
+                    setQuietHours(currentQuietFrom, selectedDate);
+                  }
+                }}
+                mode="time"
+                display="compact"
+              />
+            )}
+
+            {Platform.OS === "android" && androidQuietPicker && (
+              <DateTimePicker
+                key={`quiet-${androidQuietPicker}`}
+                value={
+                  androidQuietPicker === "from"
+                    ? currentQuietFrom
+                    : currentQuietTo
                 }
-              }}
-              mode="time"
-              display="compact"
-            />
+                onValueChange={(_event, selectedDate) => {
+                  if (androidQuietPicker === "from") {
+                    if (currentQuietFrom.getTime() !== selectedDate.getTime()) {
+                      setQuietHours(selectedDate, currentQuietTo);
+                    }
+                  } else if (
+                    currentQuietTo.getTime() !== selectedDate.getTime()
+                  ) {
+                    setQuietHours(currentQuietFrom, selectedDate);
+                  }
+
+                  setAndroidQuietPicker(null);
+                }}
+                onDismiss={() => setAndroidQuietPicker(null)}
+                mode="time"
+              />
+            )}
           </View>
 
           {/* save */}
