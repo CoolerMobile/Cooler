@@ -3,6 +3,13 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { Settings, SettingsState } from "@/lib/types/settings";
 
+const toDate = (value: unknown, fallback: Date): Date => {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
+
+  const date = new Date(value as string | number);
+  return Number.isNaN(date.getTime()) ? fallback : date;
+};
+
 export const DEFAULT_SETTINGS: Settings = {
   appLock: false,
   protectProductionActions: false,
@@ -11,6 +18,8 @@ export const DEFAULT_SETTINGS: Settings = {
   backupAlerts: true,
   scheduledTaskAlerts: true,
   serverAlerts: true,
+  quietFrom: new Date(),
+  quietTo: new Date(),
 };
 
 /**
@@ -42,12 +51,23 @@ export const useSettingsStore = create<SettingsState>()(
       partialize: ({ settings }) => ({ settings }),
       merge: (persistedState, currentState) => {
         const persisted = persistedState as Partial<SettingsState>;
+        const persistedSettings = persisted.settings;
 
         return {
           ...currentState,
           settings: {
             ...currentState.settings,
-            ...persisted.settings,
+            ...persistedSettings,
+            // JSON persistence serializes Date values as ISO strings. Restore
+            // them so native date/time pickers always receive Date instances.
+            quietFrom: toDate(
+              persistedSettings?.quietFrom,
+              currentState.settings.quietFrom,
+            ),
+            quietTo: toDate(
+              persistedSettings?.quietTo,
+              currentState.settings.quietTo,
+            ),
           },
         };
       },

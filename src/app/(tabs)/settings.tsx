@@ -6,6 +6,7 @@ import { useSettingsStore } from "@/lib/stores/settings";
 import {
   BedSingle,
   Bell,
+  BellOff,
   BookOpen,
   CalendarClock,
   DatabaseBackup,
@@ -27,13 +28,11 @@ import { Button } from "@/components/ui/button";
 import { BrandIcon } from "@/components/custom/brand-icon";
 import { siGithub } from "simple-icons";
 import type { SettingKey } from "@/lib/types/settings";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 type AlertSettingKey = Extract<
   SettingKey,
-  | "deploymentAlerts"
-  | "backupAlerts"
-  | "scheduledTaskAlerts"
-  | "serverAlerts"
+  "deploymentAlerts" | "backupAlerts" | "scheduledTaskAlerts" | "serverAlerts"
 >;
 
 export default function SettingsScreen() {
@@ -65,11 +64,9 @@ export default function SettingsScreen() {
   const settings = useSettingsStore((state) => state.settings);
   const hasHydrated = useSettingsStore((state) => state.hasHydrated);
   const setSetting = useSettingsStore((state) => state.set);
+  const getSetting = useSettingsStore((state) => state.get);
 
-  const toggleAlertRule = (
-    key: AlertSettingKey,
-    checked = !settings[key],
-  ) => {
+  const toggleAlertRule = (key: AlertSettingKey, checked = !settings[key]) => {
     if (!hasHydrated) return;
     setSetting(key, checked);
   };
@@ -117,6 +114,15 @@ export default function SettingsScreen() {
   // sheets states
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
+  const [quietOpen, setQuietOpen] = useState(false);
+
+  // quiet hours
+  const currentQuietFrom = getSetting("quietFrom");
+  const currentQuietTo = getSetting("quietTo");
+  const setQuietHours = (from: Date, to: Date) => {
+    setSetting("quietFrom", from);
+    setSetting("quietTo", to);
+  };
 
   // ui
   return (
@@ -134,10 +140,10 @@ export default function SettingsScreen() {
 
           {/* quiet hours */}
           <SettingsItem
-            icon={BedSingle}
+            icon={BellOff}
             title="Quiet Hours"
             description="When you shouldn't be notified"
-            action={() => {}}
+            action={() => setQuietOpen(true)}
           />
         </SettingsSection>
 
@@ -297,6 +303,57 @@ export default function SettingsScreen() {
               />
             }
           />
+        </View>
+      </BottomSheet>
+
+      {/* quiet hours */}
+      <BottomSheet
+        key="quiet-sheet"
+        index={quietOpen ? 0 : -1}
+        onDismiss={() => setQuietOpen(false)}
+        enablePanDownToClose
+        snapPoints={["35%"]}
+      >
+        <View className="gap-4">
+          <Text className="font-semibold text-lg text-center p-4">
+            Quiet Hours
+          </Text>
+          <View className="items-center gap-3">
+            <Text className="text-center text-muted-foreground">From</Text>
+
+            {/* from time */}
+            <DateTimePicker
+              key="quiet-from"
+              value={currentQuietFrom}
+              onValueChange={(_event, selectedDate) => {
+                if (currentQuietFrom.getTime() !== selectedDate.getTime()) {
+                  setQuietHours(selectedDate, currentQuietTo);
+                }
+              }}
+              mode="time"
+              display="compact"
+            />
+
+            <Text className="text-center text-muted-foreground">to</Text>
+
+            {/* to time */}
+            <DateTimePicker
+              key="quiet-to"
+              value={currentQuietTo}
+              onValueChange={(_event, selectedDate) => {
+                if (currentQuietTo.getTime() !== selectedDate.getTime()) {
+                  setQuietHours(currentQuietFrom, selectedDate);
+                }
+              }}
+              mode="time"
+              display="compact"
+            />
+          </View>
+
+          {/* save */}
+          <Text className="text-muted-foreground text-xs text-center p-4">
+            Values are saved automatically
+          </Text>
         </View>
       </BottomSheet>
 

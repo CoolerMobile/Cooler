@@ -15,6 +15,7 @@
     "@expo/ui": "~57.0.11",
     "@icons-pack/react-simple-icons": "^13.15.1",
     "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/datetimepicker": "^9.1.0",
     "@rn-primitives/checkbox": "^1.5.2",
     "@rn-primitives/slot": "^1.5.2",
     "@rn-primitives/switch": "^1.5.2",

@@ -11,6 +11,8 @@ export type Settings = {
   backupAlerts: boolean;
   scheduledTaskAlerts: boolean;
   serverAlerts: boolean;
+  quietFrom: Date;
+  quietTo: Date;
 };
 
 export type SettingKey = keyof Settings;
