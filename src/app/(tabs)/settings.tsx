@@ -144,7 +144,7 @@ export default function SettingsScreen() {
   // ui
   return (
     <>
-      <View className="p-4 flex flex-col gap-4">
+      <View className="py-2 px-4 flex flex-col gap-4">
         {/* visuals */}
         <SettingsSection title="Visuals">
           {/* theme toggle */}

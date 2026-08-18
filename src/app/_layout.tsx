@@ -1,9 +1,5 @@
 import "../../global.css";
-import {
-  AppThemeProvider,
-  ThemeToggle,
-  useAppTheme,
-} from "@/components/custom/theme";
+import { AppThemeProvider, useAppTheme } from "@/components/custom/theme";
 import { NAV_THEME } from "@/lib/theme";
 import {
   Stack,
@@ -22,11 +18,11 @@ const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
     headerRight: undefined,
   },
   deployments: {
-    title: "Deployments",
+    title: "Cooler",
     headerRight: undefined,
   },
   settings: {
-    title: "Settings",
+    title: "Cooler",
     headerRight: () => <SettingsGitHub />,
   },
 };
