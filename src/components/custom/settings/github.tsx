@@ -30,7 +30,7 @@ export const SettingsGitHub = () => {
           <Text className="text-muted-foreground">
             The app is{" "}
             <Text className="font-semibold">completely open-source</Text>, so
-            you can read the code in its entirety on our GitHub repository.
+            you can read the code in its entirety in its GitHub repository.
           </Text>
           <Text className="text-muted-foreground">
             Your data is never distributed, sold, or otherwise shared with any
