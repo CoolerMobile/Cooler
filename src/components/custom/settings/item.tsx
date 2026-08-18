@@ -75,7 +75,7 @@ type SettingsItemProps = {
   trailingAction?: ReactNode;
   action?: () => void;
   title: string;
-  description: string;
+  description?: string;
   icon: LucideIcon;
 };
 
@@ -110,9 +110,11 @@ export const SettingsItem = ({
         >
           {title}
         </Text>
-        <Text className={settingsItemDescriptionVariants({ variant })}>
-          {description}
-        </Text>
+        {description && (
+          <Text className={settingsItemDescriptionVariants({ variant })}>
+            {description}
+          </Text>
+        )}
       </View>
       {trailingAction ?? <Icon as={ChevronRight} />}
     </Pressable>

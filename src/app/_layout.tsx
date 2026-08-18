@@ -5,10 +5,31 @@ import {
   useAppTheme,
 } from "@/components/custom/theme";
 import { NAV_THEME } from "@/lib/theme";
-import { Stack } from "expo-router";
+import {
+  Stack,
+  usePathname,
+  type NativeStackNavigationOptions,
+} from "expo-router";
 import { StatusBar } from "react-native";
 import { FlipPrivacyProvider } from "@/lib/hooks/security/flip-privacy";
 import { AppLock } from "@/components/custom/app-lock";
+import { SettingsGitHub } from "@/components/custom/settings/github";
+import { PortalHost } from "@rn-primitives/portal";
+
+const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
+  index: {
+    title: "Cooler",
+    headerRight: undefined,
+  },
+  deployments: {
+    title: "Deployments",
+    headerRight: undefined,
+  },
+  settings: {
+    title: "Settings",
+    headerRight: () => <SettingsGitHub />,
+  },
+};
 
 export default function RootLayout() {
   // return navigator
@@ -28,6 +49,14 @@ function RootNavigator() {
   const { colorScheme } = useAppTheme();
   const theme = NAV_THEME[colorScheme];
 
+  // root stack owns the header shared by the native tabs
+  // keep its options in sync with the selected tab,
+  // since the tabs navigator only owns the bar
+  const pathname = usePathname();
+  const selectedTab = pathname.split("/").filter(Boolean)[0] ?? "index";
+  const tabHeaderOptions =
+    TAB_HEADER_OPTIONS[selectedTab] ?? TAB_HEADER_OPTIONS.index;
+
   // app
   return (
     <>
@@ -38,11 +67,11 @@ function RootNavigator() {
         screenOptions={{
           contentStyle: { backgroundColor: theme.colors.background },
           headerShadowVisible: false,
-          headerRight: () => <ThemeToggle />,
         }}
       >
-        <Stack.Screen name="(tabs)" options={{ title: "Cooler" }} />
+        <Stack.Screen name="(tabs)" options={tabHeaderOptions} />
       </Stack>
+      <PortalHost />
     </>
   );
 }

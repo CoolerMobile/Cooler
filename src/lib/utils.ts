@@ -14,3 +14,12 @@ export function parseError(error: unknown) {
   }
   return String(error);
 }
+
+/**
+ * capitalize first character of given string
+ *
+ * @param data - string to modify
+ */
+export const upperFirstLetter = (data: string = "") => {
+  return data.slice(0, 1).toUpperCase() + data.slice(1, data.length);
+};

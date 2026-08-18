@@ -2,6 +2,7 @@ import { SettingsAction } from "@/components/custom/settings/action";
 import { SettingsItem } from "@/components/custom/settings/item";
 import { SettingsSection } from "@/components/custom/settings/section";
 import { useBiometrics } from "@/lib/hooks/security/biometrics";
+import { useAppTheme } from "@/components/custom/theme";
 import { useSettingsStore } from "@/lib/stores/settings";
 import {
   BedSingle,
@@ -17,18 +18,17 @@ import {
   Rocket,
   ScanFace,
   Server,
+  Smartphone,
 } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import * as Linking from "expo-linking";
 import { View } from "react-native";
 import { ReactNativeLegal } from "react-native-legal";
 import { BottomSheet } from "@expo/ui/community/bottom-sheet";
 import { Text } from "@/components/ui/text";
-import { Button } from "@/components/ui/button";
-import { BrandIcon } from "@/components/custom/brand-icon";
-import { siGithub } from "simple-icons";
 import type { SettingKey } from "@/lib/types/settings";
 import DateTimePicker from "@react-native-community/datetimepicker";
+
+import { Option } from "@/components/ui/select";
 
 type AlertSettingKey = Extract<
   SettingKey,
@@ -112,7 +112,6 @@ export default function SettingsScreen() {
   };
 
   // sheets states
-  const [privacyOpen, setPrivacyOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [quietOpen, setQuietOpen] = useState(false);
 
@@ -124,10 +123,50 @@ export default function SettingsScreen() {
     setSetting("quietTo", to);
   };
 
+  // current theme
+  const { colorSchemePreference, setColorScheme } = useAppTheme();
+  const currentTheme =
+    colorSchemePreference === "system"
+      ? "System"
+      : colorSchemePreference === "dark"
+        ? "Dark Mode"
+        : "Light Mode";
+  const toggleTheme = async (option: Option) => {
+    const theme = option?.value;
+
+    if (theme !== "light" && theme !== "dark" && theme !== "system") {
+      throw new Error("[settings] invalid theme chosen");
+    }
+
+    await setColorScheme(theme);
+  };
+
   // ui
   return (
     <>
-      <View className="p-4 flex flex-col gap-6">
+      <View className="p-4 flex flex-col gap-4">
+        {/* visuals */}
+        <SettingsSection title="Visuals">
+          {/* theme toggle */}
+          <SettingsItem
+            icon={Smartphone}
+            title="App Theme"
+            trailingAction={
+              <SettingsAction
+                type="select"
+                option={{
+                  value: colorSchemePreference,
+                  label: currentTheme,
+                }}
+                selectOptions={["dark", "light", "system"]}
+                onOptionChange={(option) => {
+                  void toggleTheme(option).catch(() => undefined);
+                }}
+              />
+            }
+          />
+        </SettingsSection>
+
         {/* notifications */}
         <SettingsSection title="Notifications">
           {/* rules */}
@@ -198,16 +237,8 @@ export default function SettingsScreen() {
           />
         </SettingsSection>
 
-        {/* legal */}
-        <SettingsSection title="Legal">
-          {/* privacy policy */}
-          <SettingsItem
-            icon={File}
-            title="Privacy Policy"
-            description="How your data is (not) handled"
-            action={() => setPrivacyOpen(true)}
-          />
-
+        {/* libraries */}
+        <SettingsSection title="Libraries">
           {/* open-source notices */}
           <SettingsItem
             icon={BookOpen}
@@ -354,48 +385,6 @@ export default function SettingsScreen() {
           <Text className="text-muted-foreground text-xs text-center p-4">
             Values are saved automatically
           </Text>
-        </View>
-      </BottomSheet>
-
-      {/* privacy policy sheet */}
-      <BottomSheet
-        key="privacy-sheet"
-        index={privacyOpen ? 0 : -1}
-        onDismiss={() => setPrivacyOpen(false)}
-        enablePanDownToClose
-        snapPoints={["40%"]}
-      >
-        <View className="gap-4 p-4">
-          <Text className="font-semibold text-lg text-center">
-            Privacy Policy
-          </Text>
-          <Text className="text-muted-foreground">
-            There is no policy. Every single bit of your data is handled{" "}
-            <Text className="font-semibold">100% on-device</Text>.
-          </Text>
-
-          <Text className="text-muted-foreground">
-            This means that, aside from error reporting data, which does{" "}
-            <Text className="font-semibold">not</Text> include any of your own
-            data, and is completely anonymised pre-flight, nothing ever leaves
-            your device.
-          </Text>
-
-          <Text className="text-muted-foreground">
-            Still have doubts? I understand. The app is{" "}
-            <Text className="font-semibold">completely open-source</Text>, so
-            you can read the code in its entirety here:
-          </Text>
-
-          <Button
-            className="items-center"
-            onPress={async () =>
-              await Linking.openURL("https://github.com/CoolerMobile/Cooler")
-            }
-          >
-            <BrandIcon icon={siGithub} />
-            <Text>View Cooler on GitHub</Text>
-          </Button>
         </View>
       </BottomSheet>
     </>
