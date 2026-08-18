@@ -1,4 +1,3 @@
-import { useSecureStorage } from "@/lib/hooks/secure";
 import "../../global.css";
 import {
   AppThemeProvider,
@@ -7,18 +6,13 @@ import {
 } from "@/components/custom/theme";
 import { NAV_THEME } from "@/lib/theme";
 import { Stack } from "expo-router";
-import { StatusBar, AppState } from "react-native";
-import { useEffect, useRef } from "react";
-import { useBiometrics } from "@/lib/hooks/security/biometrics";
+import { StatusBar } from "react-native";
+import { useEffect } from "react";
 import { FlipPrivacyProvider } from "@/lib/hooks/security/flip-privacy";
 import { useNotifications } from "@/lib/hooks/notifications";
+import { AppLock } from "@/components/custom/app-lock";
 
 export default function RootLayout() {
-  // validate auth
-  const { get } = useSecureStorage();
-  const { authenticate } = useBiometrics();
-  const authEnabled = get("appLock");
-
   // notifications
   const { registerDevice } = useNotifications();
 
@@ -43,51 +37,24 @@ export default function RootLayout() {
     console.info("[eas] dev env: skipping registration");
   }
 
-  // request auth on app launch if enabled
-  useEffect(() => {
-    if (authEnabled as unknown as boolean) {
-      authenticate({
-        promptMessage: "Unlock with Biometrics",
-      });
-    }
-  }, [authEnabled]);
-
-  // request auth on return from background
-  const wasBackgrounded = useRef(false);
-  useEffect(() => {
-    if (!authEnabled) return;
-
-    const subscription = AppState.addEventListener("change", (state) => {
-      if (state === "background") {
-        wasBackgrounded.current = true;
-      }
-
-      if (state === "active" && wasBackgrounded.current) {
-        wasBackgrounded.current = false;
-
-        authenticate({
-          promptMessage: "Unlock with Biometrics",
-        });
-      }
-    });
-
-    return () => subscription.remove();
-  }, [authEnabled]);
-
   // return navigator
   return (
     <AppThemeProvider>
-      <FlipPrivacyProvider>
-        <RootNavigator />
-      </FlipPrivacyProvider>
+      <AppLock>
+        <FlipPrivacyProvider>
+          <RootNavigator />
+        </FlipPrivacyProvider>
+      </AppLock>
     </AppThemeProvider>
   );
 }
 
 function RootNavigator() {
+  // theme
   const { colorScheme } = useAppTheme();
   const theme = NAV_THEME[colorScheme];
 
+  // app
   return (
     <>
       <StatusBar
