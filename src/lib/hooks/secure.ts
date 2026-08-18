@@ -4,10 +4,10 @@ import type { StateStorage } from "zustand/middleware";
 import { parseError } from "@/lib/utils";
 
 /**
- * Zustand-compatible encrypted storage.
+ * zustand-compatible encrypted storage
  *
- * Keep this as the shared persistence adapter so AsyncStorage remains reserved
- * for the non-sensitive theme preference.
+ * shared persistence adapter so AsyncStorage remains
+ * reserved for non-sensitive theme preference
  */
 export const secureStorage: StateStorage = {
   getItem: (key) => SecureStore.getItemAsync(key),
@@ -16,9 +16,11 @@ export const secureStorage: StateStorage = {
 };
 
 /**
- * Secure persistence with a one-time migration from the stores' former
- * AsyncStorage values. New and updated values are written only to SecureStore,
- * and the plaintext legacy value is removed after a successful secure write.
+ * secure persistence with a one-time migration from
+ * the stores' former AsyncStorage values
+ *
+ * new and updated values are written only to SecureStore,
+ * and the plaintext legacy value is removed after a successful secure write
  */
 export const migratingSecureStorage: StateStorage = {
   getItem: async (key) => {

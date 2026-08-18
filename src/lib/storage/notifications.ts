@@ -1,5 +1,6 @@
 import { secureStorage } from "@/lib/hooks/secure";
 
+// key & prefix
 const NOTIFICATION_SEQUENCE_KEY = "cooler.notifications.sequence";
 const NOTIFICATION_ENTRY_PREFIX = "cooler.notifications.entry";
 
@@ -15,7 +16,7 @@ export type NotificationStorageInput = {
 
 type NotificationDelivery = "dropped" | "failed" | "generated" | "received";
 
-type StoredNotification = NotificationStorageInput & {
+export type StoredNotification = NotificationStorageInput & {
   id: number;
   savedAt: string;
   deliveredAt?: string;
@@ -23,7 +24,6 @@ type StoredNotification = NotificationStorageInput & {
 
 // serialize writes so concurrent notification events cannot claim the same id
 let writeQueue: Promise<unknown> = Promise.resolve();
-
 const entryKey = (id: number) => `${NOTIFICATION_ENTRY_PREFIX}.${id}`;
 
 /**
@@ -86,4 +86,31 @@ export const markNotificationDelivery = async (
 
   writeQueue = write.catch(() => undefined);
   return write;
+};
+
+/**
+ * get all notifications
+ *
+ * @returns array of notifications
+ */
+export const getNotifications = async () => {
+  // wait for pending writes so a reserved sequence always has a chance to finish
+  await writeQueue;
+
+  // validate sequence
+  const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
+  const sequence = Number.parseInt(storedSequence ?? "0", 10);
+  if (!Number.isSafeInteger(sequence) || sequence < 1) return [];
+
+  // resolve stored notifications
+  const storedNotifications = await Promise.all(
+    Array.from({ length: sequence }, (_, index) =>
+      secureStorage.getItem(entryKey(index + 1)),
+    ),
+  );
+
+  // return notifications as normalized map
+  return storedNotifications.flatMap((storedValue) =>
+    storedValue === null ? [] : [JSON.parse(storedValue) as StoredNotification],
+  );
 };

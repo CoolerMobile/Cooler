@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
+import BottomSheet from "@/components/ui/bottom-sheet";
 import { BrandIcon } from "@/components/custom/brand-icon";
 import { siGithub } from "simple-icons";
-import BottomSheet from "@expo/ui/community/bottom-sheet";
 import * as Linking from "expo-linking";
 import { useState } from "react";
 import { View } from "react-native";

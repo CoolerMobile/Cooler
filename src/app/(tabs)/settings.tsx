@@ -23,7 +23,7 @@ import {
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { ReactNativeLegal } from "react-native-legal";
-import { BottomSheet } from "@expo/ui/community/bottom-sheet";
+import { BottomSheet } from "@/components/ui/bottom-sheet";
 import { Text } from "@/components/ui/text";
 import type { SettingKey } from "@/lib/types/settings";
 import DateTimePicker from "@react-native-community/datetimepicker";

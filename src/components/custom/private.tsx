@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   ReduceMotion,
@@ -62,12 +62,17 @@ export const PrivateValue = ({ hidden, children }: PrivateValueProps) => {
           pointerEvents="none"
           style={[StyleSheet.absoluteFill, animatedStyle]}
         >
-          <BlurView
-            blurMethod="dimezisBlurViewSdk31Plus"
-            intensity={80}
-            tint="default"
-            style={[StyleSheet.absoluteFill, styles.blur]}
-          />
+          {Platform.OS === "android" ? (
+            <View
+              style={[StyleSheet.absoluteFill, styles.androidPrivacyCover]}
+            />
+          ) : (
+            <BlurView
+              intensity={80}
+              tint="default"
+              style={[StyleSheet.absoluteFill, styles.blur]}
+            />
+          )}
         </Animated.View>
       )}
     </View>
@@ -79,6 +84,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   blur: {
+    borderRadius: 4,
+  },
+  androidPrivacyCover: {
+    backgroundColor: "rgb(115, 115, 115)",
     borderRadius: 4,
   },
 });

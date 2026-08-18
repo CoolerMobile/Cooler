@@ -17,14 +17,6 @@ import {
   useState,
 } from "react";
 import { AppState, Platform, StyleSheet, View } from "react-native";
-import Animated, {
-  Easing,
-  ReduceMotion,
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
 
 /**
  * keeps app content covered whenever app lock is enabled
@@ -234,94 +226,68 @@ export function AppLock({ children }: PropsWithChildren) {
   }, [requestUnlock, setLockState]);
 
   const showCover = !hasHydrated || (appLockEnabled && locked);
-  const coverOpacity = useSharedValue(showCover ? 1 : 0);
-  const [renderCover, setRenderCover] = useState(showCover);
-  const removeCover = useCallback(() => setRenderCover(false), []);
-
-  useEffect(() => {
-    if (showCover) {
-      // Lock immediately so protected content cannot appear in an app-switcher
-      // snapshot. Only unlocking uses the softer animated transition.
-      setRenderCover(true);
-      coverOpacity.value = 1;
-      return;
-    }
-
-    coverOpacity.value = withTiming(
-      0,
-      {
-        duration: 280,
-        easing: Easing.out(Easing.cubic),
-        reduceMotion: ReduceMotion.System,
-      },
-      (finished) => {
-        if (finished) runOnJS(removeCover)();
-      },
-    );
-  }, [coverOpacity, removeCover, showCover]);
-
-  const animatedCoverStyle = useAnimatedStyle(() => ({
-    opacity: coverOpacity.value,
-  }));
 
   return (
     <View style={styles.root}>
       <View
-        accessibilityElementsHidden={showCover || renderCover}
+        accessibilityElementsHidden={showCover}
         importantForAccessibility={
-          showCover || renderCover ? "no-hide-descendants" : "auto"
+          showCover ? "no-hide-descendants" : "auto"
         }
         style={styles.root}
       >
         {children}
       </View>
 
-      {(showCover || renderCover) && (
-        <Animated.View
-          accessibilityViewIsModal
-          style={[
-            styles.cover,
-            // The locking transition stays fully opaque from its first frame.
-            !showCover && animatedCoverStyle,
-          ]}
-        >
-          <BlurView
-            blurMethod="dimezisBlurViewSdk31Plus"
-            intensity={80}
-            style={StyleSheet.absoluteFill}
-            tint="default"
-          />
+      <View
+        accessibilityViewIsModal={showCover}
+        pointerEvents={showCover ? "auto" : "none"}
+        style={[styles.cover, !showCover && styles.hiddenCover]}
+      >
+        {Platform.OS === "android" ? (
           <View
-            className="items-center justify-center gap-5 px-8"
-            style={styles.content}
-          >
-            {unlockFailed && AppState.currentState === "active" && (
-              <>
-                <View className="bg-muted h-16 w-16 items-center justify-center rounded-full">
-                  <Icon
-                    as={LockKeyhole}
-                    className="text-muted-foreground"
-                    size={30}
-                  />
-                </View>
-                <View className="items-center gap-1">
-                  <Text variant="h4">Cooler is locked</Text>
-                  <Text className="text-muted-foreground text-center">
-                    Authenticate to view your app contents.
-                  </Text>
-                </View>
-                <Button
-                  accessibilityLabel="Unlock Cooler"
-                  disabled={authenticating}
-                  onPress={() => void requestUnlock()}
-                >
-                  <Text>{authenticating ? "Unlocking…" : "Unlock"}</Text>
-                </Button>
-              </>
-            )}
-          </View>
-        </Animated.View>
-      )}
+            pointerEvents="none"
+            style={[StyleSheet.absoluteFill, styles.androidPrivacyCover]}
+          />
+        ) : (
+          showCover && (
+            <BlurView
+              intensity={80}
+              style={StyleSheet.absoluteFill}
+              tint="default"
+            />
+          )
+        )}
+        <View
+          className="items-center justify-center gap-5 px-8"
+          style={styles.content}
+        >
+          {unlockFailed && AppState.currentState === "active" && (
+            <>
+              <View className="bg-muted h-16 w-16 items-center justify-center rounded-full">
+                <Icon
+                  as={LockKeyhole}
+                  className="text-muted-foreground"
+                  size={30}
+                />
+              </View>
+              <View className="items-center gap-1">
+                <Text variant="h4">Cooler is locked</Text>
+                <Text className="text-muted-foreground text-center">
+                  Authenticate to view your app contents.
+                </Text>
+              </View>
+              <Button
+                accessibilityLabel="Unlock Cooler"
+                disabled={authenticating}
+                onPress={() => void requestUnlock()}
+              >
+                <Text>{authenticating ? "Unlocking…" : "Unlock"}</Text>
+              </Button>
+            </>
+          )}
+        </View>
+      </View>
     </View>
   );
 }
@@ -341,5 +307,13 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  hiddenCover: {
+    opacity: 0,
+  },
+  androidPrivacyCover: {
+    // BlurTargetView cannot host the app's native stack/tab surfaces safely.
+    // Keep Android fully private instead of leaking content through a tint.
+    backgroundColor: "rgb(115, 115, 115)",
   },
 });

@@ -50,7 +50,7 @@ export const useSettingsStore = create<SettingsState>()(
       storage: createJSONStorage(() => migratingSecureStorage),
       partialize: ({ settings }) => ({ settings }),
       merge: (persistedState, currentState) => {
-        const persisted = persistedState as Partial<SettingsState>;
+        const persisted = (persistedState ?? {}) as Partial<SettingsState>;
         const persistedSettings = persisted.settings;
 
         return {
@@ -71,7 +71,10 @@ export const useSettingsStore = create<SettingsState>()(
           },
         };
       },
-      onRehydrateStorage: () => (state) => {
+      onRehydrateStorage: () => (state, error) => {
+        if (error) {
+          console.error("[settings] hydration failed:", error);
+        }
         state?.setHasHydrated(true);
       },
     },
