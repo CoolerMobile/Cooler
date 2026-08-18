@@ -11,11 +11,12 @@ import { FlipPrivacyProvider } from "@/lib/hooks/security/flip-privacy";
 import { AppLock } from "@/components/custom/app-lock";
 import { SettingsGitHub } from "@/components/custom/settings/github";
 import { PortalHost } from "@rn-primitives/portal";
+import { MainNotifications } from "@/components/custom/home/notifications";
 
 const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
   index: {
     title: "Cooler",
-    headerRight: undefined,
+    headerRight: () => <MainNotifications />,
   },
   deployments: {
     title: "Cooler",
