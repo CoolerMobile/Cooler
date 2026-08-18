@@ -7,11 +7,15 @@ import {
   BedSingle,
   Bell,
   BookOpen,
+  CalendarClock,
+  DatabaseBackup,
   EyeOff,
   File,
   GitFork,
   Lock,
+  Rocket,
   ScanFace,
+  Server,
 } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import * as Linking from "expo-linking";
@@ -22,6 +26,15 @@ import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import { BrandIcon } from "@/components/custom/brand-icon";
 import { siGithub } from "simple-icons";
+import type { SettingKey } from "@/lib/types/settings";
+
+type AlertSettingKey = Extract<
+  SettingKey,
+  | "deploymentAlerts"
+  | "backupAlerts"
+  | "scheduledTaskAlerts"
+  | "serverAlerts"
+>;
 
 export default function SettingsScreen() {
   // launch oss licenses list
@@ -52,6 +65,14 @@ export default function SettingsScreen() {
   const settings = useSettingsStore((state) => state.settings);
   const hasHydrated = useSettingsStore((state) => state.hasHydrated);
   const setSetting = useSettingsStore((state) => state.set);
+
+  const toggleAlertRule = (
+    key: AlertSettingKey,
+    checked = !settings[key],
+  ) => {
+    if (!hasHydrated) return;
+    setSetting(key, checked);
+  };
 
   const toggleAppLock = async (checked = !settings.appLock) => {
     if (!hasHydrated || !bioSupported) return;
@@ -93,8 +114,9 @@ export default function SettingsScreen() {
     }
   };
 
-  // privacy sheet state
+  // sheets states
   const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   // ui
   return (
@@ -107,7 +129,7 @@ export default function SettingsScreen() {
             icon={Bell}
             title="Alert Rules"
             description="When you should be notified"
-            action={() => {}}
+            action={() => setAlertOpen(true)}
           />
 
           {/* quiet hours */}
@@ -189,7 +211,98 @@ export default function SettingsScreen() {
           />
         </SettingsSection>
       </View>
+
+      {/* alert rules */}
       <BottomSheet
+        key="alert-sheet"
+        index={alertOpen ? 0 : -1}
+        onDismiss={() => setAlertOpen(false)}
+        enablePanDownToClose
+        snapPoints={["60%"]}
+      >
+        <View className="gap-4">
+          <Text className="font-semibold text-lg text-center p-4">
+            Alert Rules
+          </Text>
+
+          {/* rules */}
+          <SettingsItem
+            className="m-2"
+            icon={Rocket}
+            title="Deployments"
+            description="Notify on any deployment event"
+            action={() => toggleAlertRule("deploymentAlerts")}
+            trailingAction={
+              <SettingsAction
+                type="switch"
+                checked={settings.deploymentAlerts}
+                disabled={!hasHydrated}
+                onCheckedChange={(checked) =>
+                  toggleAlertRule("deploymentAlerts", checked)
+                }
+              />
+            }
+          />
+
+          <SettingsItem
+            className="m-2"
+            icon={DatabaseBackup}
+            title="Backups"
+            description="Notify when database backups finish"
+            action={() => toggleAlertRule("backupAlerts")}
+            trailingAction={
+              <SettingsAction
+                type="switch"
+                checked={settings.backupAlerts}
+                disabled={!hasHydrated}
+                onCheckedChange={(checked) =>
+                  toggleAlertRule("backupAlerts", checked)
+                }
+              />
+            }
+          />
+
+          <SettingsItem
+            className="m-2"
+            icon={CalendarClock}
+            title="Scheduled Tasks"
+            description="Notify when scheduled tasks finish"
+            action={() => toggleAlertRule("scheduledTaskAlerts")}
+            trailingAction={
+              <SettingsAction
+                type="switch"
+                checked={settings.scheduledTaskAlerts}
+                disabled={!hasHydrated}
+                onCheckedChange={(checked) =>
+                  toggleAlertRule("scheduledTaskAlerts", checked)
+                }
+              />
+            }
+          />
+
+          <SettingsItem
+            className="m-2"
+            icon={Server}
+            title="Server Alerts"
+            description="Notify about server health and updates"
+            action={() => toggleAlertRule("serverAlerts")}
+            trailingAction={
+              <SettingsAction
+                type="switch"
+                checked={settings.serverAlerts}
+                disabled={!hasHydrated}
+                onCheckedChange={(checked) =>
+                  toggleAlertRule("serverAlerts", checked)
+                }
+              />
+            }
+          />
+        </View>
+      </BottomSheet>
+
+      {/* privacy policy sheet */}
+      <BottomSheet
+        key="privacy-sheet"
         index={privacyOpen ? 0 : -1}
         onDismiss={() => setPrivacyOpen(false)}
         enablePanDownToClose

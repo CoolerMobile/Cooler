@@ -7,6 +7,10 @@ export const DEFAULT_SETTINGS: Settings = {
   appLock: false,
   protectProductionActions: false,
   hideSensitiveValues: false,
+  deploymentAlerts: true,
+  backupAlerts: true,
+  scheduledTaskAlerts: true,
+  serverAlerts: true,
 };
 
 /**

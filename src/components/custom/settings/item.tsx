@@ -70,6 +70,7 @@ const settingsItemDescriptionVariants = cva("text-sm", {
 });
 
 type SettingsItemProps = {
+  className?: string;
   variant?: "default" | "secondary" | "destructive" | "ghost";
   trailingAction?: ReactNode;
   action?: () => void;
@@ -79,6 +80,7 @@ type SettingsItemProps = {
 };
 
 export const SettingsItem = ({
+  className,
   variant,
   trailingAction,
   title,
@@ -90,7 +92,7 @@ export const SettingsItem = ({
     <Pressable
       onPress={action}
       accessibilityRole="button"
-      className={settingsItemVariants({ variant })}
+      className={cn(settingsItemVariants({ variant }), className)}
     >
       <View className={settingsItemIconVariants({ variant })}>
         <Icon

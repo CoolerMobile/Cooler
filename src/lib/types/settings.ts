@@ -7,6 +7,10 @@ export type Settings = {
   appLock: boolean;
   protectProductionActions: boolean;
   hideSensitiveValues: boolean;
+  deploymentAlerts: boolean;
+  backupAlerts: boolean;
+  scheduledTaskAlerts: boolean;
+  serverAlerts: boolean;
 };
 
 export type SettingKey = keyof Settings;
