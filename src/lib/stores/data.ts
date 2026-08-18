@@ -1,6 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { migratingSecureStorage } from "@/lib/hooks/secure";
 import type { Instance, Resource, Server } from "@/lib/types/coolify";
 
 type DataState = {
@@ -36,7 +36,7 @@ export const useDataStore = create<DataState>()(
     }),
     {
       name: "cooler-data",
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => migratingSecureStorage),
       partialize: ({ servers, resources, instances }) => ({
         servers,
         resources,

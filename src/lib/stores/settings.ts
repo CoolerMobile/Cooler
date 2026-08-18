@@ -1,6 +1,6 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { migratingSecureStorage } from "@/lib/hooks/secure";
 import type { Settings, SettingsState } from "@/lib/types/settings";
 
 const toDate = (value: unknown, fallback: Date): Date => {
@@ -47,7 +47,7 @@ export const useSettingsStore = create<SettingsState>()(
     }),
     {
       name: "cooler-settings",
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => migratingSecureStorage),
       partialize: ({ settings }) => ({ settings }),
       merge: (persistedState, currentState) => {
         const persisted = persistedState as Partial<SettingsState>;

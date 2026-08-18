@@ -1,7 +1,7 @@
 /**
  * user-configurable application settings
  *
- * type limited to serializable values because it is persisted to AsyncStorage
+ * type limited to serializable values because it is persisted to SecureStore
  */
 export type Settings = {
   appLock: boolean;

@@ -4,7 +4,6 @@ import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { useOverview } from "@/lib/hooks/data/overview";
 import { useNotifications } from "@/lib/hooks/notifications";
-import { useSecureStorage } from "@/lib/hooks/secure";
 import { Plus } from "lucide-react-native";
 import { View } from "react-native";
 
@@ -17,8 +16,7 @@ export default function OverviewScreen() {
     overviewData.serverCount;
 
   // notifications
-  const { get } = useSecureStorage();
-  const { sendNotification } = useNotifications();
+  const { createLocalNotification } = useNotifications();
 
   // screen
   return (
@@ -32,12 +30,8 @@ export default function OverviewScreen() {
             <Button
               size="sm"
               onPress={async () => {
-                // token
-                const token = await get("expoToken");
-
-                // send notification
-                await sendNotification({
-                  to: token,
+                // create notification
+                await createLocalNotification({
                   title: "Test Title",
                   body: "Test Body",
                 });

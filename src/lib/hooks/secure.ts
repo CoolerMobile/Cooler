@@ -1,5 +1,49 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
+import type { StateStorage } from "zustand/middleware";
 import { parseError } from "@/lib/utils";
+
+/**
+ * Zustand-compatible encrypted storage.
+ *
+ * Keep this as the shared persistence adapter so AsyncStorage remains reserved
+ * for the non-sensitive theme preference.
+ */
+export const secureStorage: StateStorage = {
+  getItem: (key) => SecureStore.getItemAsync(key),
+  setItem: (key, value) => SecureStore.setItemAsync(key, value),
+  removeItem: (key) => SecureStore.deleteItemAsync(key),
+};
+
+/**
+ * Secure persistence with a one-time migration from the stores' former
+ * AsyncStorage values. New and updated values are written only to SecureStore,
+ * and the plaintext legacy value is removed after a successful secure write.
+ */
+export const migratingSecureStorage: StateStorage = {
+  getItem: async (key) => {
+    const secureValue = await secureStorage.getItem(key);
+    if (secureValue !== null) {
+      await AsyncStorage.removeItem(key);
+      return secureValue;
+    }
+
+    const legacyValue = await AsyncStorage.getItem(key);
+    if (legacyValue === null) return null;
+
+    await secureStorage.setItem(key, legacyValue);
+    await AsyncStorage.removeItem(key);
+    return legacyValue;
+  },
+  setItem: async (key, value) => {
+    await secureStorage.setItem(key, value);
+    await AsyncStorage.removeItem(key);
+  },
+  removeItem: async (key) => {
+    await secureStorage.removeItem(key);
+    await AsyncStorage.removeItem(key);
+  },
+};
 
 /**
  * secure storage for encrypted data
