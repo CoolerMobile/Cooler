@@ -9,14 +9,19 @@ import {
   BookOpen,
   EyeOff,
   File,
+  GitFork,
   Lock,
   ScanFace,
 } from "lucide-react-native";
 import { useEffect, useState } from "react";
+import * as Linking from "expo-linking";
 import { View } from "react-native";
 import { ReactNativeLegal } from "react-native-legal";
 import { BottomSheet } from "@expo/ui/community/bottom-sheet";
 import { Text } from "@/components/ui/text";
+import { Button } from "@/components/ui/button";
+import { BrandIcon } from "@/components/custom/brand-icon";
+import { siGithub } from "simple-icons";
 
 export default function SettingsScreen() {
   // launch oss licenses list
@@ -188,7 +193,7 @@ export default function SettingsScreen() {
         index={privacyOpen ? 0 : -1}
         onDismiss={() => setPrivacyOpen(false)}
         enablePanDownToClose
-        snapPoints={["25%"]}
+        snapPoints={["40%"]}
       >
         <View className="gap-4 p-4">
           <Text className="font-semibold text-lg text-center">
@@ -205,6 +210,22 @@ export default function SettingsScreen() {
             data, and is completely anonymised pre-flight, nothing ever leaves
             your device.
           </Text>
+
+          <Text className="text-muted-foreground">
+            Still have doubts? I understand. The app is{" "}
+            <Text className="font-semibold">completely open-source</Text>, so
+            you can read the code in its entirety here:
+          </Text>
+
+          <Button
+            className="items-center"
+            onPress={async () =>
+              await Linking.openURL("https://github.com/CoolerMobile/Cooler")
+            }
+          >
+            <BrandIcon icon={siGithub} />
+            <Text>View Cooler on GitHub</Text>
+          </Button>
         </View>
       </BottomSheet>
     </>

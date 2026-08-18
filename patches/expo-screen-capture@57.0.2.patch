@@ -1,0 +1,28 @@
+diff --git a/ios/ScreenCaptureModule.swift b/ios/ScreenCaptureModule.swift
+index 870ba58246812f72bac6c5918cefccdde8a17941..6d2db9a82f592bdbc22279c430b542da19ff84a2 100644
+--- a/ios/ScreenCaptureModule.swift
++++ b/ios/ScreenCaptureModule.swift
+@@ -203,17 +203,19 @@ public final class ScreenCaptureModule: Module {
+   private func showPrivacyOverlay() {
+     // Don't add a new blur view if one already exists
+     guard self.blurEffectView == nil,
+-      let keyWindow = keyWindow,
+-      let rootView = keyWindow.subviews.first else {
++      let keyWindow = keyWindow else {
+       return
+     }
+ 
+     let blurEffectView = AnimatedBlurEffectView(style: .light, intensity: self.blurIntensity)
+-    blurEffectView.frame = rootView.bounds
++    blurEffectView.frame = keyWindow.bounds
+     blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+     blurEffectView.alpha = 0
+ 
+-    rootView.addSubview(blurEffectView)
++    // Presented view controllers (including SwiftUI sheets) can sit above the
++    // root content view. Attach directly to the window so the privacy overlay
++    // is the final composited layer in app-switcher snapshots.
++    keyWindow.addSubview(blurEffectView)
+     self.blurEffectView = blurEffectView
+ 
+     blurEffectView.setupBlur()

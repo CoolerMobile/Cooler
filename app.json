@@ -62,8 +62,7 @@
           "motionPermission": "Allow $(PRODUCT_NAME) to use motion gestures to hide sensitive values."
         }
       ],
-      "react-native-legal",
-      "expo-notifications"
+      "react-native-legal"
     ],
     "experiments": {
       "typedRoutes": true,

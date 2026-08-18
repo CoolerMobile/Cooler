@@ -7,36 +7,10 @@ import {
 import { NAV_THEME } from "@/lib/theme";
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
-import { useEffect } from "react";
 import { FlipPrivacyProvider } from "@/lib/hooks/security/flip-privacy";
-import { useNotifications } from "@/lib/hooks/notifications";
 import { AppLock } from "@/components/custom/app-lock";
 
 export default function RootLayout() {
-  // notifications
-  const { registerDevice } = useNotifications();
-
-  // register notifications once at the app root
-  // only if in production environment
-  if (process.env.NODE_ENV === "production") {
-    useEffect(() => {
-      void registerDevice()
-        .then((token) => {
-          if (!token) {
-            console.warn(
-              "[notif] registration skipped: notification permission was not granted",
-            );
-          }
-        })
-        .catch((error) => {
-          console.error("[notif] registration failed:", error);
-        });
-    }, []);
-  } else {
-    // development environment - skip eas registration
-    console.info("[eas] dev env: skipping registration");
-  }
-
   // return navigator
   return (
     <AppThemeProvider>

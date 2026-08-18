@@ -244,6 +244,8 @@ PODS:
   - ExpoRouter (57.0.14):
     - ExpoModulesCore
     - RNScreens
+  - ExpoScreenCapture (57.0.2):
+    - ExpoModulesCore
   - ExpoSecureStore (57.0.1):
     - ExpoModulesCore
   - ExpoSensors (57.0.2):
@@ -2537,6 +2539,7 @@ DEPENDENCIES:
   - ExpoModulesWorkletsAdapter (from `../node_modules/expo-modules-core`)
   - ExpoNotifications (from `../node_modules/expo-notifications/ios`)
   - ExpoRouter (from `../node_modules/expo-router/ios`)
+  - ExpoScreenCapture (from `../node_modules/expo-screen-capture/ios`)
   - ExpoSecureStore (from `../node_modules/expo-secure-store/ios`)
   - ExpoSensors (from `../node_modules/expo-sensors/ios`)
   - ExpoSplashScreen (from `../node_modules/expo-splash-screen/ios`)
@@ -2690,6 +2693,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-notifications/ios"
   ExpoRouter:
     :path: "../node_modules/expo-router/ios"
+  ExpoScreenCapture:
+    :path: "../node_modules/expo-screen-capture/ios"
   ExpoSecureStore:
     :path: "../node_modules/expo-secure-store/ios"
   ExpoSensors:
@@ -2904,6 +2909,7 @@ SPEC CHECKSUMS:
   ExpoModulesWorkletsAdapter: b4765c3a7ea7f23bcddde04f981ff4b6d01c25d1
   ExpoNotifications: 68ff0e02eef93ccb6739317eae4bfee6ea737023
   ExpoRouter: 7d6a9a8c5b1ca3085e9d84e10094e96dc5e6ad8e
+  ExpoScreenCapture: 6b82aba55db3ecc6f124ebd45163d6db9b916b2d
   ExpoSecureStore: 94793113049a2d7478dfe1a13aa15081e9f61755
   ExpoSensors: e71c7b6cb0c09d3427ef6ae29c69532a10c86b05
   ExpoSplashScreen: 9c11c0c7dd0c57853244d0ae640a63e42ede8ffd

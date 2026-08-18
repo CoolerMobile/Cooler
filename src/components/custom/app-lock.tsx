@@ -7,6 +7,7 @@ import {
 } from "@/lib/hooks/security/biometrics";
 import { useSettingsStore } from "@/lib/stores/settings";
 import { BlurView } from "expo-blur";
+import * as ScreenCapture from "expo-screen-capture";
 import { LockKeyhole } from "lucide-react-native";
 import {
   type PropsWithChildren,
@@ -52,12 +53,32 @@ export function AppLock({ children }: PropsWithChildren) {
   const successfulAuthentication = useRef(false);
   const initialized = useRef(false);
   const previousEnabled = useRef(appLockEnabled);
+  const appSwitcherProtectionEnabled = useRef(false);
 
   useEffect(() => {
     enabled.current = appLockEnabled;
     hydrated.current = hasHydrated;
     authentication.current = authenticate;
   }, [appLockEnabled, authenticate, hasHydrated]);
+
+  useEffect(() => {
+    if (Platform.OS !== "ios") return;
+
+    // This native overlay is attached above presented view controllers, so it
+    // also protects SwiftUI sheets and system dialogs in app-switcher snapshots.
+    const shouldProtect = !hasHydrated || appLockEnabled;
+    if (appSwitcherProtectionEnabled.current === shouldProtect) return;
+
+    appSwitcherProtectionEnabled.current = shouldProtect;
+    const updateProtection = shouldProtect
+      ? ScreenCapture.enableAppSwitcherProtectionAsync(0.8)
+      : ScreenCapture.disableAppSwitcherProtectionAsync();
+
+    void updateProtection.catch((error: unknown) => {
+      appSwitcherProtectionEnabled.current = !shouldProtect;
+      console.error("[security] app-switcher protection failed:", error);
+    });
+  }, [appLockEnabled, hasHydrated]);
 
   const setLockState = useCallback((nextLocked: boolean) => {
     // lifecycle events can arrive before React commits the corresponding state

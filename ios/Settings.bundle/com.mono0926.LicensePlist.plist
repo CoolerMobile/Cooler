@@ -908,6 +908,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/@icons-pack_react-simple-icons@13.15.1</string>
+			<key>Title</key>
+			<string>@icons-pack/react-simple-icons (13.15.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/@isaacs_ttlcache@1.4.1</string>
 			<key>Title</key>
 			<string>@isaacs/ttlcache (1.4.1)</string>
@@ -2820,6 +2828,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/expo-screen-capture@57.0.2</string>
+			<key>Title</key>
+			<string>expo-screen-capture (57.0.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/expo-secure-store@57.0.1</string>
 			<key>Title</key>
 			<string>expo-secure-store (57.0.1)</string>
@@ -4567,6 +4583,14 @@
 			<string>com.mono0926.LicensePlist/signal-exit@3.0.7</string>
 			<key>Title</key>
 			<string>signal-exit (3.0.7)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/simple-icons@16.28.0</string>
+			<key>Title</key>
+			<string>simple-icons (16.28.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

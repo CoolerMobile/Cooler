@@ -28,6 +28,7 @@ rename:
   "@radix-ui_react-use-controllable-state@1.2.6": '@radix-ui/react-use-controllable-state'
   "@radix-ui_react-use-effect-event@0.0.5": '@radix-ui/react-use-effect-event'
   "@radix-ui_react-dismissable-layer@1.1.19": '@radix-ui/react-dismissable-layer'
+  "@icons-pack_react-simple-icons@13.15.1": '@icons-pack/react-simple-icons'
   "@react-native-async-storage_async-storage@2.2.0": '@react-native-async-storage/async-storage'
   "merge-options@3.0.4": merge-options
   "is-plain-obj@2.1.0": is-plain-obj
@@ -524,6 +525,7 @@ rename:
   "server-only@0.0.1": server-only
   "shallowequal@1.1.0": shallowequal
   "standard-navigation@0.0.5": standard-navigation
+  "expo-screen-capture@57.0.2": expo-screen-capture
   "expo-secure-store@57.0.1": expo-secure-store
   "expo-sensors@57.0.2": expo-sensors
   "expo-splash-screen@57.0.7": expo-splash-screen
@@ -647,6 +649,7 @@ rename:
   "@babel_plugin-transform-arrow-functions@7.29.7": '@babel/plugin-transform-arrow-functions'
   "@babel_plugin-transform-shorthand-properties@7.29.7": '@babel/plugin-transform-shorthand-properties'
   "@babel_plugin-transform-template-literals@7.29.7": '@babel/plugin-transform-template-literals'
+  "simple-icons@16.28.0": simple-icons
   "tailwind-merge@3.6.0": tailwind-merge
   "zustand@5.0.15": zustand
 manual:
@@ -762,6 +765,10 @@ manual:
     version: '1.1.19'
     source: https://github.com/radix-ui/primitives
     file: '../node_modules/@radix-ui/react-dismissable-layer/LICENSE'
+  - name: '@icons-pack_react-simple-icons@13.15.1'
+    version: '13.15.1'
+    source: https://github.com/icons-pack/react-simple-icons
+    file: '../node_modules/@icons-pack/react-simple-icons/LICENSE'
   - name: '@react-native-async-storage_async-storage@2.2.0'
     version: '2.2.0'
     source: https://github.com/react-native-async-storage/async-storage
@@ -2735,6 +2742,10 @@ manual:
     version: '0.0.5'
     source: https://github.com/react-navigation/standard-navigation
     body: MIT
+  - name: expo-screen-capture@57.0.2
+    version: '57.0.2'
+    source: https://github.com/expo/expo
+    file: '../node_modules/expo-screen-capture/LICENSE'
   - name: expo-secure-store@57.0.1
     version: '57.0.1'
     source: https://github.com/expo/expo
@@ -3227,6 +3238,10 @@ manual:
     version: '7.29.7'
     source: https://github.com/babel/babel
     file: '../node_modules/@babel/plugin-transform-template-literals/LICENSE'
+  - name: simple-icons@16.28.0
+    version: '16.28.0'
+    source: https://github.com/simple-icons/simple-icons
+    file: '../node_modules/simple-icons/LICENSE.md'
   - name: tailwind-merge@3.6.0
     version: '3.6.0'
     source: https://github.com/dcastil/tailwind-merge
