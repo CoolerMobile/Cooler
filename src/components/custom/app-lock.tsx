@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
-import { useBiometrics } from "@/lib/hooks/security/biometrics";
+import {
+  isBiometricAuthenticationInFlight,
+  useBiometrics,
+} from "@/lib/hooks/security/biometrics";
 import { useSettingsStore } from "@/lib/stores/settings";
 import { BlurView } from "expo-blur";
 import { LockKeyhole } from "lucide-react-native";
@@ -133,16 +136,22 @@ export function AppLock({ children }: PropsWithChildren) {
       successfulAuthentication.current = false;
       setUnlockFailed(false);
 
-      // enabling app lock is itself authenticated on the settings screen, so
-      // that successful confirmation also unlocks the current foreground session
-      // the next inactive/background transition will lock it
-      setLockState(false);
+      // Enabling app lock is itself authenticated on the settings screen, so
+      // that confirmation keeps the current foreground session unlocked. If
+      // the user actually left during the prompt, keep the app protected.
+      setLockState(appLockEnabled && appState.current !== "active");
     }
   }, [appLockEnabled, hasHydrated, requestUnlock, setLockState]);
 
   useEffect(() => {
-    const handleInactive = () => {
-      if (enabled.current) {
+    const handleInactive = (allowDuringAuthentication = false) => {
+      // Native biometric prompts briefly interrupt the app lifecycle. They are
+      // already authorizing an in-app action, so they must not lock the current
+      // session and trigger a second authentication when the app becomes active.
+      if (
+        enabled.current &&
+        (allowDuringAuthentication || !isBiometricAuthenticationInFlight())
+      ) {
         setUnlockFailed(false);
         setLockState(true);
       }
@@ -174,7 +183,11 @@ export function AppLock({ children }: PropsWithChildren) {
       // app necessarily reaches `background`
       //
       // this covers content at either of those phases
-      if (next !== "active") {
+      if (next === "background") {
+        // A real background transition always locks, even if it happened while
+        // a biometric prompt was visible.
+        handleInactive(true);
+      } else if (next === "inactive") {
         handleInactive();
       } else if (previous !== "active") {
         handleActive();
@@ -185,7 +198,7 @@ export function AppLock({ children }: PropsWithChildren) {
     // these event types do not exist on iOS's native RCTAppState emitter
     const blurSubscription =
       Platform.OS === "android"
-        ? AppState.addEventListener("blur", handleInactive)
+        ? AppState.addEventListener("blur", () => handleInactive())
         : undefined;
     const focusSubscription =
       Platform.OS === "android"

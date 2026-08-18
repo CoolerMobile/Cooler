@@ -1,6 +1,15 @@
 import { parseError } from "@/lib/utils";
 import * as LocalAuth from "expo-local-authentication";
 
+let authenticationRequestsInFlight = 0;
+
+/**
+ * lets app-lifecycle privacy handling distinguish a biometric prompt from the
+ * user actually leaving the app
+ */
+export const isBiometricAuthenticationInFlight = () =>
+  authenticationRequestsInFlight > 0;
+
 /**
  * biometrics hook for:
  *
@@ -77,10 +86,17 @@ export const useBiometrics = () => {
   const authenticate = async (
     options: LocalAuth.LocalAuthenticationOptions,
   ) => {
+    authenticationRequestsInFlight += 1;
+
     try {
       return await LocalAuth.authenticateAsync(options);
     } catch (error) {
       throw Error(parseError(error));
+    } finally {
+      authenticationRequestsInFlight = Math.max(
+        0,
+        authenticationRequestsInFlight - 1,
+      );
     }
   };
 
