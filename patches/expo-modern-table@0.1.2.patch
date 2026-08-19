@@ -1,0 +1,56 @@
+diff --git a/src/ModernTable.tsx b/src/ModernTable.tsx
+index f0823c7f4eea3d50239d93aa69a273bef9a2e94d..549ede31c0568b4f192b8a712d851861e4f5bddb 100644
+--- a/src/ModernTable.tsx
++++ b/src/ModernTable.tsx
+@@ -172,6 +172,8 @@ export function ModernTable<T extends TableRow>({
+   };
+ 
+   const { width: SCREEN_WIDTH } = useWindowDimensions();
++  const [viewportWidth, setViewportWidth] = useState(0);
++  const resolvedViewportWidth = viewportWidth || SCREEN_WIDTH;
+   const scrollX = useRef(new Animated.Value(0)).current;
+ 
+   // Edit Mode State
+@@ -657,7 +659,15 @@ export function ModernTable<T extends TableRow>({
+         />
+       )}
+ 
+-      <View style={{ flex: 1 }}>
++      <View
++        style={{ flex: 1 }}
++        onLayout={event => {
++          const nextWidth = event.nativeEvent.layout.width;
++          setViewportWidth(currentWidth =>
++            currentWidth === nextWidth ? currentWidth : nextWidth
++          );
++        }}
++      >
+         <AnimatedGHScrollView
+           horizontal
+           showsHorizontalScrollIndicator={true}
+@@ -671,8 +681,8 @@ export function ModernTable<T extends TableRow>({
+         >
+           <View style={{ flex: 1 }}>
+             <View
+-              key={SCREEN_WIDTH} // Force re-render on orientation change
+-              style={{ width: Math.max(SCREEN_WIDTH, totalWidth), flex: 1 }}
++              key={resolvedViewportWidth} // Force re-render when the table viewport changes
++              style={{ width: Math.max(resolvedViewportWidth, totalWidth), flex: 1 }}
+             >
+               {/* HEADER */}
+               <View style={[styles.header, headerStyle, { height: currentRowHeight }]}>
+@@ -686,7 +696,13 @@ export function ModernTable<T extends TableRow>({
+                 <FlashList
+                   key={Platform.OS === 'ios' ? listIdentityKey : undefined}
+                   data={data}
+-                  extraData={[SCREEN_WIDTH, selectedIds, editingCell, sortColumn, sortDirection]}
++                  extraData={[
++                    resolvedViewportWidth,
++                    selectedIds,
++                    editingCell,
++                    sortColumn,
++                    sortDirection,
++                  ]}
+                   renderItem={renderRow}
+                   keyExtractor={item => String(item.id)}
+                   contentContainerStyle={styles.listContent}

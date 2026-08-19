@@ -34,6 +34,10 @@ export default function OverviewScreen() {
                 await createLocalNotification({
                   title: "Test Title",
                   body: "Test Body",
+                  data: {
+                    best_kitty: "tukis",
+                    best_momma: "matis",
+                  },
                 });
               }}
             >

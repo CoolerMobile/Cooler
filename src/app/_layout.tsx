@@ -6,6 +6,7 @@ import {
   usePathname,
   type NativeStackNavigationOptions,
 } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StatusBar } from "react-native";
 import { FlipPrivacyProvider } from "@/lib/hooks/security/flip-privacy";
 import { AppLock } from "@/components/custom/app-lock";
@@ -31,13 +32,15 @@ const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
 export default function RootLayout() {
   // return navigator
   return (
-    <AppThemeProvider>
-      <AppLock>
-        <FlipPrivacyProvider>
-          <RootNavigator />
-        </FlipPrivacyProvider>
-      </AppLock>
-    </AppThemeProvider>
+    <GestureHandlerRootView>
+      <AppThemeProvider>
+        <AppLock>
+          <FlipPrivacyProvider>
+            <RootNavigator />
+          </FlipPrivacyProvider>
+        </AppLock>
+      </AppThemeProvider>
+    </GestureHandlerRootView>
   );
 }
 

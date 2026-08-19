@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Cooler app icon</title>
+  <desc id="desc">An original minimal C monogram with an operational status indicator.</desc>
+
+  <rect width="1024" height="1024" fill="#0b1220"/>
+
+  <!-- Original Cooler monogram -->
+  <path
+    d="M688 336c-48-58-119-92-198-92-148 0-268 120-268 268s120 268 268 268c79 0 150-34 198-92"
+    fill="none"
+    stroke="#48c7e8"
+    stroke-width="104"
+    stroke-linecap="round"
+  />
+
+  <!-- Quiet status cue -->
+  <circle cx="706" cy="512" r="52" fill="#f7f4ed"/>
+</svg>

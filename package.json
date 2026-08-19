@@ -20,6 +20,7 @@
     "@rn-primitives/select": "^1.5.2",
     "@rn-primitives/slot": "^1.5.2",
     "@rn-primitives/switch": "^1.5.2",
+    "@shopify/flash-list": "2.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "expo": "^57.0.14",
@@ -32,9 +33,11 @@
     "expo-image": "~57.0.3",
     "expo-linking": "~57.0.6",
     "expo-local-authentication": "~57.0.2",
+    "expo-modern-table": "^0.1.2",
     "expo-notifications": "~57.0.12",
     "expo-router": "~57.0.14",
     "expo-screen-capture": "~57.0.2",
+    "expo-screen-orientation": "~57.0.1",
     "expo-secure-store": "~57.0.1",
     "expo-sensors": "~57.0.2",
     "expo-splash-screen": "~57.0.7",
@@ -83,6 +86,7 @@
     }
   },
   "patchedDependencies": {
-    "expo-screen-capture@57.0.2": "patches/expo-screen-capture@57.0.2.patch"
+    "expo-screen-capture@57.0.2": "patches/expo-screen-capture@57.0.2.patch",
+    "expo-modern-table@0.1.2": "patches/expo-modern-table@0.1.2.patch"
   }
 }

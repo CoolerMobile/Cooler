@@ -103,8 +103,8 @@ Notifications.setNotificationHandler({
       } else {
         await saveNotification({
           requestId: identifier,
-          title: content.title,
-          body: content.body,
+          title: content.title ?? undefined,
+          body: content.body ?? undefined,
           data: content.data,
           source: isWebhook ? "webhook" : "local",
           delivery: dropNotification ? "dropped" : "received",
