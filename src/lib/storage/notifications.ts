@@ -6,8 +6,8 @@ const NOTIFICATION_ENTRY_PREFIX = "cooler.notifications.entry";
 
 export type NotificationStorageInput = {
   requestId?: string;
-  title: string | null;
-  body: string | null;
+  title: string | undefined;
+  body: string | undefined;
   data?: Record<string, unknown>;
   channelId?: string;
   source: "local" | "webhook";

@@ -26,7 +26,7 @@ export default function Spacer({
         ? { height: space }
         : { width: space };
 
-  // Fill only the remaining space within the parent (including its safe-area bounds).
+  // fill only the remaining space within the parent (including its safe-area bounds)
   const fillClass = "flex-1";
 
   return (

@@ -12,6 +12,8 @@ import { Filter } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { ListRenderItemInfo, View } from "react-native";
 import Animated from "react-native-reanimated";
+import { ListItem } from "@/components/custom/data/list-item";
+import { upperFirstLetter } from "@/lib/utils";
 
 export default function NotificationsScreen() {
   // screen options
@@ -100,7 +102,50 @@ const NotificationItem = ({
 }: {
   item: ListRenderItemInfo<StoredNotification>;
 }) => {
-  return <></>;
+  // data
+  const data = item.item;
+
+  // info sheet state
+  const [infoOpen, setInfoOpen] = useState(false);
+
+  // ui
+  return (
+    <>
+      <ListItem
+        key={item.index}
+        title={data.title}
+        description={`Source: ${upperFirstLetter(data.source)}`}
+        onPress={() => setInfoOpen(true)}
+      />
+
+      {/* extra info sheet */}
+      <BottomSheet
+        key="notif-extra-info-sheet"
+        index={infoOpen ? 0 : -1}
+        onDismiss={() => setInfoOpen(false)}
+        enablePanDownToClose
+        snapPoints={["30%"]}
+      >
+        <View className="gap-4 p-4">
+          <Text className="font-semibold text-lg text-center">
+            Notification Details
+          </Text>
+
+          {/* info */}
+          <Text className="text-muted-foreground">
+            Every time you get a notification (local or not), it is encrypted
+            and stored on your device. This is where you can see all of your
+            notifications, from the moment Cooler was installed.
+          </Text>
+
+          <Text className="text-muted-foreground">
+            If you uninstall and re-install the app, your stored notifications
+            will be <Text className="font-semibold">permanently lost</Text>.
+          </Text>
+        </View>
+      </BottomSheet>
+    </>
+  );
 };
 
 // filter button
