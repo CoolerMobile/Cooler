@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { useScreenOptions } from "@/lib/hooks/screen-options";
 import {
+  deleteAllNotifications,
   getNotifications,
   StoredNotification,
 } from "@/lib/storage/notifications";
@@ -11,6 +12,7 @@ import { Stack } from "expo-router";
 import { Filter } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import {
+  Alert,
   ListRenderItemInfo,
   Platform,
   useWindowDimensions,
@@ -19,8 +21,11 @@ import {
 import Animated from "react-native-reanimated";
 import { ListItem } from "@/components/custom/data/list-item";
 import { upperFirstLetter } from "@/lib/utils";
+import { Picker } from "@expo/ui/community/picker";
 import { Table, TableColumn, TableRow } from "@/components/custom/table";
 import Spacer from "@/components/custom/spacer";
+import { MenuView } from "@expo/ui/community/menu";
+import { Icon as ExpoIcon } from "@expo/ui";
 
 const TABLE_ROW_HEIGHT = 36;
 const TABLE_BORDER_HEIGHT = 2;
@@ -32,13 +37,41 @@ const DETAILS_CONTENT_HEIGHT = 240;
 const MAX_SHEET_HEIGHT_FRACTION = 0.85;
 const MIN_SHEET_HEIGHT_FRACTION = 0.38;
 
+type NotificationOrder = "ascending" | "descending";
+type NotificationSource = "all" | StoredNotification["source"];
+
 export default function NotificationsScreen() {
   // screen options
   const { options } = useScreenOptions();
 
   // notifications
   const [notifications, setNotifications] = useState<StoredNotification[]>([]);
+  const [order, setOrder] = useState<NotificationOrder>("descending");
+  const [source, setSource] = useState<NotificationSource>("all");
   const [notifInfoOpen, setNotifInfoOpen] = useState(false);
+
+  const visibleNotifications = notifications
+    .filter((notification) =>
+      source === "all" ? true : notification.source === source,
+    )
+    .sort((a, b) => (order === "ascending" ? a.id - b.id : b.id - a.id));
+
+  const confirmDeleteAll = () => {
+    Alert.alert(
+      "Delete All Entries?",
+      "This will permanently delete every stored notification.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete All",
+          style: "destructive",
+          onPress: () => {
+            void deleteAllNotifications().then(() => setNotifications([]));
+          },
+        },
+      ],
+    );
+  };
 
   // get notifications on mount
   useEffect(() => {
@@ -57,7 +90,16 @@ export default function NotificationsScreen() {
         options={options({
           title: "Notifications",
           headerBackButtonDisplayMode: "minimal",
-          headerRight: () => <FilterNotifications />,
+          headerRight: () => (
+            <FilterNotifications
+              order={order}
+              source={source}
+              hasNotifications={notifications.length > 0}
+              onOrderChange={setOrder}
+              onSourceChange={setSource}
+              onDeleteAll={confirmDeleteAll}
+            />
+          ),
         })}
       />
       <View className="flex-1 py-2 px-4 gap-4">
@@ -73,13 +115,19 @@ export default function NotificationsScreen() {
               <Text className="text-xs">What is this?</Text>
             </Button>
           </View>
+        ) : !visibleNotifications.length ? (
+          <View className="flex-1 items-center justify-center">
+            <Text className="text-center text-muted-foreground">
+              No Notifications Match This Filter
+            </Text>
+          </View>
         ) : (
           <View className="flex-1">
             <Animated.FlatList
               className="h-full"
               overScrollMode="auto"
               alwaysBounceVertical={false}
-              data={notifications}
+              data={visibleNotifications}
               keyExtractor={(notification) => String(notification.id)}
               renderItem={(item) => <NotificationItem item={item} />}
             />
@@ -261,10 +309,132 @@ const NotificationItem = ({
 };
 
 // filter button
-const FilterNotifications = () => {
+const FilterNotifications = ({
+  order,
+  source,
+  hasNotifications,
+  onOrderChange,
+  onSourceChange,
+  onDeleteAll,
+}: {
+  order: NotificationOrder;
+  source: NotificationSource;
+  hasNotifications: boolean;
+  onOrderChange: (order: NotificationOrder) => void;
+  onSourceChange: (source: NotificationSource) => void;
+  onDeleteAll: () => void;
+}) => {
+  const icons = {
+    ordering: ExpoIcon.select({
+      ios: "arrow.up.arrow.down",
+      android: import("@expo/material-symbols/sort.xml"),
+    }),
+    ascending: ExpoIcon.select({
+      ios: "arrow.up",
+      android: import("@expo/material-symbols/arrow_upward.xml"),
+    }),
+    descending: ExpoIcon.select({
+      ios: "arrow.down",
+      android: import("@expo/material-symbols/arrow_downward.xml"),
+    }),
+    source: ExpoIcon.select({
+      ios: "square.stack.3d.up",
+      android: import("@expo/material-symbols/home_storage.xml"),
+    }),
+    all: ExpoIcon.select({
+      ios: "tray.full",
+      android: import("@expo/material-symbols/select_all.xml"),
+    }),
+    local: ExpoIcon.select({
+      ios: "iphone",
+      android: import("@expo/material-symbols/mobile.xml"),
+    }),
+    webhook: ExpoIcon.select({
+      ios: "link",
+      android: import("@expo/material-symbols/webhook.xml"),
+    }),
+    delete: ExpoIcon.select({
+      ios: "trash",
+      android: import("@expo/material-symbols/delete_forever.xml"),
+    }),
+  };
+
   return (
-    <Button variant="ghost">
-      <Icon as={Filter} />
-    </Button>
+    <MenuView
+      onPressAction={({ nativeEvent }) => {
+        const action = nativeEvent.event;
+        if (action === "ascending" || action === "descending") {
+          onOrderChange(action);
+        } else if (
+          action === "all" ||
+          action === "local" ||
+          action === "webhook"
+        ) {
+          onSourceChange(action);
+        } else if (action === "delete") {
+          onDeleteAll();
+        }
+      }}
+      actions={[
+        {
+          id: "ordering",
+          title: "Ordering",
+          image: icons.ordering,
+          subactions: [
+            {
+              id: "ascending",
+              title: "Ascending",
+              image: icons.ascending,
+              state: order === "ascending" ? "on" : "off",
+            },
+            {
+              id: "descending",
+              title: "Descending",
+              image: icons.descending,
+              state: order === "descending" ? "on" : "off",
+            },
+          ],
+        },
+        {
+          id: "source",
+          title: "Source",
+          image: icons.source,
+          subactions: [
+            {
+              id: "all",
+              title: "All",
+              image: icons.all,
+              state: source === "all" ? "on" : "off",
+            },
+            {
+              id: "local",
+              title: "Local",
+              image: icons.local,
+              state: source === "local" ? "on" : "off",
+            },
+            {
+              id: "webhook",
+              title: "Webhook",
+              image: icons.webhook,
+              state: source === "webhook" ? "on" : "off",
+            },
+          ],
+        },
+        {
+          id: "delete",
+          title: "Delete All Entries",
+          image: icons.delete,
+          attributes: { destructive: true, disabled: !hasNotifications },
+        },
+      ]}
+    >
+      <Button
+        variant="ghost"
+        onPress={() => {}}
+        accessibilityLabel="Filter notifications"
+      >
+        <Icon as={Filter} />
+      </Button>
+    </MenuView>
   );
 };

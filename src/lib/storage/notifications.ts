@@ -114,3 +114,28 @@ export const getNotifications = async () => {
     storedValue === null ? [] : [JSON.parse(storedValue) as StoredNotification],
   );
 };
+
+/**
+ * permanently delete all stored notifications and reset their sequence
+ */
+export const deleteAllNotifications = async () => {
+  const write = writeQueue.then(async () => {
+    const storedSequence = await secureStorage.getItem(
+      NOTIFICATION_SEQUENCE_KEY,
+    );
+    const sequence = Number.parseInt(storedSequence ?? "0", 10);
+
+    if (Number.isSafeInteger(sequence) && sequence > 0) {
+      await Promise.all(
+        Array.from({ length: sequence }, (_, index) =>
+          secureStorage.removeItem(entryKey(index + 1)),
+        ),
+      );
+    }
+
+    await secureStorage.removeItem(NOTIFICATION_SEQUENCE_KEY);
+  });
+
+  writeQueue = write.catch(() => undefined);
+  return write;
+};
