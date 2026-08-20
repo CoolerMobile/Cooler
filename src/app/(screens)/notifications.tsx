@@ -428,11 +428,7 @@ const FilterNotifications = ({
         },
       ]}
     >
-      <Button
-        variant="ghost"
-        onPress={() => {}}
-        accessibilityLabel="Filter notifications"
-      >
+      <Button variant="ghost" accessibilityLabel="Filter notifications">
         <Icon as={Filter} />
       </Button>
     </MenuView>

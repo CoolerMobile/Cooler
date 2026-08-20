@@ -1,4 +1,5 @@
 import ExpoBottomSheet, {
+  BottomSheetTextInput,
   type BottomSheetProps,
 } from "@expo/ui/community/bottom-sheet";
 import { Platform, StyleSheet, useWindowDimensions, View } from "react-native";
@@ -99,3 +100,4 @@ const styles = StyleSheet.create({
 });
 
 export default BottomSheet;
+export { BottomSheetTextInput };
