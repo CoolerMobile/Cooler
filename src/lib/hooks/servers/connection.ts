@@ -8,7 +8,7 @@ const VERSION_ENDPOINT = "api/v1/version"
 
 // validation data
 type ServerHealth = "ok" | "invalid_token" | "unauthenticated" | "invalid_data" | "unknown"
-type ValidationData = {
+export type ValidationData = {
   healthStatus: ServerHealth
   version: string
 }
@@ -25,7 +25,13 @@ export const useServer = () => {
    *
    * @returns whether the connection was successful or not
    */
-  const validate = async ({ address, apiKey }: { address: string; apiKey: string }) => {
+  const validate = async ({
+    address,
+    apiKey,
+  }: {
+    address: string
+    apiKey: string
+  }): Promise<ValidationData> => {
     // validate input
     if (!address || !apiKey) throw Error("missing data for connection validation")
 
@@ -72,8 +78,8 @@ export const useServer = () => {
         version: versionResponse,
       }
 
-      // debug: log validation data
-      console.debug("[server] validation data:", data)
+      // return validation data
+      return data
     } catch (error) {
       throw Error(parseError(error))
     }

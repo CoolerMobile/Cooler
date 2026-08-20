@@ -6,10 +6,10 @@ import { Icon } from "@/components/ui/icon"
 import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
 import { useOverview } from "@/lib/hooks/data/overview"
-import { useServer } from "@/lib/hooks/servers/connection"
-import { Plus } from "lucide-react-native"
+import { useServer, ValidationData } from "@/lib/hooks/servers/connection"
+import { Plus, Waypoints } from "lucide-react-native"
 import { useRef, useState } from "react"
-import { Alert, TextInput, useWindowDimensions, View } from "react-native"
+import { ActivityIndicator, Alert, TextInput, useWindowDimensions, View } from "react-native"
 
 export default function OverviewScreen() {
   const { height: windowHeight } = useWindowDimensions()
@@ -33,16 +33,48 @@ export default function OverviewScreen() {
 
   // validate connection
   const { validate } = useServer()
+  const [validating, setValidating] = useState(false)
+  const [validationResponse, setValidationResponse] = useState<ValidationData>()
   const validateConnection = async () => {
     // validate input
     if (!canValidateServer) return
     if (!newServerNickValue || !newServerAddressValue || !newServerApiKeyValue) return
 
     // attempt to validate connection
-    await validate({
+    setValidating(true)
+    const data = await validate({
       address: newServerAddressValue.trim(),
       apiKey: newServerApiKeyValue.trim(),
     })
+
+    // set validation data
+    setValidating(false)
+    setValidationResponse(data)
+
+    // alert per response type
+    const { healthStatus: health, version } = data
+    const allGood = health === "ok" && version
+    Alert.alert(
+      `Validation ${allGood ? "Succeded" : "Failed"}`,
+      allGood ? `This server is running Coolify v${version}.` : "Would you like to try again?",
+      allGood
+        ? [
+            {
+              text: "Edit Details",
+            },
+            {
+              text: "Add Server",
+            },
+          ]
+        : [
+            {
+              text: "Go Back",
+            },
+            {
+              text: "Try Again",
+            },
+          ]
+    )
   }
 
   // api key scopes
@@ -97,7 +129,7 @@ export default function OverviewScreen() {
           <Text className="text-center text-lg font-semibold">New Server</Text>
 
           {/* form */}
-          <View className="flex-1 gap-4 pt-4">
+          <View className="flex-1 gap-4">
             {/* nickname */}
             <Label>Nickname</Label>
             <BottomSheetTextInput
@@ -121,11 +153,12 @@ export default function OverviewScreen() {
             {/* api key */}
             <View className="gap-2">
               {/* input */}
+              <Label>API Key</Label>
               <BottomSheetTextInput
                 ref={newServerApiKey}
                 className="w-full rounded-md border border-input bg-card px-3 py-4 text-foreground"
                 autoCorrect={false}
-                placeholder="API Key"
+                placeholder="HOPE"
                 onChangeText={setNewServerApiKeyValue}
               />
 
@@ -152,8 +185,9 @@ export default function OverviewScreen() {
             <Spacer />
 
             {/* validate connection */}
-            <Button disabled={!canValidateServer} onPress={validateConnection}>
-              <Text>Validate Connection</Text>
+            <Button disabled={!canValidateServer || validating} onPress={validateConnection}>
+              {validating ? <ActivityIndicator /> : <Icon as={Waypoints} />}
+              <Text>{validating ? "Validating..." : "Validate Connection"}</Text>
             </Button>
           </View>
         </View>
