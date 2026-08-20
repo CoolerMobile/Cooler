@@ -1,7 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as SecureStore from "expo-secure-store";
-import type { StateStorage } from "zustand/middleware";
-import { parseError } from "@/lib/utils";
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import * as SecureStore from "expo-secure-store"
+import type { StateStorage } from "zustand/middleware"
+import { parseError } from "@/lib/utils"
 
 /**
  * zustand-compatible encrypted storage
@@ -13,7 +13,7 @@ export const secureStorage: StateStorage = {
   getItem: (key) => SecureStore.getItemAsync(key),
   setItem: (key, value) => SecureStore.setItemAsync(key, value),
   removeItem: (key) => SecureStore.deleteItemAsync(key),
-};
+}
 
 /**
  * secure persistence with a one-time migration from
@@ -24,28 +24,28 @@ export const secureStorage: StateStorage = {
  */
 export const migratingSecureStorage: StateStorage = {
   getItem: async (key) => {
-    const secureValue = await secureStorage.getItem(key);
+    const secureValue = await secureStorage.getItem(key)
     if (secureValue !== null) {
-      await AsyncStorage.removeItem(key);
-      return secureValue;
+      await AsyncStorage.removeItem(key)
+      return secureValue
     }
 
-    const legacyValue = await AsyncStorage.getItem(key);
-    if (legacyValue === null) return null;
+    const legacyValue = await AsyncStorage.getItem(key)
+    if (legacyValue === null) return null
 
-    await secureStorage.setItem(key, legacyValue);
-    await AsyncStorage.removeItem(key);
-    return legacyValue;
+    await secureStorage.setItem(key, legacyValue)
+    await AsyncStorage.removeItem(key)
+    return legacyValue
   },
   setItem: async (key, value) => {
-    await secureStorage.setItem(key, value);
-    await AsyncStorage.removeItem(key);
+    await secureStorage.setItem(key, value)
+    await AsyncStorage.removeItem(key)
   },
   removeItem: async (key) => {
-    await secureStorage.removeItem(key);
-    await AsyncStorage.removeItem(key);
+    await secureStorage.removeItem(key)
+    await AsyncStorage.removeItem(key)
   },
-};
+}
 
 /**
  * secure storage for encrypted data
@@ -57,8 +57,8 @@ export const useSecureStorage = () => {
    * @returns true or false
    */
   const checkSupport = async () => {
-    return await SecureStore.isAvailableAsync();
-  };
+    return await SecureStore.isAvailableAsync()
+  }
 
   /**
    * set `value` for `key`
@@ -68,19 +68,25 @@ export const useSecureStorage = () => {
    * such as **adding a new fingerprint** or changing the **face profile**, the key will be
    * *permanently* impossible to access, and its value will be lost
    *
+   * by default, `requireAuth` is **enabled**
+   *
    * @param key
    * @param value
    * @param requireAuth
+   *
+   * @returns whether the value was set or not
    */
-  const set = async (key: string, value: any, requireAuth?: boolean) => {
+  const set = async (key: string, value: any, requireAuth: boolean = true) => {
     try {
       await SecureStore.setItemAsync(key, value, {
         requireAuthentication: requireAuth,
-      });
+      })
+
+      return true
     } catch (error) {
-      throw Error(parseError(error));
+      throw Error(parseError(error))
     }
-  };
+  }
 
   /**
    * get `value` from `key`
@@ -91,11 +97,11 @@ export const useSecureStorage = () => {
    */
   const get = async (key: string): Promise<any> => {
     try {
-      return await SecureStore.getItemAsync(key);
+      return await SecureStore.getItemAsync(key)
     } catch (error) {
-      throw Error(parseError(error));
+      throw Error(parseError(error))
     }
-  };
+  }
 
   /**
    * delete `key`
@@ -104,12 +110,12 @@ export const useSecureStorage = () => {
    */
   const del = async (key: string) => {
     try {
-      await SecureStore.deleteItemAsync(key);
+      await SecureStore.deleteItemAsync(key)
     } catch (error) {
-      throw Error(parseError(error));
+      throw Error(parseError(error))
     }
-  };
+  }
 
   // return methods
-  return { checkSupport, get, set, del };
-};
+  return { checkSupport, get, set, del }
+}

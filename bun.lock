@@ -6,7 +6,7 @@
       "name": "cooler",
       "dependencies": {
         "@expo/material-symbols": "^0.1.1",
-        "@expo/ui": "~57.0.11",
+        "@expo/ui": "~57.0.12",
         "@icons-pack/react-simple-icons": "^13.15.1",
         "@react-native-async-storage/async-storage": "2.2.0",
         "@react-native-community/datetimepicker": "^9.1.0",
@@ -18,19 +18,19 @@
         "@shopify/flash-list": "2.0.2",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
-        "expo": "^57.0.14",
+        "expo": "^57.0.15",
         "expo-blur": "~57.0.2",
-        "expo-constants": "~57.0.12",
-        "expo-dev-client": "~57.0.13",
+        "expo-constants": "~57.0.13",
+        "expo-dev-client": "~57.0.14",
         "expo-device": "~57.0.1",
         "expo-font": "~57.0.1",
         "expo-glass-effect": "~57.0.1",
         "expo-image": "~57.0.3",
-        "expo-linking": "~57.0.6",
+        "expo-linking": "~57.0.7",
         "expo-local-authentication": "~57.0.2",
         "expo-modern-table": "^0.1.2",
-        "expo-notifications": "~57.0.12",
-        "expo-router": "~57.0.14",
+        "expo-notifications": "~57.0.13",
+        "expo-router": "~57.0.15",
         "expo-screen-capture": "~57.0.2",
         "expo-screen-orientation": "~57.0.1",
         "expo-secure-store": "~57.0.1",
@@ -58,6 +58,7 @@
         "react-native-worklets": "0.10.1",
         "simple-icons": "^16.28.0",
         "tailwind-merge": "^3.6.0",
+        "uuid": "^14.0.2",
         "zustand": "^5.0.15",
       },
       "devDependencies": {
@@ -1374,7 +1375,7 @@
 
     "utils-merge": ["utils-merge@1.0.1", "", {}, "sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA=="],
 
-    "uuid": ["uuid@7.0.3", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg=="],
+    "uuid": ["uuid@14.0.2", "", { "bin": { "uuid": "dist-node/bin/uuid" } }, "sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ=="],
 
     "validate-npm-package-name": ["validate-npm-package-name@5.0.1", "", {}, "sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ=="],
 
@@ -1549,6 +1550,8 @@
     "wrap-ansi/ansi-styles": ["ansi-styles@4.3.0", "", { "dependencies": { "color-convert": "^2.0.1" } }, "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg=="],
 
     "wrap-ansi/strip-ansi": ["strip-ansi@6.0.1", "", { "dependencies": { "ansi-regex": "^5.0.1" } }, "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A=="],
+
+    "xcode/uuid": ["uuid@7.0.3", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg=="],
 
     "@react-native/babel-preset/babel-plugin-syntax-hermes-parser/hermes-parser": ["hermes-parser@0.36.0", "", { "dependencies": { "hermes-estree": "0.36.0" } }, "sha512-GdpwMmH5x6IpC1cijvcvYnlPB60Mh6kTSF/NFdYV/j56gYdi+0RIakYs+eqOV+bbO0SW7mgVVGSsTJxyPQfo3w=="],
 

@@ -6,7 +6,7 @@ import { Icon } from "@/components/ui/icon"
 import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
 import { useOverview } from "@/lib/hooks/data/overview"
-import { useServer, ValidationData } from "@/lib/hooks/servers/connection"
+import { useServer, ServerData } from "@/lib/hooks/servers/connection"
 import { Plus, Waypoints } from "lucide-react-native"
 import { useRef, useState } from "react"
 import { ActivityIndicator, Alert, TextInput, useWindowDimensions, View } from "react-native"
@@ -32,49 +32,90 @@ export default function OverviewScreen() {
   )
 
   // validate connection
-  const { validate } = useServer()
+  const { validate, create } = useServer()
   const [validating, setValidating] = useState(false)
-  const [validationResponse, setValidationResponse] = useState<ValidationData>()
+  const [validationResponse, setValidationResponse] = useState<Omit<ServerData, "id">>()
+  const resetNewServerForm = () => {
+    setNewServerOpen(false)
+    setNewServerNickValue("")
+    setNewServerAddressValue("")
+    setNewServerApiKeyValue("")
+    setValidationResponse(undefined)
+    newServerNick.current?.clear()
+    newServerAddress.current?.clear()
+    newServerApiKey.current?.clear()
+  }
+
+  const addServer = async () => {
+    try {
+      // create server
+      const created = await create({
+        nickname: newServerNickValue.trim(),
+        endpoint: newServerAddressValue.trim(),
+        token: newServerApiKeyValue.trim(),
+      })
+
+      // failed to create server
+      if (!created) throw Error("server could not be added")
+
+      // reset new server form
+      resetNewServerForm()
+    } catch (error) {
+      Alert.alert(
+        "Server Could Not Be Added",
+        error instanceof Error ? error.message : "Please try again.",
+        [
+          { text: "Go Back", style: "cancel" },
+          { text: "Try Again", onPress: addServer },
+        ]
+      )
+    }
+  }
+
   const validateConnection = async () => {
     // validate input
     if (!canValidateServer) return
-    if (!newServerNickValue || !newServerAddressValue || !newServerApiKeyValue) return
 
     // attempt to validate connection
     setValidating(true)
-    const data = await validate({
-      address: newServerAddressValue.trim(),
-      apiKey: newServerApiKeyValue.trim(),
-    })
+    try {
+      const data = await validate({
+        nickname: newServerNickValue.trim(),
+        endpoint: newServerAddressValue.trim(),
+        token: newServerApiKeyValue.trim(),
+      })
 
-    // set validation data
-    setValidating(false)
-    setValidationResponse(data)
+      // set validation data
+      setValidationResponse(data)
 
-    // alert per response type
-    const { healthStatus: health, version } = data
-    const allGood = health === "ok" && version
-    Alert.alert(
-      `Validation ${allGood ? "Succeded" : "Failed"}`,
-      allGood ? `This server is running Coolify v${version}.` : "Would you like to try again?",
-      allGood
-        ? [
-            {
-              text: "Edit Details",
-            },
-            {
-              text: "Add Server",
-            },
-          ]
-        : [
-            {
-              text: "Go Back",
-            },
-            {
-              text: "Try Again",
-            },
-          ]
-    )
+      // alert per response type
+      const { health, version } = data
+      const allGood = health === "ok" && Boolean(version)
+      Alert.alert(
+        `Validation ${allGood ? "Succeeded" : "Failed"}`,
+        allGood ? `This server is running Coolify v${version}.` : "Would you like to try again?",
+        allGood
+          ? [
+              { text: "Edit Details", style: "cancel" },
+              { text: "Add Server", onPress: addServer },
+            ]
+          : [
+              { text: "Go Back", style: "cancel" },
+              { text: "Try Again", onPress: validateConnection },
+            ]
+      )
+    } catch (error) {
+      Alert.alert(
+        "Validation Failed",
+        error instanceof Error ? error.message : "Would you like to try again?",
+        [
+          { text: "Go Back", style: "cancel" },
+          { text: "Try Again", onPress: validateConnection },
+        ]
+      )
+    } finally {
+      setValidating(false)
+    }
   }
 
   // api key scopes

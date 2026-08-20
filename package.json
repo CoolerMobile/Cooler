@@ -65,6 +65,7 @@
     "react-native-worklets": "0.10.1",
     "simple-icons": "^16.28.0",
     "tailwind-merge": "^3.6.0",
+    "uuid": "^14.0.2",
     "zustand": "^5.0.15"
   },
   "devDependencies": {
