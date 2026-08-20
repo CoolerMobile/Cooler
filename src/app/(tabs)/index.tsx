@@ -6,6 +6,7 @@ import { Icon } from "@/components/ui/icon"
 import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
 import { useOverview } from "@/lib/hooks/data/overview"
+import { useServer } from "@/lib/hooks/servers/connection"
 import { Plus } from "lucide-react-native"
 import { useRef, useState } from "react"
 import { Alert, TextInput, useWindowDimensions, View } from "react-native"
@@ -16,10 +17,7 @@ export default function OverviewScreen() {
 
   // overview data
   const overviewData = useOverview()
-  const total =
-    overviewData.instanceCount +
-    overviewData.resourceCount +
-    overviewData.serverCount
+  const total = overviewData.instanceCount + overviewData.resourceCount + overviewData.serverCount
 
   // new server
   const [newServerOpen, setNewServerOpen] = useState(false)
@@ -29,11 +27,23 @@ export default function OverviewScreen() {
   const [newServerNickValue, setNewServerNickValue] = useState("")
   const [newServerAddressValue, setNewServerAddressValue] = useState("")
   const [newServerApiKeyValue, setNewServerApiKeyValue] = useState("")
-  const canValidateServer = [
-    newServerNickValue,
-    newServerAddressValue,
-    newServerApiKeyValue,
-  ].every((value) => value.trim().length > 0)
+  const canValidateServer = [newServerNickValue, newServerAddressValue, newServerApiKeyValue].every(
+    (value) => value.trim().length > 0
+  )
+
+  // validate connection
+  const { validate } = useServer()
+  const validateConnection = async () => {
+    // validate input
+    if (!canValidateServer) return
+    if (!newServerNickValue || !newServerAddressValue || !newServerApiKeyValue) return
+
+    // attempt to validate connection
+    await validate({
+      address: newServerAddressValue.trim(),
+      apiKey: newServerApiKeyValue.trim(),
+    })
+  }
 
   // api key scopes
   const apiKeyScopes: { name: string; description: string }[] = [
@@ -99,7 +109,7 @@ export default function OverviewScreen() {
             />
 
             {/* address */}
-            <Label>Server Address</Label>
+            <Label>Server Address (No Protocol)</Label>
             <BottomSheetTextInput
               ref={newServerAddress}
               className="rounded-md border border-input bg-card px-3 py-4 text-foreground"
@@ -111,7 +121,6 @@ export default function OverviewScreen() {
             {/* api key */}
             <View className="gap-2">
               {/* input */}
-              <Label>API Key</Label>
               <BottomSheetTextInput
                 ref={newServerApiKey}
                 className="w-full rounded-md border border-input bg-card px-3 py-4 text-foreground"
@@ -122,9 +131,7 @@ export default function OverviewScreen() {
 
               {/* info */}
               <View className="flex-row flex-wrap items-center justify-center">
-                <Text className="text-xs text-muted-foreground">
-                  Set your key access to{" "}
-                </Text>
+                <Text className="text-xs text-muted-foreground">Set your key access to </Text>
                 <Button
                   variant="link"
                   className="h-auto p-0"
@@ -136,9 +143,7 @@ export default function OverviewScreen() {
                         .join("\n")}`
                     )
                   }}>
-                  <Text className="text-xs font-semibold underline">
-                    only what you need
-                  </Text>
+                  <Text className="text-xs font-semibold underline">only what you need</Text>
                 </Button>
                 <Text className="text-xs text-muted-foreground">.</Text>
               </View>
@@ -147,7 +152,7 @@ export default function OverviewScreen() {
             <Spacer />
 
             {/* validate connection */}
-            <Button disabled={!canValidateServer}>
+            <Button disabled={!canValidateServer} onPress={validateConnection}>
               <Text>Validate Connection</Text>
             </Button>
           </View>
