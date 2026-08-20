@@ -21,7 +21,6 @@ import {
 import Animated from "react-native-reanimated";
 import { ListItem } from "@/components/custom/data/list-item";
 import { upperFirstLetter } from "@/lib/utils";
-import { Picker } from "@expo/ui/community/picker";
 import { Table, TableColumn, TableRow } from "@/components/custom/table";
 import Spacer from "@/components/custom/spacer";
 import { MenuView } from "@expo/ui/community/menu";
