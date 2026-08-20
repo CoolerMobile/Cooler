@@ -5,14 +5,9 @@
   "tabWidth": 2,
   "bracketSameLine": true,
   "trailingComma": "es5",
-  "printWidth": 80,
-  "plugins": [
-    "prettier-plugin-tailwindcss"
-  ],
-  "tailwindFunctions": [
-    "cn",
-    "cva"
-  ],
+  "printWidth": 100,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindFunctions": ["cn", "cva"],
   "overrides": [
     {
       "files": "*.astro",
