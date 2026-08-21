@@ -1,6 +1,7 @@
 # BEGIN Generated NPM license entries
 rename:
-  "@expo_ui@57.0.11": '@expo/ui'
+  "@expo_material-symbols@0.1.1": '@expo/material-symbols'
+  "@expo_ui@57.0.12": '@expo/ui'
   "sf-symbols-typescript@2.2.0": sf-symbols-typescript
   "vaul@1.1.2": vaul
   "@radix-ui_react-dialog@1.1.23": '@radix-ui/react-dialog'
@@ -42,6 +43,8 @@ rename:
   "@rn-primitives_hooks@1.5.2": '@rn-primitives/hooks'
   "@rn-primitives_types@1.5.2": '@rn-primitives/types'
   "@rn-primitives_slot@1.5.2": '@rn-primitives/slot'
+  "@rn-primitives_label@1.5.2": '@rn-primitives/label'
+  "@radix-ui_react-label@2.1.15": '@radix-ui/react-label'
   "@rn-primitives_select@1.5.2": '@rn-primitives/select'
   "@radix-ui_react-select@2.3.7": '@radix-ui/react-select'
   "@radix-ui_number@1.1.3": '@radix-ui/number'
@@ -59,11 +62,12 @@ rename:
   "@radix-ui_react-use-previous@1.1.4": '@radix-ui/react-use-previous'
   "@rn-primitives_switch@1.5.2": '@rn-primitives/switch'
   "@radix-ui_react-switch@1.3.7": '@radix-ui/react-switch'
+  "@shopify_flash-list@2.0.2": '@shopify/flash-list'
   "class-variance-authority@0.7.1": class-variance-authority
   "clsx@2.1.1": clsx
-  "expo@57.0.14": expo
+  "expo@57.0.15": expo
   "@babel_runtime@7.29.7": '@babel/runtime'
-  "@expo_cli@57.0.16": '@expo/cli'
+  "@expo_cli@57.0.17": '@expo/cli'
   "@expo_code-signing-certificates@0.0.6": '@expo/code-signing-certificates'
   "node-forge@1.4.0": node-forge
   "@expo_config@57.0.8": '@expo/config'
@@ -274,9 +278,7 @@ rename:
   "require-directory@2.1.1": require-directory
   "y18n@5.0.8": y18n
   "yargs-parser@21.1.1": yargs-parser
-  "@expo_metro-config@57.0.8": '@expo/metro-config'
-  "@expo_config@57.0.7": '@expo/config'
-  "@expo_config-plugins@57.0.7": '@expo/config-plugins'
+  "@expo_metro-config@57.0.9": '@expo/metro-config'
   "hermes-parser@0.36.1": hermes-parser
   "hermes-estree@0.36.1": hermes-estree
   "lightningcss@1.33.0": lightningcss
@@ -315,11 +317,11 @@ rename:
   "wcwidth@1.0.1": wcwidth
   "defaults@1.0.4": defaults
   "clone@1.0.4": clone
-  "@expo_prebuild-config@57.0.12": '@expo/prebuild-config'
+  "@expo_prebuild-config@57.0.13": '@expo/prebuild-config'
   "@react-native_normalize-colors@0.86.2": '@react-native/normalize-colors'
   "expo-modules-autolinking@57.0.10": expo-modules-autolinking
   "commander@7.2.0": commander
-  "@expo_router-server@57.0.6": '@expo/router-server'
+  "@expo_router-server@57.0.7": '@expo/router-server'
   "@expo_schema-utils@57.0.2": '@expo/schema-utils'
   "@expo_ws-tunnel@2.0.0": '@expo/ws-tunnel'
   "@expo_xcpretty@4.4.4": '@expo/xcpretty'
@@ -357,7 +359,7 @@ rename:
   "mime-types@2.1.35": mime-types
   "mime-db@1.52.0": mime-db
   "negotiator@0.6.3": negotiator
-  "agent-cli-detector@0.1.4": agent-cli-detector
+  "agent-cli-detector@0.1.6": agent-cli-detector
   "arg@5.0.2": arg
   "bplist-parser@0.3.2": bplist-parser
   "compression@1.8.1": compression
@@ -386,9 +388,9 @@ rename:
   "ws@8.21.2": ws
   "zod@3.25.76": zod
   "@expo_devtools@57.0.1": '@expo/devtools'
-  "@expo_fingerprint@0.20.8": '@expo/fingerprint'
+  "@expo_fingerprint@0.20.9": '@expo/fingerprint'
   "ignore@5.3.2": ignore
-  "@expo_local-build-cache-provider@57.0.6": '@expo/local-build-cache-provider'
+  "@expo_local-build-cache-provider@57.0.7": '@expo/local-build-cache-provider'
   "@ungap_structured-clone@1.3.3": '@ungap/structured-clone'
   "babel-preset-expo@57.0.7": babel-preset-expo
   "@babel_plugin-proposal-decorators@7.29.7": '@babel/plugin-proposal-decorators'
@@ -469,21 +471,22 @@ rename:
   "babel-plugin-react-native-web@0.21.2": babel-plugin-react-native-web
   "babel-plugin-syntax-hermes-parser@0.36.1": babel-plugin-syntax-hermes-parser
   "babel-plugin-transform-flow-enums@0.0.2": babel-plugin-transform-flow-enums
-  "expo-asset@57.0.12": expo-asset
-  "expo-constants@57.0.12": expo-constants
-  "expo-file-system@57.0.4": expo-file-system
+  "expo-asset@57.0.13": expo-asset
+  "expo-constants@57.0.13": expo-constants
+  "expo-file-system@57.0.5": expo-file-system
   "expo-font@57.0.1": expo-font
   "fontfaceobserver@2.3.0": fontfaceobserver
   "expo-keep-awake@57.0.1": expo-keep-awake
-  "expo-modules-core@57.0.11": expo-modules-core
+  "expo-modules-core@57.0.12": expo-modules-core
   "@expo_expo-modules-macros-plugin@0.6.1": '@expo/expo-modules-macros-plugin'
-  "expo-modules-jsi@57.0.4": expo-modules-jsi
+  "expo-modules-jsi@57.0.5": expo-modules-jsi
   "react-refresh@0.14.2": react-refresh
   "whatwg-url-minimum@0.1.2": whatwg-url-minimum
   "expo-blur@57.0.2": expo-blur
-  "expo-dev-client@57.0.13": expo-dev-client
-  "expo-dev-launcher@57.0.13": expo-dev-launcher
-  "expo-dev-menu@57.0.13": expo-dev-menu
+  "expo-crypto@57.0.1": expo-crypto
+  "expo-dev-client@57.0.14": expo-dev-client
+  "expo-dev-launcher@57.0.14": expo-dev-launcher
+  "expo-dev-menu@57.0.14": expo-dev-menu
   "expo-dev-menu-interface@57.0.0": expo-dev-menu-interface
   "expo-manifests@57.0.1": expo-manifests
   "expo-json-utils@57.0.1": expo-json-utils
@@ -492,30 +495,21 @@ rename:
   "ua-parser-js@0.7.41": ua-parser-js
   "expo-glass-effect@57.0.1": expo-glass-effect
   "expo-image@57.0.3": expo-image
-  "expo-linking@57.0.6": expo-linking
+  "expo-linking@57.0.7": expo-linking
   "expo-local-authentication@57.0.2": expo-local-authentication
-  "expo-notifications@57.0.12": expo-notifications
+  "expo-modern-table@0.1.2": expo-modern-table
+  "expo-notifications@57.0.13": expo-notifications
   "abort-controller@3.0.0": abort-controller
   "event-target-shim@5.0.1": event-target-shim
   "badgin@1.2.3": badgin
   "expo-application@57.0.2": expo-application
-  "expo-router@57.0.14": expo-router
-  "@expo_metro-runtime@57.0.11": '@expo/metro-runtime'
+  "expo-router@57.0.15": expo-router
+  "@expo_metro-runtime@57.0.12": '@expo/metro-runtime'
   "whatwg-fetch@3.6.20": whatwg-fetch
   "@radix-ui_react-tabs@1.1.21": '@radix-ui/react-tabs'
   "@radix-ui_react-roving-focus@1.1.19": '@radix-ui/react-roving-focus'
   "@radix-ui_react-use-is-hydrated@0.1.3": '@radix-ui/react-use-is-hydrated'
   "@react-native-masked-view_masked-view@0.3.2": '@react-native-masked-view/masked-view'
-  "@testing-library_jest-dom@6.10.0": '@testing-library/jest-dom'
-  "@adobe_css-tools@4.5.0": '@adobe/css-tools'
-  "aria-query@5.3.2": aria-query
-  "css.escape@1.5.1": css.escape
-  "dom-accessibility-api@0.6.3": dom-accessibility-api
-  "redent@3.0.0": redent
-  "indent-string@4.0.0": indent-string
-  "strip-indent@3.0.0": strip-indent
-  "min-indent@1.0.1": min-indent
-  "@testing-library_user-event@14.6.3": '@testing-library/user-event'
   "client-only@0.0.1": client-only
   "color@4.2.3": color
   "color-string@1.9.1": color-string
@@ -540,13 +534,14 @@ rename:
   "shallowequal@1.1.0": shallowequal
   "standard-navigation@0.0.5": standard-navigation
   "expo-screen-capture@57.0.2": expo-screen-capture
+  "expo-screen-orientation@57.0.1": expo-screen-orientation
   "expo-secure-store@57.0.1": expo-secure-store
   "expo-sensors@57.0.2": expo-sensors
   "expo-splash-screen@57.0.7": expo-splash-screen
   "expo-status-bar@57.0.1": expo-status-bar
   "expo-system-ui@57.0.2": expo-system-ui
   "expo-web-browser@57.0.2": expo-web-browser
-  "lucide-react-native@1.32.0": lucide-react-native
+  "lucide-react-native@1.33.0": lucide-react-native
   "nativewind@4.2.6": nativewind
   "comment-json@4.6.2": comment-json
   "array-timsort@1.0.3": array-timsort
@@ -555,6 +550,11 @@ rename:
   "lightningcss@1.27.0": lightningcss
   "detect-libc@1.0.3": detect-libc
   "lightningcss-darwin-arm64@1.27.0": lightningcss-darwin-arm64
+  "normalize-url@9.0.1": normalize-url
+  "ofetch@1.5.1": ofetch
+  "destr@2.0.5": destr
+  "node-fetch-native@1.6.7": node-fetch-native
+  "ufo@1.6.4": ufo
   "radix-ui@1.6.7": radix-ui
   "@radix-ui_react-accessible-icon@1.1.15": '@radix-ui/react-accessible-icon'
   "@radix-ui_react-accordion@1.2.20": '@radix-ui/react-accordion'
@@ -566,7 +566,6 @@ rename:
   "@radix-ui_react-menu@2.1.24": '@radix-ui/react-menu'
   "@radix-ui_react-dropdown-menu@2.1.24": '@radix-ui/react-dropdown-menu'
   "@radix-ui_react-form@0.1.16": '@radix-ui/react-form'
-  "@radix-ui_react-label@2.1.15": '@radix-ui/react-label'
   "@radix-ui_react-hover-card@1.1.23": '@radix-ui/react-hover-card'
   "@radix-ui_react-menubar@1.1.24": '@radix-ui/react-menubar'
   "@radix-ui_react-navigation-menu@1.2.22": '@radix-ui/react-navigation-menu'
@@ -655,8 +654,12 @@ rename:
   "tailwind-merge@3.6.0": tailwind-merge
   "zustand@5.0.15": zustand
 manual:
-  - name: '@expo_ui@57.0.11'
-    version: '57.0.11'
+  - name: '@expo_material-symbols@0.1.1'
+    version: '0.1.1'
+    source: https://github.com/expo/material-symbols
+    body: MIT
+  - name: '@expo_ui@57.0.12'
+    version: '57.0.12'
     source: https://github.com/expo/expo
     body: MIT
   - name: sf-symbols-typescript@2.2.0
@@ -819,6 +822,13 @@ manual:
   - name: '@rn-primitives_slot@1.5.2'
     version: '1.5.2'
     file: '../node_modules/@rn-primitives/slot/LICENSE'
+  - name: '@rn-primitives_label@1.5.2'
+    version: '1.5.2'
+    file: '../node_modules/@rn-primitives/label/LICENSE'
+  - name: '@radix-ui_react-label@2.1.15'
+    version: '2.1.15'
+    source: https://github.com/radix-ui/primitives
+    file: '../node_modules/@radix-ui/react-label/LICENSE'
   - name: '@rn-primitives_select@1.5.2'
     version: '1.5.2'
     file: '../node_modules/@rn-primitives/select/LICENSE'
@@ -885,6 +895,10 @@ manual:
     version: '1.3.7'
     source: https://github.com/radix-ui/primitives
     file: '../node_modules/@radix-ui/react-switch/LICENSE'
+  - name: '@shopify_flash-list@2.0.2'
+    version: '2.0.2'
+    source: https://github.com/Shopify/flash-list
+    file: '../node_modules/@shopify/flash-list/LICENSE.md'
   - name: class-variance-authority@0.7.1
     version: '0.7.1'
     source: https://github.com/joe-bell/cva
@@ -893,16 +907,16 @@ manual:
     version: '2.1.1'
     source: lukeed/clsx
     file: '../node_modules/clsx/LICENSE'
-  - name: expo@57.0.14
-    version: '57.0.14'
+  - name: expo@57.0.15
+    version: '57.0.15'
     source: https://github.com/expo/expo
     file: '../node_modules/expo/LICENSE'
   - name: '@babel_runtime@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
     file: '../node_modules/@babel/runtime/LICENSE'
-  - name: '@expo_cli@57.0.16'
-    version: '57.0.16'
+  - name: '@expo_cli@57.0.17'
+    version: '57.0.17'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/cli/LICENSE'
   - name: '@expo_code-signing-certificates@0.0.6'
@@ -1211,7 +1225,7 @@ manual:
   - name: uuid@7.0.3
     version: '7.0.3'
     source: https://github.com/uuidjs/uuid
-    file: '../node_modules/uuid/LICENSE.md'
+    file: '../node_modules/xcode/node_modules/uuid/LICENSE.md'
   - name: xml2js@0.6.0
     version: '0.6.0'
     source: https://github.com/Leonidas-from-XIV/node-xml2js
@@ -1743,18 +1757,10 @@ manual:
     version: '21.1.1'
     source: https://github.com/yargs/yargs-parser
     body: ISC
-  - name: '@expo_metro-config@57.0.8'
-    version: '57.0.8'
+  - name: '@expo_metro-config@57.0.9'
+    version: '57.0.9'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/metro-config/LICENSE'
-  - name: '@expo_config@57.0.7'
-    version: '57.0.7'
-    source: https://github.com/expo/expo
-    file: '../node_modules/@expo/metro-config/node_modules/@expo/config/LICENSE'
-  - name: '@expo_config-plugins@57.0.7'
-    version: '57.0.7'
-    source: https://github.com/expo/expo
-    file: '../node_modules/@expo/metro-config/node_modules/@expo/config/node_modules/@expo/config-plugins/LICENSE'
   - name: hermes-parser@0.36.1
     version: '0.36.1'
     source: https://github.com/facebook/hermes
@@ -1907,8 +1913,8 @@ manual:
     version: '1.0.4'
     source: https://github.com/pvorb/node-clone
     file: '../node_modules/clone/LICENSE'
-  - name: '@expo_prebuild-config@57.0.12'
-    version: '57.0.12'
+  - name: '@expo_prebuild-config@57.0.13'
+    version: '57.0.13'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/prebuild-config/LICENSE'
   - name: '@react-native_normalize-colors@0.86.2'
@@ -1923,8 +1929,8 @@ manual:
     version: '7.2.0'
     source: https://github.com/tj/commander.js
     file: '../node_modules/expo-modules-autolinking/node_modules/commander/LICENSE'
-  - name: '@expo_router-server@57.0.6'
-    version: '57.0.6'
+  - name: '@expo_router-server@57.0.7'
+    version: '57.0.7'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/router-server/LICENSE'
   - name: '@expo_schema-utils@57.0.2'
@@ -2073,9 +2079,9 @@ manual:
     version: '0.6.3'
     source: jshttp/negotiator
     file: '../node_modules/negotiator/LICENSE'
-  - name: agent-cli-detector@0.1.4
-    version: '0.1.4'
-    source: https://github.com/davidmokos/detect-agent
+  - name: agent-cli-detector@0.1.6
+    version: '0.1.6'
+    source: https://github.com/expo/agent-cli-detector
     file: '../node_modules/agent-cli-detector/LICENSE'
   - name: arg@5.0.2
     version: '5.0.2'
@@ -2189,16 +2195,16 @@ manual:
     version: '57.0.1'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/devtools/LICENSE'
-  - name: '@expo_fingerprint@0.20.8'
-    version: '0.20.8'
+  - name: '@expo_fingerprint@0.20.9'
+    version: '0.20.9'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/fingerprint/LICENSE'
   - name: ignore@5.3.2
     version: '5.3.2'
     source: https://github.com/kaelzhang/node-ignore
     body: MIT
-  - name: '@expo_local-build-cache-provider@57.0.6'
-    version: '57.0.6'
+  - name: '@expo_local-build-cache-provider@57.0.7'
+    version: '57.0.7'
     source: https://github.com/expo/expo
     file: '../node_modules/@expo/local-build-cache-provider/LICENSE'
   - name: '@ungap_structured-clone@1.3.3'
@@ -2521,16 +2527,16 @@ manual:
     version: '0.0.2'
     source: https://github.com/facebook/flow
     file: '../node_modules/babel-plugin-transform-flow-enums/LICENSE'
-  - name: expo-asset@57.0.12
-    version: '57.0.12'
+  - name: expo-asset@57.0.13
+    version: '57.0.13'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-asset/LICENSE'
-  - name: expo-constants@57.0.12
-    version: '57.0.12'
+  - name: expo-constants@57.0.13
+    version: '57.0.13'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-constants/LICENSE'
-  - name: expo-file-system@57.0.4
-    version: '57.0.4'
+  - name: expo-file-system@57.0.5
+    version: '57.0.5'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-file-system/LICENSE'
   - name: expo-font@57.0.1
@@ -2545,16 +2551,16 @@ manual:
     version: '57.0.1'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-keep-awake/LICENSE'
-  - name: expo-modules-core@57.0.11
-    version: '57.0.11'
+  - name: expo-modules-core@57.0.12
+    version: '57.0.12'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-modules-core/LICENSE'
   - name: '@expo_expo-modules-macros-plugin@0.6.1'
     version: '0.6.1'
     source: https://github.com/expo/expo-modules-macros-plugin
     file: '../node_modules/@expo/expo-modules-macros-plugin/LICENSE'
-  - name: expo-modules-jsi@57.0.4
-    version: '57.0.4'
+  - name: expo-modules-jsi@57.0.5
+    version: '57.0.5'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-modules-jsi/LICENSE'
   - name: react-refresh@0.14.2
@@ -2569,16 +2575,20 @@ manual:
     version: '57.0.2'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-blur/LICENSE'
-  - name: expo-dev-client@57.0.13
-    version: '57.0.13'
+  - name: expo-crypto@57.0.1
+    version: '57.0.1'
+    source: https://github.com/expo/expo
+    file: '../node_modules/expo-crypto/LICENSE'
+  - name: expo-dev-client@57.0.14
+    version: '57.0.14'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-dev-client/LICENSE'
-  - name: expo-dev-launcher@57.0.13
-    version: '57.0.13'
+  - name: expo-dev-launcher@57.0.14
+    version: '57.0.14'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-dev-launcher/LICENSE'
-  - name: expo-dev-menu@57.0.13
-    version: '57.0.13'
+  - name: expo-dev-menu@57.0.14
+    version: '57.0.14'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-dev-menu/LICENSE'
   - name: expo-dev-menu-interface@57.0.0
@@ -2613,16 +2623,20 @@ manual:
     version: '57.0.3'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-image/LICENSE'
-  - name: expo-linking@57.0.6
-    version: '57.0.6'
+  - name: expo-linking@57.0.7
+    version: '57.0.7'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-linking/LICENSE'
   - name: expo-local-authentication@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-local-authentication/LICENSE'
-  - name: expo-notifications@57.0.12
-    version: '57.0.12'
+  - name: expo-modern-table@0.1.2
+    version: '0.1.2'
+    source: https://github.com/melihmuratpesmen/expo-modern-table
+    file: '../node_modules/expo-modern-table/LICENSE'
+  - name: expo-notifications@57.0.13
+    version: '57.0.13'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-notifications/LICENSE'
   - name: abort-controller@3.0.0
@@ -2641,14 +2655,14 @@ manual:
     version: '57.0.2'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-application/LICENSE'
-  - name: expo-router@57.0.14
-    version: '57.0.14'
+  - name: expo-router@57.0.15
+    version: '57.0.15'
     source: https://github.com/expo/expo
     body: MIT
-  - name: '@expo_metro-runtime@57.0.11'
-    version: '57.0.11'
+  - name: '@expo_metro-runtime@57.0.12'
+    version: '57.0.12'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-router/node_modules/@expo/metro-runtime/LICENSE'
+    file: '../node_modules/@expo/metro-runtime/LICENSE'
   - name: whatwg-fetch@3.6.20
     version: '3.6.20'
     source: github/fetch
@@ -2669,46 +2683,6 @@ manual:
     version: '0.3.2'
     source: https://github.com/react-native-masked-view/masked-view
     file: '../node_modules/@react-native-masked-view/masked-view/LICENSE'
-  - name: '@testing-library_jest-dom@6.10.0'
-    version: '6.10.0'
-    source: https://github.com/testing-library/jest-dom
-    file: '../node_modules/@testing-library/jest-dom/LICENSE'
-  - name: '@adobe_css-tools@4.5.0'
-    version: '4.5.0'
-    source: https://github.com/adobe/css-tools
-    file: '../node_modules/@adobe/css-tools/LICENSE'
-  - name: aria-query@5.3.2
-    version: '5.3.2'
-    source: https://github.com/A11yance/aria-query
-    file: '../node_modules/aria-query/LICENSE'
-  - name: css.escape@1.5.1
-    version: '1.5.1'
-    source: https://github.com/mathiasbynens/CSS.escape
-    body: MIT
-  - name: dom-accessibility-api@0.6.3
-    version: '0.6.3'
-    source: https://github.com/eps1lon/dom-accessibility-api
-    file: '../node_modules/dom-accessibility-api/LICENSE.md'
-  - name: redent@3.0.0
-    version: '3.0.0'
-    source: sindresorhus/redent
-    file: '../node_modules/redent/LICENSE'
-  - name: indent-string@4.0.0
-    version: '4.0.0'
-    source: sindresorhus/indent-string
-    file: '../node_modules/indent-string/LICENSE'
-  - name: strip-indent@3.0.0
-    version: '3.0.0'
-    source: sindresorhus/strip-indent
-    file: '../node_modules/strip-indent/LICENSE'
-  - name: min-indent@1.0.1
-    version: '1.0.1'
-    source: https://github.com/thejameskyle/min-indent
-    file: '../node_modules/min-indent/LICENSE'
-  - name: '@testing-library_user-event@14.6.3'
-    version: '14.6.3'
-    source: https://github.com/testing-library/user-event
-    file: '../node_modules/@testing-library/user-event/LICENSE'
   - name: client-only@0.0.1
     version: '0.0.1'
     body: MIT
@@ -2803,6 +2777,10 @@ manual:
     version: '57.0.2'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-screen-capture/LICENSE'
+  - name: expo-screen-orientation@57.0.1
+    version: '57.0.1'
+    source: https://github.com/expo/expo
+    file: '../node_modules/expo-screen-orientation/LICENSE'
   - name: expo-secure-store@57.0.1
     version: '57.0.1'
     source: https://github.com/expo/expo
@@ -2827,8 +2805,8 @@ manual:
     version: '57.0.2'
     source: https://github.com/expo/expo
     file: '../node_modules/expo-web-browser/LICENSE'
-  - name: lucide-react-native@1.32.0
-    version: '1.32.0'
+  - name: lucide-react-native@1.33.0
+    version: '1.33.0'
     source: https://github.com/lucide-icons/lucide
     file: '../node_modules/lucide-react-native/LICENSE'
   - name: nativewind@4.2.6
@@ -2863,6 +2841,26 @@ manual:
     version: '1.27.0'
     source: https://github.com/parcel-bundler/lightningcss
     file: '../node_modules/react-native-css-interop/node_modules/lightningcss/node_modules/lightningcss-darwin-arm64/LICENSE'
+  - name: normalize-url@9.0.1
+    version: '9.0.1'
+    source: sindresorhus/normalize-url
+    file: '../node_modules/normalize-url/LICENSE'
+  - name: ofetch@1.5.1
+    version: '1.5.1'
+    source: unjs/ofetch
+    file: '../node_modules/ofetch/LICENSE'
+  - name: destr@2.0.5
+    version: '2.0.5'
+    source: unjs/destr
+    file: '../node_modules/destr/LICENSE'
+  - name: node-fetch-native@1.6.7
+    version: '1.6.7'
+    source: unjs/node-fetch-native
+    file: '../node_modules/node-fetch-native/LICENSE'
+  - name: ufo@1.6.4
+    version: '1.6.4'
+    source: unjs/ufo
+    file: '../node_modules/ufo/LICENSE'
   - name: radix-ui@1.6.7
     version: '1.6.7'
     source: https://github.com/radix-ui/primitives
@@ -2907,10 +2905,6 @@ manual:
     version: '0.1.16'
     source: https://github.com/radix-ui/primitives
     file: '../node_modules/@radix-ui/react-form/LICENSE'
-  - name: '@radix-ui_react-label@2.1.15'
-    version: '2.1.15'
-    source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-label/LICENSE'
   - name: '@radix-ui_react-hover-card@1.1.23'
     version: '1.1.23'
     source: https://github.com/radix-ui/primitives

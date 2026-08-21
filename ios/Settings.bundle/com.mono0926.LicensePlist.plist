@@ -12,14 +12,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@adobe_css-tools@4.5.0</string>
-			<key>Title</key>
-			<string>@adobe/css-tools (4.5.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/@babel_code-frame@7.29.7</string>
 			<key>Title</key>
 			<string>@babel/code-frame (7.29.7)</string>
@@ -596,9 +588,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_cli@57.0.16</string>
+			<string>com.mono0926.LicensePlist/@expo_cli@57.0.17</string>
 			<key>Title</key>
-			<string>@expo/cli (57.0.16)</string>
+			<string>@expo/cli (57.0.17)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -607,14 +599,6 @@
 			<string>com.mono0926.LicensePlist/@expo_code-signing-certificates@0.0.6</string>
 			<key>Title</key>
 			<string>@expo/code-signing-certificates (0.0.6)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_config-plugins@57.0.7</string>
-			<key>Title</key>
-			<string>@expo/config-plugins (57.0.7)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -631,14 +615,6 @@
 			<string>com.mono0926.LicensePlist/@expo_config-types@57.0.2</string>
 			<key>Title</key>
 			<string>@expo/config-types (57.0.2)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_config@57.0.7</string>
-			<key>Title</key>
-			<string>@expo/config (57.0.7)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -692,9 +668,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_fingerprint@0.20.8</string>
+			<string>com.mono0926.LicensePlist/@expo_fingerprint@0.20.9</string>
 			<key>Title</key>
-			<string>@expo/fingerprint (0.20.8)</string>
+			<string>@expo/fingerprint (0.20.9)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -724,9 +700,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_local-build-cache-provider@57.0.6</string>
+			<string>com.mono0926.LicensePlist/@expo_local-build-cache-provider@57.0.7</string>
 			<key>Title</key>
-			<string>@expo/local-build-cache-provider (57.0.6)</string>
+			<string>@expo/local-build-cache-provider (57.0.7)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -740,9 +716,17 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_metro-config@57.0.8</string>
+			<string>com.mono0926.LicensePlist/@expo_material-symbols@0.1.1</string>
 			<key>Title</key>
-			<string>@expo/metro-config (57.0.8)</string>
+			<string>@expo/material-symbols (0.1.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@expo_metro-config@57.0.9</string>
+			<key>Title</key>
+			<string>@expo/metro-config (57.0.9)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -756,9 +740,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_metro-runtime@57.0.11</string>
+			<string>com.mono0926.LicensePlist/@expo_metro-runtime@57.0.12</string>
 			<key>Title</key>
-			<string>@expo/metro-runtime (57.0.11)</string>
+			<string>@expo/metro-runtime (57.0.12)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -796,9 +780,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_prebuild-config@57.0.12</string>
+			<string>com.mono0926.LicensePlist/@expo_prebuild-config@57.0.13</string>
 			<key>Title</key>
-			<string>@expo/prebuild-config (57.0.12)</string>
+			<string>@expo/prebuild-config (57.0.13)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -812,9 +796,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_router-server@57.0.6</string>
+			<string>com.mono0926.LicensePlist/@expo_router-server@57.0.7</string>
 			<key>Title</key>
-			<string>@expo/router-server (57.0.6)</string>
+			<string>@expo/router-server (57.0.7)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -852,9 +836,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/@expo_ui@57.0.11</string>
+			<string>com.mono0926.LicensePlist/@expo_ui@57.0.12</string>
 			<key>Title</key>
-			<string>@expo/ui (57.0.11)</string>
+			<string>@expo/ui (57.0.12)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -1604,6 +1588,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/@rn-primitives_label@1.5.2</string>
+			<key>Title</key>
+			<string>@rn-primitives/label (1.5.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/@rn-primitives_select@1.5.2</string>
 			<key>Title</key>
 			<string>@rn-primitives/select (1.5.2)</string>
@@ -1636,25 +1628,17 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/@shopify_flash-list@2.0.2</string>
+			<key>Title</key>
+			<string>@shopify/flash-list (2.0.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/@sinclair_typebox@0.27.12</string>
 			<key>Title</key>
 			<string>@sinclair/typebox (0.27.12)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/@testing-library_jest-dom@6.10.0</string>
-			<key>Title</key>
-			<string>@testing-library/jest-dom (6.10.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/@testing-library_user-event@14.6.3</string>
-			<key>Title</key>
-			<string>@testing-library/user-event (14.6.3)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -1796,9 +1780,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/agent-cli-detector@0.1.4</string>
+			<string>com.mono0926.LicensePlist/agent-cli-detector@0.1.6</string>
 			<key>Title</key>
-			<string>agent-cli-detector (0.1.4)</string>
+			<string>agent-cli-detector (0.1.6)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -1879,14 +1863,6 @@
 			<string>com.mono0926.LicensePlist/aria-hidden@1.2.6</string>
 			<key>Title</key>
 			<string>aria-hidden (1.2.6)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/aria-query@5.3.2</string>
-			<key>Title</key>
-			<string>aria-query (5.3.2)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2388,14 +2364,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/css.escape@1.5.1</string>
-			<key>Title</key>
-			<string>css.escape (1.5.1)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/csstype@3.2.3</string>
 			<key>Title</key>
 			<string>csstype (3.2.3)</string>
@@ -2460,6 +2428,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/destr@2.0.5</string>
+			<key>Title</key>
+			<string>destr (2.0.5)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/destroy@1.2.0</string>
 			<key>Title</key>
 			<string>destroy (1.2.0)</string>
@@ -2495,14 +2471,6 @@
 			<string>com.mono0926.LicensePlist/dnssd-advertise@1.1.6</string>
 			<key>Title</key>
 			<string>dnssd-advertise (1.1.6)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/dom-accessibility-api@0.6.3</string>
-			<key>Title</key>
-			<string>dom-accessibility-api (0.6.3)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2668,9 +2636,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-asset@57.0.12</string>
+			<string>com.mono0926.LicensePlist/expo-asset@57.0.13</string>
 			<key>Title</key>
-			<string>expo-asset (57.0.12)</string>
+			<string>expo-asset (57.0.13)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2684,25 +2652,33 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-constants@57.0.12</string>
+			<string>com.mono0926.LicensePlist/expo-constants@57.0.13</string>
 			<key>Title</key>
-			<string>expo-constants (57.0.12)</string>
+			<string>expo-constants (57.0.13)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-dev-client@57.0.13</string>
+			<string>com.mono0926.LicensePlist/expo-crypto@57.0.1</string>
 			<key>Title</key>
-			<string>expo-dev-client (57.0.13)</string>
+			<string>expo-crypto (57.0.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-dev-launcher@57.0.13</string>
+			<string>com.mono0926.LicensePlist/expo-dev-client@57.0.14</string>
 			<key>Title</key>
-			<string>expo-dev-launcher (57.0.13)</string>
+			<string>expo-dev-client (57.0.14)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/expo-dev-launcher@57.0.14</string>
+			<key>Title</key>
+			<string>expo-dev-launcher (57.0.14)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2716,9 +2692,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-dev-menu@57.0.13</string>
+			<string>com.mono0926.LicensePlist/expo-dev-menu@57.0.14</string>
 			<key>Title</key>
-			<string>expo-dev-menu (57.0.13)</string>
+			<string>expo-dev-menu (57.0.14)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2732,9 +2708,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-file-system@57.0.4</string>
+			<string>com.mono0926.LicensePlist/expo-file-system@57.0.5</string>
 			<key>Title</key>
-			<string>expo-file-system (57.0.4)</string>
+			<string>expo-file-system (57.0.5)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2780,9 +2756,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-linking@57.0.6</string>
+			<string>com.mono0926.LicensePlist/expo-linking@57.0.7</string>
 			<key>Title</key>
-			<string>expo-linking (57.0.6)</string>
+			<string>expo-linking (57.0.7)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2804,6 +2780,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/expo-modern-table@0.1.2</string>
+			<key>Title</key>
+			<string>expo-modern-table (0.1.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/expo-modules-autolinking@57.0.10</string>
 			<key>Title</key>
 			<string>expo-modules-autolinking (57.0.10)</string>
@@ -2812,33 +2796,33 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-modules-core@57.0.11</string>
+			<string>com.mono0926.LicensePlist/expo-modules-core@57.0.12</string>
 			<key>Title</key>
-			<string>expo-modules-core (57.0.11)</string>
+			<string>expo-modules-core (57.0.12)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-modules-jsi@57.0.4</string>
+			<string>com.mono0926.LicensePlist/expo-modules-jsi@57.0.5</string>
 			<key>Title</key>
-			<string>expo-modules-jsi (57.0.4)</string>
+			<string>expo-modules-jsi (57.0.5)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-notifications@57.0.12</string>
+			<string>com.mono0926.LicensePlist/expo-notifications@57.0.13</string>
 			<key>Title</key>
-			<string>expo-notifications (57.0.12)</string>
+			<string>expo-notifications (57.0.13)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo-router@57.0.14</string>
+			<string>com.mono0926.LicensePlist/expo-router@57.0.15</string>
 			<key>Title</key>
-			<string>expo-router (57.0.14)</string>
+			<string>expo-router (57.0.15)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2847,6 +2831,14 @@
 			<string>com.mono0926.LicensePlist/expo-screen-capture@57.0.2</string>
 			<key>Title</key>
 			<string>expo-screen-capture (57.0.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/expo-screen-orientation@57.0.1</string>
+			<key>Title</key>
+			<string>expo-screen-orientation (57.0.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2924,9 +2916,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/expo@57.0.14</string>
+			<string>com.mono0926.LicensePlist/expo@57.0.15</string>
 			<key>Title</key>
-			<string>expo (57.0.14)</string>
+			<string>expo (57.0.15)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -3244,14 +3236,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/indent-string@4.0.0</string>
-			<key>Title</key>
-			<string>indent-string (4.0.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/inherits@2.0.4</string>
 			<key>Title</key>
 			<string>inherits (2.0.4)</string>
@@ -3548,9 +3532,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/lucide-react-native@1.32.0</string>
+			<string>com.mono0926.LicensePlist/lucide-react-native@1.33.0</string>
 			<key>Title</key>
-			<string>lucide-react-native (1.32.0)</string>
+			<string>lucide-react-native (1.33.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -3780,14 +3764,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/min-indent@1.0.1</string>
-			<key>Title</key>
-			<string>min-indent (1.0.1)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/minimatch@10.2.6</string>
 			<key>Title</key>
 			<string>minimatch (10.2.6)</string>
@@ -3876,6 +3852,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/node-fetch-native@1.6.7</string>
+			<key>Title</key>
+			<string>node-fetch-native (1.6.7)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/node-fetch@2.7.0</string>
 			<key>Title</key>
 			<string>node-fetch (2.7.0)</string>
@@ -3903,6 +3887,14 @@
 			<string>com.mono0926.LicensePlist/node-releases@2.0.51</string>
 			<key>Title</key>
 			<string>node-releases (2.0.51)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/normalize-url@9.0.1</string>
+			<key>Title</key>
+			<string>normalize-url (9.0.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -3943,6 +3935,14 @@
 			<string>com.mono0926.LicensePlist/object-assign@4.1.1</string>
 			<key>Title</key>
 			<string>object-assign (4.1.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/ofetch@1.5.1</string>
+			<key>Title</key>
+			<string>ofetch (1.5.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -4364,14 +4364,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/redent@3.0.0</string>
-			<key>Title</key>
-			<string>redent (3.0.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/regenerate-unicode-properties@10.2.2</string>
 			<key>Title</key>
 			<string>regenerate-unicode-properties (10.2.2)</string>
@@ -4764,14 +4756,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>com.mono0926.LicensePlist/strip-indent@3.0.0</string>
-			<key>Title</key>
-			<string>strip-indent (3.0.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>com.mono0926.LicensePlist/structured-headers@0.4.1</string>
 			<key>Title</key>
 			<string>structured-headers (0.4.1)</string>
@@ -4943,6 +4927,14 @@
 			<string>com.mono0926.LicensePlist/ua-parser-js@1.0.41</string>
 			<key>Title</key>
 			<string>ua-parser-js (1.0.41)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/ufo@1.6.4</string>
+			<key>Title</key>
+			<string>ufo (1.6.4)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

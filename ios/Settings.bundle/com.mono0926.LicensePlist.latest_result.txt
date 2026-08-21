@@ -10,11 +10,6 @@ body: MIT License
 Copyrig…
 version: 3.28.0
 
-name: @adobe_css-tools@4.5.0, nameSpecified: @adobe/css-tools, version: 4.5.0
-body: (The MIT License)
-
-C…
-
 name: @babel_code-frame@7.29.7, nameSpecified: @babel/code-frame, version: 7.29.7
 body: MIT License
 
@@ -371,22 +366,16 @@ body: MIT License
 
 Copyrig…
 
-name: @expo_cli@57.0.16, nameSpecified: @expo/cli, version: 57.0.16
+name: @expo_cli@57.0.17, nameSpecified: @expo/cli, version: 57.0.17
 body: The MIT License (MIT…
 
 name: @expo_code-signing-certificates@0.0.6, nameSpecified: @expo/code-signing-certificates, version: 0.0.6
-body: The MIT License (MIT…
-
-name: @expo_config-plugins@57.0.7, nameSpecified: @expo/config-plugins, version: 57.0.7
 body: The MIT License (MIT…
 
 name: @expo_config-plugins@57.0.8, nameSpecified: @expo/config-plugins, version: 57.0.8
 body: The MIT License (MIT…
 
 name: @expo_config-types@57.0.2, nameSpecified: @expo/config-types, version: 57.0.2
-body: The MIT License (MIT…
-
-name: @expo_config@57.0.7, nameSpecified: @expo/config, version: 57.0.7
 body: The MIT License (MIT…
 
 name: @expo_config@57.0.8, nameSpecified: @expo/config, version: 57.0.8
@@ -407,7 +396,7 @@ body: The MIT License (MIT…
 name: @expo_expo-modules-macros-plugin@0.6.1, nameSpecified: @expo/expo-modules-macros-plugin, version: 0.6.1
 body: The MIT License (MIT…
 
-name: @expo_fingerprint@0.20.8, nameSpecified: @expo/fingerprint, version: 0.20.8
+name: @expo_fingerprint@0.20.9, nameSpecified: @expo/fingerprint, version: 0.20.9
 body: The MIT License (MIT…
 
 name: @expo_image-utils@0.11.4, nameSpecified: @expo/image-utils, version: 0.11.4
@@ -419,19 +408,22 @@ body: The MIT License (MIT…
 name: @expo_json-file@11.0.1, nameSpecified: @expo/json-file, version: 11.0.1
 body: The MIT License (MIT…
 
-name: @expo_local-build-cache-provider@57.0.6, nameSpecified: @expo/local-build-cache-provider, version: 57.0.6
+name: @expo_local-build-cache-provider@57.0.7, nameSpecified: @expo/local-build-cache-provider, version: 57.0.7
 body: The MIT License (MIT…
 
 name: @expo_log-box@57.0.3, nameSpecified: @expo/log-box, version: 57.0.3
 body: The MIT License (MIT…
 
-name: @expo_metro-config@57.0.8, nameSpecified: @expo/metro-config, version: 57.0.8
+name: @expo_material-symbols@0.1.1, nameSpecified: @expo/material-symbols, version: 0.1.1
+body: MIT…
+
+name: @expo_metro-config@57.0.9, nameSpecified: @expo/metro-config, version: 57.0.9
 body: The MIT License (MIT…
 
 name: @expo_metro-file-map@57.0.1, nameSpecified: @expo/metro-file-map, version: 57.0.1
 body: The MIT License (MIT…
 
-name: @expo_metro-runtime@57.0.11, nameSpecified: @expo/metro-runtime, version: 57.0.11
+name: @expo_metro-runtime@57.0.12, nameSpecified: @expo/metro-runtime, version: 57.0.12
 body: The MIT License (MIT…
 
 name: @expo_metro@56.0.0, nameSpecified: @expo/metro, version: 56.0.0
@@ -448,13 +440,13 @@ body: The MIT License (MIT…
 name: @expo_plist@0.8.1, nameSpecified: @expo/plist, version: 0.8.1
 body: The MIT License (MIT…
 
-name: @expo_prebuild-config@57.0.12, nameSpecified: @expo/prebuild-config, version: 57.0.12
+name: @expo_prebuild-config@57.0.13, nameSpecified: @expo/prebuild-config, version: 57.0.13
 body: The MIT License (MIT…
 
 name: @expo_require-utils@57.0.4, nameSpecified: @expo/require-utils, version: 57.0.4
 body: The MIT License (MIT…
 
-name: @expo_router-server@57.0.6, nameSpecified: @expo/router-server, version: 57.0.6
+name: @expo_router-server@57.0.7, nameSpecified: @expo/router-server, version: 57.0.7
 body: The MIT License (MIT…
 
 name: @expo_schema-utils@57.0.2, nameSpecified: @expo/schema-utils, version: 57.0.2
@@ -469,7 +461,7 @@ body: The MIT License (MIT…
 name: @expo_sudo-prompt@9.3.2, nameSpecified: @expo/sudo-prompt, version: 9.3.2
 body: The MIT License (MIT…
 
-name: @expo_ui@57.0.11, nameSpecified: @expo/ui, version: 57.0.11
+name: @expo_ui@57.0.12, nameSpecified: @expo/ui, version: 57.0.12
 body: MIT…
 
 name: @expo_ws-tunnel@2.0.0, nameSpecified: @expo/ws-tunnel, version: 2.0.0
@@ -898,6 +890,11 @@ body: MIT License
 
 Copyrig…
 
+name: @rn-primitives_label@1.5.2, nameSpecified: @rn-primitives/label, version: 1.5.2
+body: MIT License
+
+Copyrig…
+
 name: @rn-primitives_select@1.5.2, nameSpecified: @rn-primitives/select, version: 1.5.2
 body: MIT License
 
@@ -918,14 +915,11 @@ body: MIT License
 
 Copyrig…
 
+name: @shopify_flash-list@2.0.2, nameSpecified: @shopify/flash-list, version: 2.0.2
+body: Copyright 2022-prese…
+
 name: @sinclair_typebox@0.27.12, nameSpecified: @sinclair/typebox, version: 0.27.12
 body: TypeBox: JSON Schema…
-
-name: @testing-library_jest-dom@6.10.0, nameSpecified: @testing-library/jest-dom, version: 6.10.0
-body: The MIT License (MIT…
-
-name: @testing-library_user-event@14.6.3, nameSpecified: @testing-library/user-event, version: 14.6.3
-body: The MIT License (MIT…
 
 name: @types_hammerjs@2.0.46, nameSpecified: @types/hammerjs, version: 2.0.46
 body:     MIT License
@@ -1008,7 +1002,7 @@ body: (The MIT License)
 
 C…
 
-name: agent-cli-detector@0.1.4, nameSpecified: agent-cli-detector, version: 0.1.4
+name: agent-cli-detector@0.1.6, nameSpecified: agent-cli-detector, version: 0.1.6
 body: MIT License
 
 Copyrig…
@@ -1056,10 +1050,6 @@ name: aria-hidden@1.2.6, nameSpecified: aria-hidden, version: 1.2.6
 body: MIT License
 
 Copyrig…
-
-name: aria-query@5.3.2, nameSpecified: aria-query, version: 5.3.2
-body: Apache License
-Versi…
 
 name: array-timsort@1.0.3, nameSpecified: array-timsort, version: 1.0.3
 body: The MIT License
@@ -1300,9 +1290,6 @@ body: Copyright (C) 2016-2…
 name: css-what@6.2.2, nameSpecified: css-what, version: 6.2.2
 body: Copyright (c) Felix …
 
-name: css.escape@1.5.1, nameSpecified: css.escape, version: 1.5.1
-body: MIT…
-
 name: csstype@3.2.3, nameSpecified: csstype, version: 3.2.3
 body: Copyright (c) 2017-2…
 
@@ -1335,6 +1322,11 @@ body: (The MIT License)
 
 C…
 
+name: destr@2.0.5, nameSpecified: destr, version: 2.0.5
+body: MIT License
+
+Copyrig…
+
 name: destroy@1.2.0, nameSpecified: destroy, version: 1.2.0
 body: 
 The MIT License (MI…
@@ -1351,11 +1343,6 @@ body: MIT License
 Copyrig…
 
 name: dnssd-advertise@1.1.6, nameSpecified: dnssd-advertise, version: 1.1.6
-body: MIT License
-
-Copyrig…
-
-name: dom-accessibility-api@0.6.3, nameSpecified: dom-accessibility-api, version: 0.6.3
 body: MIT License
 
 Copyrig…
@@ -1437,31 +1424,34 @@ body: The MIT License (MIT…
 name: expo-application@57.0.2, nameSpecified: expo-application, version: 57.0.2
 body: The MIT License (MIT…
 
-name: expo-asset@57.0.12, nameSpecified: expo-asset, version: 57.0.12
+name: expo-asset@57.0.13, nameSpecified: expo-asset, version: 57.0.13
 body: The MIT License (MIT…
 
 name: expo-blur@57.0.2, nameSpecified: expo-blur, version: 57.0.2
 body: The MIT License (MIT…
 
-name: expo-constants@57.0.12, nameSpecified: expo-constants, version: 57.0.12
+name: expo-constants@57.0.13, nameSpecified: expo-constants, version: 57.0.13
 body: The MIT License (MIT…
 
-name: expo-dev-client@57.0.13, nameSpecified: expo-dev-client, version: 57.0.13
+name: expo-crypto@57.0.1, nameSpecified: expo-crypto, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-dev-launcher@57.0.13, nameSpecified: expo-dev-launcher, version: 57.0.13
+name: expo-dev-client@57.0.14, nameSpecified: expo-dev-client, version: 57.0.14
+body: The MIT License (MIT…
+
+name: expo-dev-launcher@57.0.14, nameSpecified: expo-dev-launcher, version: 57.0.14
 body: The MIT License (MIT…
 
 name: expo-dev-menu-interface@57.0.0, nameSpecified: expo-dev-menu-interface, version: 57.0.0
 body: The MIT License (MIT…
 
-name: expo-dev-menu@57.0.13, nameSpecified: expo-dev-menu, version: 57.0.13
+name: expo-dev-menu@57.0.14, nameSpecified: expo-dev-menu, version: 57.0.14
 body: The MIT License (MIT…
 
 name: expo-device@57.0.1, nameSpecified: expo-device, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-file-system@57.0.4, nameSpecified: expo-file-system, version: 57.0.4
+name: expo-file-system@57.0.5, nameSpecified: expo-file-system, version: 57.0.5
 body: The MIT License (MIT…
 
 name: expo-font@57.0.1, nameSpecified: expo-font, version: 57.0.1
@@ -1479,7 +1469,7 @@ body: The MIT License (MIT…
 name: expo-keep-awake@57.0.1, nameSpecified: expo-keep-awake, version: 57.0.1
 body: The MIT License (MIT…
 
-name: expo-linking@57.0.6, nameSpecified: expo-linking, version: 57.0.6
+name: expo-linking@57.0.7, nameSpecified: expo-linking, version: 57.0.7
 body: The MIT License (MIT…
 
 name: expo-local-authentication@57.0.2, nameSpecified: expo-local-authentication, version: 57.0.2
@@ -1488,22 +1478,30 @@ body: The MIT License (MIT…
 name: expo-manifests@57.0.1, nameSpecified: expo-manifests, version: 57.0.1
 body: The MIT License (MIT…
 
+name: expo-modern-table@0.1.2, nameSpecified: expo-modern-table, version: 0.1.2
+body: MIT License
+
+Copyrig…
+
 name: expo-modules-autolinking@57.0.10, nameSpecified: expo-modules-autolinking, version: 57.0.10
 body: The MIT License (MIT…
 
-name: expo-modules-core@57.0.11, nameSpecified: expo-modules-core, version: 57.0.11
+name: expo-modules-core@57.0.12, nameSpecified: expo-modules-core, version: 57.0.12
 body: The MIT License (MIT…
 
-name: expo-modules-jsi@57.0.4, nameSpecified: expo-modules-jsi, version: 57.0.4
+name: expo-modules-jsi@57.0.5, nameSpecified: expo-modules-jsi, version: 57.0.5
 body: The MIT License (MIT…
 
-name: expo-notifications@57.0.12, nameSpecified: expo-notifications, version: 57.0.12
+name: expo-notifications@57.0.13, nameSpecified: expo-notifications, version: 57.0.13
 body: The MIT License (MIT…
 
-name: expo-router@57.0.14, nameSpecified: expo-router, version: 57.0.14
+name: expo-router@57.0.15, nameSpecified: expo-router, version: 57.0.15
 body: MIT…
 
 name: expo-screen-capture@57.0.2, nameSpecified: expo-screen-capture, version: 57.0.2
+body: The MIT License (MIT…
+
+name: expo-screen-orientation@57.0.1, nameSpecified: expo-screen-orientation, version: 57.0.1
 body: The MIT License (MIT…
 
 name: expo-secure-store@57.0.1, nameSpecified: expo-secure-store, version: 57.0.1
@@ -1533,7 +1531,7 @@ body: The MIT License (MIT…
 name: expo-web-browser@57.0.2, nameSpecified: expo-web-browser, version: 57.0.2
 body: The MIT License (MIT…
 
-name: expo@57.0.14, nameSpecified: expo, version: 57.0.14
+name: expo@57.0.15, nameSpecified: expo, version: 57.0.15
 body: The MIT License (MIT…
 
 name: exponential-backoff@3.1.3, nameSpecified: exponential-backoff, version: 3.1.3
@@ -1691,11 +1689,6 @@ body: MIT…
 name: image-size@1.2.1, nameSpecified: image-size, version: 1.2.1
 body: The MIT License (MIT…
 
-name: indent-string@4.0.0, nameSpecified: indent-string, version: 4.0.0
-body: MIT License
-
-Copyrig…
-
 name: inherits@2.0.4, nameSpecified: inherits, version: 2.0.4
 body: The ISC License
 
@@ -1842,7 +1835,7 @@ body: The ISC License
 
 Cop…
 
-name: lucide-react-native@1.32.0, nameSpecified: lucide-react-native, version: 1.32.0
+name: lucide-react-native@1.33.0, nameSpecified: lucide-react-native, version: 1.33.0
 body: ISC License
 
 Copyrig…
@@ -1950,10 +1943,6 @@ body: MIT License
 
 Copyrig…
 
-name: min-indent@1.0.1, nameSpecified: min-indent, version: 1.0.1
-body: 
-The MIT License (MI…
-
 name: minimatch@10.2.6, nameSpecified: minimatch, version: 10.2.6
 body: # Blue Oak Model Lic…
 
@@ -1997,6 +1986,11 @@ body: (The MIT License)
 
 C…
 
+name: node-fetch-native@1.6.7, nameSpecified: node-fetch-native, version: 1.6.7
+body: MIT License
+
+Copyrig…
+
 name: node-fetch@2.7.0, nameSpecified: node-fetch, version: 2.7.0
 body: The MIT License (MIT…
 
@@ -2010,6 +2004,11 @@ name: node-releases@2.0.51, nameSpecified: node-releases, version: 2.0.51
 body: The MIT License
 
 Cop…
+
+name: normalize-url@9.0.1, nameSpecified: normalize-url, version: 9.0.1
+body: MIT License
+
+Copyrig…
 
 name: npm-package-arg@11.0.3, nameSpecified: npm-package-arg, version: 11.0.3
 body: The ISC License
@@ -2027,6 +2026,11 @@ body: MIT…
 
 name: object-assign@4.1.1, nameSpecified: object-assign, version: 4.1.1
 body: The MIT License (MIT…
+
+name: ofetch@1.5.1, nameSpecified: ofetch, version: 1.5.1
+body: MIT License
+
+Copyrig…
 
 name: on-finished@2.3.0, nameSpecified: on-finished, version: 2.3.0
 body: (The MIT License)
@@ -2253,11 +2257,6 @@ body: MIT License
 
 Copyrig…
 
-name: redent@3.0.0, nameSpecified: redent, version: 3.0.0
-body: MIT License
-
-Copyrig…
-
 name: regenerate-unicode-properties@10.2.2, nameSpecified: regenerate-unicode-properties, version: 10.2.2
 body: MIT…
 
@@ -2451,11 +2450,6 @@ body: MIT License
 
 Copyrig…
 
-name: strip-indent@3.0.0, nameSpecified: strip-indent, version: 3.0.0
-body: MIT License
-
-Copyrig…
-
 name: structured-headers@0.4.1, nameSpecified: structured-headers, version: 0.4.1
 body: MIT…
 
@@ -2550,6 +2544,11 @@ body: MIT License
 Copyrig…
 
 name: ua-parser-js@1.0.41, nameSpecified: ua-parser-js, version: 1.0.41
+body: MIT License
+
+Copyrig…
+
+name: ufo@1.6.4, nameSpecified: ufo, version: 1.6.4
 body: MIT License
 
 Copyrig…

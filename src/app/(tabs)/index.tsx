@@ -1,25 +1,71 @@
 import Spacer from "@/components/custom/spacer"
+import { useAppTheme } from "@/components/custom/theme"
 import BottomSheet, { BottomSheetTextInput } from "@/components/ui/bottom-sheet"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import { Icon } from "@/components/ui/icon"
 import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
 import { Text } from "@/components/ui/text"
-import { useOverview } from "@/lib/hooks/data/overview"
-import { useServer, ServerData } from "@/lib/hooks/servers/connection"
-import { Plus, Waypoints } from "lucide-react-native"
+import { HealthStatus, useOverview } from "@/lib/hooks/data/overview"
+import { useServer } from "@/lib/hooks/servers/connection"
+import { Button as NativeButton, Host as NativeHost } from "@expo/ui"
+import {
+  CircleAlert,
+  CircleCheck,
+  CircleHelp,
+  Component,
+  Library,
+  LucideIcon,
+  Server,
+  TriangleAlert,
+} from "lucide-react-native"
 import { useRef, useState } from "react"
-import { ActivityIndicator, Alert, TextInput, useWindowDimensions, View } from "react-native"
+import { Alert, ScrollView, TextInput, useWindowDimensions, View } from "react-native"
+
+const HEALTH_PRESENTATION: Record<
+  HealthStatus,
+  {
+    icon: LucideIcon
+    iconClassName: string
+    iconContainerClassName: string
+    description: string
+  }
+> = {
+  [HealthStatus.HEALTHY]: {
+    icon: CircleCheck,
+    iconClassName: "text-emerald-600 dark:text-emerald-400",
+    iconContainerClassName: "bg-emerald-500/10",
+    description: "Everything being monitored is running normally.",
+  },
+  [HealthStatus.DEGRADED]: {
+    icon: TriangleAlert,
+    iconClassName: "text-amber-600 dark:text-amber-400",
+    iconContainerClassName: "bg-amber-500/10",
+    description: "A non-critical resource needs your attention.",
+  },
+  [HealthStatus.UNHEALTHY]: {
+    icon: CircleAlert,
+    iconClassName: "text-red-600 dark:text-red-400",
+    iconContainerClassName: "bg-red-500/10",
+    description: "A critical resource is stopped, failing, or unreachable.",
+  },
+  [HealthStatus.UNKNOWN]: {
+    icon: CircleHelp,
+    iconClassName: "text-muted-foreground",
+    iconContainerClassName: "bg-muted",
+    description: "There is not enough resource data to determine health yet.",
+  },
+}
 
 export default function OverviewScreen() {
   const { height: windowHeight } = useWindowDimensions()
-  const newServerSheetHeight = windowHeight * 0.5
+  const { colorScheme } = useAppTheme()
+  const nativeAccentColor = colorScheme === "dark" ? "#e91e63" : "#008080"
+  const newServerSheetHeight = windowHeight * 0.56
 
-  // overview data
   const overviewData = useOverview()
-  const total = overviewData.instanceCount + overviewData.resourceCount + overviewData.serverCount
+  const health = HEALTH_PRESENTATION[overviewData.healthStatus]
 
-  // new server
   const [newServerOpen, setNewServerOpen] = useState(false)
   const newServerNick = useRef<TextInput>(null)
   const newServerAddress = useRef<TextInput>(null)
@@ -31,16 +77,13 @@ export default function OverviewScreen() {
     (value) => value.trim().length > 0
   )
 
-  // validate connection
   const { validate, create } = useServer()
   const [validating, setValidating] = useState(false)
-  const [validationResponse, setValidationResponse] = useState<Omit<ServerData, "id">>()
   const resetNewServerForm = () => {
     setNewServerOpen(false)
     setNewServerNickValue("")
     setNewServerAddressValue("")
     setNewServerApiKeyValue("")
-    setValidationResponse(undefined)
     newServerNick.current?.clear()
     newServerAddress.current?.clear()
     newServerApiKey.current?.clear()
@@ -48,35 +91,31 @@ export default function OverviewScreen() {
 
   const addServer = async () => {
     try {
-      // create server
       const created = await create({
         nickname: newServerNickValue.trim(),
         endpoint: newServerAddressValue.trim(),
         token: newServerApiKeyValue.trim(),
       })
 
-      // failed to create server
       if (!created) throw Error("server could not be added")
-
-      // reset new server form
       resetNewServerForm()
     } catch (error) {
-      Alert.alert(
-        "Server Could Not Be Added",
-        error instanceof Error ? error.message : "Please try again.",
-        [
-          { text: "Go Back", style: "cancel" },
-          { text: "Try Again", onPress: addServer },
-        ]
-      )
+      Alert.alert("Server Could Not Be Added", error instanceof Error ? error.message : "Please try again.", [
+        {
+          text: "Go Back",
+          style: "cancel",
+        },
+        {
+          text: "Try Again",
+          onPress: addServer,
+        },
+      ])
     }
   }
 
   const validateConnection = async () => {
-    // validate input
     if (!canValidateServer) return
 
-    // attempt to validate connection
     setValidating(true)
     try {
       const data = await validate({
@@ -85,23 +124,31 @@ export default function OverviewScreen() {
         token: newServerApiKeyValue.trim(),
       })
 
-      // set validation data
-      setValidationResponse(data)
-
-      // alert per response type
-      const { health, version } = data
-      const allGood = health === "ok" && Boolean(version)
+      const { health: serverHealth, version } = data
+      const allGood = serverHealth === "ok" && Boolean(version)
       Alert.alert(
         `Validation ${allGood ? "Succeeded" : "Failed"}`,
         allGood ? `This server is running Coolify v${version}.` : "Would you like to try again?",
         allGood
           ? [
-              { text: "Edit Details", style: "cancel" },
-              { text: "Add Server", onPress: addServer },
+              {
+                text: "Edit Details",
+                style: "cancel",
+              },
+              {
+                text: "Add Server",
+                onPress: addServer,
+              },
             ]
           : [
-              { text: "Go Back", style: "cancel" },
-              { text: "Try Again", onPress: validateConnection },
+              {
+                text: "Go Back",
+                style: "cancel",
+              },
+              {
+                text: "Try Again",
+                onPress: validateConnection,
+              },
             ]
       )
     } catch (error) {
@@ -109,8 +156,14 @@ export default function OverviewScreen() {
         "Validation Failed",
         error instanceof Error ? error.message : "Would you like to try again?",
         [
-          { text: "Go Back", style: "cancel" },
-          { text: "Try Again", onPress: validateConnection },
+          {
+            text: "Go Back",
+            style: "cancel",
+          },
+          {
+            text: "Try Again",
+            onPress: validateConnection,
+          },
         ]
       )
     } finally {
@@ -118,8 +171,10 @@ export default function OverviewScreen() {
     }
   }
 
-  // api key scopes
-  const apiKeyScopes: { name: string; description: string }[] = [
+  const apiKeyScopes: {
+    name: string
+    description: string
+  }[] = [
     {
       name: "Root",
       description: "Full access to every operation",
@@ -138,86 +193,145 @@ export default function OverviewScreen() {
     },
   ]
 
-  // screen
   return (
     <>
-      <View className="flex flex-col gap-2">
-        {/* main grid */}
-        <View className="grid grid-cols-2">
-          {/* no data to show */}
-          {!total && (
-            <View className="h-full w-full items-center justify-center gap-4">
-              <Text className="text-center text-lg">You have no Servers</Text>
-              <Button size="sm" onPress={() => setNewServerOpen(true)}>
-                <Icon as={Plus} />
-                <Text>Add Server</Text>
-              </Button>
+      <View className="flex-1 gap-8 p-4">
+        <View
+          accessible
+          accessibilityLabel={`Status: ${overviewData.healthStatus}. ${health.description}`}
+          className="gap-5 rounded-2xl border border-border bg-card p-5">
+          <View className="flex-row items-center gap-4">
+            <View
+              className={`h-12 w-12 shrink-0 items-center justify-center rounded-full ${health.iconContainerClassName}`}>
+              <Icon as={health.icon} size={24} className={health.iconClassName} />
             </View>
-          )}
+
+            <View className="flex-1 gap-1">
+              <Text className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Status
+              </Text>
+              <Text className="text-2xl font-bold">{overviewData.healthStatus}</Text>
+              <Text className="leading-5 text-muted-foreground">{health.description}</Text>
+            </View>
+          </View>
+
+          <View className="flex-row border-t border-border pt-4">
+            <StatusFact label="Servers" value={overviewData.serverCount} />
+            <View className="w-hairline mx-4 bg-border" />
+            <StatusFact label="Monitored resources" value={overviewData.resourceCount} />
+          </View>
+        </View>
+
+        <View className="gap-3">
+          <View className="gap-1 px-1">
+            <Text className="text-xl font-semibold">Infrastructure</Text>
+            <Text className="text-sm text-muted-foreground">What Cooler can currently see</Text>
+          </View>
+
+          <View className="overflow-hidden rounded-2xl border border-border bg-card">
+            <OverviewRow
+              icon={Server}
+              title="Servers"
+              description="Coolify connections"
+              count={overviewData.serverCount}
+            />
+            <Separator />
+            <OverviewRow
+              icon={Component}
+              title="Instances"
+              description="Deployment targets"
+              count={overviewData.instanceCount}
+            />
+            <Separator />
+            <OverviewRow
+              icon={Library}
+              title="Resources"
+              description="Apps, databases, and services"
+              count={overviewData.resourceCount}
+            />
+          </View>
         </View>
       </View>
+
       <BottomSheet
         key="new-server-sheet"
         index={newServerOpen ? 0 : -1}
         onDismiss={() => setNewServerOpen(false)}
         enablePanDownToClose
-        snapPoints={["62%"]}>
+        snapPoints={["68%"]}>
         <View
-          className="gap-4 p-4"
+          className="gap-5 p-4"
           style={{
             height: newServerSheetHeight,
           }}>
-          <Text className="text-center text-lg font-semibold">New Server</Text>
+          <View className="gap-1">
+            <Text className="text-xl font-semibold">Add a server</Text>
+            <Text className="text-sm text-muted-foreground">
+              Connect Cooler to an existing Coolify server.
+            </Text>
+          </View>
 
-          {/* form */}
           <View className="flex-1 gap-4">
-            {/* nickname */}
-            <Label>Nickname</Label>
-            <BottomSheetTextInput
-              ref={newServerNick}
-              className="rounded-md border border-input bg-card px-3 py-4 text-foreground"
-              autoCorrect={false}
-              placeholder="Leon's Very Cool Server"
-              onChangeText={setNewServerNickValue}
-            />
-
-            {/* address */}
-            <Label>Server Address (No Protocol)</Label>
-            <BottomSheetTextInput
-              ref={newServerAddress}
-              className="rounded-md border border-input bg-card px-3 py-4 text-foreground"
-              autoCorrect={false}
-              placeholder="server.umbrella.gg"
-              onChangeText={setNewServerAddressValue}
-            />
-
-            {/* api key */}
             <View className="gap-2">
-              {/* input */}
-              <Label>API Key</Label>
+              <Label>Nickname</Label>
+              <BottomSheetTextInput
+                ref={newServerNick}
+                className="rounded-md border border-input bg-card px-3 py-4 text-foreground"
+                autoCorrect={false}
+                autoCapitalize="words"
+                placeholder="Production"
+                returnKeyType="next"
+                onSubmitEditing={() => newServerAddress.current?.focus()}
+                onChangeText={setNewServerNickValue}
+              />
+            </View>
+
+            <View className="gap-2">
+              <Label>Server address</Label>
+              <BottomSheetTextInput
+                ref={newServerAddress}
+                className="rounded-md border border-input bg-card px-3 py-4 text-foreground"
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="url"
+                placeholder="server.example.com"
+                returnKeyType="next"
+                onSubmitEditing={() => newServerApiKey.current?.focus()}
+                onChangeText={setNewServerAddressValue}
+              />
+              <Text className="text-xs text-muted-foreground">HTTPS is added automatically.</Text>
+            </View>
+
+            <View className="gap-2">
+              <Label>API key</Label>
               <BottomSheetTextInput
                 ref={newServerApiKey}
                 className="w-full rounded-md border border-input bg-card px-3 py-4 text-foreground"
                 autoCorrect={false}
-                placeholder="HOPE"
+                autoCapitalize="none"
+                secureTextEntry
+                placeholder="Enter your API key"
+                returnKeyType="done"
+                onSubmitEditing={() => {
+                  if (canValidateServer && !validating) void validateConnection()
+                }}
                 onChangeText={setNewServerApiKeyValue}
               />
 
-              {/* info */}
-              <View className="flex-row flex-wrap items-center justify-center">
-                <Text className="text-xs text-muted-foreground">Set your key access to </Text>
+              <View className="flex-row flex-wrap items-center">
+                <Text className="text-xs text-muted-foreground">Grant </Text>
                 <Button
                   variant="link"
                   className="h-auto p-0"
                   onPress={() => {
                     Alert.alert(
-                      "API Key",
-                      `When creating your API key, ensure to enable only the scopes you truly need.\n\nHere are the scopes, for reference:\n\n${apiKeyScopes
-                        .map((scope) => `${scope.name} - ${scope.description}`)
+                      "API key permissions",
+                      `Only enable the permissions this key needs.\n\n${apiKeyScopes
+                        .map((scope) => `${scope.name} — ${scope.description}`)
                         .join("\n")}`
                     )
                   }}>
-                  <Text className="text-xs font-semibold underline">only what you need</Text>
+                  <Text className="text-xs font-semibold underline">only the permissions you need</Text>
                 </Button>
                 <Text className="text-xs text-muted-foreground">.</Text>
               </View>
@@ -225,11 +339,25 @@ export default function OverviewScreen() {
 
             <Spacer />
 
-            {/* validate connection */}
-            <Button disabled={!canValidateServer || validating} onPress={validateConnection}>
-              {validating ? <ActivityIndicator /> : <Icon as={Waypoints} />}
-              <Text>{validating ? "Validating..." : "Validate Connection"}</Text>
-            </Button>
+            <NativeHost
+              colorScheme={colorScheme}
+              seedColor={nativeAccentColor}
+              matchContents={{
+                vertical: true,
+              }}
+              style={{
+                width: "100%",
+              }}>
+              <NativeButton
+                label={validating ? "Validating…" : "Validate connection"}
+                disabled={!canValidateServer || validating}
+                onPress={() => void validateConnection()}
+                style={{
+                  width: "100%",
+                  height: 48,
+                }}
+              />
+            </NativeHost>
           </View>
         </View>
       </BottomSheet>
@@ -237,7 +365,39 @@ export default function OverviewScreen() {
   )
 }
 
-// overview card
-const OverviewCard = () => {
-  return <Card></Card>
+function StatusFact({ label, value }: { label: string; value: number }) {
+  return (
+    <View className="flex-1 gap-0.5">
+      <Text className="text-2xl font-semibold tabular-nums">{value}</Text>
+      <Text className="text-xs text-muted-foreground">{label}</Text>
+    </View>
+  )
+}
+
+function OverviewRow({
+  icon,
+  title,
+  description,
+  count,
+}: {
+  icon: LucideIcon
+  title: string
+  description: string
+  count: number
+}) {
+  return (
+    <View
+      accessible
+      accessibilityLabel={`${title}: ${count}. ${description}`}
+      className="min-h-20 flex-row items-center gap-3 px-4 py-3">
+      <View className="h-10 w-10 items-center justify-center rounded-full bg-muted">
+        <Icon as={icon} size={20} className="text-foreground" />
+      </View>
+      <View className="flex-1 gap-0.5">
+        <Text className="font-semibold">{title}</Text>
+        <Text className="text-sm text-muted-foreground">{description}</Text>
+      </View>
+      <Text className="text-2xl font-semibold tabular-nums">{count}</Text>
+    </View>
+  )
 }

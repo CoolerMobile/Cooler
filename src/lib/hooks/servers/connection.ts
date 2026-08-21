@@ -1,7 +1,8 @@
 import { normalizeUrl, parseError } from "@/lib/utils"
 import { ofetch } from "ofetch"
 import { useSecureStorage } from "@/lib/hooks/secure"
-import { v4 as uuidv4 } from "uuid"
+import { useDataStore } from "@/lib/stores/data"
+import * as Crypto from "expo-crypto"
 
 // variables
 const HEALTH_ENDPOINT = "api/v1/health"
@@ -121,23 +122,27 @@ export const useServer = () => {
     const valid = await validate(server)
 
     // servers
-    const servers = ((await getSecure("servers")) as ServerData[] | null) ?? []
+    const storedServers = await getSecure("servers")
+    const servers: ServerData[] = storedServers ? JSON.parse(storedServers) : []
 
     // validate server existence
-    if (servers.some((serverItem) => serverItem.endpoint === server.endpoint)) {
+    if (servers.some((serverItem) => serverItem.endpoint === valid.endpoint)) {
       throw Error("server already added")
     }
 
     // complete server data
-    const normalizedEndpoint = normalizeUrl(server.endpoint)
-    const serverData: Omit<ServerData, "version" | "health"> = {
-      ...server,
-      id: uuidv4(),
-      endpoint: normalizedEndpoint,
+    const serverData: ServerData = {
+      ...valid,
+      id: Crypto.randomUUID(),
     }
 
     // add server to secure storage
-    const serverAdded = await setSecure("servers", [...servers, serverData])
+    const nextServers = [...servers, serverData]
+    const serverAdded = await setSecure("servers", JSON.stringify(nextServers))
+
+    // keep the live store in sync with the established SecureStore flow so
+    // subscribed screens update immediately after a successful write
+    if (serverAdded) useDataStore.getState().setServers(nextServers)
 
     // return success or failure
     return serverAdded
