@@ -7,6 +7,7 @@ import {
   CircleAlert,
   CircleCheck,
   CircleHelp,
+  ChevronRight,
   Component,
   Library,
   LucideIcon,
@@ -58,14 +59,18 @@ export default function OverviewScreen() {
     overviewData.failedServerCount > 0
       ? `${overviewData.failedServerCount} Coolify ${overviewData.failedServerCount === 1 ? "connection could" : "connections could"} not be refreshed.`
       : health.description
+  const showHealthDetails = overviewData.healthStatus !== HealthStatus.HEALTHY
 
   // ui
   return (
     <>
       <View className="flex-1 gap-8 p-4">
-        <View
+        <Pressable
           accessible
-          accessibilityLabel={`Status: ${overviewData.healthStatus}. ${healthDescription}`}
+          accessibilityRole={showHealthDetails ? "button" : undefined}
+          accessibilityLabel={`Status: ${overviewData.healthStatus}. ${healthDescription}${showHealthDetails ? " Tap for details." : ""}`}
+          disabled={!showHealthDetails}
+          onPress={() => router.navigate({ pathname: "/(screens)/health" })}
           className="gap-5 rounded-2xl border border-border bg-card p-5">
           <View className="flex-row items-center gap-4">
             <View
@@ -80,6 +85,7 @@ export default function OverviewScreen() {
               <Text className="text-2xl font-bold">{overviewData.healthStatus}</Text>
               <Text className="leading-5 text-muted-foreground">{healthDescription}</Text>
             </View>
+            {showHealthDetails && <Icon as={ChevronRight} size={20} className="text-muted-foreground" />}
           </View>
 
           <View className="flex-row border-t border-border pt-4">
@@ -87,7 +93,7 @@ export default function OverviewScreen() {
             <View className="w-hairline mx-4 bg-border" />
             <StatusFact label="Monitored resources" value={overviewData.resources.length} />
           </View>
-        </View>
+        </Pressable>
 
         <View className="gap-3">
           <View className="gap-1 px-1">
