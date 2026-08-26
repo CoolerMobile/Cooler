@@ -1,35 +1,38 @@
-/** A Coolify server persisted by the Zustand data store. */
-export type Server = {
-  id: string;
-  name: string;
-  description: string;
-};
-
 /** A resource status reported by Coolify. */
-export type ResourceStatus = "running" | "stopped" | "failed" | "unknown";
+export type ResourceStatus = "running" | "stopped" | "failed" | "unknown"
 
 /**
  * A deployed resource whose reported state contributes to the overview health.
  */
 export type Resource = {
-  id: string;
-  name: string;
-  instanceId: string;
+  id: string
+  uuid: string
+  name: string
+  type: string
+  /** The saved Coolify connection this resource was discovered through. */
+  connectionId: string
+  instanceId: string
+  /** The unmodified status returned by Coolify. */
+  rawStatus: string
   /** Critical resources make the overall health unhealthy when unavailable. */
-  isCritical: boolean;
+  isCritical: boolean
   /** Whether the resource can currently be reached by its instance. */
-  isReachable: boolean;
-  status: ResourceStatus;
-};
+  isReachable: boolean
+  status: ResourceStatus
+}
 
 /**
  * coolify instance
  */
 export type Instance = {
-  id: string;
-  name: string;
-  description: string;
-};
+  id: string
+  uuid: string
+  name: string
+  description: string
+  /** The saved Coolify connection that manages this deployment target. */
+  connectionId: string
+  isReachable: boolean
+}
 
 export enum HealthStatus {
   /** every reachable resource is running and healthy */

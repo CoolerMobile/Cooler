@@ -12,9 +12,18 @@ type PersistedDataState = {
 
 type DataState = PersistedDataState & {
   hasHydrated: boolean
+  hasSynced: boolean
+  failedServerIds: string[]
+  lastSyncedAt: number | null
   setServers: (servers: ServerData[]) => void
   setResources: (resources: Resource[]) => void
   setInstances: (instances: Instance[]) => void
+  setInfrastructure: (data: {
+    resources: Resource[]
+    instances: Instance[]
+    failedServerIds: string[]
+    lastSyncedAt: number
+  }) => void
   setHasHydrated: (hasHydrated: boolean) => void
   reset: () => void
 }
@@ -24,6 +33,12 @@ const EMPTY_DATA: PersistedDataState = {
   servers: [],
   resources: [],
   instances: [],
+}
+
+const EMPTY_SYNC_STATE = {
+  hasSynced: false,
+  failedServerIds: [] as string[],
+  lastSyncedAt: null as number | null,
 }
 
 const parseCollection = <T>(value: string | null): T[] | undefined => {
@@ -99,12 +114,21 @@ export const useDataStore = create<DataState>()(
   persist<DataState, [], [], PersistedDataState>(
     (set) => ({
       ...EMPTY_DATA,
+      ...EMPTY_SYNC_STATE,
       hasHydrated: false,
       setServers: (servers) => set({ servers }),
       setResources: (resources) => set({ resources }),
       setInstances: (instances) => set({ instances }),
+      setInfrastructure: ({ resources, instances, failedServerIds, lastSyncedAt }) =>
+        set({
+          resources,
+          instances,
+          failedServerIds,
+          lastSyncedAt,
+          hasSynced: true,
+        }),
       setHasHydrated: (hasHydrated) => set({ hasHydrated }),
-      reset: () => set({ ...EMPTY_DATA }),
+      reset: () => set({ ...EMPTY_DATA, ...EMPTY_SYNC_STATE }),
     }),
     {
       name: DATA_STORAGE_KEY,

@@ -10,12 +10,15 @@ import { SettingsGitHub } from "@/components/custom/settings/github"
 import { PortalHost } from "@rn-primitives/portal"
 import { MainNotifications } from "@/components/custom/home/notifications"
 import { MainAdd } from "@/components/custom/home/add"
+import { NewServerSheet } from "@/components/custom/new-server"
+import { useState } from "react"
+import { useCoolifyMonitor } from "@/lib/hooks/data/coolify"
 
 const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
   index: {
     title: "Cooler",
     headerLeft: () => <MainNotifications />,
-    headerRight: () => <MainAdd />,
+    headerRight: () => <MainHeaderRight />,
   },
   deployments: {
     title: "Cooler",
@@ -25,6 +28,17 @@ const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
     title: "Cooler",
     headerRight: () => <SettingsGitHub />,
   },
+}
+
+function MainHeaderRight() {
+  const [newServerOpen, setNewServerOpen] = useState(false)
+
+  return (
+    <>
+      <MainAdd onPress={() => setNewServerOpen(true)} />
+      <NewServerSheet open={newServerOpen} onOpenChange={setNewServerOpen} />
+    </>
+  )
 }
 
 export default function RootLayout() {
@@ -43,6 +57,8 @@ export default function RootLayout() {
 }
 
 function RootNavigator() {
+  useCoolifyMonitor()
+
   // theme
   const { colorScheme } = useAppTheme()
   const theme = NAV_THEME[colorScheme]
