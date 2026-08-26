@@ -140,9 +140,6 @@ const syncConnection = async (
                 type: normalizedText(coolifyResource.type, "unknown").toLowerCase(),
                 rawStatus,
                 status: normalizeResourceStatus(rawStatus),
-                // Coolify does not expose resource criticality. Monitoring errs on
-                // the safe side until Cooler offers a user-controlled override.
-                isCritical: true,
                 isReachable: reportedReachable,
               },
             ]

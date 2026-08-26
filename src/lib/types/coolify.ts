@@ -14,8 +14,6 @@ export type Resource = {
   instanceId: string
   /** The unmodified status returned by Coolify. */
   rawStatus: string
-  /** Critical resources make the overall health unhealthy when unavailable. */
-  isCritical: boolean
   /** Whether the resource can currently be reached by its instance. */
   isReachable: boolean
   status: ResourceStatus
@@ -38,10 +36,10 @@ export enum HealthStatus {
   /** every reachable resource is running and healthy */
   HEALTHY = "Healthy",
 
-  /** core services are healthy, but some resources need attention */
+  /** infrastructure is reachable, but some resources need attention */
   DEGRADED = "Degraded",
 
-  /** at least one critical resource is stopped, failing, or unreachable */
+  /** a Coolify connection or deployment target is unreachable */
   UNHEALTHY = "Unhealthy",
 
   /** not enough information retrieved to decide on a proper status */

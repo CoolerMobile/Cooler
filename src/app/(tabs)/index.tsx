@@ -34,13 +34,13 @@ const HEALTH_PRESENTATION: Record<
     icon: TriangleAlert,
     iconClassName: "text-amber-600 dark:text-amber-400",
     iconContainerClassName: "bg-amber-500/10",
-    description: "A non-critical resource needs your attention.",
+    description: "A resource is stopped or failing and needs your attention.",
   },
   [HealthStatus.UNHEALTHY]: {
     icon: CircleAlert,
     iconClassName: "text-red-600 dark:text-red-400",
     iconContainerClassName: "bg-red-500/10",
-    description: "A critical resource is stopped, failing, or unreachable.",
+    description: "A Coolify connection or deployment target is unreachable.",
   },
   [HealthStatus.UNKNOWN]: {
     icon: CircleHelp,

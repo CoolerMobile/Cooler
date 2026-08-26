@@ -124,7 +124,6 @@ export default function ResourceScreen() {
                   ["UUID", item.uuid],
                   ["Instance ID", item.instanceId],
                   ["Connection ID", item.connectionId],
-                  ["Critical", item.isCritical ? "Yes" : "No"],
                 ]}
                 hidden={isHidden}
               />

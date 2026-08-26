@@ -14,8 +14,8 @@ export type OverviewData = {
 /**
  * derives the overall state from the latest resource reports
  *
- * critical failures take priority, and a missing or unknown report cannot be
- * classified safely, while a known non-critical failure degrades the service
+ * unreachable infrastructure takes priority, and a missing or unknown report
+ * cannot be classified safely, while a known resource failure degrades service
  */
 export const calculateHealthStatus = (
   resources: Resource[],
@@ -33,29 +33,17 @@ export const calculateHealthStatus = (
 
   if (resources.length === 0) return HealthStatus.UNKNOWN
 
-  const hasCriticalFailure = resources.some(
-    (resource) =>
-      resource.isCritical &&
-      (!resource.isReachable || resource.status === "stopped" || resource.status === "failed")
-  )
-
-  if (hasCriticalFailure) {
-    return HealthStatus.UNHEALTHY
-  }
-
   const hasIncompleteReport = resources.some((resource) => resource.status === "unknown")
 
   if (hasIncompleteReport) {
     return HealthStatus.UNKNOWN
   }
 
-  const hasNonCriticalFailure = resources.some(
-    (resource) =>
-      !resource.isCritical &&
-      (!resource.isReachable || resource.status === "stopped" || resource.status === "failed")
+  const hasResourceFailure = resources.some(
+    (resource) => !resource.isReachable || resource.status === "stopped" || resource.status === "failed"
   )
 
-  return hasNonCriticalFailure ? HealthStatus.DEGRADED : HealthStatus.HEALTHY
+  return hasResourceFailure ? HealthStatus.DEGRADED : HealthStatus.HEALTHY
 }
 
 /** overview data hook backed by the persisted zustand data store */
