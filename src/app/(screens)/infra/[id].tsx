@@ -14,7 +14,7 @@ import { upperFirstLetter } from "@/lib/utils"
 import { router, Stack, useLocalSearchParams } from "expo-router"
 import { Component, Ellipsis, Library, LucideIcon, Server } from "lucide-react-native"
 import { useState } from "react"
-import { View } from "react-native"
+import { SectionList, View } from "react-native"
 
 type ParsedData =
   | { type: "servers"; params: ServerData[] }
@@ -24,6 +24,11 @@ type ParsedData =
 type ItemState = "healthy" | "unhealthy" | "unknown"
 type ItemFilter = "all" | ItemState
 type ItemOrder = "ascending" | "descending"
+type ResourceSection = {
+  key: string
+  title: string
+  data: Resource[]
+}
 
 const ITEM_STATE_CLASSES: Record<ItemState, { icon: string; container: string }> = {
   healthy: {
@@ -165,6 +170,28 @@ export default function Infra() {
     return order === "ascending" ? comparison : -comparison
   }
 
+  const resourceSections = (items: Resource[]): ResourceSection[] => {
+    const sections = new Map<string, ResourceSection>()
+
+    for (const item of items) {
+      const key = item.projectId ?? `${item.connectionId}:unknown-project`
+      const section = sections.get(key) ?? {
+        key,
+        title: item.projectName ?? "Unknown project",
+        data: [],
+      }
+      section.data.push(item)
+      sections.set(key, section)
+    }
+
+    return [...sections.values()]
+      .map((section) => ({ ...section, data: section.data.sort(byName) }))
+      .sort((a, b) => {
+        const comparison = a.title.localeCompare(b.title)
+        return order === "ascending" ? comparison : -comparison
+      })
+  }
+
   const openDetails = (type: ParsedData["type"], itemId: string) =>
     router.navigate({ pathname: "/(screens)/(resources)/[id]", params: { id: itemId, type } })
 
@@ -211,20 +238,35 @@ export default function Infra() {
         )
 
       case "resources":
+        const resources = parsedData.params.filter((item) =>
+          stateMatches(
+            item.status === "running" ? "healthy" : item.status === "unknown" ? "unknown" : "unhealthy"
+          )
+        )
+
         return (
-          <DataList
-            data={parsedData.params
-              .filter((item) =>
-                stateMatches(
-                  item.status === "running" ? "healthy" : item.status === "unknown" ? "unknown" : "unhealthy"
-                )
-              )
-              .sort(byName)}
+          <SectionList
+            className="flex-1"
+            contentContainerClassName="pb-2"
+            sections={resourceSections(resources)}
             keyExtractor={(item) => item.id}
+            renderSectionHeader={({ section }) => (
+              <View className="bg-background px-1 pb-1 pt-4">
+                <Text className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                  {section.title}
+                </Text>
+              </View>
+            )}
             renderItem={({ item }) => (
               <ListItem
                 title={item.name}
-                description={`${upperFirstLetter(item.type)} · ${upperFirstLetter(item.status)}`}
+                description={[
+                  item.environmentName,
+                  upperFirstLetter(item.type),
+                  upperFirstLetter(item.status),
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
                 leading={
                   <ItemIcon
                     icon={Library}
@@ -240,6 +282,8 @@ export default function Infra() {
                 onPress={() => openDetails("resources", item.id)}
               />
             )}
+            alwaysBounceVertical={false}
+            showsVerticalScrollIndicator={false}
           />
         )
 

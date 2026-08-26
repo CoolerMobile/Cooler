@@ -29,6 +29,26 @@ type CoolifyResource = {
   status?: unknown
 }
 
+type CoolifyProject = {
+  id?: unknown
+  uuid?: unknown
+  name?: unknown
+}
+
+type CoolifyEnvironment = {
+  id?: unknown
+  uuid?: unknown
+  name?: unknown
+}
+
+type CoolifyResourceOwnership = {
+  id?: unknown
+  uuid?: unknown
+  environment_id?: unknown
+}
+
+type ResourceProject = Pick<Resource, "projectId" | "projectUuid" | "projectName" | "environmentName">
+
 type ConnectionSnapshot = {
   instances: Instance[]
   resources: Resource[]
@@ -65,6 +85,74 @@ const request = async <T>(server: ServerData, path: string): Promise<T> =>
     timeout: REQUEST_TIMEOUT_MS,
   })
 
+const previousResourceProjects = (resources: Resource[]): Map<string, ResourceProject> => {
+  const projects = new Map<string, ResourceProject>()
+
+  for (const resource of resources) {
+    if (!resource.projectId || !resource.projectUuid || !resource.projectName) continue
+
+    projects.set(resource.uuid, {
+      projectId: resource.projectId,
+      projectUuid: resource.projectUuid,
+      projectName: resource.projectName,
+      environmentName: resource.environmentName ?? null,
+    })
+  }
+
+  return projects
+}
+
+/** Joins Coolify's resource ownership data to its project and environment names. */
+const loadResourceProjects = async (connection: ServerData): Promise<Map<string, ResourceProject>> => {
+  const [projectResponse, resourceResponse] = await Promise.all([
+    request<unknown>(connection, "projects"),
+    request<unknown>(connection, "resources"),
+  ])
+  const coolifyProjects = readArray<CoolifyProject>(projectResponse, "projects")
+  const coolifyResources = readArray<CoolifyResourceOwnership>(resourceResponse, "resources")
+
+  const environmentResults = await Promise.all(
+    coolifyProjects.map(async (project) => {
+      const projectUuid = coolifyId(project, "project")
+      const environmentResponse = await request<unknown>(
+        connection,
+        `projects/${encodeURIComponent(projectUuid)}/environments`
+      )
+
+      return {
+        project: {
+          projectId: scopedId(connection.id, "project", projectUuid),
+          projectUuid,
+          projectName: normalizedText(project.name, projectUuid),
+        },
+        environments: readArray<CoolifyEnvironment>(environmentResponse, "environments"),
+      }
+    })
+  )
+
+  const projectsByEnvironmentId = new Map<string, ResourceProject>()
+  for (const { project, environments } of environmentResults) {
+    for (const environment of environments) {
+      const environmentId = normalizedText(environment.id)
+      if (!environmentId) throw Error("Coolify returned an environment without an id")
+
+      projectsByEnvironmentId.set(environmentId, {
+        ...project,
+        environmentName: normalizedText(environment.name, "Unknown environment"),
+      })
+    }
+  }
+
+  const projectsByResourceUuid = new Map<string, ResourceProject>()
+  for (const resource of coolifyResources) {
+    const resourceUuid = coolifyId(resource, "resource")
+    const project = projectsByEnvironmentId.get(normalizedText(resource.environment_id))
+    if (project) projectsByResourceUuid.set(resourceUuid, project)
+  }
+
+  return projectsByResourceUuid
+}
+
 const unavailableResources = (resources: Resource[]): Resource[] =>
   resources.map((resource) => ({ ...resource, isReachable: false }))
 
@@ -98,6 +186,10 @@ const syncConnection = async (
     }
   }
 
+  const resourceProjectsPromise = loadResourceProjects(connection).catch(() =>
+    previousResourceProjects(previousResources)
+  )
+
   const results = await Promise.all(
     coolifyServers.map(async (coolifyServer) => {
       let uuid: string
@@ -125,17 +217,23 @@ const syncConnection = async (
           `servers/${encodeURIComponent(uuid)}/resources`
         )
         const coolifyResources = readArray<CoolifyResource>(resourceResponse, "resources")
+        const resourceProjects = await resourceProjectsPromise
         let hasMalformedResource = false
         const resources = coolifyResources.flatMap<Resource>((coolifyResource) => {
           try {
             const resourceUuid = coolifyId(coolifyResource, "resource")
             const rawStatus = normalizedText(coolifyResource.status, "unknown")
+            const project = resourceProjects.get(resourceUuid)
             return [
               {
                 id: scopedId(connection.id, uuid, resourceUuid),
                 uuid: resourceUuid,
                 connectionId: connection.id,
                 instanceId,
+                projectId: project?.projectId ?? null,
+                projectUuid: project?.projectUuid ?? null,
+                projectName: project?.projectName ?? null,
+                environmentName: project?.environmentName ?? null,
                 name: normalizedText(coolifyResource.name, resourceUuid),
                 type: normalizedText(coolifyResource.type, "unknown").toLowerCase(),
                 rawStatus,

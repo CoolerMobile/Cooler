@@ -12,6 +12,11 @@ export type Resource = {
   /** The saved Coolify connection this resource was discovered through. */
   connectionId: string
   instanceId: string
+  /** The Coolify project and environment that own this resource. */
+  projectId: string | null
+  projectUuid: string | null
+  projectName: string | null
+  environmentName: string | null
   /** The unmodified status returned by Coolify. */
   rawStatus: string
   /** Whether the resource can currently be reached by its instance. */
