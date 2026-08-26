@@ -156,7 +156,7 @@ function OverviewRow({
       onPress={() => {
         router.navigate({
           pathname: `/infra/[id]`,
-          params: { id, data: JSON.stringify(data) },
+          params: { id },
         })
       }}>
       <View className="h-10 w-10 items-center justify-center rounded-full bg-muted">
