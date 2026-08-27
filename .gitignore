@@ -20,7 +20,9 @@ google-services.json
 gen-external-apklibs
 
 # Node
+# hide node logs but allow logs screen
 logs
+!src/app/(screens)/(resources)/logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

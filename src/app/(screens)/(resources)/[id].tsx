@@ -6,10 +6,12 @@ import { Text } from "@/components/ui/text"
 import { useScreenOptions } from "@/lib/hooks/screen-options"
 import { useFlipPrivacy } from "@/lib/hooks/security/flip-privacy"
 import { useDataStore } from "@/lib/stores/data"
+import type { Resource } from "@/lib/types/coolify"
 import { upperFirstLetter } from "@/lib/utils"
-import { Stack, useLocalSearchParams } from "expo-router"
-import { CircleAlert, CircleCheck, CircleHelp, Component, Library, Server } from "lucide-react-native"
-import { ScrollView, View } from "react-native"
+import { GlassView, isGlassEffectAPIAvailable, isLiquidGlassAvailable } from "expo-glass-effect"
+import { router, Stack, useLocalSearchParams } from "expo-router"
+import { CircleAlert, CircleCheck, CircleHelp, Component, Library, Logs, Server } from "lucide-react-native"
+import { Button as NativeButton, Platform, Pressable, ScrollView, View } from "react-native"
 
 type DetailType = "servers" | "instances" | "resources"
 type DetailState = "healthy" | "unhealthy" | "unknown"
@@ -66,7 +68,7 @@ export default function ResourceScreen() {
           </Text>
         </View>
       ) : (
-        <ScrollView className="flex-1" contentContainerClassName="gap-4 p-4" alwaysBounceVertical={false}>
+        <View className="flex-1 gap-4 p-4">
           {type === "servers" && "nickname" in item ? (
             <>
               <DetailHeader
@@ -126,10 +128,11 @@ export default function ResourceScreen() {
                   ["Connection ID", item.connectionId],
                 ]}
                 hidden={isHidden}
+                resource={item}
               />
             </>
           ) : null}
-        </ScrollView>
+        </View>
       )}
     </>
   )
@@ -177,27 +180,82 @@ function DetailHeader({
   )
 }
 
-function DetailCard({ rows, hidden }: { rows: [string, string][]; hidden: boolean }) {
+function DetailCard({
+  rows,
+  hidden,
+  resource,
+}: {
+  rows: [string, string][]
+  hidden: boolean
+  resource?: Resource
+}) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Details</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {rows.map(([label, value], index) => (
-          <View key={label}>
-            {index > 0 && <Separator />}
-            <View className="gap-1 py-4">
-              <Text className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                {label}
-              </Text>
-              <PrivateValue hidden={hidden}>
-                <Text selectable>{value}</Text>
-              </PrivateValue>
-            </View>
-          </View>
-        ))}
-      </CardContent>
-    </Card>
+    <View className="min-h-0 flex-1 gap-4">
+      {/* details */}
+      <ScrollView className="flex-1" alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
+        <Card>
+          <CardHeader>
+            <CardTitle>Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {rows.map(([label, value], index) => (
+              <View key={label}>
+                {index > 0 && <Separator />}
+                <View className="gap-1 py-4">
+                  <Text className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    {label}
+                  </Text>
+                  <PrivateValue hidden={hidden}>
+                    <Text selectable>{value}</Text>
+                  </PrivateValue>
+                </View>
+              </View>
+            ))}
+          </CardContent>
+        </Card>
+      </ScrollView>
+
+      {/* logs */}
+      {resource && <ResourceLogsButton resource={resource} />}
+    </View>
+  )
+}
+
+function ResourceLogsButton({ resource }: { resource: Resource }) {
+  const openLogs = () => {
+    router.push({
+      pathname: "/logs/[id]",
+      params: {
+        id: resource.id,
+        uuid: resource.uuid,
+        name: resource.name,
+        type: resource.type,
+        connectionId: resource.connectionId,
+        instanceId: resource.instanceId,
+      },
+    })
+  }
+
+  const supportsLiquidGlass = Platform.OS === "ios" && isGlassEffectAPIAvailable() && isLiquidGlassAvailable()
+
+  return (
+    <View className="p-8">
+      {supportsLiquidGlass ? (
+        <GlassView
+          glassEffectStyle="regular"
+          isInteractive
+          style={{ width: "100%", height: 48, borderRadius: 24, overflow: "hidden" }}>
+          <Pressable
+            accessibilityRole="button"
+            className="flex h-full w-full flex-row items-center justify-center gap-2 active:opacity-70"
+            onPress={openLogs}>
+            <Icon as={Logs} />
+            <Text className="text-sm font-semibold">Logs</Text>
+          </Pressable>
+        </GlassView>
+      ) : (
+        <NativeButton title="Logs" onPress={openLogs} />
+      )}
+    </View>
   )
 }

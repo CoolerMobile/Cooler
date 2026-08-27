@@ -1,6 +1,14 @@
 /** A resource status reported by Coolify. */
 export type ResourceStatus = "running" | "stopped" | "failed" | "unknown"
 
+/** A named container-runtime log stream returned by Coolify. */
+export type ResourceLog = {
+  /** The resource name, or the sub-resource name for a multi-container service. */
+  source: string
+  /** The raw log output returned by Coolify. */
+  content: string
+}
+
 /**
  * A deployed resource whose reported state contributes to the overview health.
  */
@@ -22,7 +30,16 @@ export type Resource = {
   /** Whether the resource can currently be reached by its instance. */
   isReachable: boolean
   status: ResourceStatus
+  /** Current container-runtime logs. Services expose one entry per sub-resource. */
+  logs: ResourceLog[]
+  /** The time the latest log request succeeded, or null when logs are unavailable. */
+  logsUpdatedAt: number | null
 }
+
+export type ResourceLogsRouteParams = Pick<
+  Resource,
+  "id" | "uuid" | "name" | "type" | "connectionId" | "instanceId"
+>
 
 /**
  * coolify instance

@@ -17,6 +17,7 @@ type DataState = PersistedDataState & {
   lastSyncedAt: number | null
   setServers: (servers: ServerData[]) => void
   setResources: (resources: Resource[]) => void
+  setResourceLogs: (resourceId: string, data: Pick<Resource, "logs" | "logsUpdatedAt">) => void
   setInstances: (instances: Instance[]) => void
   setInfrastructure: (data: {
     resources: Resource[]
@@ -49,6 +50,17 @@ const parseCollection = <T>(value: string | null): T[] | undefined => {
 
   return parsed as T[]
 }
+
+const normalizeResources = (resources: Resource[]): Resource[] =>
+  resources.map((resource) => ({
+    ...resource,
+    logs: Array.isArray(resource.logs) ? resource.logs : [],
+    logsUpdatedAt: typeof resource.logsUpdatedAt === "number" ? resource.logsUpdatedAt : null,
+  }))
+
+/** Runtime logs stay in memory and are refreshed from Coolify instead of persisted. */
+const withoutResourceLogs = (resources: Resource[]): Resource[] =>
+  resources.map((resource) => ({ ...resource, logs: [], logsUpdatedAt: null }))
 
 /**
  * persists each collection under the same raw JSON keys
@@ -86,7 +98,9 @@ const dataStorage: PersistStorage<PersistedDataState> = {
     return {
       state: {
         servers: parseCollection<ServerData>(storedServers) ?? legacyState.servers ?? [],
-        resources: parseCollection<Resource>(storedResources) ?? legacyState.resources ?? [],
+        resources: normalizeResources(
+          parseCollection<Resource>(storedResources) ?? legacyState.resources ?? []
+        ),
         instances: parseCollection<Instance>(storedInstances) ?? legacyState.instances ?? [],
       },
     }
@@ -118,14 +132,33 @@ export const useDataStore = create<DataState>()(
       hasHydrated: false,
       setServers: (servers) => set({ servers }),
       setResources: (resources) => set({ resources }),
+      setResourceLogs: (resourceId, data) =>
+        set((state) => ({
+          resources: state.resources.map((resource) =>
+            resource.id === resourceId ? { ...resource, ...data } : resource
+          ),
+        })),
       setInstances: (instances) => set({ instances }),
       setInfrastructure: ({ resources, instances, failedServerIds, lastSyncedAt }) =>
-        set({
-          resources,
-          instances,
-          failedServerIds,
-          lastSyncedAt,
-          hasSynced: true,
+        set((state) => {
+          const currentResources = new Map(state.resources.map((resource) => [resource.id, resource]))
+
+          return {
+            resources: resources.map((resource) => {
+              const currentResource = currentResources.get(resource.id)
+              if (!currentResource) return resource
+
+              return {
+                ...resource,
+                logs: currentResource.logs,
+                logsUpdatedAt: currentResource.logsUpdatedAt,
+              }
+            }),
+            instances,
+            failedServerIds,
+            lastSyncedAt,
+            hasSynced: true,
+          }
         }),
       setHasHydrated: (hasHydrated) => set({ hasHydrated }),
       reset: () => set({ ...EMPTY_DATA, ...EMPTY_SYNC_STATE }),
@@ -135,7 +168,7 @@ export const useDataStore = create<DataState>()(
       storage: dataStorage,
       partialize: ({ servers, resources, instances }) => ({
         servers,
-        resources,
+        resources: withoutResourceLogs(resources),
         instances,
       }),
       onRehydrateStorage: () => (state, error) => {
