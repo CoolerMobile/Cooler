@@ -1,10 +1,11 @@
+import { Card } from "@/components/ui/card"
 import { Text } from "@/components/ui/text"
-import { useCoolifyResourceLogs } from "@/lib/hooks/data/coolify"
+import { useCoolifyResourceLogs } from "@/lib/hooks/data/coolify-logs"
 import { useScreenOptions } from "@/lib/hooks/screen-options"
 import type { ResourceLogsRouteParams } from "@/lib/types/coolify"
-import { Stack, useIsFocused, useLocalSearchParams } from "expo-router"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import { Stack, useIsFocused, useLocalSearchParams } from "expo-router"
 import { useEffect, useRef, useState } from "react"
 import {
   ActivityIndicator,
@@ -14,7 +15,6 @@ import {
   type NativeSyntheticEvent,
   View,
 } from "react-native"
-import { Card } from "@/components/ui/card"
 
 dayjs.extend(relativeTime)
 
