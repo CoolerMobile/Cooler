@@ -1,8 +1,10 @@
 import { PrivateValue } from "@/components/custom/private"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Icon } from "@/components/ui/icon"
 import { Separator } from "@/components/ui/separator"
 import { Text } from "@/components/ui/text"
+import { Icon as ExpoIcon } from "@expo/ui"
 import { useScreenOptions } from "@/lib/hooks/screen-options"
 import { useFlipPrivacy } from "@/lib/hooks/security/flip-privacy"
 import { useDataStore } from "@/lib/stores/data"
@@ -10,8 +12,20 @@ import type { Resource } from "@/lib/types/coolify"
 import { upperFirstLetter } from "@/lib/utils"
 import { GlassView, isGlassEffectAPIAvailable, isLiquidGlassAvailable } from "expo-glass-effect"
 import { router, Stack, useLocalSearchParams } from "expo-router"
-import { CircleAlert, CircleCheck, CircleHelp, Component, Library, Logs, Server } from "lucide-react-native"
+import {
+  CircleAlert,
+  CircleCheck,
+  CircleHelp,
+  Component,
+  Ellipsis,
+  Library,
+  Logs,
+  LucideIcon,
+  Server,
+} from "lucide-react-native"
 import { Button as NativeButton, Platform, Pressable, ScrollView, View } from "react-native"
+import MenuView, { MenuAction } from "@expo/ui/community/menu"
+import { useState } from "react"
 
 type DetailType = "servers" | "instances" | "resources"
 type DetailState = "healthy" | "unhealthy" | "unknown"
@@ -51,13 +65,51 @@ export default function ResourceScreen() {
 
   const title = item ? ("nickname" in item ? item.nickname : item.name) : "Details"
 
+  // actions menu icons
+  const menuIcons = {
+    start: ExpoIcon.select({
+      ios: "play.fill",
+      android: import("@expo/material-symbols/play_arrow.xml"),
+    }),
+    restart: ExpoIcon.select({
+      ios: "arrow.clockwise",
+      android: import("@expo/material-symbols/refresh.xml"),
+    }),
+    stop: ExpoIcon.select({
+      ios: "stop.fill",
+      android: import("@expo/material-symbols/stop.xml"),
+    }),
+  }
+
+  // screen
   return (
     <>
       <Stack.Screen
         options={options({
           title: isHidden ? "Details" : title,
           headerBackButtonDisplayMode: "minimal",
-          headerRight: actionMenu,
+          headerRight: () => (
+            <ActionMenu
+              resourceId={item?.id ?? ""}
+              actions={[
+                {
+                  id: "start",
+                  image: menuIcons.start,
+                  title: "Start",
+                },
+                {
+                  id: "restart",
+                  image: menuIcons.restart,
+                  title: "Restart",
+                },
+                {
+                  id: "stop",
+                  image: menuIcons.stop,
+                  title: "Stop",
+                },
+              ]}
+            />
+          ),
         })}
       />
 
@@ -139,7 +191,23 @@ export default function ResourceScreen() {
   )
 }
 
-const actionButton = () => {}
+const ActionMenu = ({ resourceId, actions }: { resourceId: string; actions: MenuAction[] }) => {
+  // restart state
+  const [isRestarting, setIsRestarting] = useState(false)
+
+  // menu
+  return (
+    <MenuView
+      onPressAction={({ nativeEvent }) => {
+        const action = nativeEvent.event
+      }}
+      actions={actions.map((action) => action)}>
+      <Button variant="ghost" accessibilityLabel="More list options">
+        <Icon as={Ellipsis} />
+      </Button>
+    </MenuView>
+  )
+}
 
 const DetailHeader = ({
   icon,
