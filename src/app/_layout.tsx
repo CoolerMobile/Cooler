@@ -13,6 +13,7 @@ import { MainAdd } from "@/components/custom/home/add"
 import { NewServerSheet } from "@/components/custom/new-server"
 import { useState } from "react"
 import { useCoolifyMonitor } from "@/lib/hooks/data/coolify"
+import { useDeploymentMonitor } from "@/lib/hooks/data/deployments"
 
 const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
   index: {
@@ -21,7 +22,7 @@ const TAB_HEADER_OPTIONS: Record<string, NativeStackNavigationOptions> = {
     headerRight: () => <MainHeaderRight />,
   },
   deployments: {
-    title: "Cooler",
+    title: "Deployments",
     headerRight: undefined,
   },
   settings: {
@@ -58,6 +59,7 @@ export default function RootLayout() {
 
 function RootNavigator() {
   useCoolifyMonitor()
+  useDeploymentMonitor()
 
   // theme
   const { colorScheme } = useAppTheme()
