@@ -17,6 +17,7 @@ type DataState = PersistedDataState & {
   lastSyncedAt: number | null
   setServers: (servers: ServerData[]) => void
   setResources: (resources: Resource[]) => void
+  setResourceStatus: (resourceId: string, data: Pick<Resource, "rawStatus" | "status">) => void
   setResourceLogs: (resourceId: string, data: Pick<Resource, "logs" | "logsUpdatedAt">) => void
   setInstances: (instances: Instance[]) => void
   setInfrastructure: (data: {
@@ -132,6 +133,12 @@ export const useDataStore = create<DataState>()(
       hasHydrated: false,
       setServers: (servers) => set({ servers }),
       setResources: (resources) => set({ resources }),
+      setResourceStatus: (resourceId, data) =>
+        set((state) => ({
+          resources: state.resources.map((resource) =>
+            resource.id === resourceId ? { ...resource, ...data } : resource
+          ),
+        })),
       setResourceLogs: (resourceId, data) =>
         set((state) => ({
           resources: state.resources.map((resource) =>

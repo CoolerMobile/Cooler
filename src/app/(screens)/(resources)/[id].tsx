@@ -5,6 +5,14 @@ import { Icon } from "@/components/ui/icon"
 import { Separator } from "@/components/ui/separator"
 import { Text } from "@/components/ui/text"
 import { Icon as ExpoIcon } from "@expo/ui"
+import {
+  canRequestCoolifyResourceAction,
+  coolifyResourceActionErrorMessage,
+  refreshCoolifyResourceAfterAction,
+  requestCoolifyResourceAction,
+  supportsCoolifyResourceActions,
+  type CoolifyResourceAction,
+} from "@/lib/hooks/data/coolify"
 import { useScreenOptions } from "@/lib/hooks/screen-options"
 import { useFlipPrivacy } from "@/lib/hooks/security/flip-privacy"
 import { useDataStore } from "@/lib/stores/data"
@@ -20,15 +28,28 @@ import {
   Ellipsis,
   Library,
   Logs,
-  LucideIcon,
   Server,
 } from "lucide-react-native"
-import { Button as NativeButton, Platform, Pressable, ScrollView, View } from "react-native"
+import {
+  ActivityIndicator,
+  Button as NativeButton,
+  Platform,
+  Pressable,
+  ScrollView,
+  View,
+} from "react-native"
 import MenuView, { MenuAction } from "@expo/ui/community/menu"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type DetailType = "servers" | "instances" | "resources"
 type DetailState = "healthy" | "unhealthy" | "unknown"
+type ResourceActionFeedbackPhase = "requesting" | "updating" | "accepted" | "complete" | "error"
+
+type ResourceActionFeedback = {
+  phase: ResourceActionFeedbackPhase
+  title: string
+  message: string
+}
 
 const STATE_PRESENTATION = {
   healthy: {
@@ -55,6 +76,11 @@ export default function ResourceScreen() {
   const servers = useDataStore((state) => state.servers)
   const instances = useDataStore((state) => state.instances)
   const resources = useDataStore((state) => state.resources)
+  const [pendingAction, setPendingAction] = useState<CoolifyResourceAction | null>(null)
+  const [actionFeedback, setActionFeedback] = useState<ResourceActionFeedback | null>(null)
+  const actionInFlight = useRef(false)
+  const actionOperationId = useRef(0)
+  const refreshController = useRef<AbortController | null>(null)
 
   const item =
     type === "servers"
@@ -64,6 +90,87 @@ export default function ResourceScreen() {
         : resources.find((resource) => resource.id === id)
 
   const title = item ? ("nickname" in item ? item.nickname : item.name) : "Details"
+  const selectedResource = type === "resources" ? resources.find((resource) => resource.id === id) : undefined
+
+  useEffect(() => {
+    actionOperationId.current += 1
+    actionInFlight.current = false
+    refreshController.current?.abort()
+    refreshController.current = null
+    setPendingAction(null)
+    setActionFeedback(null)
+
+    return () => refreshController.current?.abort()
+  }, [id])
+
+  const performResourceAction = async (action: CoolifyResourceAction) => {
+    if (
+      actionInFlight.current ||
+      !selectedResource ||
+      !canRequestCoolifyResourceAction(selectedResource, action)
+    ) {
+      return
+    }
+
+    const operationId = ++actionOperationId.current
+    const isCurrentOperation = () => actionOperationId.current === operationId
+    actionInFlight.current = true
+    setPendingAction(action)
+    setActionFeedback({
+      phase: "requesting",
+      title: `${ACTION_PROGRESS_TITLES[action]}`,
+      message: "Sending the request to Coolify…",
+    })
+
+    try {
+      const result = await requestCoolifyResourceAction(selectedResource.id, action)
+      if (!isCurrentOperation()) return
+
+      setActionFeedback({
+        phase: "updating",
+        title: `${ACTION_TITLES[action]} queued`,
+        message: `${result.message} Refreshing its status now…`,
+      })
+
+      const controller = new AbortController()
+      refreshController.current = controller
+      const refreshResult = await refreshCoolifyResourceAfterAction(
+        selectedResource.id,
+        action,
+        controller.signal
+      )
+      if (!isCurrentOperation() || controller.signal.aborted) return
+
+      setActionFeedback(
+        refreshResult.settled
+          ? {
+              phase: "complete",
+              title: `Resource ${ACTION_PAST_TENSE[action]}`,
+              message: "The status shown here is now up to date with Coolify.",
+            }
+          : {
+              phase: "accepted",
+              title: `${ACTION_TITLES[action]} queued`,
+              message: refreshResult.refreshed
+                ? "The latest status is shown here. Monitoring will continue in the background."
+                : "Coolify accepted the request. Monitoring will continue in the background.",
+            }
+      )
+    } catch (error) {
+      if (!isCurrentOperation()) return
+      setActionFeedback({
+        phase: "error",
+        title: "Action could not be queued",
+        message: coolifyResourceActionErrorMessage(error),
+      })
+    } finally {
+      if (isCurrentOperation()) {
+        actionInFlight.current = false
+        refreshController.current = null
+        setPendingAction(null)
+      }
+    }
+  }
 
   // actions menu icons
   const menuIcons = {
@@ -88,28 +195,34 @@ export default function ResourceScreen() {
         options={options({
           title: isHidden ? "Details" : title,
           headerBackButtonDisplayMode: "minimal",
-          headerRight: () => (
-            <ActionMenu
-              resourceId={item?.id ?? ""}
-              actions={[
-                {
-                  id: "start",
-                  image: menuIcons.start,
-                  title: "Start",
-                },
-                {
-                  id: "restart",
-                  image: menuIcons.restart,
-                  title: "Restart",
-                },
-                {
-                  id: "stop",
-                  image: menuIcons.stop,
-                  title: "Stop",
-                },
-              ]}
-            />
-          ),
+          headerRight:
+            selectedResource && supportsCoolifyResourceActions(selectedResource)
+              ? () => (
+                  <ActionMenu
+                    resource={selectedResource}
+                    pendingAction={pendingAction}
+                    onAction={(action) => void performResourceAction(action)}
+                    actions={[
+                      {
+                        id: "start",
+                        image: menuIcons.start,
+                        title: "Start",
+                      },
+                      {
+                        id: "restart",
+                        image: menuIcons.restart,
+                        title: "Restart",
+                      },
+                      {
+                        id: "stop",
+                        image: menuIcons.stop,
+                        title: "Stop",
+                        attributes: { destructive: true },
+                      },
+                    ]}
+                  />
+                )
+              : undefined,
         })}
       />
 
@@ -162,6 +275,7 @@ export default function ResourceScreen() {
             </>
           ) : "status" in item ? (
             <>
+              {actionFeedback && <ResourceActionStatus feedback={actionFeedback} />}
               <DetailHeader
                 icon={Library}
                 title={item.name}
@@ -191,21 +305,89 @@ export default function ResourceScreen() {
   )
 }
 
-const ActionMenu = ({ resourceId, actions }: { resourceId: string; actions: MenuAction[] }) => {
-  // restart state
-  const [isRestarting, setIsRestarting] = useState(false)
+type ResourceMenuAction = MenuAction & { id: CoolifyResourceAction }
 
-  // menu
+const ACTION_TITLES: Record<CoolifyResourceAction, string> = {
+  start: "Start",
+  restart: "Restart",
+  stop: "Stop",
+}
+
+const ACTION_PROGRESS_TITLES: Record<CoolifyResourceAction, string> = {
+  start: "Starting…",
+  restart: "Restarting…",
+  stop: "Stopping…",
+}
+
+const ACTION_PAST_TENSE: Record<CoolifyResourceAction, string> = {
+  start: "started",
+  restart: "restarted",
+  stop: "stopped",
+}
+
+const ActionMenu = ({
+  resource,
+  actions,
+  pendingAction,
+  onAction,
+}: {
+  resource: Resource
+  actions: ResourceMenuAction[]
+  pendingAction: CoolifyResourceAction | null
+  onAction: (action: CoolifyResourceAction) => void
+}) => {
   return (
     <MenuView
       onPressAction={({ nativeEvent }) => {
         const action = nativeEvent.event
+        if (action === "start" || action === "restart" || action === "stop") {
+          onAction(action)
+        }
       }}
-      actions={actions.map((action) => action)}>
-      <Button variant="ghost" accessibilityLabel="More list options">
+      actions={actions.map((action) => ({
+        ...action,
+        title: pendingAction === action.id ? ACTION_PROGRESS_TITLES[action.id] : action.title,
+        attributes: {
+          ...action.attributes,
+          disabled: pendingAction !== null || !canRequestCoolifyResourceAction(resource, action.id),
+        },
+      }))}>
+      <Button variant="ghost" accessibilityLabel="Resource actions">
         <Icon as={Ellipsis} />
       </Button>
     </MenuView>
+  )
+}
+
+const ResourceActionStatus = ({ feedback }: { feedback: ResourceActionFeedback }) => {
+  const isWorking = feedback.phase === "requesting" || feedback.phase === "updating"
+  const isError = feedback.phase === "error"
+
+  return (
+    <Card>
+      <CardContent accessibilityLiveRegion="polite" className="flex-row items-center gap-3 py-3">
+        <View
+          className={`h-10 w-10 items-center justify-center rounded-full ${
+            isError ? "bg-red-500/10" : isWorking ? "bg-blue-500/10" : "bg-emerald-500/10"
+          }`}>
+          {isWorking ? (
+            <ActivityIndicator />
+          ) : (
+            <Icon
+              as={isError ? CircleAlert : CircleCheck}
+              size={20}
+              className={
+                isError ? "text-red-600 dark:text-red-400" : "text-emerald-600 dark:text-emerald-400"
+              }
+            />
+          )}
+        </View>
+        <View className="min-w-0 flex-1 gap-1">
+          <Text className="font-semibold">{feedback.title}</Text>
+          <Text className="text-sm text-muted-foreground">{feedback.message}</Text>
+        </View>
+      </CardContent>
+    </Card>
   )
 }
 
