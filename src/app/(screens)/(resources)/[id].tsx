@@ -57,6 +57,7 @@ export default function ResourceScreen() {
         options={options({
           title: isHidden ? "Details" : title,
           headerBackButtonDisplayMode: "minimal",
+          headerRight: actionMenu,
         })}
       />
 
@@ -138,7 +139,9 @@ export default function ResourceScreen() {
   )
 }
 
-function DetailHeader({
+const actionButton = () => {}
+
+const DetailHeader = ({
   icon,
   title,
   subtitle,
@@ -152,7 +155,7 @@ function DetailHeader({
   state: DetailState
   status: string
   hidden: boolean
-}) {
+}) => {
   const presentation = STATE_PRESENTATION[state]
 
   return (
@@ -180,7 +183,7 @@ function DetailHeader({
   )
 }
 
-function DetailCard({
+const DetailCard = ({
   rows,
   hidden,
   resource,
@@ -188,7 +191,7 @@ function DetailCard({
   rows: [string, string][]
   hidden: boolean
   resource?: Resource
-}) {
+}) => {
   return (
     <View className="min-h-0 flex-1 gap-4">
       {/* details */}
@@ -221,7 +224,7 @@ function DetailCard({
   )
 }
 
-function ResourceLogsButton({ resource }: { resource: Resource }) {
+const ResourceLogsButton = ({ resource }: { resource: Resource }) => {
   const openLogs = () => {
     router.push({
       pathname: "/logs/[id]",
