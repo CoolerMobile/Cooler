@@ -8,9 +8,12 @@ import { AppState } from "react-native"
 
 const API_PREFIX = "api/v1"
 const REFRESH_INTERVAL_MS = 60_000
-const RESOURCE_LOG_REFRESH_INTERVAL_MS = 2_000
+const RESOURCE_LOG_REFRESH_INTERVAL_MS = 5_000
 const REQUEST_TIMEOUT_MS = 15_000
 const RESOURCE_LOG_LINES = 100
+const RESOURCE_LOG_FAILURE_DELAYS_MS = [10_000, 20_000, 30_000] as const
+const RESOURCE_LOG_MAX_FAILURE_DELAY_MS = 60_000
+const RESOURCE_LOG_JITTER_RATIO = 0.1
 
 const HTTP_STATUS_LABELS: Partial<Record<number, string>> = {
   400: "Bad Request",
@@ -111,10 +114,16 @@ const coolifyId = (item: { id?: unknown; uuid?: unknown }, collectionName: strin
 const isEnabled = (value: unknown): boolean =>
   value !== false && value !== 0 && value !== "0" && value !== "false"
 
-const request = async <T>(server: ServerData, path: string): Promise<T> =>
+const request = async <T>(server: ServerData, path: string, signal?: AbortSignal): Promise<T> =>
   ofetch<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
-    headers: { Authorization: `Bearer ${server.token}` },
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${server.token}`,
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+    },
     retry: 0,
+    signal,
     timeout: REQUEST_TIMEOUT_MS,
   })
 
@@ -127,11 +136,12 @@ const logsPath = (resourceType: string, resourceUuid: string): string | null => 
   return null
 }
 
-const requestLogs = async (connection: ServerData, path: string): Promise<string> => {
+const requestLogs = async (connection: ServerData, path: string, signal?: AbortSignal): Promise<string> => {
   const separator = path.includes("?") ? "&" : "?"
   const response = await request<CoolifyLogs>(
     connection,
-    `${path}${separator}lines=${RESOURCE_LOG_LINES}&show_timestamps=true`
+    `${path}${separator}lines=${RESOURCE_LOG_LINES}&show_timestamps=true&_=${Date.now()}`,
+    signal
   )
 
   if (typeof response.logs !== "string") throw Error("Coolify returned invalid log data")
@@ -170,12 +180,14 @@ const serviceSubResourceNames = (service: CoolifyService): string[] => {
 /** Loads container-runtime logs while keeping service sub-resources as separate streams. */
 const loadResourceLogs = async (
   connection: ServerData,
-  resource: Pick<Resource, "uuid" | "name" | "type" | "logs" | "logsUpdatedAt">
+  resource: Pick<Resource, "uuid" | "name" | "type" | "logs" | "logsUpdatedAt">,
+  selectedSource?: string,
+  signal?: AbortSignal
 ): Promise<ResourceLogsSnapshot> => {
   const path = logsPath(resource.type, resource.uuid)
   if (path) {
     return {
-      logs: [{ source: resource.name, content: await requestLogs(connection, path) }],
+      logs: [{ source: resource.name, content: await requestLogs(connection, path, signal) }],
       logsUpdatedAt: Date.now(),
     }
   }
@@ -183,36 +195,49 @@ const loadResourceLogs = async (
   if (resource.type !== "service") return { logs: resource.logs, logsUpdatedAt: resource.logsUpdatedAt }
 
   const uuid = encodeURIComponent(resource.uuid)
-  const service = await request<CoolifyService>(connection, `services/${uuid}`)
-  const names = serviceSubResourceNames(service)
   const previousLogs = new Map(resource.logs.map((log) => [log.source, log]))
-  let receivedFreshLogs = false
+  let names = resource.logs.map(({ source }) => source)
+
+  // Discover a service's containers once. Once the viewer has a selected
+  // source, steady-state refreshes go directly to that container's log route.
+  if (names.length === 0) {
+    const service = await request<CoolifyService>(connection, `services/${uuid}`, signal)
+    names = serviceSubResourceNames(service)
+  }
+
+  if (names.length === 0) return { logs: [], logsUpdatedAt: Date.now() }
+
+  // Populate every selector the first time the service is opened. Subsequent
+  // polls only refresh the selected stream, which keeps the live tail cheap
+  // without presenting the other containers as permanently empty.
+  const sources = selectedSource && names.includes(selectedSource) ? [selectedSource] : names
   let firstError: unknown
+  let receivedFreshLogs = false
+  const freshLogs = new Map<string, ResourceLog>()
 
-  const logs = (
-    await Promise.all(
-      names.map(async (source): Promise<ResourceLog | null> => {
-        try {
-          const content = await requestLogs(
-            connection,
-            `services/${uuid}/logs?sub_service_name=${encodeURIComponent(source)}`
-          )
-          receivedFreshLogs = true
-          return { source, content }
-        } catch (error) {
-          firstError ??= error
-          return previousLogs.get(source) ?? null
-        }
-      })
-    )
-  ).filter((log): log is ResourceLog => log !== null)
+  await Promise.all(
+    sources.map(async (source) => {
+      try {
+        const content = await requestLogs(
+          connection,
+          `services/${uuid}/logs?sub_service_name=${encodeURIComponent(source)}`,
+          signal
+        )
+        receivedFreshLogs = true
+        freshLogs.set(source, { source, content })
+      } catch (error) {
+        firstError ??= error
+      }
+    })
+  )
 
-  // Do not turn a failed request for every service container into a successful,
-  // empty refresh. The consumer needs the failure in order to explain why no
-  // logs are visible and retain the last successful update time.
-  if (names.length > 0 && !receivedFreshLogs) {
+  if (!receivedFreshLogs) {
     throw firstError instanceof Error ? firstError : Error("Unable to load service logs")
   }
+
+  const logs: ResourceLog[] = names.map(
+    (name) => freshLogs.get(name) ?? previousLogs.get(name) ?? { source: name, content: "" }
+  )
 
   return {
     logs,
@@ -409,7 +434,8 @@ const syncConnection = async (
 
 let activeSync: Promise<void> | null = null
 let syncRequested = false
-const activeResourceLogSyncs = new Map<string, Promise<void>>()
+type ActiveResourceLogSync = { promise: Promise<void>; signal?: AbortSignal }
+const activeResourceLogSyncs = new Map<string, ActiveResourceLogSync>()
 
 const performCoolifySync = async () => {
   const state = useDataStore.getState()
@@ -455,9 +481,14 @@ export const refreshCoolifyData = async (): Promise<void> => {
 }
 
 /** Refreshes one resource's runtime logs without reloading the infrastructure snapshot. */
-export const refreshCoolifyResourceLogs = async (resourceId: string): Promise<void> => {
-  const activeLogSync = activeResourceLogSyncs.get(resourceId)
-  if (activeLogSync) return activeLogSync
+export const refreshCoolifyResourceLogs = async (
+  resourceId: string,
+  selectedSource?: string,
+  signal?: AbortSignal
+): Promise<void> => {
+  const syncKey = `${resourceId}:${selectedSource ?? ""}`
+  const activeLogSync = activeResourceLogSyncs.get(syncKey)
+  if (activeLogSync && !activeLogSync.signal?.aborted) return activeLogSync.promise
 
   const logSync = (async () => {
     const state = useDataStore.getState()
@@ -467,24 +498,38 @@ export const refreshCoolifyResourceLogs = async (resourceId: string): Promise<vo
     const connection = state.servers.find((server) => server.id === resource.connectionId)
     if (!connection) throw Error("Coolify connection not found")
 
-    const logs = await loadResourceLogs(connection, resource)
+    const logs = await loadResourceLogs(connection, resource, selectedSource, signal)
+    if (signal?.aborted) return
     useDataStore.getState().setResourceLogs(resourceId, logs)
   })()
+  const activeEntry = { promise: logSync, signal }
 
-  activeResourceLogSyncs.set(resourceId, logSync)
+  activeResourceLogSyncs.set(syncKey, activeEntry)
 
   try {
     await logSync
   } finally {
-    if (activeResourceLogSyncs.get(resourceId) === logSync) activeResourceLogSyncs.delete(resourceId)
+    if (activeResourceLogSyncs.get(syncKey) === activeEntry) activeResourceLogSyncs.delete(syncKey)
   }
 }
 
 export type CoolifyResourceLogsOptions = {
   /** Starts or pauses polling without unmounting the consumer. */
   enabled?: boolean
-  /** Polling cadence. Defaults to two seconds. */
+  /** For services, polls only this container after the initial container discovery. */
+  selectedSource?: string
+  /** Successful polling cadence. Defaults to five seconds. */
   refreshIntervalMs?: number
+}
+
+const resourceLogRefreshDelay = (failureCount: number, refreshIntervalMs: number): number => {
+  const baseDelay =
+    failureCount === 0
+      ? Math.max(1_000, refreshIntervalMs)
+      : (RESOURCE_LOG_FAILURE_DELAYS_MS[failureCount - 1] ?? RESOURCE_LOG_MAX_FAILURE_DELAY_MS)
+  const jitter = 1 + (Math.random() * 2 - 1) * RESOURCE_LOG_JITTER_RATIO
+
+  return Math.round(baseDelay * jitter)
 }
 
 /**
@@ -495,53 +540,104 @@ export type CoolifyResourceLogsOptions = {
  */
 export const useCoolifyResourceLogs = (
   resourceId: string | undefined,
-  { enabled = true, refreshIntervalMs = RESOURCE_LOG_REFRESH_INTERVAL_MS }: CoolifyResourceLogsOptions = {}
+  {
+    enabled = true,
+    selectedSource,
+    refreshIntervalMs = RESOURCE_LOG_REFRESH_INTERVAL_MS,
+  }: CoolifyResourceLogsOptions = {}
 ) => {
   const resource = useDataStore((state) =>
     resourceId ? state.resources.find((item) => item.id === resourceId) : undefined
   )
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const refreshPromise = useRef<Promise<void> | null>(null)
+  const refreshPromise = useRef<{
+    key: string
+    promise: Promise<boolean | null>
+    signal?: AbortSignal
+  } | null>(null)
 
-  const refresh = useCallback(async () => {
-    if (!resourceId) return
-    if (refreshPromise.current) return refreshPromise.current
+  const refresh = useCallback(
+    async (signal?: AbortSignal): Promise<boolean | null> => {
+      if (!resourceId) return null
+      const refreshKey = `${resourceId}:${selectedSource ?? ""}`
+      if (refreshPromise.current?.key === refreshKey && !refreshPromise.current.signal?.aborted) {
+        return refreshPromise.current.promise
+      }
 
-    setIsRefreshing(true)
-    const nextRefresh = refreshCoolifyResourceLogs(resourceId)
-      .then(() => setError(null))
-      .catch((refreshError: unknown) => {
-        setError(resourceLogsErrorMessage(refreshError))
-      })
-      .finally(() => {
-        if (refreshPromise.current === nextRefresh) refreshPromise.current = null
-        setIsRefreshing(false)
-      })
+      setIsRefreshing(true)
+      let nextRefresh: Promise<boolean | null>
+      nextRefresh = refreshCoolifyResourceLogs(resourceId, selectedSource, signal)
+        .then(() => {
+          if (signal?.aborted) return null
+          setError(null)
+          return true
+        })
+        .catch((refreshError: unknown): boolean | null => {
+          if (signal?.aborted) return null
+          setError(resourceLogsErrorMessage(refreshError))
+          return false
+        })
+        .finally(() => {
+          if (refreshPromise.current?.promise === nextRefresh) {
+            refreshPromise.current = null
+            setIsRefreshing(false)
+          }
+        })
 
-    refreshPromise.current = nextRefresh
-    return nextRefresh
-  }, [resourceId])
+      refreshPromise.current = { key: refreshKey, promise: nextRefresh, signal }
+      return nextRefresh
+    },
+    [resourceId, selectedSource]
+  )
 
   useEffect(() => {
     if (!enabled || !resourceId) return
 
-    void refresh()
-    const interval = setInterval(
-      () => {
-        if (AppState.currentState === "active") void refresh()
-      },
-      Math.max(1_000, refreshIntervalMs)
-    )
+    let cancelled = false
+    let appIsActive = AppState.currentState === "active"
+    let failureCount = 0
+    let timeout: ReturnType<typeof setTimeout> | undefined
+    let controller: AbortController | undefined
+
+    const stopCurrentPoll = () => {
+      if (timeout) clearTimeout(timeout)
+      timeout = undefined
+      controller?.abort()
+      controller = undefined
+    }
+
+    const poll = async () => {
+      if (cancelled || !appIsActive) return
+
+      controller = new AbortController()
+      const succeeded = await refresh(controller.signal)
+      controller = undefined
+
+      if (cancelled || !appIsActive || succeeded === null) return
+
+      failureCount = succeeded ? 0 : failureCount + 1
+      timeout = setTimeout(poll, resourceLogRefreshDelay(failureCount, refreshIntervalMs))
+    }
+
+    if (appIsActive) void poll()
     const appStateSubscription = AppState.addEventListener("change", (nextState) => {
-      if (nextState === "active") void refresh()
+      const wasActive = appIsActive
+      appIsActive = nextState === "active"
+
+      if (!appIsActive) {
+        stopCurrentPoll()
+      } else if (!wasActive) {
+        void poll()
+      }
     })
 
     return () => {
-      clearInterval(interval)
+      cancelled = true
+      stopCurrentPoll()
       appStateSubscription.remove()
     }
-  }, [enabled, refresh, refreshIntervalMs, resourceId])
+  }, [enabled, refresh, refreshIntervalMs, resourceId, selectedSource])
 
   return {
     logs: resource?.logs ?? [],
