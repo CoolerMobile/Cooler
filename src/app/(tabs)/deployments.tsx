@@ -150,8 +150,64 @@ export default function DeploymentsScreen() {
 
   return (
     <View className="flex-1 bg-background">
+      <View className="gap-3 px-4 pb-4 pt-2">
+        <View className="flex-row items-center gap-2">
+          <View className="h-11 flex-1 flex-row items-center gap-2 rounded-xl border border-border bg-card px-3">
+            <Icon as={Search} size={18} className="text-muted-foreground" />
+            <TextInput
+              accessibilityLabel="Search deployments"
+              autoCapitalize="none"
+              autoCorrect={false}
+              className="h-full flex-1 pb-3 pt-2 text-base text-foreground"
+              onChangeText={(query) => setFilters({ query })}
+              placeholder="Search deployments"
+              placeholderTextColor="#7a7a7a"
+              value={filters.query}
+            />
+            {filters.query ? (
+              <Pressable
+                accessibilityLabel="Clear search"
+                hitSlop={10}
+                onPress={() => setFilters({ query: "" })}>
+                <Icon as={X} size={17} className="text-muted-foreground" />
+              </Pressable>
+            ) : null}
+          </View>
+          <Pressable
+            accessibilityLabel={`Filters${activeFilterCount ? `, ${activeFilterCount} active` : ""}`}
+            className={`h-11 flex-row items-center gap-1.5 rounded-xl border px-3 ${activeFilterCount ? "border-teal-600 bg-teal-500/10 dark:border-pink-500 dark:bg-pink-500/10" : "border-border bg-card"}`}
+            onPress={() => setFiltersOpen(true)}>
+            <Icon as={SlidersHorizontal} size={18} />
+            {activeFilterCount ? <Text className="text-xs font-bold">{activeFilterCount}</Text> : null}
+          </Pressable>
+        </View>
+
+        <ScrollView
+          horizontal
+          contentContainerClassName="flex-grow justify-center gap-2"
+          showsHorizontalScrollIndicator={false}
+          alwaysBounceHorizontal={false}>
+          {STATUS_FILTERS.map((item) => {
+            const selected = filters.status === item.value
+            return (
+              <Pressable
+                key={item.value}
+                accessibilityRole="tab"
+                accessibilityState={{ selected }}
+                className={`rounded-full border px-4 py-2 ${selected ? "border-foreground bg-foreground" : "border-border bg-card"}`}
+                onPress={() => setFilters({ status: item.value })}>
+                <Text className={`text-sm font-medium ${selected ? "text-background" : "text-foreground"}`}>
+                  {item.label}
+                </Text>
+              </Pressable>
+            )
+          })}
+        </ScrollView>
+      </View>
+
       <ScrollView
         ref={scrollRef}
+        className="flex-1"
         keyboardDismissMode="on-drag"
         onScroll={({ nativeEvent }) => {
           deploymentsScrollOffset = nativeEvent.contentOffset.y
@@ -163,7 +219,7 @@ export default function DeploymentsScreen() {
             onRefresh={() => void refreshDeployments({ showRefreshIndicator: true })}
           />
         }
-        contentContainerClassName="gap-6 px-4 pb-32 pt-2">
+        contentContainerClassName="gap-6 px-4 pb-32">
         {activeDeployments.length > 0 ? (
           <ActiveDeployments
             deployments={activeDeployments}
@@ -174,61 +230,6 @@ export default function DeploymentsScreen() {
             onToggleNotification={(deployment) => void toggleNotification(deployment)}
           />
         ) : null}
-
-        <View className="gap-3">
-          <View className="flex-row items-center gap-2">
-            <View className="h-11 flex-1 flex-row items-center gap-2 rounded-xl border border-border bg-card px-3">
-              <Icon as={Search} size={18} className="text-muted-foreground" />
-              <TextInput
-                accessibilityLabel="Search deployments"
-                autoCapitalize="none"
-                autoCorrect={false}
-                className="h-full flex-1 pb-3 pt-2 text-base text-foreground"
-                onChangeText={(query) => setFilters({ query })}
-                placeholder="Search deployments"
-                placeholderTextColor="#7a7a7a"
-                value={filters.query}
-              />
-              {filters.query ? (
-                <Pressable
-                  accessibilityLabel="Clear search"
-                  hitSlop={10}
-                  onPress={() => setFilters({ query: "" })}>
-                  <Icon as={X} size={17} className="text-muted-foreground" />
-                </Pressable>
-              ) : null}
-            </View>
-            <Pressable
-              accessibilityLabel={`Filters${activeFilterCount ? `, ${activeFilterCount} active` : ""}`}
-              className={`h-11 flex-row items-center gap-1.5 rounded-xl border px-3 ${activeFilterCount ? "border-teal-600 bg-teal-500/10 dark:border-pink-500 dark:bg-pink-500/10" : "border-border bg-card"}`}
-              onPress={() => setFiltersOpen(true)}>
-              <Icon as={SlidersHorizontal} size={18} />
-              {activeFilterCount ? <Text className="text-xs font-bold">{activeFilterCount}</Text> : null}
-            </Pressable>
-          </View>
-
-          <ScrollView
-            horizontal
-            contentContainerClassName="gap-2"
-            showsHorizontalScrollIndicator={false}
-            alwaysBounceHorizontal={false}>
-            {STATUS_FILTERS.map((item) => {
-              const selected = filters.status === item.value
-              return (
-                <Pressable
-                  key={item.value}
-                  accessibilityRole="tab"
-                  accessibilityState={{ selected }}
-                  className={`rounded-full border px-4 py-2 ${selected ? "border-foreground bg-foreground" : "border-border bg-card"}`}
-                  onPress={() => setFilters({ status: item.value })}>
-                  <Text className={`text-sm font-medium ${selected ? "text-background" : "text-foreground"}`}>
-                    {item.label}
-                  </Text>
-                </Pressable>
-              )
-            })}
-          </ScrollView>
-        </View>
 
         {error ? (
           <View className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3">
