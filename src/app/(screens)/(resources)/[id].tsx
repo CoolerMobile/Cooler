@@ -2,6 +2,7 @@ import { PrivateValue } from "@/components/custom/private"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Icon } from "@/components/ui/icon"
+import MenuView, { MenuAction } from "@/components/ui/menu"
 import { Separator } from "@/components/ui/separator"
 import { Text } from "@/components/ui/text"
 import { Icon as ExpoIcon } from "@expo/ui"
@@ -38,7 +39,6 @@ import {
   ScrollView,
   View,
 } from "react-native"
-import MenuView, { MenuAction } from "@expo/ui/community/menu"
 import { useEffect, useRef, useState } from "react"
 
 type DetailType = "servers" | "instances" | "resources"

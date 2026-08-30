@@ -1,12 +1,12 @@
-import BottomSheet, { BottomSheetTextInput } from "@expo/ui/community/bottom-sheet"
-import { View } from "react-native"
+import BottomSheet, { BottomSheetTextInput } from "@/components/ui/bottom-sheet"
 import { Text } from "@/components/ui/text"
 import { Label } from "@/components/ui/label"
-import { Alert, TextInput, useWindowDimensions } from "react-native"
+import { Alert, Platform, TextInput, useWindowDimensions, View } from "react-native"
 import { useRef, useState } from "react"
 import { useServer } from "@/lib/hooks/servers/connection"
 import { Button } from "@/components/ui/button"
 import { Button as NativeButton, Host as NativeHost } from "@expo/ui"
+import { fillMaxWidth } from "@expo/ui/jetpack-compose/modifiers"
 import { useAppTheme } from "@/components/custom/theme"
 import Spacer from "@/components/custom/spacer"
 
@@ -220,9 +220,9 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
                 className="h-auto p-0"
                 onPress={() => {
                   Alert.alert(
-                    "API key permissions",
+                    "API Key Permissions",
                     `Only enable the permissions this key needs.\n\n${apiKeyScopes
-                      .map((scope) => `${scope.name} — ${scope.description}`)
+                      .map((scope) => `${scope.name} - ${scope.description}`)
                       .join("\n")}`
                   )
                 }}>
@@ -247,8 +247,9 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
               label={validating ? "Validating…" : "Validate connection"}
               disabled={!canValidateServer || validating}
               onPress={() => void validateConnection()}
+              modifiers={Platform.OS === "android" ? [fillMaxWidth()] : undefined}
               style={{
-                width: "100%",
+                width: Platform.OS === "android" ? undefined : "100%",
                 height: 48,
               }}
             />

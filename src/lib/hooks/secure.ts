@@ -78,8 +78,10 @@ export const useSecureStorage = () => {
   /**
    * set `value` for `key`
    *
-   * if `requireAuth` is enabled, the value will only be readable if
-   * biometrics are provided. if there is a change to the device's biometrics,
+   * if `requireAuth` is enabled and biometrics are available, the value will
+   * only be readable if biometrics are provided. devices without supported,
+   * enrolled biometrics fall back to encrypted storage without authentication.
+   * if there is a change to the device's biometrics,
    * such as **adding a new fingerprint** or changing the **face profile**, the key will be
    * *permanently* impossible to access, and its value will be lost
    *
@@ -94,7 +96,7 @@ export const useSecureStorage = () => {
   const set = async (key: string, value: any, requireAuth: boolean = true) => {
     try {
       await SecureStore.setItemAsync(key, value, {
-        requireAuthentication: requireAuth,
+        requireAuthentication: requireAuth && SecureStore.canUseBiometricAuthentication(),
       })
 
       return true

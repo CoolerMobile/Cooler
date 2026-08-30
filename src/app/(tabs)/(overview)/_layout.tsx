@@ -5,13 +5,17 @@ import { useAppTheme } from "@/components/custom/theme"
 import { NAV_THEME } from "@/lib/theme"
 import { Stack } from "expo-router"
 import { useState } from "react"
+import { View } from "react-native"
 
 function OverviewHeaderRight() {
   const [newServerOpen, setNewServerOpen] = useState(false)
 
   return (
     <>
-      <MainAdd onPress={() => setNewServerOpen(true)} />
+      <View className="flex flex-row items-center">
+        <MainNotifications />
+        <MainAdd onPress={() => setNewServerOpen(true)} />
+      </View>
       <NewServerSheet open={newServerOpen} onOpenChange={setNewServerOpen} />
     </>
   )
@@ -31,7 +35,6 @@ export default function OverviewLayout() {
         name="index"
         options={{
           title: "Cooler",
-          headerLeft: () => <MainNotifications />,
           headerRight: () => <OverviewHeaderRight />,
         }}
       />

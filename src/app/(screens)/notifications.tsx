@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import BottomSheet from "@/components/ui/bottom-sheet";
 import { Icon } from "@/components/ui/icon";
+import { MenuView } from "@/components/ui/menu";
 import { Text } from "@/components/ui/text";
 import { useScreenOptions } from "@/lib/hooks/screen-options";
 import {
@@ -23,7 +24,6 @@ import { ListItem } from "@/components/custom/data/list-item";
 import { upperFirstLetter } from "@/lib/utils";
 import { Table, TableColumn, TableRow } from "@/components/custom/table";
 import Spacer from "@/components/custom/spacer";
-import { MenuView } from "@expo/ui/community/menu";
 import { Icon as ExpoIcon } from "@expo/ui";
 
 const TABLE_ROW_HEIGHT = 36;
