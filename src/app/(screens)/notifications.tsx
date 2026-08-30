@@ -172,6 +172,27 @@ const NotificationItem = ({
 }) => {
   // data
   const data = item.item;
+  const eventTimestamp = data.deliveredAt ?? data.savedAt;
+  const eventDate = new Date(eventTimestamp);
+  const hasValidEventDate = !Number.isNaN(eventDate.getTime());
+  const eventTime = hasValidEventDate
+    ? eventDate.toLocaleTimeString()
+    : "an unknown time";
+  const eventDay = hasValidEventDate
+    ? eventDate.toLocaleDateString()
+    : "an unknown date";
+  const deliveryDescription = (() => {
+    switch (data.delivery) {
+      case "received":
+        return `It was delivered at ${eventTime}, on ${eventDay}.`;
+      case "dropped":
+        return `It was suppressed by quiet hours at ${eventTime}, on ${eventDay}.`;
+      case "failed":
+        return `Scheduling failed at ${eventTime}, on ${eventDay}.`;
+      case "generated":
+        return `It was generated at ${eventTime}, on ${eventDay}.`;
+    }
+  })();
   const tableData = data.data;
   const { height: windowHeight } = useWindowDimensions();
   const [tableWidth, setTableWidth] = useState(0);
@@ -260,17 +281,7 @@ const NotificationItem = ({
             .
           </Text>
 
-          <Text className="text-muted-foreground">
-            It was delivered at{" "}
-            <Text className="font-semibold">
-              {new Date(data.deliveredAt ?? "").toLocaleTimeString()}
-            </Text>
-            , on{" "}
-            <Text className="font-semibold">
-              {new Date(data.deliveredAt ?? "").toLocaleDateString()}
-            </Text>
-            .
-          </Text>
+          <Text className="text-muted-foreground">{deliveryDescription}</Text>
 
           {tableData && (
             <View

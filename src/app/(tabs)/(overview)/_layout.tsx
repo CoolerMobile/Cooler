@@ -3,6 +3,7 @@ import { MainNotifications } from "@/components/custom/home/notifications"
 import { NewServerSheet } from "@/components/custom/new-server"
 import { useAppTheme } from "@/components/custom/theme"
 import { NAV_THEME } from "@/lib/theme"
+import { isAppleDevice } from "@/lib/utils"
 import { Stack } from "expo-router"
 import { useState } from "react"
 import { View } from "react-native"
@@ -13,7 +14,7 @@ function OverviewHeaderRight() {
   return (
     <>
       <View className="flex flex-row items-center">
-        <MainNotifications />
+        {isAppleDevice() ? null : <MainNotifications />}
         <MainAdd onPress={() => setNewServerOpen(true)} />
       </View>
       <NewServerSheet open={newServerOpen} onOpenChange={setNewServerOpen} />
@@ -35,6 +36,7 @@ export default function OverviewLayout() {
         name="index"
         options={{
           title: "Cooler",
+          headerLeft: () => (isAppleDevice() ? <MainNotifications /> : undefined),
           headerRight: () => <OverviewHeaderRight />,
         }}
       />
