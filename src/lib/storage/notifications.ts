@@ -26,6 +26,11 @@ export type StoredNotification = NotificationStorageInput & {
 let writeQueue: Promise<unknown> = Promise.resolve();
 const entryKey = (id: number) => `${NOTIFICATION_ENTRY_PREFIX}.${id}`;
 
+/** Makes the archive sequence available to a headless task after first unlock. */
+export const prepareNotificationStorageForBackground = async () => {
+  await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
+};
+
 /**
  * append a notification to the local encrypted notification database
  *
@@ -35,9 +40,7 @@ const entryKey = (id: number) => `${NOTIFICATION_ENTRY_PREFIX}.${id}`;
  */
 export const saveNotification = async (input: NotificationStorageInput) => {
   const write = writeQueue.then(async () => {
-    const storedSequence = await secureStorage.getItem(
-      NOTIFICATION_SEQUENCE_KEY,
-    );
+    const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
     const parsedSequence = Number.parseInt(storedSequence ?? "0", 10);
     const id = Number.isSafeInteger(parsedSequence) ? parsedSequence + 1 : 1;
     const notification: StoredNotification = {
@@ -65,7 +68,7 @@ export const saveNotification = async (input: NotificationStorageInput) => {
  */
 export const markNotificationDelivery = async (
   id: number,
-  delivery: Exclude<NotificationDelivery, "generated">,
+  delivery: Exclude<NotificationDelivery, "generated">
 ) => {
   const write = writeQueue.then(async () => {
     const storedValue = await secureStorage.getItem(entryKey(id));
@@ -80,7 +83,7 @@ export const markNotificationDelivery = async (
         ...notification,
         delivery,
         deliveredAt: new Date().toISOString(),
-      } satisfies StoredNotification),
+      } satisfies StoredNotification)
     );
   });
 
@@ -104,14 +107,12 @@ export const getNotifications = async () => {
 
   // resolve stored notifications
   const storedNotifications = await Promise.all(
-    Array.from({ length: sequence }, (_, index) =>
-      secureStorage.getItem(entryKey(index + 1)),
-    ),
+    Array.from({ length: sequence }, (_, index) => secureStorage.getItem(entryKey(index + 1)))
   );
 
   // return notifications as normalized map
   return storedNotifications.flatMap((storedValue) =>
-    storedValue === null ? [] : [JSON.parse(storedValue) as StoredNotification],
+    storedValue === null ? [] : [JSON.parse(storedValue) as StoredNotification]
   );
 };
 
@@ -120,16 +121,12 @@ export const getNotifications = async () => {
  */
 export const deleteAllNotifications = async () => {
   const write = writeQueue.then(async () => {
-    const storedSequence = await secureStorage.getItem(
-      NOTIFICATION_SEQUENCE_KEY,
-    );
+    const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
     const sequence = Number.parseInt(storedSequence ?? "0", 10);
 
     if (Number.isSafeInteger(sequence) && sequence > 0) {
       await Promise.all(
-        Array.from({ length: sequence }, (_, index) =>
-          secureStorage.removeItem(entryKey(index + 1)),
-        ),
+        Array.from({ length: sequence }, (_, index) => secureStorage.removeItem(entryKey(index + 1)))
       );
     }
 

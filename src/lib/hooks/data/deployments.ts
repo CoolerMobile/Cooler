@@ -1,5 +1,5 @@
 import type { ServerData } from "@/lib/hooks/servers/connection"
-import { useNotifications } from "@/lib/hooks/notifications"
+import { createLocalNotification } from "@/lib/hooks/notifications"
 import { useDataStore } from "@/lib/stores/data"
 import { useDeploymentStore } from "@/lib/stores/deployments"
 import type { Deployment, DeploymentStatus, DeploymentTrigger } from "@/lib/types/deployment"
@@ -203,8 +203,36 @@ const loadServerDeployments = async (server: ServerData, resources: Resource[]):
   return [...deployments.values()]
 }
 
+const loadWatchedDeployment = async (deploymentId: string): Promise<Deployment> => {
+  const separatorIndex = deploymentId.indexOf(":")
+  if (separatorIndex < 1 || separatorIndex === deploymentId.length - 1) {
+    throw Error(`Invalid watched deployment id: ${deploymentId}`)
+  }
+
+  const connectionId = deploymentId.slice(0, separatorIndex)
+  const deploymentUuid = deploymentId.slice(separatorIndex + 1)
+  const { servers, resources } = useDataStore.getState()
+  const server = servers.find((item) => item.id === connectionId)
+  if (!server) throw Error(`Missing Coolify connection for deployment ${deploymentUuid}`)
+
+  const raw = await deploymentRequest<CoolifyDeployment>(
+    server,
+    `deployments/${encodeURIComponent(deploymentUuid)}`
+  )
+  const deployment = normalizeDeployment(
+    raw,
+    server,
+    resourceForActiveDeployment(
+      raw,
+      resources.filter((resource) => resource.connectionId === connectionId)
+    )
+  )
+
+  if (!deployment) throw Error(`Coolify returned an invalid deployment for ${deploymentUuid}`)
+  return deployment
+}
+
 let refreshPromise: Promise<void> | null = null
-let previousDeploymentStatuses = new Map<string, DeploymentStatus>()
 
 export const refreshDeployments = async ({ showRefreshIndicator = false } = {}): Promise<void> => {
   if (refreshPromise) return refreshPromise
@@ -309,18 +337,31 @@ export const deploymentErrorMessage = (error: unknown): string => {
   return error instanceof Error ? error.message : "The deployment action could not be completed."
 }
 
-/** Polls while the app is active and delivers requested completion notifications. */
-export const useDeploymentMonitor = () => {
-  const { createLocalNotification } = useNotifications()
+let refreshAndNotifyPromise: Promise<number> | null = null
 
-  const refreshAndNotify = useCallback(async () => {
+/** Refreshes deployments and delivers locally generated completion notifications. */
+export const refreshDeploymentsAndNotify = async (): Promise<number> => {
+  if (refreshAndNotifyPromise) return refreshAndNotifyPromise
+
+  refreshAndNotifyPromise = (async () => {
     await refreshDeployments()
     const state = useDeploymentStore.getState()
+    const watchedResults = await Promise.allSettled(state.watchedDeploymentIds.map(loadWatchedDeployment))
+    const deploymentsById = new Map(state.deployments.map((deployment) => [deployment.id, deployment]))
 
-    for (const deployment of state.deployments) {
-      const wasActive = ["queued", "running"].includes(previousDeploymentStatuses.get(deployment.id) ?? "")
+    for (const result of watchedResults) {
+      if (result.status === "fulfilled") deploymentsById.set(result.value.id, result.value)
+      else console.error("[deployments] watched deployment refresh failed:", result.reason)
+    }
+
+    state.setDeployments([...deploymentsById.values()].sort((a, b) => b.createdAt - a.createdAt))
+    let notificationCount = 0
+
+    for (const deployment of deploymentsById.values()) {
       const isFinished = ["success", "failed", "cancelled"].includes(deployment.status)
-      if (wasActive && isFinished && state.watchedDeploymentIds.includes(deployment.id)) {
+      if (!isFinished || !state.watchedDeploymentIds.includes(deployment.id)) continue
+
+      try {
         await createLocalNotification({
           title: `${deployment.resourceName} ${deployment.status === "success" ? "deployed" : deployment.status}`,
           body:
@@ -329,25 +370,29 @@ export const useDeploymentMonitor = () => {
               : `The deployment finished with status: ${deployment.status}.`,
           data: { deploymentId: deployment.id, deploymentUuid: deployment.uuid },
           channelId: "deployments",
-        }).catch(() => undefined)
+        })
         state.unwatchDeployment(deployment.id)
+        notificationCount += 1
+      } catch (error) {
+        // Keep watching so a later foreground or background pass can retry.
+        console.error("[deployments] local notification delivery failed:", error)
+        state.setRequestState({
+          error: "The deployment finished, but its notification could not be delivered. Cooler will retry.",
+        })
       }
     }
 
-    // Keep a watched deployment's last active state if it briefly disappears
-    // between Coolify's active queue and deployment-history responses.
-    const nextStatuses = new Map(previousDeploymentStatuses)
-    for (const deployment of state.deployments) nextStatuses.set(deployment.id, deployment.status)
-    for (const [deploymentId, deploymentStatus] of nextStatuses) {
-      if (
-        !state.watchedDeploymentIds.includes(deploymentId) &&
-        !["queued", "running"].includes(deploymentStatus)
-      ) {
-        nextStatuses.delete(deploymentId)
-      }
-    }
-    previousDeploymentStatuses = nextStatuses
-  }, [createLocalNotification])
+    return notificationCount
+  })().finally(() => {
+    refreshAndNotifyPromise = null
+  })
+
+  return refreshAndNotifyPromise
+}
+
+/** Polls while the app is active and delivers requested completion notifications. */
+export const useDeploymentMonitor = () => {
+  const refreshAndNotify = useCallback(refreshDeploymentsAndNotify, [])
 
   useEffect(() => {
     void refreshAndNotify()

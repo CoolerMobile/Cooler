@@ -10,8 +10,23 @@ import { parseError } from "@/lib/utils"
  * reserved for non-sensitive theme preference
  */
 export const secureStorage: StateStorage = {
-  getItem: (key) => SecureStore.getItemAsync(key),
-  setItem: (key, value) => SecureStore.setItemAsync(key, value),
+  getItem: async (key) => {
+    const value = await SecureStore.getItemAsync(key)
+
+    // Headless deployment checks can run while the device is locked. Rewrite
+    // existing entries once so they match the access level of new entries.
+    if (value !== null) {
+      await SecureStore.setItemAsync(key, value, {
+        keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK,
+      })
+    }
+
+    return value
+  },
+  setItem: (key, value) =>
+    SecureStore.setItemAsync(key, value, {
+      keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK,
+    }),
   removeItem: (key) => SecureStore.deleteItemAsync(key),
 }
 

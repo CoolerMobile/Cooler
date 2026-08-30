@@ -8,6 +8,7 @@ import { cancelDeployment, deploymentErrorMessage, refreshDeployments } from "@/
 import { useNotifications } from "@/lib/hooks/notifications"
 import { useDataStore } from "@/lib/stores/data"
 import { useDeploymentStore } from "@/lib/stores/deployments"
+import { registerDeploymentBackgroundTask } from "@/lib/tasks/deployment-monitor"
 import type { Deployment, DeploymentFilters, DeploymentStatusFilter } from "@/lib/types/deployment"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
@@ -64,7 +65,7 @@ export default function DeploymentsScreen() {
   const isRefreshing = useDeploymentStore((state) => state.isRefreshing)
   const error = useDeploymentStore((state) => state.error)
   const servers = useDataStore((state) => state.servers)
-  const { registerDevice } = useNotifications()
+  const { enableLocalNotifications } = useNotifications()
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [notificationBusyId, setNotificationBusyId] = useState<string | null>(null)
 
@@ -109,8 +110,8 @@ export default function DeploymentsScreen() {
     }
     setNotificationBusyId(deployment.id)
     try {
-      const token = await registerDevice()
-      if (!token) {
+      const notificationsEnabled = await enableLocalNotifications()
+      if (!notificationsEnabled) {
         Alert.alert(
           "Notifications are off",
           "Allow notifications in system settings to be notified when this deployment finishes."
@@ -118,6 +119,12 @@ export default function DeploymentsScreen() {
         return
       }
       watchDeployment(deployment.id)
+      try {
+        await registerDeploymentBackgroundTask()
+      } catch (backgroundError) {
+        unwatchDeployment(deployment.id)
+        throw backgroundError
+      }
     } catch (notificationError) {
       Alert.alert(
         "Notifications unavailable",

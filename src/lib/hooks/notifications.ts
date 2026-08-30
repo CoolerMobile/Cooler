@@ -1,15 +1,11 @@
-import Constants from "expo-constants";
-import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import {
   markNotificationDelivery,
+  prepareNotificationStorageForBackground,
   saveNotification,
 } from "@/lib/storage/notifications";
 import { useSettingsStore } from "@/lib/stores/settings";
-import { parseError } from "@/lib/utils";
-import { useSecureStorage } from "@/lib/hooks/secure";
-import { useEffect, useRef, useState } from "react";
 
 // notification data
 type NotificationData = {
@@ -49,8 +45,7 @@ const notificationChannels = {
 type NotificationChannelId = keyof typeof notificationChannels;
 
 // calculate minutes since midnight
-const minutesSinceMidnight = (date: Date) =>
-  date.getHours() * 60 + date.getMinutes();
+const minutesSinceMidnight = (date: Date) => date.getHours() * 60 + date.getMinutes();
 
 /**
  * checks if quiet hours are currently active
@@ -82,8 +77,7 @@ Notifications.setNotificationHandler({
   handleNotification: async (notification) => {
     const dropNotification = await areQuietHoursActive();
     const { content, identifier, trigger } = notification.request;
-    const isWebhook =
-      trigger !== null && "type" in trigger && trigger.type === "push";
+    const isWebhook = trigger !== null && "type" in trigger && trigger.type === "push";
     const storedLocalId = content.data?.[LOCAL_NOTIFICATION_ID_KEY];
 
     try {
@@ -91,14 +85,12 @@ Notifications.setNotificationHandler({
       // notification can never be shown to the user
       //
       // quiet-hours drops are retained in the archive too
-      if (
-        !isWebhook &&
-        typeof storedLocalId === "number" &&
-        Number.isSafeInteger(storedLocalId)
-      ) {
-        await markNotificationDelivery(
-          storedLocalId,
-          dropNotification ? "dropped" : "received",
+      if (!isWebhook && typeof storedLocalId === "number" && Number.isSafeInteger(storedLocalId)) {
+        // The local notification was archived before it was scheduled. Do not
+        // make foreground presentation wait on another Keychain round-trip;
+        // Expo discards notifications whose handler exceeds three seconds.
+        void markNotificationDelivery(storedLocalId, dropNotification ? "dropped" : "received").catch(
+          (error) => console.error("[notifications] delivery archive update failed:", error)
         );
       } else {
         await saveNotification({
@@ -124,170 +116,94 @@ Notifications.setNotificationHandler({
     }
 
     return {
-      shouldPlaySound: false,
+      shouldPlaySound: !dropNotification,
       shouldSetBadge: false,
       shouldShowBanner: !dropNotification,
       shouldShowList: !dropNotification,
     };
   },
+  handleError: (notificationId, error) => {
+    console.error(`[notifications] foreground handler failed for ${notificationId}:`, error);
+  },
 });
 
 // notifications hook
-export const useNotifications = () => {
-  // secure storage
-  const { get, set } = useSecureStorage();
+/**
+ * Requests permission to present notifications created by this app.
+ * This intentionally does not register for remote notifications or request
+ * an Expo push token, so iOS does not require the APS entitlement.
+ */
+export const enableLocalNotifications = async () => {
+  await prepareNotificationStorageForBackground();
 
-  // registration state
-  const registration = useRef<Promise<string | null> | null>(null);
-  const [isRegistered, setIsRegistered] = useState(false);
-
-  // register listeners once registration succeeds
-  useEffect(() => {
-    if (!isRegistered) return;
-
-    const notifListener = Notifications.addNotificationReceivedListener(
-      (notification) => notification,
+  if (Platform.OS === "android") {
+    await Promise.all(
+      Object.entries(notificationChannels).map(([id, channel]) =>
+        Notifications.setNotificationChannelAsync(id, channel)
+      )
     );
-    const responseListener =
-      Notifications.addNotificationResponseReceivedListener(
-        (response) => response,
-      );
+  }
 
-    return () => {
-      notifListener.remove();
-      responseListener.remove();
-    };
-  }, [isRegistered]);
+  const permissions = await Notifications.getPermissionsAsync();
+  if (permissions.status === "granted" && (Platform.OS !== "ios" || permissions.ios?.allowsAlert !== false)) {
+    return true;
+  }
 
-  /**
-   * registers the device for push notifications,
-   * sets up the notification listener and sets
-   * the expo push token app-wide
-   */
-  const registerDevice = async () => {
-    // reuse an in-flight or completed registration
-    if (registration.current) return registration.current;
+  const requestedPermissions = await Notifications.requestPermissionsAsync();
+  return (
+    requestedPermissions.status === "granted" &&
+    (Platform.OS !== "ios" || requestedPermissions.ios?.allowsAlert !== false)
+  );
+};
 
-    registration.current = (async () => {
-      // validate real device
-      if (!Device.isDevice) {
-        throw Error("push notifications require a real device");
-      }
+/** Creates and archives a notification generated by local polling. */
+export const createLocalNotification = async (data: NotificationData) => {
+  const permissions = await Notifications.getPermissionsAsync();
+  if (permissions.status !== "granted" || (Platform.OS === "ios" && permissions.ios?.allowsAlert === false)) {
+    throw Error("Notification alerts are disabled in system settings.");
+  }
 
-      // register channels before reusing a token so existing installs receive
-      // newly added channels after an app update
-      if (Platform.OS === "android") {
-        await Promise.all(
-          Object.entries(notificationChannels).map(([id, channel]) =>
-            Notifications.setNotificationChannelAsync(id, channel),
-          ),
-        );
-      }
+  const { trigger } = data;
+  const channelId = data.channelId ?? "deployments";
+  const dropNotification = await areQuietHoursActive();
 
-      // reuse an established Expo token
-      const storedToken = await get("expoToken");
-      if (
-        typeof storedToken === "string" &&
-        /^(Exponent|Expo)PushToken\[[^\]]+\]$/.test(storedToken)
-      ) {
-        setIsRegistered(true);
-        return storedToken;
-      }
+  // Save before scheduling, including notifications dropped because of quiet hours.
+  const storedNotificationId = await saveNotification({
+    title: data.title,
+    body: data.body,
+    data: data.data,
+    channelId,
+    source: "local",
+    delivery: dropNotification ? "dropped" : "generated",
+  });
 
-      // permissions status
-      const permissions = await Notifications.getPermissionsAsync();
-      let permStatus = permissions.status;
+  if (dropNotification) return;
 
-      // validate permissions status
-      if (permStatus !== "granted") {
-        // request permissions
-        const requestPerm = await Notifications.requestPermissionsAsync();
-        permStatus = requestPerm.status;
-      }
-
-      // permissions denied again, exit early
-      if (permStatus !== "granted") {
-        return null;
-      }
-
-      // eas project
-      const easId =
-        Constants.expoConfig?.extra?.eas?.projectId ??
-        Constants.easConfig?.projectId;
-
-      // validate project
-      if (!easId) {
-        throw Error("missing eas project id");
-      }
-
-      // expo push token
-      const token = await Notifications.getExpoPushTokenAsync({
-        projectId: easId,
-      });
-
-      // store the serializable token securely
-      await set("expoToken", token.data);
-      setIsRegistered(true);
-
-      return token.data;
-    })();
-
-    try {
-      return await registration.current;
-    } catch (error) {
-      registration.current = null;
-      throw Error(parseError(error));
-    }
-  };
-
-  /**
-   * creates a local notification, such as one generated by polling
-   *
-   * @param data notification data
-   */
-  const createLocalNotification = async (data: NotificationData) => {
-    const { trigger } = data;
-    const channelId = data.channelId ?? "deployments";
-    const dropNotification = await areQuietHoursActive();
-
-    // polling-generated notifications are local in every build
-    //
-    // save before scheduling, including notifications dropped because of quiet hours
-    const storedNotificationId = await saveNotification({
-      title: data.title,
-      body: data.body,
-      data: data.data,
-      channelId,
-      source: "local",
-      delivery: dropNotification ? "dropped" : "generated",
-    });
-
-    if (dropNotification) return;
-
-    try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: data.title,
-          body: data.body,
-          data: {
-            ...data.data,
-            [LOCAL_NOTIFICATION_ID_KEY]: storedNotificationId,
-          },
+  try {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: data.title,
+        body: data.body,
+        sound: "default",
+        data: {
+          ...data.data,
+          [LOCAL_NOTIFICATION_ID_KEY]: storedNotificationId,
         },
-        trigger: trigger
-          ? { ...trigger, channelId: trigger.channelId ?? channelId }
-          : {
-              type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-              channelId,
-              seconds: 2,
-            },
-      });
-    } catch (error) {
-      await markNotificationDelivery(storedNotificationId, "failed");
-      throw error;
-    }
-  };
+      },
+      trigger: trigger
+        ? { ...trigger, channelId: trigger.channelId ?? channelId }
+        : {
+            type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+            channelId,
+            seconds: 2,
+          },
+    });
+  } catch (error) {
+    await markNotificationDelivery(storedNotificationId, "failed");
+    throw error;
+  }
+};
 
-  // return methods
-  return { registerDevice, createLocalNotification };
+export const useNotifications = () => {
+  return { enableLocalNotifications, createLocalNotification };
 };

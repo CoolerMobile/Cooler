@@ -14,6 +14,7 @@ import {
 import { useNotifications } from "@/lib/hooks/notifications"
 import { useScreenOptions } from "@/lib/hooks/screen-options"
 import { useDeploymentStore } from "@/lib/stores/deployments"
+import { registerDeploymentBackgroundTask } from "@/lib/tasks/deployment-monitor"
 import type { Deployment } from "@/lib/types/deployment"
 import MenuView from "@expo/ui/community/menu"
 import dayjs from "dayjs"
@@ -30,7 +31,7 @@ export default function DeploymentDetailScreen() {
   const watchedDeploymentIds = useDeploymentStore((state) => state.watchedDeploymentIds)
   const watchDeployment = useDeploymentStore((state) => state.watchDeployment)
   const unwatchDeployment = useDeploymentStore((state) => state.unwatchDeployment)
-  const { registerDevice } = useNotifications()
+  const { enableLocalNotifications } = useNotifications()
   const { options } = useScreenOptions()
   const [pendingAction, setPendingAction] = useState<DeploymentAction | null>(null)
   const [notificationBusy, setNotificationBusy] = useState(false)
@@ -48,8 +49,8 @@ export default function DeploymentDetailScreen() {
 
     setNotificationBusy(true)
     try {
-      const token = await registerDevice()
-      if (!token) {
+      const notificationsEnabled = await enableLocalNotifications()
+      if (!notificationsEnabled) {
         Alert.alert(
           "Notifications are off",
           "Allow notifications in system settings to be notified when this deployment finishes."
@@ -57,6 +58,12 @@ export default function DeploymentDetailScreen() {
         return
       }
       watchDeployment(deployment.id)
+      try {
+        await registerDeploymentBackgroundTask()
+      } catch (backgroundError) {
+        unwatchDeployment(deployment.id)
+        throw backgroundError
+      }
     } catch (error) {
       Alert.alert(
         "Notifications unavailable",

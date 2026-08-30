@@ -9,6 +9,7 @@ import { AppLock } from "@/components/custom/app-lock"
 import { PortalHost } from "@rn-primitives/portal"
 import { useCoolifyMonitor } from "@/lib/hooks/data/coolify"
 import { useDeploymentMonitor } from "@/lib/hooks/data/deployments"
+import { useDeploymentBackgroundTask } from "@/lib/tasks/deployment-monitor"
 
 export default function RootLayout() {
   // return navigator
@@ -28,6 +29,7 @@ export default function RootLayout() {
 function RootNavigator() {
   useCoolifyMonitor()
   useDeploymentMonitor()
+  useDeploymentBackgroundTask()
 
   // theme
   const { colorScheme } = useAppTheme()
