@@ -491,14 +491,19 @@ const ResourceLogsButton = ({ resource }: { resource: Resource }) => {
 
   const supportsLiquidGlass = Platform.OS === "ios" && isGlassEffectAPIAvailable() && isLiquidGlassAvailable()
 
+  // running state
+  const isRunning = resource.status === "running" || resource.status === "unknown"
+
+  // button
   return (
     <View className="p-8">
       {supportsLiquidGlass ? (
         <GlassView
           glassEffectStyle="regular"
           isInteractive
-          style={{ width: "100%", height: 48, borderRadius: 24, overflow: "hidden" }}>
+          style={{ width: "100%", height: 48, borderRadius: 24, opacity: isRunning ? 1 : 0.5 }}>
           <Pressable
+            disabled={!isRunning}
             accessibilityRole="button"
             className="flex h-full w-full flex-row items-center justify-center gap-2 active:opacity-70"
             onPress={openLogs}>
@@ -507,7 +512,7 @@ const ResourceLogsButton = ({ resource }: { resource: Resource }) => {
           </Pressable>
         </GlassView>
       ) : (
-        <NativeButton title="Logs" onPress={openLogs} />
+        <NativeButton disabled={!isRunning} title="Logs" onPress={openLogs} />
       )}
     </View>
   )
