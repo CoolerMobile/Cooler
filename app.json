@@ -9,10 +9,14 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "dev.danfq.cooler",
+      "bundleIdentifier": "app.getcooler.Cooler",
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "associatedDomains": [
+        "applinks:getcooler.app"
+      ],
+      "appleTeamId": "73H669GA5T"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +27,10 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "dev.danfq.cooler",
-      "permissions": ["android.permission.USE_BIOMETRIC", "android.permission.USE_FINGERPRINT"]
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ]
     },
     "web": {
       "output": "static",
@@ -60,7 +67,16 @@
         }
       ],
       "react-native-legal",
-      "expo-background-task"
+      "expo-background-task",
+      "@react-native-community/datetimepicker",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "enableSceneSupport": true
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
