@@ -148,6 +148,29 @@ export const useServer = () => {
     return serverAdded
   }
 
+  /** securely update an existing server after validating its connection details */
+  const update = async (id: string, server: Omit<ServerData, "id" | "version" | "health">) => {
+    if (!id || !server) throw Error("invalid server data")
+
+    const valid = await validate(server)
+    const storedServers = await getSecure("servers")
+    const servers: ServerData[] = storedServers ? JSON.parse(storedServers) : []
+
+    if (!servers.some((serverItem) => serverItem.id === id)) throw Error("server no longer exists")
+    if (servers.some((serverItem) => serverItem.id !== id && serverItem.endpoint === valid.endpoint)) {
+      throw Error("server already added")
+    }
+
+    const nextServers = servers.map((serverItem) =>
+      serverItem.id === id ? { ...valid, id: serverItem.id } : serverItem
+    )
+    const serverUpdated = await setSecure("servers", JSON.stringify(nextServers))
+
+    if (serverUpdated) useDataStore.getState().setServers(nextServers)
+
+    return serverUpdated
+  }
+
   // return methods
-  return { validate, create }
+  return { validate, create, update }
 }

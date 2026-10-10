@@ -86,11 +86,11 @@ export default function HealthDetailsScreen() {
 
       <FlatList
         className="flex-1"
-        contentContainerClassName="gap-2 p-4 pb-8"
+        contentContainerClassName="gap-2 pb-8"
         data={overview.healthIssues}
         keyExtractor={(issue) => issue.id}
         ListHeaderComponent={
-          <View className="gap-5 pb-3">
+          <View className="gap-5 px-4 pb-3 pt-4">
             <Card>
               <CardContent className="flex-row items-center gap-4 py-1">
                 <View

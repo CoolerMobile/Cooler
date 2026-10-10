@@ -20,6 +20,7 @@ type DataState = PersistedDataState & {
   setResourceStatus: (resourceId: string, data: Pick<Resource, "rawStatus" | "status">) => void
   setResourceLogs: (resourceId: string, data: Pick<Resource, "logs" | "logsUpdatedAt">) => void
   setInstances: (instances: Instance[]) => void
+  removeServerData: (serverId: string) => void
   setInfrastructure: (data: {
     resources: Resource[]
     instances: Instance[]
@@ -146,23 +147,33 @@ export const useDataStore = create<DataState>()(
           ),
         })),
       setInstances: (instances) => set({ instances }),
+      removeServerData: (serverId) =>
+        set((state) => ({
+          servers: state.servers.filter((server) => server.id !== serverId),
+          resources: state.resources.filter((resource) => resource.connectionId !== serverId),
+          instances: state.instances.filter((instance) => instance.connectionId !== serverId),
+          failedServerIds: state.failedServerIds.filter((failedServerId) => failedServerId !== serverId),
+        })),
       setInfrastructure: ({ resources, instances, failedServerIds, lastSyncedAt }) =>
         set((state) => {
           const currentResources = new Map(state.resources.map((resource) => [resource.id, resource]))
+          const activeServerIds = new Set(state.servers.map((server) => server.id))
 
           return {
-            resources: resources.map((resource) => {
-              const currentResource = currentResources.get(resource.id)
-              if (!currentResource) return resource
+            resources: resources
+              .filter((resource) => activeServerIds.has(resource.connectionId))
+              .map((resource) => {
+                const currentResource = currentResources.get(resource.id)
+                if (!currentResource) return resource
 
-              return {
-                ...resource,
-                logs: currentResource.logs,
-                logsUpdatedAt: currentResource.logsUpdatedAt,
-              }
-            }),
-            instances,
-            failedServerIds,
+                return {
+                  ...resource,
+                  logs: currentResource.logs,
+                  logsUpdatedAt: currentResource.logsUpdatedAt,
+                }
+              }),
+            instances: instances.filter((instance) => activeServerIds.has(instance.connectionId)),
+            failedServerIds: failedServerIds.filter((serverId) => activeServerIds.has(serverId)),
             lastSyncedAt,
             hasSynced: true,
           }

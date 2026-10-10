@@ -1,35 +1,35 @@
-import { secureStorage } from "@/lib/hooks/secure";
+import { secureStorage } from "@/lib/hooks/secure"
 
 // key & prefix
-const NOTIFICATION_SEQUENCE_KEY = "cooler.notifications.sequence";
-const NOTIFICATION_ENTRY_PREFIX = "cooler.notifications.entry";
+const NOTIFICATION_SEQUENCE_KEY = "cooler.notifications.sequence"
+const NOTIFICATION_ENTRY_PREFIX = "cooler.notifications.entry"
 
 export type NotificationStorageInput = {
-  requestId?: string;
-  title: string | undefined;
-  body: string | undefined;
-  data?: Record<string, unknown>;
-  channelId?: string;
-  source: "local" | "webhook";
-  delivery: NotificationDelivery;
-};
+  requestId?: string
+  title: string | undefined
+  body: string | undefined
+  data?: Record<string, unknown>
+  channelId?: string
+  source: "local" | "webhook"
+  delivery: NotificationDelivery
+}
 
-type NotificationDelivery = "dropped" | "failed" | "generated" | "received";
+type NotificationDelivery = "dropped" | "failed" | "generated" | "received"
 
 export type StoredNotification = NotificationStorageInput & {
-  id: number;
-  savedAt: string;
-  deliveredAt?: string;
-};
+  id: number
+  savedAt: string
+  deliveredAt?: string
+}
 
 // serialize writes so concurrent notification events cannot claim the same id
-let writeQueue: Promise<unknown> = Promise.resolve();
-const entryKey = (id: number) => `${NOTIFICATION_ENTRY_PREFIX}.${id}`;
+let writeQueue: Promise<unknown> = Promise.resolve()
+const entryKey = (id: number) => `${NOTIFICATION_ENTRY_PREFIX}.${id}`
 
 /** Makes the archive sequence available to a headless task after first unlock. */
 export const prepareNotificationStorageForBackground = async () => {
-  await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
-};
+  await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY)
+}
 
 /**
  * append a notification to the local encrypted notification database
@@ -40,28 +40,28 @@ export const prepareNotificationStorageForBackground = async () => {
  */
 export const saveNotification = async (input: NotificationStorageInput) => {
   const write = writeQueue.then(async () => {
-    const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
-    const parsedSequence = Number.parseInt(storedSequence ?? "0", 10);
-    const id = Number.isSafeInteger(parsedSequence) ? parsedSequence + 1 : 1;
+    const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY)
+    const parsedSequence = Number.parseInt(storedSequence ?? "0", 10)
+    const id = Number.isSafeInteger(parsedSequence) ? parsedSequence + 1 : 1
     const notification: StoredNotification = {
       ...input,
       id,
       savedAt: new Date().toISOString(),
-    };
+    }
 
     // reserve the id before writing the entry
     //
     // a failed entry write can leave a harmless gap,
     // but a later notification can never overwrite it
-    await secureStorage.setItem(NOTIFICATION_SEQUENCE_KEY, String(id));
-    await secureStorage.setItem(entryKey(id), JSON.stringify(notification));
+    await secureStorage.setItem(NOTIFICATION_SEQUENCE_KEY, String(id))
+    await secureStorage.setItem(entryKey(id), JSON.stringify(notification))
 
-    return id;
-  });
+    return id
+  })
 
-  writeQueue = write.catch(() => undefined);
-  return write;
-};
+  writeQueue = write.catch(() => undefined)
+  return write
+}
 
 /**
  * update a locally-generated notification
@@ -71,12 +71,12 @@ export const markNotificationDelivery = async (
   delivery: Exclude<NotificationDelivery, "generated">
 ) => {
   const write = writeQueue.then(async () => {
-    const storedValue = await secureStorage.getItem(entryKey(id));
+    const storedValue = await secureStorage.getItem(entryKey(id))
     if (storedValue === null) {
-      throw new Error(`[notifications] missing stored notification ${id}`);
+      throw new Error(`[notifications] missing stored notification ${id}`)
     }
 
-    const notification = JSON.parse(storedValue) as StoredNotification;
+    const notification = JSON.parse(storedValue) as StoredNotification
     await secureStorage.setItem(
       entryKey(id),
       JSON.stringify({
@@ -84,12 +84,12 @@ export const markNotificationDelivery = async (
         delivery,
         deliveredAt: new Date().toISOString(),
       } satisfies StoredNotification)
-    );
-  });
+    )
+  })
 
-  writeQueue = write.catch(() => undefined);
-  return write;
-};
+  writeQueue = write.catch(() => undefined)
+  return write
+}
 
 /**
  * get all notifications
@@ -98,41 +98,78 @@ export const markNotificationDelivery = async (
  */
 export const getNotifications = async () => {
   // wait for pending writes so a reserved sequence always has a chance to finish
-  await writeQueue;
+  await writeQueue
 
   // validate sequence
-  const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
-  const sequence = Number.parseInt(storedSequence ?? "0", 10);
-  if (!Number.isSafeInteger(sequence) || sequence < 1) return [];
+  const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY)
+  const sequence = Number.parseInt(storedSequence ?? "0", 10)
+  if (!Number.isSafeInteger(sequence) || sequence < 1) return []
 
   // resolve stored notifications
   const storedNotifications = await Promise.all(
     Array.from({ length: sequence }, (_, index) => secureStorage.getItem(entryKey(index + 1)))
-  );
+  )
 
   // return notifications as normalized map
   return storedNotifications.flatMap((storedValue) =>
     storedValue === null ? [] : [JSON.parse(storedValue) as StoredNotification]
-  );
-};
+  )
+}
+
+/** Permanently deletes archived notifications that can be attributed to a server. */
+export const deleteNotificationsForServer = async (serverId: string) => {
+  const write = writeQueue.then(async () => {
+    const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY)
+    const sequence = Number.parseInt(storedSequence ?? "0", 10)
+    if (!Number.isSafeInteger(sequence) || sequence < 1) return
+
+    const keys = Array.from({ length: sequence }, (_, index) => entryKey(index + 1))
+    const entries = await Promise.all(keys.map((key) => secureStorage.getItem(key)))
+    const scopedPrefix = `${serverId}:`
+
+    await Promise.all(
+      entries.flatMap((storedValue, index) => {
+        if (storedValue === null) return []
+
+        const notification = JSON.parse(storedValue) as StoredNotification
+        const data = notification.data ?? {}
+        const identifiers = [
+          data.connectionId,
+          data.serverId,
+          data.deploymentId,
+          data.resourceId,
+          data.instanceId,
+        ]
+        const belongsToServer = identifiers.some(
+          (value) => typeof value === "string" && (value === serverId || value.startsWith(scopedPrefix))
+        )
+
+        return belongsToServer ? [secureStorage.removeItem(keys[index])] : []
+      })
+    )
+  })
+
+  writeQueue = write.catch(() => undefined)
+  return write
+}
 
 /**
  * permanently delete all stored notifications and reset their sequence
  */
 export const deleteAllNotifications = async () => {
   const write = writeQueue.then(async () => {
-    const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY);
-    const sequence = Number.parseInt(storedSequence ?? "0", 10);
+    const storedSequence = await secureStorage.getItem(NOTIFICATION_SEQUENCE_KEY)
+    const sequence = Number.parseInt(storedSequence ?? "0", 10)
 
     if (Number.isSafeInteger(sequence) && sequence > 0) {
       await Promise.all(
         Array.from({ length: sequence }, (_, index) => secureStorage.removeItem(entryKey(index + 1)))
-      );
+      )
     }
 
-    await secureStorage.removeItem(NOTIFICATION_SEQUENCE_KEY);
-  });
+    await secureStorage.removeItem(NOTIFICATION_SEQUENCE_KEY)
+  })
 
-  writeQueue = write.catch(() => undefined);
-  return write;
-};
+  writeQueue = write.catch(() => undefined)
+  return write
+}

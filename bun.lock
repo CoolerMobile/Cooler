@@ -12,6 +12,7 @@
         "@react-native-async-storage/async-storage": "2.2.0",
         "@react-native-community/datetimepicker": "9.1.0",
         "@rn-primitives/checkbox": "^1.5.2",
+        "@rn-primitives/dialog": "^1.5.2",
         "@rn-primitives/label": "^1.5.2",
         "@rn-primitives/select": "^1.5.2",
         "@rn-primitives/separator": "^1.5.2",
@@ -61,6 +62,7 @@
         "react-native-safe-area-context": "~5.7.0",
         "react-native-screens": "4.27.0",
         "react-native-svg": "15.15.4",
+        "react-native-swipeable-actions": "^0.1.12",
         "react-native-web": "~0.21.4",
         "react-native-worklets": "0.10.1",
         "simple-icons": "^16.34.0",
@@ -80,6 +82,7 @@
     },
   },
   "patchedDependencies": {
+    "react-native-swipeable-actions@0.1.12": "patches/react-native-swipeable-actions@0.1.12.patch",
     "expo-modern-table@0.1.2": "patches/expo-modern-table@0.1.2.patch",
   },
   "overrides": {
@@ -499,6 +502,8 @@
     "@react-native/virtualized-lists": ["@react-native/virtualized-lists@0.86.3", "", { "dependencies": { "invariant": "^2.2.4", "nullthrows": "^1.1.1" }, "peerDependencies": { "@types/react": "^19.2.0", "react": "*", "react-native": "0.86.3" }, "optionalPeers": ["@types/react"] }, "sha512-1j44NEyNn05Ut40vHAmoSWbsIcybFkMAOBTwQt1PrESyfSS+qBoyU1LGIogNva0VIa0rQyEC5PzbA7R4/7Nhyw=="],
 
     "@rn-primitives/checkbox": ["@rn-primitives/checkbox@1.5.2", "", { "dependencies": { "@radix-ui/react-checkbox": "^1.3.3", "@rn-primitives/hooks": "1.5.2", "@rn-primitives/slot": "1.5.2", "@rn-primitives/types": "1.5.2" }, "peerDependencies": { "react": "*", "react-native": "*", "react-native-web": "*" }, "optionalPeers": ["react-native", "react-native-web"] }, "sha512-wZzxfDHms+DKCiZssbM3KUuDg2A7dmRDLTHhAyq/QPqaxSwvzp7O6ul/E6fmiSQ2s+A37UwjBTzCNoSNGYexdQ=="],
+
+    "@rn-primitives/dialog": ["@rn-primitives/dialog@1.5.2", "", { "dependencies": { "@radix-ui/react-dialog": "^1.1.15", "@rn-primitives/hooks": "1.5.2", "@rn-primitives/slot": "1.5.2", "@rn-primitives/types": "1.5.2" }, "peerDependencies": { "@rn-primitives/portal": "*", "react": "*", "react-native": "*", "react-native-web": "*" }, "optionalPeers": ["react-native", "react-native-web"] }, "sha512-FNrpYIULeZpFY5VFIaaU2EH1VxF52B4AfNlqic9eAKG74JAtRSoew/IMJOnsH4ujR/AA4I+9JZGZ35adFuc7DA=="],
 
     "@rn-primitives/hooks": ["@rn-primitives/hooks@1.5.2", "", { "dependencies": { "@rn-primitives/types": "1.5.2" }, "peerDependencies": { "react": "*", "react-native": "*", "react-native-web": "*" }, "optionalPeers": ["react-native", "react-native-web"] }, "sha512-7XUVqR/nS309Fpltd19GflRTUPE/bYwZnOh/ofEDw7UMMelfI5CIgc70BXfZPHAkrjG9/tU3JAZl0KWSrWLJCQ=="],
 
@@ -1201,6 +1206,8 @@
     "react-native-screens": ["react-native-screens@4.27.0", "", { "dependencies": { "react-freeze": "^1.0.0", "warn-once": "^0.1.0" }, "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-IUukKYilhKhdJqGh59BmxrAjgIO84CaOkdowEY20+RmapOAFpqS//xOIcq2iqDQ4xVoxuwCHGWhY/Tbz6lTblA=="],
 
     "react-native-svg": ["react-native-svg@15.15.4", "", { "dependencies": { "css-select": "^5.1.0", "css-tree": "^1.1.3", "warn-once": "0.1.1" }, "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-boT/vIRgj6zZKBpfTPJJiYWMbZE9duBMOwPK6kCSTgxsS947IFMOq9OgIFkpWZTB7t229H24pDRkh3W9ZK/J1A=="],
+
+    "react-native-swipeable-actions": ["react-native-swipeable-actions@0.1.12", "", { "peerDependencies": { "expo": ">=50.0.0", "expo-modules-core": ">=1.0.0", "react": ">=18.0.0", "react-native": ">=0.73.0" } }, "sha512-/6xVTE4CKDc7nnLHzYmkbXxYz6b13tv0uAEXsBQMuVKaKYvbxdpqHZRY9yT6liPtNBKDsQan4Xx5cRho5AKopQ=="],
 
     "react-native-web": ["react-native-web@0.21.4", "", { "dependencies": { "@babel/runtime": "^7.18.6", "@react-native/normalize-colors": "^0.74.1", "fbjs": "^3.0.4", "inline-style-prefixer": "^7.0.1", "memoize-one": "^6.0.0", "nullthrows": "^1.1.1", "postcss-value-parser": "^4.2.0", "styleq": "^0.1.3" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0" } }, "sha512-77B6KlalB4osNIck91TNFixPkYPsTbuNEvw8P7IV+4v4/5wZSBRKZnw0Zhx6YjuauDTz71gc8IW+fVhcBMjr5A=="],
 

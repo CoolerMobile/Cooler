@@ -260,15 +260,17 @@ export const refreshDeployments = async ({ showRefreshIndicator = false } = {}):
         )
       )
     )
-    const deployments = results.flatMap((result) => (result.status === "fulfilled" ? result.value : []))
-    const failedCount = results.filter((result) => result.status === "rejected").length
+    const activeServerIds = new Set(useDataStore.getState().servers.map((server) => server.id))
+    const activeResults = results.filter((_, index) => activeServerIds.has(servers[index].id))
+    const deployments = activeResults.flatMap((result) => (result.status === "fulfilled" ? result.value : []))
+    const failedCount = activeResults.filter((result) => result.status === "rejected").length
 
     deploymentStore.setDeployments(deployments.sort((a, b) => b.createdAt - a.createdAt))
     deploymentStore.setRequestState({
       isLoading: false,
       isRefreshing: false,
       error:
-        failedCount === servers.length
+        activeResults.length > 0 && failedCount === activeResults.length
           ? "Deployments could not be refreshed. Pull down to try again."
           : failedCount > 0
             ? `${failedCount} Coolify connection${failedCount === 1 ? "" : "s"} could not be refreshed.`
@@ -354,12 +356,21 @@ export const refreshDeploymentsAndNotify = async (): Promise<number> => {
       else console.error("[deployments] watched deployment refresh failed:", result.reason)
     }
 
-    state.setDeployments([...deploymentsById.values()].sort((a, b) => b.createdAt - a.createdAt))
+    const activeServerIds = new Set(useDataStore.getState().servers.map((server) => server.id))
+    state.setDeployments(
+      [...deploymentsById.values()]
+        .filter((deployment) => activeServerIds.has(deployment.connectionId))
+        .sort((a, b) => b.createdAt - a.createdAt)
+    )
     let notificationCount = 0
 
     for (const deployment of deploymentsById.values()) {
       const isFinished = ["success", "failed", "cancelled"].includes(deployment.status)
-      if (!isFinished || !state.watchedDeploymentIds.includes(deployment.id)) continue
+      const currentWatches = useDeploymentStore.getState().watchedDeploymentIds
+      const serverStillExists = useDataStore
+        .getState()
+        .servers.some((server) => server.id === deployment.connectionId)
+      if (!isFinished || !serverStillExists || !currentWatches.includes(deployment.id)) continue
 
       try {
         await createLocalNotification({

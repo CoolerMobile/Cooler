@@ -1,5 +1,6 @@
 import { DataList } from "@/components/custom/data/list"
 import { ListItem } from "@/components/custom/data/list-item"
+import { NewServerSheet } from "@/components/custom/new-server"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { MenuView } from "@/components/ui/menu"
@@ -8,13 +9,26 @@ import { refreshCoolifyData } from "@/lib/hooks/data/coolify"
 import { useScreenOptions } from "@/lib/hooks/screen-options"
 import { ServerData } from "@/lib/hooks/servers/connection"
 import { useDataStore } from "@/lib/stores/data"
+import { useDeploymentStore } from "@/lib/stores/deployments"
+import { deleteNotificationsForServer } from "@/lib/storage/notifications"
 import { Instance, Resource } from "@/lib/types/coolify"
 import { Icon as ExpoIcon } from "@expo/ui"
 import { upperFirstLetter } from "@/lib/utils"
 import { router, Stack, useLocalSearchParams } from "expo-router"
-import { Component, Ellipsis, Library, LucideIcon, Search, Server, X } from "lucide-react-native"
+import {
+  Component,
+  Ellipsis,
+  Library,
+  LucideIcon,
+  Pencil,
+  Search,
+  Server,
+  Trash,
+  X,
+} from "lucide-react-native"
 import { useState } from "react"
-import { Pressable, SectionList, TextInput, View } from "react-native"
+import { Alert, Pressable, SectionList, TextInput, View } from "react-native"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogTitle } from "@/components/ui/dialog"
 
 type ParsedData =
   | { type: "servers"; params: ServerData[] }
@@ -179,7 +193,12 @@ export default function Infra() {
   const [order, setOrder] = useState<ItemOrder>("ascending")
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [openSwipeItemId, setOpenSwipeItemId] = useState<string | null>(null)
+  const [serverIdBeingEdited, setServerIdBeingEdited] = useState<string | null>(null)
+  const [serverIdPendingRemoval, setServerIdPendingRemoval] = useState<string | null>(null)
+  const [isRemovingServer, setIsRemovingServer] = useState(false)
 
+  const serverBeingEdited = servers.find((server) => server.id === serverIdBeingEdited) ?? null
   const connectionsById = new Map(servers.map((server) => [server.id, server]))
   const instancesById = new Map(instances.map((instance) => [instance.id, instance]))
   const stateMatches = (state: ItemState) => filter === "all" || filter === state
@@ -283,6 +302,34 @@ export default function Infra() {
   const openDetails = (type: ParsedData["type"], itemId: string) =>
     router.navigate({ pathname: "/(screens)/(resources)/[id]", params: { id: itemId, type } })
 
+  const handleRemoveServer = async (serverId: string) => {
+    if (isRemovingServer) return
+
+    const server = useDataStore.getState().servers.find((item) => item.id === serverId)
+    if (!server) {
+      setServerIdPendingRemoval(null)
+      Alert.alert("Server unavailable", "This server has already been removed.")
+      return
+    }
+
+    setIsRemovingServer(true)
+    try {
+      await deleteNotificationsForServer(serverId)
+      useDeploymentStore.getState().removeServerData(serverId, server.nickname)
+      useDataStore.getState().removeServerData(serverId)
+      setServerIdPendingRemoval(null)
+      setOpenSwipeItemId(null)
+      Alert.alert("Server removed", `${server.nickname} and its local data were removed.`)
+    } catch (error) {
+      Alert.alert(
+        "Could not remove server",
+        error instanceof Error ? error.message : "The server's local data could not be removed."
+      )
+    } finally {
+      setIsRemovingServer(false)
+    }
+  }
+
   const refresh = async () => {
     if (isRefreshing) return
     setIsRefreshing(true)
@@ -303,19 +350,90 @@ export default function Infra() {
 
         if (matchingServers.length === 0) return <EmptyList searching={Boolean(normalizedSearch)} />
 
+        const serverPendingRemoval = servers.find((server) => server.id === serverIdPendingRemoval)
+        const lostData = ["Overall configuration", "Scheduled deployments", "Notification rules", "API token"]
+
         return (
-          <DataList
-            data={matchingServers}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <ListItem
-                title={item.nickname}
-                description={item.endpoint}
-                leading={<ItemIcon icon={Server} state={serverState(item)} />}
-                onPress={() => openDetails("servers", item.id)}
-              />
-            )}
-          />
+          <>
+            <DataList
+              data={matchingServers}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <ListItem
+                  title={item.nickname}
+                  description={item.endpoint}
+                  leading={<ItemIcon icon={Server} state={serverState(item)} />}
+                  onPress={() => openDetails("servers", item.id)}
+                  swipeableKey={item.id}
+                  swipeActions={[
+                    // remove server
+                    {
+                      icon: Trash,
+                      variant: "destructive",
+                      side: "right",
+                      onPress: () => setServerIdPendingRemoval(item.id),
+                    },
+
+                    // edit details
+                    {
+                      icon: Pencil,
+                      variant: "default",
+                      side: "left",
+                      onPress: () => setServerIdBeingEdited(item.id),
+                    },
+                  ]}
+                  onSwipeOpenChange={(isOpen) =>
+                    setOpenSwipeItemId((currentId) =>
+                      isOpen ? item.id : currentId === item.id ? null : currentId
+                    )
+                  }
+                />
+              )}
+            />
+
+            <NewServerSheet
+              open={Boolean(serverBeingEdited)}
+              onOpenChange={(open) => {
+                if (!open) setServerIdBeingEdited(null)
+              }}
+              server={serverBeingEdited}
+            />
+
+            <Dialog
+              open={Boolean(serverPendingRemoval)}
+              onOpenChange={(open) => {
+                if (!open && !isRemovingServer) setServerIdPendingRemoval(null)
+              }}>
+              <DialogContent>
+                <DialogTitle>
+                  <Text>Remove {serverPendingRemoval?.nickname}?</Text>
+                </DialogTitle>
+                <Text>If you remove this server, its local data will be lost:</Text>
+                <View className="gap-2 pt-4">
+                  {lostData.map((item) => (
+                    <Text key={item}>- {item}</Text>
+                  ))}
+                </View>
+
+                <DialogFooter className="flex flex-row justify-end gap-2">
+                  <DialogClose asChild>
+                    <Button variant="secondary" disabled={isRemovingServer}>
+                      <Text>Cancel</Text>
+                    </Button>
+                  </DialogClose>
+
+                  <Button
+                    variant="destructive"
+                    disabled={!serverPendingRemoval || isRemovingServer}
+                    onPress={() => {
+                      if (serverPendingRemoval) void handleRemoveServer(serverPendingRemoval.id)
+                    }}>
+                    <Text>{isRemovingServer ? "Removing…" : "Remove"}</Text>
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </>
         )
       }
 
@@ -331,7 +449,7 @@ export default function Infra() {
             sections={resourceSections(matchingResources)}
             keyExtractor={(item) => item.key}
             renderSectionHeader={({ section }) => (
-              <View className="border-b border-border bg-background px-1 pb-3 pt-5">
+              <View className="border-b border-border bg-background px-5 pb-3 pt-5">
                 <Text className="text-lg font-semibold">{section.title}</Text>
                 {section.connectionName && (
                   <Text className="text-xs text-muted-foreground">
@@ -343,7 +461,7 @@ export default function Infra() {
             renderItem={({ item }) => {
               if (item.kind === "project") {
                 return (
-                  <View className="bg-background px-1 pb-1 pt-4">
+                  <View className="bg-background px-5 pb-1 pt-4">
                     <Text className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                       {item.title}
                     </Text>
@@ -408,6 +526,7 @@ export default function Infra() {
         options={options({
           title: `${upperFirstLetter(id)}`,
           headerBackButtonDisplayMode: "minimal",
+          gestureEnabled: openSwipeItemId === null,
           headerRight: () => (
             <InfraMoreMenu
               filter={filter}
@@ -420,33 +539,37 @@ export default function Infra() {
           ),
         })}
       />
-      <View className="flex-1 p-4">
-        <View className="mb-2 flex-row items-center gap-2 rounded-xl border border-border bg-card px-3">
-          <Icon as={Search} size={18} className="text-muted-foreground" />
-          <TextInput
-            accessibilityLabel={`Search ${id}`}
-            className="flex-1 pb-3 pt-2 text-base text-foreground"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholder={`Search ${id}`}
-            autoCapitalize="none"
-            autoCorrect={false}
-            returnKeyType="search"
-          />
-          {searchQuery.length > 0 && (
-            <Pressable accessibilityLabel="Clear search" hitSlop={8} onPress={() => setSearchQuery("")}>
-              <Icon as={X} size={18} className="text-muted-foreground" />
-            </Pressable>
-          )}
+      <View className="flex-1 py-4">
+        <View className="px-4">
+          <View className="mb-2 flex-row items-center gap-2 rounded-xl border border-border bg-card px-3">
+            <Icon as={Search} size={18} className="text-muted-foreground" />
+            <TextInput
+              accessibilityLabel={`Search ${id}`}
+              className="flex-1 pb-3 pt-2 text-base text-foreground"
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              placeholder={`Search ${id}`}
+              autoCapitalize="none"
+              autoCorrect={false}
+              returnKeyType="search"
+            />
+            {searchQuery.length > 0 && (
+              <Pressable accessibilityLabel="Clear search" hitSlop={8} onPress={() => setSearchQuery("")}>
+                <Icon as={X} size={18} className="text-muted-foreground" />
+              </Pressable>
+            )}
+          </View>
         </View>
         {renderList()}
 
-        <View className="border-t border-border pt-4">
-          <Text className="text-center text-xs text-muted-foreground">
-            {visibleCount === parsedData.params.length
-              ? `Total: ${parsedData.params.length}`
-              : `Showing ${visibleCount} of ${parsedData.params.length}`}
-          </Text>
+        <View className="px-4">
+          <View className="border-t border-border pt-4">
+            <Text className="text-center text-xs text-muted-foreground">
+              {visibleCount === parsedData.params.length
+                ? `Total: ${parsedData.params.length}`
+                : `Showing ${visibleCount} of ${parsedData.params.length}`}
+            </Text>
+          </View>
         </View>
       </View>
     </>

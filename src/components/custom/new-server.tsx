@@ -2,8 +2,8 @@ import BottomSheet, { BottomSheetTextInput } from "@/components/ui/bottom-sheet"
 import { Text } from "@/components/ui/text"
 import { Label } from "@/components/ui/label"
 import { Alert, Platform, TextInput, useWindowDimensions, View } from "react-native"
-import { useRef, useState } from "react"
-import { useServer } from "@/lib/hooks/servers/connection"
+import { useEffect, useRef, useState } from "react"
+import { ServerData, useServer } from "@/lib/hooks/servers/connection"
 import { Button } from "@/components/ui/button"
 import { Button as NativeButton, Host as NativeHost } from "@expo/ui"
 import { fillMaxWidth } from "@expo/ui/jetpack-compose/modifiers"
@@ -13,9 +13,10 @@ import Spacer from "@/components/custom/spacer"
 type Props = {
   open: boolean
   onOpenChange: (open: boolean) => void
+  server?: ServerData | null
 }
 
-export const NewServerSheet = ({ open, onOpenChange }: Props) => {
+export const NewServerSheet = ({ open, onOpenChange, server }: Props) => {
   const { height: windowHeight } = useWindowDimensions()
   const { colorScheme } = useAppTheme()
   const nativeAccentColor = colorScheme === "dark" ? "#e91e63" : "#008080"
@@ -31,9 +32,18 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
   const canValidateServer = [newServerNickValue, newServerAddressValue, newServerApiKeyValue].every(
     (value) => value.trim().length > 0
   )
+  const isEditing = Boolean(server)
 
-  const { validate, create } = useServer()
+  const { validate, create, update } = useServer()
   const [validating, setValidating] = useState(false)
+
+  useEffect(() => {
+    if (!open) return
+
+    setNewServerNickValue(server?.nickname ?? "")
+    setNewServerAddressValue(server?.endpoint ?? "")
+    setNewServerApiKeyValue(server?.token ?? "")
+  }, [open, server])
   const resetNewServerForm = () => {
     onOpenChange(false)
     setNewServerNickValue("")
@@ -44,27 +54,32 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
     newServerApiKey.current?.clear()
   }
 
-  const addServer = async () => {
+  const saveServer = async () => {
     try {
-      const created = await create({
+      const details = {
         nickname: newServerNickValue.trim(),
         endpoint: newServerAddressValue.trim(),
         token: newServerApiKeyValue.trim(),
-      })
+      }
+      const saved = server ? await update(server.id, details) : await create(details)
 
-      if (!created) throw Error("server could not be added")
+      if (!saved) throw Error(server ? "server could not be updated" : "server could not be added")
       resetNewServerForm()
     } catch (error) {
-      Alert.alert("Server Could Not Be Added", error instanceof Error ? error.message : "Please try again.", [
-        {
-          text: "Go Back",
-          style: "cancel",
-        },
-        {
-          text: "Try Again",
-          onPress: addServer,
-        },
-      ])
+      Alert.alert(
+        server ? "Changes Could Not Be Saved" : "Server Could Not Be Added",
+        error instanceof Error ? error.message : "Please try again.",
+        [
+          {
+            text: "Go Back",
+            style: "cancel",
+          },
+          {
+            text: "Try Again",
+            onPress: saveServer,
+          },
+        ]
+      )
     }
   }
 
@@ -87,12 +102,12 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
         allGood
           ? [
               {
-                text: "Edit Details",
+                text: isEditing ? "Keep Editing" : "Edit Details",
                 style: "cancel",
               },
               {
-                text: "Add Server",
-                onPress: addServer,
+                text: isEditing ? "Save Changes" : "Add Server",
+                onPress: saveServer,
               },
             ]
           : [
@@ -162,8 +177,12 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
           height: newServerSheetHeight,
         }}>
         <View className="gap-1">
-          <Text className="text-xl font-semibold">Add a server</Text>
-          <Text className="text-sm text-muted-foreground">Connect Cooler to an existing Coolify server.</Text>
+          <Text className="text-xl font-semibold">{isEditing ? "Edit server details" : "Add a server"}</Text>
+          <Text className="text-sm text-muted-foreground">
+            {isEditing
+              ? "Update the connection details for this Coolify server."
+              : "Connect Cooler to an existing Coolify server."}
+          </Text>
         </View>
 
         <View className="flex-1 gap-4">
@@ -177,6 +196,7 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
               placeholder="Production"
               returnKeyType="next"
               onSubmitEditing={() => newServerAddress.current?.focus()}
+              value={newServerNickValue}
               onChangeText={setNewServerNickValue}
             />
           </View>
@@ -192,6 +212,7 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
               placeholder="server.example.com"
               returnKeyType="next"
               onSubmitEditing={() => newServerApiKey.current?.focus()}
+              value={newServerAddressValue}
               onChangeText={setNewServerAddressValue}
             />
             <Text className="text-xs text-muted-foreground">HTTPS is added automatically.</Text>
@@ -210,6 +231,7 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
               onSubmitEditing={() => {
                 if (canValidateServer && !validating) void validateConnection()
               }}
+              value={newServerApiKeyValue}
               onChangeText={setNewServerApiKeyValue}
             />
 
@@ -244,7 +266,7 @@ export const NewServerSheet = ({ open, onOpenChange }: Props) => {
               width: "100%",
             }}>
             <NativeButton
-              label={validating ? "Validating…" : "Validate connection"}
+              label={validating ? "Validating…" : isEditing ? "Validate changes" : "Validate connection"}
               disabled={!canValidateServer || validating}
               onPress={() => void validateConnection()}
               modifiers={Platform.OS === "android" ? [fillMaxWidth()] : undefined}

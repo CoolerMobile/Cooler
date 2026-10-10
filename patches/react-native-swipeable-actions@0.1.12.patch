@@ -1,0 +1,25 @@
+diff --git a/ios/SwipeableView.swift b/ios/SwipeableView.swift
+--- a/ios/SwipeableView.swift
++++ b/ios/SwipeableView.swift
+@@ -1020,6 +1020,10 @@ extension SwipeableView: UIGestureRecognizerDelegate {
+         _ gestureRecognizer: UIGestureRecognizer,
+         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+     ) -> Bool {
++        if otherGestureRecognizer is UIScreenEdgePanGestureRecognizer {
++            return false
++        }
++
+         if Self.isRNTouchHandler(otherGestureRecognizer) {
+             return false
+         }
+@@ -1030,6 +1034,10 @@ extension SwipeableView: UIGestureRecognizerDelegate {
+         _ gestureRecognizer: UIGestureRecognizer,
+         shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer
+     ) -> Bool {
++        if otherGestureRecognizer is UIScreenEdgePanGestureRecognizer {
++            return true
++        }
++
+         if otherGestureRecognizer.view is UIScrollView {
+             return true
+         }

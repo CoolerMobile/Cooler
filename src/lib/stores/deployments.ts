@@ -19,6 +19,7 @@ type DeploymentState = {
   setHasHydratedWatches: (hasHydrated: boolean) => void
   setRequestState: (state: Partial<Pick<DeploymentState, "isLoading" | "isRefreshing" | "error">>) => void
   updateDeployment: (id: string, deployment: Partial<Deployment>) => void
+  removeServerData: (serverId: string, serverName: string) => void
 }
 
 const DEFAULT_FILTERS: DeploymentFilters = {
@@ -59,6 +60,38 @@ export const useDeploymentStore = create<DeploymentState>()(
         set((state) => ({
           deployments: state.deployments.map((item) => (item.id === id ? { ...item, ...deployment } : item)),
         })),
+      removeServerData: (serverId, serverName) =>
+        set((state) => {
+          const removedDeployments = state.deployments.filter(
+            (deployment) => deployment.connectionId === serverId
+          )
+          const deployments = state.deployments.filter((deployment) => deployment.connectionId !== serverId)
+          const removedProjects = new Set(removedDeployments.map((deployment) => deployment.projectName))
+          const removedResources = new Set(removedDeployments.map((deployment) => deployment.resourceName))
+
+          return {
+            deployments,
+            watchedDeploymentIds: state.watchedDeploymentIds.filter(
+              (deploymentId) => !deploymentId.startsWith(`${serverId}:`)
+            ),
+            filters: {
+              ...state.filters,
+              server: state.filters.server === serverName ? null : state.filters.server,
+              project:
+                state.filters.project &&
+                removedProjects.has(state.filters.project) &&
+                !deployments.some((deployment) => deployment.projectName === state.filters.project)
+                  ? null
+                  : state.filters.project,
+              resource:
+                state.filters.resource &&
+                removedResources.has(state.filters.resource) &&
+                !deployments.some((deployment) => deployment.resourceName === state.filters.resource)
+                  ? null
+                  : state.filters.resource,
+            },
+          }
+        }),
     }),
     {
       name: "cooler-deployment-watches",
