@@ -2,7 +2,7 @@
   "name": "cooler",
   "main": "expo-router/entry",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "scripts": {
     "dev": "expo start -c --go",
     "dev:native-build": "expo run --device",
