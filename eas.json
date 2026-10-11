@@ -13,6 +13,17 @@
     },
     "production": {
       "autoIncrement": true
+    },
+    "release": {
+      "extends": "production",
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "nightly": {
+      "extends": "release",
+      "autoIncrement": true
     }
   },
   "submit": {

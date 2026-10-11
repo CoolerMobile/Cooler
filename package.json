@@ -9,7 +9,8 @@
     "dev:native-rebuild": "bun run clean:native && expo run --device",
     "dev:native-build:eas": "eas build --profile development",
     "clean:native": "rm -rf .expo ios android",
-    "clean": "rm -rf .expo node_modules && bun install"
+    "clean": "rm -rf .expo node_modules && bun install",
+    "release": "bun scripts/release.ts"
   },
   "dependencies": {
     "@expo/material-symbols": "^0.1.1",
@@ -77,6 +78,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@types/bun": "^1.4.2",
     "@types/react": "~19.2.18",
     "babel-preset-expo": "^57.0.14",
     "prettier": "^3.9.9",
