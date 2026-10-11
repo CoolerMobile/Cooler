@@ -5,7 +5,7 @@
 </div>
 
 > [!NOTE]
-> Cooler is prod-ready, at **v1.0.0**. The project is still evolving, and new features will continue to build on the core management experience.
+> Cooler is prod-ready. The project is still evolving, and new features will continue to build on the core management experience.
 
 ## What Cooler does
 
