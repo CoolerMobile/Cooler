@@ -1,0 +1,3 @@
+# Managed by Blitz. Allows ASC CLI commands without approval prompts.
+prefix_rule(pattern=["asc"], decision="allow")
+prefix_rule(pattern=["/Users/danfq/.blitz/bin/asc"], decision="allow")
