@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs"
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 
 type Bump = "major" | "minor" | "patch"
@@ -6,16 +6,29 @@ type PackageJson = { version: string; [key: string]: unknown }
 
 const root = join(import.meta.dir, "..")
 const packagePath = join(root, "package.json")
-const requestedBump = Bun.argv[2]
 const versionPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
+const usage = "Usage: bun release [--eas] [--nightly] [patch|minor|major|x.y.z]"
+const args = Bun.argv.slice(2)
+const useEas = args.includes("--eas")
+const nightly = args.includes("--nightly")
+const bumpOnly = args.includes("--bump-only")
+const unknownFlags = args.filter(
+  (arg) => arg.startsWith("--") && !["--eas", "--nightly", "--bump-only"].includes(arg)
+)
+const positionalArgs = args.filter((arg) => !arg.startsWith("--"))
 
+if (useEas && bumpOnly) throw new Error(usage)
+if (unknownFlags.length > 0 || positionalArgs.length > 1) throw new Error(usage)
+
+const requestedBump = positionalArgs[0] === "auto" ? undefined : positionalArgs[0]
 if (
   requestedBump &&
   !["major", "minor", "patch"].includes(requestedBump) &&
   !versionPattern.test(requestedBump)
 ) {
-  throw new Error("Usage: bun release [patch|minor|major|x.y.z]")
+  throw new Error(usage)
 }
+
 const supportedTypes = new Set([
   "build",
   "chore",
@@ -33,17 +46,14 @@ const fail = (message: string): never => {
   throw new Error(message)
 }
 
-const run = (command: string, args: string[], captureOutput = false) => {
-  const result = Bun.spawnSync([command, ...args], {
+const run = (command: string, commandArgs: string[], captureOutput = false) => {
+  const result = Bun.spawnSync([command, ...commandArgs], {
     cwd: root,
     stdout: captureOutput ? "pipe" : "inherit",
     stderr: "inherit",
   })
 
-  if (!result.success) {
-    fail(`Command failed: ${command} ${args.join(" ")}`)
-  }
-
+  if (!result.success) fail(`Command failed: ${command} ${commandArgs.join(" ")}`)
   return captureOutput ? new TextDecoder().decode(result.stdout) : ""
 }
 
@@ -73,20 +83,19 @@ const isGreaterVersion = (candidate: string, current: string) => {
   return false
 }
 
-const latestReleaseTag = run(
-  "git",
-  ["tag", "--merged", "HEAD", "--list", "v[0-9]*", "--sort=-version:refname"],
-  true
-)
-  .split("\n")
-  .find((tag) => versionPattern.test(tag.slice(1)))
-const revisionRange = latestReleaseTag ? `${latestReleaseTag}..HEAD` : "HEAD"
-const commits = run("git", ["log", revisionRange, "--format=%B%x00"], true)
-  .split("\0")
-  .map((message) => message.trim())
-  .filter(Boolean)
-
 const calculateBump = (): Bump => {
+  const latestReleaseTag = run(
+    "git",
+    ["tag", "--merged", "HEAD", "--list", "v[0-9]*", "nightly-v[0-9]*", "--sort=-creatordate"],
+    true
+  )
+    .split("\n")
+    .find((tag) => versionPattern.test(tag.startsWith("nightly-v") ? tag.slice(9) : tag.slice(1)))
+  const revisionRange = latestReleaseTag ? `${latestReleaseTag}..HEAD` : "HEAD"
+  const commits = run("git", ["log", revisionRange, "--format=%B%x00"], true)
+    .split("\0")
+    .map((message) => message.trim())
+    .filter(Boolean)
   let bump: Bump | undefined
 
   for (const message of commits) {
@@ -101,61 +110,149 @@ const calculateBump = (): Bump => {
   }
 
   if (bump) return bump
-
   throw new Error(
     `No releasable conventional commits found since ${latestReleaseTag ?? "the first commit"}. ` +
       "Use bun release <patch|minor|major|x.y.z> to override."
   )
 }
 
-const packageChanges = Bun.spawnSync(["git", "diff", "--quiet", "--", "package.json"], {
-  cwd: root,
-})
-const stagedPackageChanges = Bun.spawnSync(["git", "diff", "--cached", "--quiet", "--", "package.json"], {
-  cwd: root,
-})
-if (!packageChanges.success || !stagedPackageChanges.success) {
-  fail("package.json has uncommitted changes. Commit or discard them before releasing.")
-}
+const prepareVersion = () => {
+  const packageChanges = Bun.spawnSync(["git", "diff", "--quiet", "--", "package.json"], { cwd: root })
+  const stagedPackageChanges = Bun.spawnSync(["git", "diff", "--cached", "--quiet", "--", "package.json"], {
+    cwd: root,
+  })
+  if (!packageChanges.success || !stagedPackageChanges.success) {
+    fail("package.json has uncommitted changes. Commit or discard them before releasing.")
+  }
 
-const packageJson = JSON.parse(readFileSync(packagePath, "utf8")) as PackageJson
-if (!versionPattern.test(packageJson.version)) {
-  fail(`package.json has an invalid semantic version: ${packageJson.version}`)
-}
+  const originalPackage = readFileSync(packagePath, "utf8")
+  const packageJson = JSON.parse(originalPackage) as PackageJson
+  if (!versionPattern.test(packageJson.version)) {
+    fail(`package.json has an invalid semantic version: ${packageJson.version}`)
+  }
 
-const release = (() => {
+  let version: string
+  let description: string
   if (!requestedBump) {
     const calculatedBump = calculateBump()
-    return {
-      version: bumpVersion(packageJson.version, calculatedBump),
-      description: `calculated ${calculatedBump} bump`,
+    version = bumpVersion(packageJson.version, calculatedBump)
+    description = `calculated ${calculatedBump} bump`
+  } else if (["major", "minor", "patch"].includes(requestedBump)) {
+    version = bumpVersion(packageJson.version, requestedBump as Bump)
+    description = `manual ${requestedBump} bump`
+  } else {
+    if (!isGreaterVersion(requestedBump, packageJson.version)) {
+      fail(`Manual version must be greater than ${packageJson.version}.`)
     }
+    version = requestedBump
+    description = "manual version override"
   }
 
-  if (["major", "minor", "patch"].includes(requestedBump)) {
-    return {
-      version: bumpVersion(packageJson.version, requestedBump as Bump),
-      description: `manual ${requestedBump} bump`,
+  packageJson.version = version
+  writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+  return { version, description, originalPackage }
+}
+
+const currentBranch = () => {
+  const branch = run("git", ["branch", "--show-current"], true).trim()
+  if (!branch) fail("Cannot release from a detached HEAD. Check out a branch first.")
+  return branch
+}
+
+if (bumpOnly) {
+  process.stdout.write(prepareVersion().version)
+  process.exit(0)
+}
+
+const branch = currentBranch()
+const channel = nightly ? "nightly" : "release"
+if (useEas) {
+  const bump = requestedBump ?? "auto"
+  run("git", ["push", "origin", branch])
+  run("gh", [
+    "workflow",
+    "run",
+    "release.yml",
+    "--ref",
+    branch,
+    "--field",
+    `channel=${channel}`,
+    "--field",
+    `bump=${bump}`,
+  ])
+  console.log(`EAS ${channel} dispatched from ${branch} (${bump} bump).`)
+  process.exit(0)
+}
+
+const { version, description: releaseDescription, originalPackage } = prepareVersion()
+const artifactDirectory = join(root, "artifacts")
+const builds = [
+  { platform: "ios", extension: "ipa" },
+  { platform: "android", extension: "apk" },
+] as const
+
+mkdirSync(artifactDirectory, { recursive: true })
+
+try {
+  for (const { platform, extension } of builds) {
+    const output = join(artifactDirectory, `Cooler-${channel}-${version}-${platform}.${extension}`)
+    let succeeded = false
+
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+      rmSync(output, { force: true })
+      console.log(`Starting local ${platform} build (attempt ${attempt}/2).`)
+      const result = Bun.spawnSync(
+        [
+          "bunx",
+          "eas-cli@latest",
+          "build",
+          "--local",
+          "--platform",
+          platform,
+          "--profile",
+          channel,
+          "--non-interactive",
+          "--output",
+          output,
+        ],
+        { cwd: root, stdout: "inherit", stderr: "inherit" }
+      )
+
+      if (result.success) {
+        succeeded = true
+        break
+      }
+      if (attempt === 1) console.error(`Local ${platform} build failed; retrying once.`)
     }
+
+    if (!succeeded) fail(`Local ${platform} build failed twice; stopping without further retries.`)
   }
-
-  if (!isGreaterVersion(requestedBump, packageJson.version)) {
-    return fail(`Manual version must be greater than ${packageJson.version}.`)
-  }
-
-  return { version: requestedBump, description: "manual version override" }
-})()
-const { version, description: releaseDescription } = release
-
-const branch = run("git", ["branch", "--show-current"], true).trim()
-if (!branch) fail("Cannot release from a detached HEAD. Check out a branch first.")
-
-packageJson.version = version
-writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+} catch (error) {
+  writeFileSync(packagePath, originalPackage)
+  throw error
+}
 
 run("git", ["add", "package.json"])
-run("git", ["commit", "-m", `chore: release v${version}`])
+run("git", ["commit", "-m", `chore: release ${nightly ? "nightly " : ""}v${version}`])
 run("git", ["push", "origin", branch])
-run("gh", ["workflow", "run", "release.yml", "--ref", branch, "--field", `version=${version}`])
+const releaseCommit = run("git", ["rev-parse", "HEAD"], true).trim()
+const tag = nightly ? `nightly-v${version}` : `v${version}`
+const title = nightly ? `Cooler nightly v${version}` : `Cooler v${version}`
+run("gh", [
+  "release",
+  "create",
+  tag,
+  ...builds.map(({ platform, extension }) =>
+    join(artifactDirectory, `Cooler-${channel}-${version}-${platform}.${extension}`)
+  ),
+  "--target",
+  releaseCommit,
+  "--title",
+  title,
+  "--notes",
+  `Built locally from commit ${releaseCommit}.`,
+  "--generate-notes",
+  ...(nightly ? ["--prerelease"] : ["--latest"]),
+])
 
-console.log(`Release v${version} dispatched from ${branch} (${releaseDescription}).`)
+console.log(`${title} built and published from ${branch} (${releaseDescription}).`)

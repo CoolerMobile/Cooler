@@ -3,15 +3,21 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: Semantic release version
-        required: false
+      channel:
+        description: Release channel
+        required: true
+        default: release
+        type: choice
+        options:
+          - release
+          - nightly
+      bump:
+        description: Version bump (auto, patch, minor, major, or x.y.z)
+        required: true
+        default: auto
         type: string
-  schedule:
-    - cron: "0 0 * * *"
-
 concurrency:
-  group: cooler-${{ github.event_name == 'schedule' && 'nightly' || 'release' }}
+  group: cooler-${{ inputs.channel }}
   cancel-in-progress: false
 
 permissions:
@@ -20,6 +26,7 @@ permissions:
 jobs:
   prepare:
     name: Prepare release metadata
+    if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     runs-on: ubuntu-latest
     outputs:
       channel: ${{ steps.metadata.outputs.channel }}
@@ -27,53 +34,43 @@ jobs:
       name: ${{ steps.metadata.outputs.name }}
       version: ${{ steps.metadata.outputs.version }}
       prerelease: ${{ steps.metadata.outputs.prerelease }}
+      sha: ${{ steps.metadata.outputs.sha }}
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Resolve release metadata
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Resolve release metadata and bump version
         id: metadata
         env:
-          DISPATCH_VERSION: ${{ inputs.version }}
-          RUN_NUMBER: ${{ github.run_number }}
+          DISPATCH_CHANNEL: ${{ inputs.channel }}
+          REQUESTED_BUMP: ${{ inputs.bump }}
         run: |
           set -euo pipefail
 
-          package_version="$(jq -r '.version' package.json)"
-          if [[ ! "$package_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Invalid package.json version: $package_version" >&2
-            exit 1
-          fi
-
-          if [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then
-            channel="nightly"
-            version="$package_version"
-            tag="nightly-$(date -u +%Y%m%d)-$RUN_NUMBER"
-            name="Cooler nightly $(date -u +%Y-%m-%d)"
+          channel="$DISPATCH_CHANNEL"
+          version="$(bun scripts/release.ts --bump-only "${REQUESTED_BUMP:-auto}")"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json
+          if [[ "$channel" == "nightly" ]]; then
+            git commit -m "chore: release nightly v${version}"
+            tag="nightly-v${version}"
+            name="Cooler nightly v${version}"
             prerelease="true"
           else
-            channel="release"
-            version="$DISPATCH_VERSION"
-
-            if [[ -z "$version" ]]; then
-              echo "A release version is required for manual dispatches." >&2
-              exit 1
-            fi
-
-            if [[ "$version" != "$package_version" ]]; then
-              echo "Workflow version $version does not match package.json version $package_version" >&2
-              exit 1
-            fi
-
-            if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo "Invalid release version: $version" >&2
-              exit 1
-            fi
-
-            tag="v$version"
-            name="Cooler v$version"
+            git commit -m "chore: release v${version}"
+            tag="v${version}"
+            name="Cooler v${version}"
             prerelease="false"
           fi
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
           {
             echo "channel=$channel"
@@ -81,25 +78,27 @@ jobs:
             echo "name=$name"
             echo "version=$version"
             echo "prerelease=$prerelease"
+            echo "sha=$(git rev-parse HEAD)"
           } >> "$GITHUB_OUTPUT"
 
   build:
-    name: Build ${{ matrix.platform }} (${{ needs.prepare.outputs.channel }})
+    name: Queue EAS ${{ matrix.platform }} build (${{ needs.prepare.outputs.channel }})
+    if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     needs: prepare
     strategy:
       fail-fast: false
       matrix:
         include:
           - platform: ios
-            runner: macos-14
             extension: ipa
           - platform: android
-            runner: ubuntu-latest
             extension: apk
-    runs-on: ${{ matrix.runner }}
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out source
+      - name: Check out prepared source
         uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
@@ -109,7 +108,7 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build locally with EAS (one retry maximum)
+      - name: Queue EAS cloud build and download artifact
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           PLATFORM: ${{ matrix.platform }}
@@ -117,31 +116,30 @@ jobs:
           VERSION: ${{ needs.prepare.outputs.version }}
           EXTENSION: ${{ matrix.extension }}
         run: |
-          set -uo pipefail
+          set -euo pipefail
           mkdir -p artifacts
-          output="artifacts/Cooler-${PROFILE}-${VERSION}-${PLATFORM}.${EXTENSION}"
 
           for attempt in 1 2; do
-            echo "Starting local ${PLATFORM} build (attempt ${attempt}/2)."
-            rm -f "$output"
-
+            echo "Queueing EAS ${PLATFORM} build (attempt ${attempt}/2)."
             if bunx eas-cli@latest build \
-              --local \
               --platform "$PLATFORM" \
               --profile "$PROFILE" \
               --non-interactive \
-              --output "$output"; then
-              echo "Local ${PLATFORM} build succeeded on attempt ${attempt}."
-              exit 0
+              --wait \
+              --json > build.json; then
+              break
             fi
 
             if [[ "$attempt" == 2 ]]; then
-              echo "Local ${PLATFORM} build failed twice; stopping without further retries." >&2
+              echo "EAS ${PLATFORM} build failed twice; stopping without further retries." >&2
               exit 1
             fi
-
-            echo "Local ${PLATFORM} build failed; retrying once." >&2
+            echo "EAS ${PLATFORM} build failed; retrying once." >&2
           done
+
+          artifact_url="$(jq -er 'if type == "array" then .[0] else . end | .artifacts.applicationArchiveUrl' build.json)"
+          output="artifacts/Cooler-${PROFILE}-${VERSION}-${PLATFORM}.${EXTENSION}"
+          curl --fail --location --retry 3 --output "$output" "$artifact_url"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -153,6 +151,7 @@ jobs:
 
   release:
     name: Publish GitHub Release
+    if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     needs: [prepare, build]
     runs-on: ubuntu-latest
     steps:
@@ -167,15 +166,15 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.prepare.outputs.tag }}
-          target_commitish: ${{ github.sha }}
+          target_commitish: ${{ needs.prepare.outputs.sha }}
           name: ${{ needs.prepare.outputs.name }}
           prerelease: ${{ needs.prepare.outputs.prerelease }}
           make_latest: ${{ needs.prepare.outputs.channel == 'release' }}
           generate_release_notes: true
           body: |
-            Built from commit ${{ github.sha }}.
+            Built from commit ${{ needs.prepare.outputs.sha }}.
 
-            This ${{ needs.prepare.outputs.channel }} release includes iOS and Android artifacts. GitHub generated the changelog below from the commits since the previous release, including commit authors and new contributors.
+            This ${{ needs.prepare.outputs.channel }} release includes iOS and Android artifacts built by EAS. GitHub generated the changelog below from the commits since the previous release, including commit authors and new contributors.
           files: artifacts/*
           fail_on_unmatched_files: true
           token: ${{ github.token }}

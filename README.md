@@ -83,19 +83,33 @@ bunx tsc --noEmit
 
 ## Building release artifacts
 
-The repository includes EAS profiles for the two CI release channels. Local builds require the platform's native toolchain and configured signing credentials:
+Stable releases build locally by default. This bumps and commits the version, builds the iOS and Android artifacts with the local native toolchains, pushes the release commit, and publishes the GitHub Release:
 
 ```bash
-# Android APK
-bunx eas-cli build --local --platform android --profile release
-
-# iOS IPA (run on macOS)
-bunx eas-cli build --local --platform ios --profile release
+bun release
+# Optional override: patch, minor, major, or an exact x.y.z version
+bun release minor
 ```
 
-The Android profiles are configured to produce installable `.apk` files. The GitHub Actions workflow in `.github/workflows/release.yml` builds iOS on a macOS runner and Android on an Ubuntu runner in parallel. Each platform build is retried at most once if it fails, then the workflow stops without additional retries. Artifacts are attached to the GitHub Release using the `Cooler-<channel>-<version>-<platform>.<extension>` naming convention.
+Use EAS cloud builds when the local toolchains are unavailable or unwanted:
 
-To run the workflow manually, open **Actions → Release → Run workflow** and choose `release` or `nightly`. Nightly builds also run automatically at midnight UTC. CI requires the repository's `EXPO_TOKEN` secret and the EAS project to have its signing credentials configured.
+```bash
+bun release --eas
+bun release --eas minor
+```
+
+Nightly releases are explicit and follow the same local/EAS and version-bump rules:
+
+```bash
+bun release --nightly
+bun release --nightly --eas
+# Version overrides can be combined with either form
+bun release --nightly --eas patch
+```
+
+With `--eas`, the local command only pushes the selected branch and dispatches `.github/workflows/release.yml`. The workflow bumps and commits the version, queues parallel iOS and Android EAS builds, downloads their artifacts, and publishes the GitHub Release. Nightly releases are prereleases and are never scheduled automatically.
+
+Each platform build is retried at most once if it fails. Android release profiles produce installable `.apk` files, and release assets use the `Cooler-<channel>-<version>-<platform>.<extension>` naming convention. Cloud builds require the repository's `EXPO_TOKEN` secret and EAS signing credentials; local builds require locally configured signing credentials.
 
 ## Contributing
 

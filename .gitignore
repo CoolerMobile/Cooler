@@ -1,4 +1,5 @@
 # Android
+/artifacts/
 .gradle/
 build/
 local.properties
