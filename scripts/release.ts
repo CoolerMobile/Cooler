@@ -83,15 +83,39 @@ const isGreaterVersion = (candidate: string, current: string) => {
   return false
 }
 
-const calculateBump = (): Bump => {
-  const latestReleaseTag = run(
-    "git",
-    ["tag", "--merged", "HEAD", "--list", "v[0-9]*", "nightly-v[0-9]*", "--sort=-creatordate"],
-    true
-  )
+const latestReleaseTag = () =>
+  run("git", ["tag", "--merged", "HEAD", "--list", "v[0-9]*", "nightly-v[0-9]*", "--sort=-creatordate"], true)
     .split("\n")
     .find((tag) => versionPattern.test(tag.startsWith("nightly-v") ? tag.slice(9) : tag.slice(1)))
-  const revisionRange = latestReleaseTag ? `${latestReleaseTag}..HEAD` : "HEAD"
+
+const latestReleaseReference = () =>
+  latestReleaseTag() ??
+  (run("git", ["log", "HEAD", "--format=%H", "--grep=^chore: release ", "-n", "1"], true).trim() || undefined)
+
+const createReleaseNotes = () => {
+  const previousRelease = latestReleaseReference()
+  const revisionRange = previousRelease ? `${previousRelease}..HEAD` : "HEAD"
+  const commits = run("git", ["log", revisionRange, "--format=%H%x09%h%x09%s%x09%an"], true)
+    .trim()
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => line.split("\t"))
+
+  const changes = commits.length
+    ? commits
+        .map(
+          ([sha, shortSha, subject, author]) =>
+            `- ${subject} — ${author} ([${shortSha}](https://github.com/CoolerMobile/Cooler/commit/${sha}))`
+        )
+        .join("\n")
+    : "- No commits since the previous release."
+
+  return `## Changes\n\n${changes}\n`
+}
+
+const calculateBump = (): Bump => {
+  const previousRelease = latestReleaseReference()
+  const revisionRange = previousRelease ? `${previousRelease}..HEAD` : "HEAD"
   const commits = run("git", ["log", revisionRange, "--format=%B%x00"], true)
     .split("\0")
     .map((message) => message.trim())
@@ -111,7 +135,7 @@ const calculateBump = (): Bump => {
 
   if (bump) return bump
   throw new Error(
-    `No releasable conventional commits found since ${latestReleaseTag ?? "the first commit"}. ` +
+    `No releasable conventional commits found since ${previousRelease ?? "the first commit"}. ` +
       "Use bun release <patch|minor|major|x.y.z> to override."
   )
 }
@@ -184,49 +208,47 @@ if (useEas) {
   process.exit(0)
 }
 
+const releaseNotes = createReleaseNotes()
 const { version, description: releaseDescription, originalPackage } = prepareVersion()
 const artifactDirectory = join(root, "artifacts")
-const builds = [
-  { platform: "ios", extension: "ipa" },
-  { platform: "android", extension: "apk" },
-] as const
+const platform = "android"
+const extension = "apk"
+const output = join(artifactDirectory, `Cooler-${channel}-${version}-${platform}.${extension}`)
+const releaseNotesPath = join(artifactDirectory, "release-notes.md")
 
 mkdirSync(artifactDirectory, { recursive: true })
 
 try {
-  for (const { platform, extension } of builds) {
-    const output = join(artifactDirectory, `Cooler-${channel}-${version}-${platform}.${extension}`)
-    let succeeded = false
+  let succeeded = false
 
-    for (let attempt = 1; attempt <= 2; attempt += 1) {
-      rmSync(output, { force: true })
-      console.log(`Starting local ${platform} build (attempt ${attempt}/2).`)
-      const result = Bun.spawnSync(
-        [
-          "bunx",
-          "eas-cli@latest",
-          "build",
-          "--local",
-          "--platform",
-          platform,
-          "--profile",
-          channel,
-          "--non-interactive",
-          "--output",
-          output,
-        ],
-        { cwd: root, stdout: "inherit", stderr: "inherit" }
-      )
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    rmSync(output, { force: true })
+    console.log(`Starting local ${platform} build (attempt ${attempt}/2).`)
+    const result = Bun.spawnSync(
+      [
+        "bunx",
+        "eas-cli@latest",
+        "build",
+        "--local",
+        "--platform",
+        platform,
+        "--profile",
+        channel,
+        "--non-interactive",
+        "--output",
+        output,
+      ],
+      { cwd: root, stdout: "inherit", stderr: "inherit" }
+    )
 
-      if (result.success) {
-        succeeded = true
-        break
-      }
-      if (attempt === 1) console.error(`Local ${platform} build failed; retrying once.`)
+    if (result.success) {
+      succeeded = true
+      break
     }
-
-    if (!succeeded) fail(`Local ${platform} build failed twice; stopping without further retries.`)
+    if (attempt === 1) console.error(`Local ${platform} build failed; retrying once.`)
   }
+
+  if (!succeeded) fail(`Local ${platform} build failed twice; stopping without further retries.`)
 } catch (error) {
   writeFileSync(packagePath, originalPackage)
   throw error
@@ -238,20 +260,18 @@ run("git", ["push", "origin", branch])
 const releaseCommit = run("git", ["rev-parse", "HEAD"], true).trim()
 const tag = nightly ? `nightly-v${version}` : `v${version}`
 const title = nightly ? `Cooler nightly v${version}` : `Cooler v${version}`
+writeFileSync(releaseNotesPath, `${releaseNotes}\nBuilt from commit \`${releaseCommit}\`.\n`)
 run("gh", [
   "release",
   "create",
   tag,
-  ...builds.map(({ platform, extension }) =>
-    join(artifactDirectory, `Cooler-${channel}-${version}-${platform}.${extension}`)
-  ),
+  output,
   "--target",
   releaseCommit,
   "--title",
   title,
-  "--notes",
-  `Built locally from commit ${releaseCommit}.`,
-  "--generate-notes",
+  "--notes-file",
+  releaseNotesPath,
   ...(nightly ? ["--prerelease"] : ["--latest"]),
 ])
 

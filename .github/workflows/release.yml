@@ -82,17 +82,9 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
   build:
-    name: Queue EAS ${{ matrix.platform }} build (${{ needs.prepare.outputs.channel }})
+    name: Queue EAS Android build (${{ needs.prepare.outputs.channel }})
     if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     needs: prepare
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: ios
-            extension: ipa
-          - platform: android
-            extension: apk
     runs-on: ubuntu-latest
     steps:
       - name: Check out prepared source
@@ -111,10 +103,10 @@ jobs:
       - name: Queue EAS cloud build and download artifact
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          PLATFORM: ${{ matrix.platform }}
+          PLATFORM: android
           PROFILE: ${{ needs.prepare.outputs.channel }}
           VERSION: ${{ needs.prepare.outputs.version }}
-          EXTENSION: ${{ matrix.extension }}
+          EXTENSION: apk
         run: |
           set -euo pipefail
           mkdir -p artifacts
@@ -144,7 +136,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cooler-${{ needs.prepare.outputs.channel }}-${{ matrix.platform }}
+          name: cooler-${{ needs.prepare.outputs.channel }}-android
           path: artifacts/*
           if-no-files-found: error
           retention-days: 7
@@ -155,12 +147,48 @@ jobs:
     needs: [prepare, build]
     runs-on: ubuntu-latest
     steps:
-      - name: Download iOS and Android artifacts
+      - name: Check out prepared source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          fetch-depth: 0
+
+      - name: Download Android artifact
         uses: actions/download-artifact@v4
         with:
-          pattern: cooler-${{ needs.prepare.outputs.channel }}-*
+          name: cooler-${{ needs.prepare.outputs.channel }}-android
           path: artifacts
-          merge-multiple: true
+
+      - name: Write release notes
+        env:
+          RELEASE_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          set -euo pipefail
+
+          release_parent="${RELEASE_SHA}^"
+          mapfile -t release_tags < <(git tag --merged "$release_parent" --list 'v[0-9]*' 'nightly-v[0-9]*' --sort=-creatordate)
+          previous_tag="${release_tags[0]:-}"
+          if [[ -n "$previous_tag" ]]; then
+            revision_range="${previous_tag}..${release_parent}"
+          else
+            previous_release="$(git log "$release_parent" --format=%H --grep='^chore: release ' -n 1)"
+            if [[ -n "$previous_release" ]]; then
+              revision_range="${previous_release}..${release_parent}"
+            else
+              revision_range="$release_parent"
+            fi
+          fi
+
+          {
+            echo "## Changes"
+            echo
+            if [[ "$(git rev-list --count "$revision_range")" -eq 0 ]]; then
+              echo "- No commits since the previous release."
+            else
+              git log "$revision_range" --format="- %s — %an ([%h](https://github.com/${GITHUB_REPOSITORY}/commit/%H))"
+            fi
+            printf '\nBuilt from commit `%s`.\n' "$RELEASE_SHA"
+          } > release-notes.md
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
@@ -170,11 +198,7 @@ jobs:
           name: ${{ needs.prepare.outputs.name }}
           prerelease: ${{ needs.prepare.outputs.prerelease }}
           make_latest: ${{ needs.prepare.outputs.channel == 'release' }}
-          generate_release_notes: true
-          body: |
-            Built from commit ${{ needs.prepare.outputs.sha }}.
-
-            This ${{ needs.prepare.outputs.channel }} release includes iOS and Android artifacts built by EAS. GitHub generated the changelog below from the commits since the previous release, including commit authors and new contributors.
+          body_path: release-notes.md
           files: artifacts/*
           fail_on_unmatched_files: true
           token: ${{ github.token }}
