@@ -1261,7 +1261,7 @@ manual:
   - name: uuid@7.0.3
     version: '7.0.3'
     source: https://github.com/uuidjs/uuid
-    file: '../node_modules/xcode/node_modules/uuid/LICENSE.md'
+    file: '../node_modules/uuid/LICENSE.md'
   - name: xml2js@0.6.0
     version: '0.6.0'
     source: https://github.com/Leonidas-from-XIV/node-xml2js
@@ -2530,11 +2530,11 @@ manual:
   - name: hermes-parser@0.36.0
     version: '0.36.0'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/@react-native/babel-plugin-codegen/node_modules/@react-native/codegen/node_modules/hermes-parser/LICENSE'
+    file: '../node_modules/hermes-parser/LICENSE'
   - name: hermes-estree@0.36.0
     version: '0.36.0'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/@react-native/babel-plugin-codegen/node_modules/@react-native/codegen/node_modules/hermes-parser/node_modules/hermes-estree/LICENSE'
+    file: '../node_modules/hermes-estree/LICENSE'
   - name: tinyglobby@0.2.17
     version: '0.2.17'
     source: https://github.com/SuperchupuDev/tinyglobby
