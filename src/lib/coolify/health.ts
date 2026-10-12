@@ -13,6 +13,21 @@ export type HealthIssue = {
   }
 }
 
+const HEALTH_STATUS_PRIORITY: Record<HealthStatus, number> = {
+  [HealthStatus.HEALTHY]: 0,
+  [HealthStatus.DEGRADED]: 1,
+  [HealthStatus.UNKNOWN]: 2,
+  [HealthStatus.UNHEALTHY]: 3,
+}
+
+/** Returns the most important status represented by the supplied issues. */
+export const calculateIssueHealthStatus = (issues: HealthIssue[]): HealthStatus =>
+  issues.reduce<HealthStatus>(
+    (status, issue) =>
+      HEALTH_STATUS_PRIORITY[issue.severity] > HEALTH_STATUS_PRIORITY[status] ? issue.severity : status,
+    HealthStatus.HEALTHY
+  )
+
 const resourceContext = (resource: Resource): string =>
   [resource.projectName, resource.environmentName].filter(Boolean).join(" · ")
 

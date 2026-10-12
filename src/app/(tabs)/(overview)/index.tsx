@@ -56,10 +56,12 @@ export default function OverviewScreen() {
   const overviewData = useOverview()
   const health = HEALTH_PRESENTATION[overviewData.healthStatus]
   const healthDescription =
-    overviewData.failedServerCount > 0
-      ? `${overviewData.failedServerCount} Coolify ${overviewData.failedServerCount === 1 ? "connection could" : "connections could"} not be refreshed.`
-      : health.description
-  const showHealthDetails = overviewData.healthStatus !== HealthStatus.HEALTHY
+    overviewData.healthStatus === HealthStatus.HEALTHY && overviewData.dismissedHealthIssueCount > 0
+      ? `${overviewData.dismissedHealthIssueCount} current ${overviewData.dismissedHealthIssueCount === 1 ? "issue is" : "issues are"} dismissed.`
+      : overviewData.failedServerCount > 0
+        ? `${overviewData.failedServerCount} Coolify ${overviewData.failedServerCount === 1 ? "connection could" : "connections could"} not be refreshed.`
+        : health.description
+  const showHealthDetails = overviewData.healthIssues.length > 0
 
   // ui
   return (

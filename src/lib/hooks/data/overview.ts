@@ -1,7 +1,7 @@
 import { useDataStore } from "@/lib/stores/data"
 import { HealthStatus, type Instance, type Resource } from "@/lib/types/coolify"
 import { ServerData } from "../servers/connection"
-import { collectHealthIssues, type HealthIssue } from "@/lib/coolify/health"
+import { calculateIssueHealthStatus, collectHealthIssues, type HealthIssue } from "@/lib/coolify/health"
 export { HealthStatus } from "@/lib/types/coolify"
 export type { HealthIssue } from "@/lib/coolify/health"
 
@@ -12,6 +12,7 @@ export type OverviewData = {
   instances: Instance[]
   healthStatus: HealthStatus
   healthIssues: HealthIssue[]
+  dismissedHealthIssueCount: number
 }
 
 /**
@@ -57,14 +58,19 @@ export const useOverview = (): OverviewData => {
   const hasHydrated = useDataStore((state) => state.hasHydrated)
   const hasSynced = useDataStore((state) => state.hasSynced)
   const failedServerIds = useDataStore((state) => state.failedServerIds)
+  const dismissedHealthIssueIds = useDataStore((state) => state.dismissedHealthIssueIds)
   const hasCurrentData = hasHydrated && hasSynced
+  const healthIssues = collectHealthIssues(servers, resources, instances, hasCurrentData, failedServerIds)
+  const dismissedIssues = new Set(dismissedHealthIssueIds)
+  const visibleHealthIssues = healthIssues.filter((issue) => !dismissedIssues.has(issue.id))
 
   return {
     servers: servers,
     failedServerCount: failedServerIds.length,
     resources: resources,
     instances: instances,
-    healthStatus: calculateHealthStatus(resources, hasCurrentData, failedServerIds.length > 0, instances),
-    healthIssues: collectHealthIssues(servers, resources, instances, hasCurrentData, failedServerIds),
+    healthStatus: calculateIssueHealthStatus(visibleHealthIssues),
+    healthIssues,
+    dismissedHealthIssueCount: healthIssues.length - visibleHealthIssues.length,
   }
 }

@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test"
 import type { ServerData } from "@/lib/hooks/servers/connection"
 import type { Instance, Resource } from "@/lib/types/coolify"
-import { collectHealthIssues } from "./health"
+import { HealthStatus } from "@/lib/types/coolify"
+import { calculateIssueHealthStatus, collectHealthIssues, type HealthIssue } from "./health"
 
 const connection: ServerData = {
   id: "connection-1",
@@ -75,5 +76,33 @@ describe("collectHealthIssues", () => {
     )
 
     expect(issues.map((issue) => issue.id)).toEqual([`resource:${resource.id}:failed`])
+  })
+})
+
+describe("calculateIssueHealthStatus", () => {
+  const issue = (severity: HealthIssue["severity"]): HealthIssue => ({
+    id: severity,
+    kind: "data",
+    title: severity,
+    description: severity,
+    severity,
+  })
+
+  test("is healthy when no issues remain visible", () => {
+    expect(calculateIssueHealthStatus([])).toBe(HealthStatus.HEALTHY)
+  })
+
+  test("uses the highest-priority visible issue", () => {
+    expect(
+      calculateIssueHealthStatus([
+        issue(HealthStatus.DEGRADED),
+        issue(HealthStatus.UNKNOWN),
+        issue(HealthStatus.UNHEALTHY),
+      ])
+    ).toBe(HealthStatus.UNHEALTHY)
+
+    expect(calculateIssueHealthStatus([issue(HealthStatus.DEGRADED), issue(HealthStatus.UNKNOWN)])).toBe(
+      HealthStatus.UNKNOWN
+    )
   })
 })
