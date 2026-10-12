@@ -1,5 +1,6 @@
 import type { ServerData } from "@/lib/hooks/servers/connection"
 import { migratingSecureStorage } from "@/lib/hooks/secure"
+import { collectHealthIssues } from "@/lib/coolify/health"
 import type { Instance, Resource } from "@/lib/types/coolify"
 import { create } from "zustand"
 import { persist, type PersistStorage } from "zustand/middleware"
@@ -8,6 +9,7 @@ type PersistedDataState = {
   servers: ServerData[]
   resources: Resource[]
   instances: Instance[]
+  dismissedHealthIssueIds: string[]
 }
 
 type DataState = PersistedDataState & {
@@ -15,6 +17,8 @@ type DataState = PersistedDataState & {
   hasSynced: boolean
   failedServerIds: string[]
   lastSyncedAt: number | null
+  dismissHealthIssue: (issueId: string) => void
+  restoreHealthIssues: () => void
   setServers: (servers: ServerData[]) => void
   setResources: (resources: Resource[]) => void
   setResourceStatus: (resourceId: string, data: Pick<Resource, "rawStatus" | "status">) => void
@@ -36,6 +40,7 @@ const EMPTY_DATA: PersistedDataState = {
   servers: [],
   resources: [],
   instances: [],
+  dismissedHealthIssueIds: [],
 }
 
 const EMPTY_SYNC_STATE = {
@@ -73,17 +78,20 @@ const withoutResourceLogs = (resources: Resource[]): Resource[] =>
  */
 const dataStorage: PersistStorage<PersistedDataState> = {
   getItem: async () => {
-    const [storedServers, storedResources, storedInstances, legacyValue] = await Promise.all([
-      migratingSecureStorage.getItem("servers"),
-      migratingSecureStorage.getItem("resources"),
-      migratingSecureStorage.getItem("instances"),
-      migratingSecureStorage.getItem(DATA_STORAGE_KEY),
-    ])
+    const [storedServers, storedResources, storedInstances, storedDismissedIssues, legacyValue] =
+      await Promise.all([
+        migratingSecureStorage.getItem("servers"),
+        migratingSecureStorage.getItem("resources"),
+        migratingSecureStorage.getItem("instances"),
+        migratingSecureStorage.getItem("dismissed-health-issues"),
+        migratingSecureStorage.getItem(DATA_STORAGE_KEY),
+      ])
 
     if (
       storedServers === null &&
       storedResources === null &&
       storedInstances === null &&
+      storedDismissedIssues === null &&
       legacyValue === null
     ) {
       return null
@@ -104,6 +112,8 @@ const dataStorage: PersistStorage<PersistedDataState> = {
           parseCollection<Resource>(storedResources) ?? legacyState.resources ?? []
         ),
         instances: parseCollection<Instance>(storedInstances) ?? legacyState.instances ?? [],
+        dismissedHealthIssueIds:
+          parseCollection<string>(storedDismissedIssues) ?? legacyState.dismissedHealthIssueIds ?? [],
       },
     }
   },
@@ -112,6 +122,10 @@ const dataStorage: PersistStorage<PersistedDataState> = {
       migratingSecureStorage.setItem("servers", JSON.stringify(state.servers)),
       migratingSecureStorage.setItem("resources", JSON.stringify(state.resources)),
       migratingSecureStorage.setItem("instances", JSON.stringify(state.instances)),
+      migratingSecureStorage.setItem(
+        "dismissed-health-issues",
+        JSON.stringify(state.dismissedHealthIssueIds)
+      ),
     ])
     await migratingSecureStorage.removeItem(DATA_STORAGE_KEY)
   },
@@ -120,6 +134,7 @@ const dataStorage: PersistStorage<PersistedDataState> = {
       migratingSecureStorage.removeItem("servers"),
       migratingSecureStorage.removeItem("resources"),
       migratingSecureStorage.removeItem("instances"),
+      migratingSecureStorage.removeItem("dismissed-health-issues"),
       migratingSecureStorage.removeItem(DATA_STORAGE_KEY),
     ])
   },
@@ -147,33 +162,55 @@ export const useDataStore = create<DataState>()(
           ),
         })),
       setInstances: (instances) => set({ instances }),
+      dismissHealthIssue: (issueId) =>
+        set((state) => ({
+          dismissedHealthIssueIds: state.dismissedHealthIssueIds.includes(issueId)
+            ? state.dismissedHealthIssueIds
+            : [...state.dismissedHealthIssueIds, issueId],
+        })),
+      restoreHealthIssues: () => set({ dismissedHealthIssueIds: [] }),
       removeServerData: (serverId) =>
         set((state) => ({
           servers: state.servers.filter((server) => server.id !== serverId),
           resources: state.resources.filter((resource) => resource.connectionId !== serverId),
           instances: state.instances.filter((instance) => instance.connectionId !== serverId),
           failedServerIds: state.failedServerIds.filter((failedServerId) => failedServerId !== serverId),
+          dismissedHealthIssueIds: state.dismissedHealthIssueIds.filter(
+            (issueId) => !issueId.includes(serverId)
+          ),
         })),
       setInfrastructure: ({ resources, instances, failedServerIds, lastSyncedAt }) =>
         set((state) => {
           const currentResources = new Map(state.resources.map((resource) => [resource.id, resource]))
           const activeServerIds = new Set(state.servers.map((server) => server.id))
 
-          return {
-            resources: resources
-              .filter((resource) => activeServerIds.has(resource.connectionId))
-              .map((resource) => {
-                const currentResource = currentResources.get(resource.id)
-                if (!currentResource) return resource
+          const nextResources = resources
+            .filter((resource) => activeServerIds.has(resource.connectionId))
+            .map((resource) => {
+              const currentResource = currentResources.get(resource.id)
+              if (!currentResource) return resource
 
-                return {
-                  ...resource,
-                  logs: currentResource.logs,
-                  logsUpdatedAt: currentResource.logsUpdatedAt,
-                }
-              }),
-            instances: instances.filter((instance) => activeServerIds.has(instance.connectionId)),
-            failedServerIds: failedServerIds.filter((serverId) => activeServerIds.has(serverId)),
+              return {
+                ...resource,
+                logs: currentResource.logs,
+                logsUpdatedAt: currentResource.logsUpdatedAt,
+              }
+            })
+          const nextInstances = instances.filter((instance) => activeServerIds.has(instance.connectionId))
+          const nextFailedServerIds = failedServerIds.filter((serverId) => activeServerIds.has(serverId))
+          const activeIssueIds = new Set(
+            collectHealthIssues(state.servers, nextResources, nextInstances, true, nextFailedServerIds).map(
+              (issue) => issue.id
+            )
+          )
+
+          return {
+            resources: nextResources,
+            instances: nextInstances,
+            failedServerIds: nextFailedServerIds,
+            dismissedHealthIssueIds: state.dismissedHealthIssueIds.filter((issueId) =>
+              activeIssueIds.has(issueId)
+            ),
             lastSyncedAt,
             hasSynced: true,
           }
@@ -184,10 +221,11 @@ export const useDataStore = create<DataState>()(
     {
       name: DATA_STORAGE_KEY,
       storage: dataStorage,
-      partialize: ({ servers, resources, instances }) => ({
+      partialize: ({ servers, resources, instances, dismissedHealthIssueIds }) => ({
         servers,
         resources: withoutResourceLogs(resources),
         instances,
+        dismissedHealthIssueIds,
       }),
       onRehydrateStorage: () => (state, error) => {
         if (error) console.error("[data] hydration failed:", error)

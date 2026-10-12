@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/icon"
 import { Text } from "@/components/ui/text"
 import { HealthStatus, type HealthIssue, useOverview } from "@/lib/hooks/data/overview"
 import { useScreenOptions } from "@/lib/hooks/screen-options"
+import { useDataStore } from "@/lib/stores/data"
 import { router, Stack } from "expo-router"
 import {
   CircleAlert,
@@ -15,6 +16,7 @@ import {
   LucideIcon,
   Server,
   TriangleAlert,
+  X,
 } from "lucide-react-native"
 import { FlatList, View } from "react-native"
 
@@ -66,6 +68,12 @@ export default function HealthDetailsScreen() {
   const { options } = useScreenOptions()
   const overview = useOverview()
   const status = STATUS_PRESENTATION[overview.healthStatus]
+  const dismissedIssueIds = useDataStore((state) => state.dismissedHealthIssueIds)
+  const dismissHealthIssue = useDataStore((state) => state.dismissHealthIssue)
+  const restoreHealthIssues = useDataStore((state) => state.restoreHealthIssues)
+  const dismissedIssues = new Set(dismissedIssueIds)
+  const visibleIssues = overview.healthIssues.filter((issue) => !dismissedIssues.has(issue.id))
+  const dismissedCount = overview.healthIssues.length - visibleIssues.length
 
   const openIssue = (issue: HealthIssue) => {
     if (!issue.target) return
@@ -87,7 +95,7 @@ export default function HealthDetailsScreen() {
       <FlatList
         className="flex-1"
         contentContainerClassName="gap-2 pb-8"
-        data={overview.healthIssues}
+        data={visibleIssues}
         keyExtractor={(issue) => issue.id}
         ListHeaderComponent={
           <View className="gap-5 px-4 pb-3 pt-4">
@@ -109,13 +117,27 @@ export default function HealthDetailsScreen() {
 
             <View className="gap-1 px-1">
               <Text className="text-xl font-semibold">
-                {overview.healthIssues.length === 0 ? "All clear" : "What needs attention"}
+                {overview.healthIssues.length === 0
+                  ? "All clear"
+                  : visibleIssues.length === 0
+                    ? "No visible issues"
+                    : "What needs attention"}
               </Text>
               <Text className="text-sm text-muted-foreground">
                 {overview.healthIssues.length === 0
                   ? "No current infrastructure issues were found."
-                  : `${overview.healthIssues.length} ${overview.healthIssues.length === 1 ? "issue" : "issues"} found in the latest report.`}
+                  : visibleIssues.length === 0
+                    ? `${dismissedCount} ${dismissedCount === 1 ? "issue is" : "issues are"} currently dismissed.`
+                    : `${visibleIssues.length} ${visibleIssues.length === 1 ? "issue" : "issues"} shown from the latest report. Swipe left to dismiss.`}
               </Text>
+              {dismissedCount > 0 && (
+                <Text
+                  accessibilityRole="button"
+                  className="pt-2 font-semibold text-primary"
+                  onPress={restoreHealthIssues}>
+                  Show {dismissedCount} dismissed
+                </Text>
+              )}
             </View>
           </View>
         }
@@ -134,6 +156,16 @@ export default function HealthDetailsScreen() {
               }
               trailing={item.target ? undefined : <View />}
               onPress={item.target ? () => openIssue(item) : undefined}
+              swipeableKey={item.id}
+              swipeActions={[
+                {
+                  icon: X,
+                  variant: "destructive",
+                  accessibilityLabel: `Dismiss ${item.title}`,
+                  side: "right",
+                  onPress: () => dismissHealthIssue(item.id),
+                },
+              ]}
             />
           )
         }}

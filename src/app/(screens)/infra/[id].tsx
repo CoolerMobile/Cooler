@@ -182,6 +182,7 @@ export default function Infra() {
   const servers = useDataStore((state) => state.servers)
   const resources = useDataStore((state) => state.resources)
   const instances = useDataStore((state) => state.instances)
+  const failedServerIds = useDataStore((state) => state.failedServerIds)
   const parsedData: ParsedData =
     id === "servers"
       ? { type: id, params: servers }
@@ -199,6 +200,7 @@ export default function Infra() {
   const [isRemovingServer, setIsRemovingServer] = useState(false)
 
   const serverBeingEdited = servers.find((server) => server.id === serverIdBeingEdited) ?? null
+  const failedServers = new Set(failedServerIds)
   const connectionsById = new Map(servers.map((server) => [server.id, server]))
   const instancesById = new Map(instances.map((instance) => [instance.id, instance]))
   const stateMatches = (state: ItemState) => filter === "all" || filter === state
@@ -206,9 +208,21 @@ export default function Infra() {
   const matchesSearch = (...values: Array<string | null | undefined>) =>
     !normalizedSearch || values.some((value) => value?.toLocaleLowerCase().includes(normalizedSearch))
   const serverState = (item: ServerData): ItemState =>
-    item.health === "ok" ? "healthy" : item.health === "unknown" ? "unknown" : "unhealthy"
+    failedServers.has(item.id)
+      ? "unhealthy"
+      : item.health === "ok"
+        ? "healthy"
+        : item.health === "unknown"
+          ? "unknown"
+          : "unhealthy"
   const resourceState = (item: Resource): ItemState =>
-    item.status === "running" ? "healthy" : item.status === "unknown" ? "unknown" : "unhealthy"
+    !item.isReachable
+      ? "unhealthy"
+      : item.status === "running"
+        ? "healthy"
+        : item.status === "unknown"
+          ? "unknown"
+          : "unhealthy"
   const serverMatchesSearch = (item: ServerData) =>
     matchesSearch(item.nickname, item.endpoint, item.version, item.health)
   const instanceMatchesSearch = (item: Instance) => {
@@ -366,20 +380,22 @@ export default function Infra() {
                   onPress={() => openDetails("servers", item.id)}
                   swipeableKey={item.id}
                   swipeActions={[
-                    // remove server
-                    {
-                      icon: Trash,
-                      variant: "destructive",
-                      side: "right",
-                      onPress: () => setServerIdPendingRemoval(item.id),
-                    },
-
                     // edit details
                     {
                       icon: Pencil,
                       variant: "default",
-                      side: "left",
+                      accessibilityLabel: `Edit ${item.nickname}`,
+                      side: "right",
                       onPress: () => setServerIdBeingEdited(item.id),
+                    },
+
+                    // remove server
+                    {
+                      icon: Trash,
+                      variant: "destructive",
+                      accessibilityLabel: `Remove ${item.nickname}`,
+                      side: "right",
+                      onPress: () => setServerIdPendingRemoval(item.id),
                     },
                   ]}
                   onSwipeOpenChange={(isOpen) =>
@@ -392,6 +408,7 @@ export default function Infra() {
             />
 
             <NewServerSheet
+              key={serverBeingEdited?.id ?? "server-editor"}
               open={Boolean(serverBeingEdited)}
               onOpenChange={(open) => {
                 if (!open) setServerIdBeingEdited(null)
@@ -476,7 +493,7 @@ export default function Infra() {
                   description={[
                     resource.environmentName,
                     upperFirstLetter(resource.type),
-                    upperFirstLetter(resource.status),
+                    resource.isReachable ? upperFirstLetter(resource.status) : "Unreachable",
                   ]
                     .filter(Boolean)
                     .join(" · ")}

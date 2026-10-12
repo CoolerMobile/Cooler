@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 export type SwipeAction = {
   variant: "destructive" | "default"
   icon: LucideIcon
+  accessibilityLabel?: string
   side?: "left" | "right"
   onPress: () => void
 }
@@ -32,7 +33,7 @@ export const ListItem = ({
   title = "No Title",
   description,
   leading = <Icon as={CircleQuestionMark} size={24} />,
-  trailing = <Icon as={ChevronRight} />,
+  trailing,
   onPress,
   swipeActions,
   swipeableKey,
@@ -41,15 +42,20 @@ export const ListItem = ({
   // swipe ref
   const swipeRef = useRef<SwipeableMethods>(null)
   const isSwipeClosedRef = useRef(true)
-  const pendingPressRef = useRef<(() => void) | null>(null)
+  const pendingRowPressRef = useRef<(() => void) | null>(null)
+  const pendingSwipeActionRef = useRef<(() => void) | null>(null)
 
   const handlePress = () => {
+    // Some Android gesture paths also deliver the release to the row under a
+    // swipe action. Do not let that press replace the selected action.
+    if (pendingSwipeActionRef.current) return
+
     if (isSwipeClosedRef.current) {
       onPress?.()
       return
     }
 
-    pendingPressRef.current = onPress ?? null
+    pendingRowPressRef.current = onPress ?? null
     swipeRef.current?.close()
   }
 
@@ -62,11 +68,24 @@ export const ListItem = ({
     isSwipeClosedRef.current = true
     onSwipeOpenChange?.(false)
 
-    if (pendingPressRef.current) {
-      const pendingPress = pendingPressRef.current
-      pendingPressRef.current = null
+    if (pendingSwipeActionRef.current) {
+      const pendingAction = pendingSwipeActionRef.current
+      pendingSwipeActionRef.current = null
+      pendingRowPressRef.current = null
+      pendingAction()
+    } else if (pendingRowPressRef.current) {
+      const pendingPress = pendingRowPressRef.current
+      pendingRowPressRef.current = null
       pendingPress()
     }
+  }
+
+  const handleSwipeAction = (action: SwipeAction) => {
+    // On Android, presenting a sheet while the swipeable action surface is
+    // still open can be ignored by the native modal host. Finish closing the
+    // row first, then run the action from onSwipeableClose.
+    pendingSwipeActionRef.current = action.onPress
+    swipeRef.current?.close()
   }
 
   // swipe actions
@@ -84,16 +103,12 @@ export const ListItem = ({
       overshootRight={false}
       renderLeftActions={
         leftActions.length > 0
-          ? (_progress, _translation, methods) => (
-              <SwipeActionsView actions={leftActions} side="left" swipeable={methods} />
-            )
+          ? () => <SwipeActionsView actions={leftActions} side="left" onActionPress={handleSwipeAction} />
           : undefined
       }
       renderRightActions={
         rightActions.length > 0
-          ? (_progress, _translation, methods) => (
-              <SwipeActionsView actions={rightActions} side="right" swipeable={methods} />
-            )
+          ? () => <SwipeActionsView actions={rightActions} side="right" onActionPress={handleSwipeAction} />
           : undefined
       }
       onSwipeableWillOpen={handleSwipeOpen}
@@ -126,11 +141,11 @@ export const ListItem = ({
 const SwipeActionsView = ({
   actions,
   side,
-  swipeable,
+  onActionPress,
 }: {
   actions: SwipeAction[]
   side: "left" | "right"
-  swipeable: SwipeableMethods
+  onActionPress: (action: SwipeAction) => void
 }) => (
   <View className="flex-row">
     {actions.map((action, index) => (
@@ -141,10 +156,8 @@ const SwipeActionsView = ({
         <Button
           className="h-14"
           variant={action.variant}
-          onPress={() => {
-            action.onPress()
-            swipeable.close()
-          }}>
+          accessibilityLabel={action.accessibilityLabel}
+          onPress={() => onActionPress(action)}>
           <Icon as={action.icon} />
         </Button>
       </View>

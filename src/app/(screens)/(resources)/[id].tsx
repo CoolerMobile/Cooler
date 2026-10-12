@@ -76,6 +76,7 @@ export default function ResourceScreen() {
   const servers = useDataStore((state) => state.servers)
   const instances = useDataStore((state) => state.instances)
   const resources = useDataStore((state) => state.resources)
+  const failedServerIds = useDataStore((state) => state.failedServerIds)
   const [pendingAction, setPendingAction] = useState<CoolifyResourceAction | null>(null)
   const [actionFeedback, setActionFeedback] = useState<ResourceActionFeedback | null>(null)
   const actionInFlight = useRef(false)
@@ -91,6 +92,8 @@ export default function ResourceScreen() {
 
   const title = item ? ("nickname" in item ? item.nickname : item.name) : "Details"
   const selectedResource = type === "resources" ? resources.find((resource) => resource.id === id) : undefined
+  const latestConnectionRefreshFailed =
+    type === "servers" && item && "nickname" in item && failedServerIds.includes(item.id)
 
   useEffect(() => {
     actionOperationId.current += 1
@@ -241,8 +244,22 @@ export default function ResourceScreen() {
                 icon={Server}
                 title={item.nickname}
                 subtitle="Coolify connection"
-                state={item.health === "ok" ? "healthy" : item.health === "unknown" ? "unknown" : "unhealthy"}
-                status={item.health === "ok" ? "Healthy" : upperFirstLetter(item.health.replaceAll("_", " "))}
+                state={
+                  latestConnectionRefreshFailed
+                    ? "unhealthy"
+                    : item.health === "ok"
+                      ? "healthy"
+                      : item.health === "unknown"
+                        ? "unknown"
+                        : "unhealthy"
+                }
+                status={
+                  latestConnectionRefreshFailed
+                    ? "Latest refresh failed"
+                    : item.health === "ok"
+                      ? "Healthy"
+                      : upperFirstLetter(item.health.replaceAll("_", " "))
+                }
                 hidden={isHidden}
               />
               <DetailCard
@@ -281,9 +298,15 @@ export default function ResourceScreen() {
                 title={item.name}
                 subtitle={upperFirstLetter(item.type)}
                 state={
-                  item.status === "running" ? "healthy" : item.status === "unknown" ? "unknown" : "unhealthy"
+                  !item.isReachable
+                    ? "unhealthy"
+                    : item.status === "running"
+                      ? "healthy"
+                      : item.status === "unknown"
+                        ? "unknown"
+                        : "unhealthy"
                 }
-                status={upperFirstLetter(item.status)}
+                status={item.isReachable ? upperFirstLetter(item.status) : "Unreachable"}
                 hidden={isHidden}
               />
               <DetailCard
