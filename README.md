@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/expo.icon/Assets/logo.svg" alt="Cooler logo" width="180" style="border-radius: 24px;" />
+  <img src="assets/expo.icon/Assets/logo.svg" alt="Cooler logo" width="180" />
   <h1>Cooler</h1>
   <p>Cooler is a native mobile companion for <a href="https://coolify.io">Coolify</a>. It gives you a focused way to check infrastructure health and manage deployments from your phone without needing the full Coolify dashboard.</p>
 </div>
@@ -127,4 +127,4 @@ Never include Coolify API tokens, instance credentials, private URLs, or other s
 
 ## Disclaimer
 
-Cooler is an independent project. It is not affiliated with, endorsed by, or sponsored by Coolify.
+Cooler is an independent project. It is not affiliated with, endorsed by, or sponsored by [Coolify](https://coolify.io).

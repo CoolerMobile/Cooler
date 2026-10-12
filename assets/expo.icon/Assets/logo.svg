@@ -2,7 +2,7 @@
   <title id="title">Cooler app icon</title>
   <desc id="desc">An original minimal C monogram with an operational status indicator.</desc>
 
-  <rect width="1024" height="1024" fill="#0b1220"/>
+  <rect width="1024" height="1024" rx="136" fill="#0b1220"/>
 
   <!-- Original Cooler monogram -->
   <path
