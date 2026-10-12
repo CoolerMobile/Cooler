@@ -415,7 +415,11 @@ function DeploymentLogsSheet({
           <View className="flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-card p-6">
             <Icon as={TerminalSquare} size={26} className="text-muted-foreground" />
             <Text className="text-center text-sm text-muted-foreground">
-              {active ? "Waiting for Coolify to publish logs…" : "No deployment logs were retained."}
+              {!deployment.logsAvailable
+                ? `${active ? "Live deployment logs" : "Build logs"} require a Coolify API token with Read Sensitive or Root permission.`
+                : active
+                  ? "Waiting for Coolify to publish logs…"
+                  : "No deployment logs were retained."}
             </Text>
           </View>
         )}

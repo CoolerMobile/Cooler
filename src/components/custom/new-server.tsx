@@ -147,7 +147,11 @@ export const NewServerSheet = ({ open, onOpenChange, server }: Props) => {
   }[] = [
     {
       name: "Root",
-      description: "Full access to every operation",
+      description: "All Cooler features, including logs and deployment actions",
+    },
+    {
+      name: "Read Sensitive",
+      description: "View build and runtime logs (also grants Read)",
     },
     {
       name: "Write",

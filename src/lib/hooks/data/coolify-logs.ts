@@ -1,4 +1,8 @@
 import type { ServerData } from "@/lib/hooks/servers/connection"
+import {
+  resourceLogRequestGate,
+  type ResourceLogRequestOutcome,
+} from "@/lib/coolify/resource-log-request-gate"
 import { useDataStore } from "@/lib/stores/data"
 import type { Resource, ResourceLog } from "@/lib/types/coolify"
 import { FetchError, ofetch } from "ofetch"
@@ -6,12 +10,11 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { AppState } from "react-native"
 
 const API_PREFIX = "api/v1"
-const RESOURCE_LOG_REFRESH_INTERVAL_MS = 5_000
 const REQUEST_TIMEOUT_MS = 15_000
+// Coolify resolves runtime logs through the resource server over SSH. That can
+// take considerably longer than its database-backed API endpoints.
+export const RESOURCE_LOG_REQUEST_TIMEOUT_MS = 60_000
 const RESOURCE_LOG_LINES = 100
-const RESOURCE_LOG_FAILURE_DELAYS_MS = [10_000, 20_000, 30_000] as const
-const RESOURCE_LOG_MAX_FAILURE_DELAY_MS = 60_000
-const RESOURCE_LOG_JITTER_RATIO = 0.1
 
 const HTTP_STATUS_LABELS: Partial<Record<number, string>> = {
   400: "Bad Request",
@@ -44,11 +47,35 @@ type CoolifyService = {
 
 type ResourceLogsSnapshot = Pick<Resource, "logs" | "logsUpdatedAt">
 
-type ActiveResourceLogSync = {
-  promise: Promise<void>
+export type ResourceLogRequestTrace = {
+  id: string
+  label: string
+  path: string
+  startedAt: number
+  finishedAt: number | null
+  timeoutMs: number
+  state: "pending" | "success" | "error"
+  statusCode: number | null
+  result: string | null
 }
 
-const activeResourceLogSyncs = new Map<string, ActiveResourceLogSync>()
+type ResourceLogRequestObserver = (trace: ResourceLogRequestTrace) => void
+
+let resourceLogRequestSequence = 0
+
+class ResourceLogRequestTimeoutError extends Error {
+  constructor() {
+    super("Runtime log request timed out")
+    this.name = "ResourceLogRequestTimeoutError"
+  }
+}
+
+class ResourceLogRequestCancelledError extends Error {
+  constructor() {
+    super("Runtime log request cancelled")
+    this.name = "ResourceLogRequestCancelledError"
+  }
+}
 
 const normalizedText = (value: unknown, fallback = ""): string =>
   typeof value === "string" || typeof value === "number" ? String(value).trim() || fallback : fallback
@@ -58,17 +85,113 @@ const readArray = <T>(value: unknown, collectionName: string): T[] => {
   return value as T[]
 }
 
-const request = async <T>(server: ServerData, path: string): Promise<T> =>
-  ofetch<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${server.token}`,
-      "Cache-Control": "no-cache",
-      Pragma: "no-cache",
-    },
-    retry: 0,
-    timeout: REQUEST_TIMEOUT_MS,
-  })
+const requestResult = (value: unknown): string => {
+  if (value && typeof value === "object" && typeof (value as CoolifyLogs).logs === "string") {
+    const logs = (value as { logs: string }).logs
+    const lineCount = logs.length === 0 ? 0 : logs.split(/\r\n|\r|\n/).length
+    return `${lineCount} ${lineCount === 1 ? "line" : "lines"} · ${logs.length.toLocaleString()} characters`
+  }
+
+  if (value && typeof value === "object") {
+    const service = value as CoolifyService
+    const subResourceCount =
+      (Array.isArray(service.applications) ? service.applications.length : 0) +
+      (Array.isArray(service.databases) ? service.databases.length : 0)
+    if (subResourceCount > 0) {
+      return `${subResourceCount} service ${subResourceCount === 1 ? "container" : "containers"} discovered`
+    }
+  }
+
+  return "Response received"
+}
+
+const request = async <T>(
+  server: ServerData,
+  path: string,
+  {
+    timeout = REQUEST_TIMEOUT_MS,
+    traceLabel,
+    tracePath = path,
+    onTrace,
+    signal,
+  }: {
+    timeout?: number
+    traceLabel?: string
+    tracePath?: string
+    onTrace?: ResourceLogRequestObserver
+    signal?: AbortSignal
+  } = {}
+): Promise<T> => {
+  const startedAt = Date.now()
+  const id = `${startedAt}-${resourceLogRequestSequence++}`
+  const baseTrace: ResourceLogRequestTrace = {
+    id,
+    label: traceLabel ?? "Fetch resource data",
+    path: `/${API_PREFIX}/${tracePath}`,
+    startedAt,
+    finishedAt: null,
+    timeoutMs: timeout,
+    state: "pending",
+    statusCode: null,
+    result: null,
+  }
+  onTrace?.(baseTrace)
+
+  const controller = new AbortController()
+  let timedOut = false
+  const cancelRequest = () => controller.abort()
+  const timeoutId = setTimeout(() => {
+    timedOut = true
+    controller.abort()
+  }, timeout)
+
+  if (signal?.aborted) cancelRequest()
+  else signal?.addEventListener("abort", cancelRequest, { once: true })
+
+  try {
+    const response = await ofetch.raw<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${server.token}`,
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+      },
+      retry: 0,
+      signal: controller.signal,
+    })
+    const data = response._data as T
+
+    onTrace?.({
+      ...baseTrace,
+      finishedAt: Date.now(),
+      state: "success",
+      statusCode: response.status,
+      result: requestResult(data),
+    })
+    return data
+  } catch (error) {
+    const cancelled = Boolean(signal?.aborted && !timedOut)
+    const requestError = timedOut
+      ? new ResourceLogRequestTimeoutError()
+      : cancelled
+        ? new ResourceLogRequestCancelledError()
+        : error
+
+    onTrace?.({
+      ...baseTrace,
+      finishedAt: Date.now(),
+      state: "error",
+      statusCode: error instanceof FetchError && typeof error.status === "number" ? error.status : null,
+      result: cancelled
+        ? "Cancelled when the log screen closed"
+        : resourceLogsErrorMessage(requestError).replace(/^Error:\s*/i, ""),
+    })
+    throw requestError
+  } finally {
+    clearTimeout(timeoutId)
+    signal?.removeEventListener("abort", cancelRequest)
+  }
+}
 
 const logsPath = (resourceType: string, resourceUuid: string): string | null => {
   const uuid = encodeURIComponent(resourceUuid)
@@ -79,12 +202,22 @@ const logsPath = (resourceType: string, resourceUuid: string): string | null => 
   return null
 }
 
-const requestLogs = async (connection: ServerData, path: string): Promise<string> => {
+const requestLogs = async (
+  connection: ServerData,
+  path: string,
+  label: string,
+  onTrace?: ResourceLogRequestObserver,
+  signal?: AbortSignal
+): Promise<string> => {
   const separator = path.includes("?") ? "&" : "?"
-  const response = await request<CoolifyLogs>(
-    connection,
-    `${path}${separator}lines=${RESOURCE_LOG_LINES}&show_timestamps=true`
-  )
+  const query = `lines=${RESOURCE_LOG_LINES}&show_timestamps=true`
+  const response = await request<CoolifyLogs>(connection, `${path}${separator}${query}`, {
+    timeout: RESOURCE_LOG_REQUEST_TIMEOUT_MS,
+    traceLabel: label,
+    tracePath: `${path}${separator}${query}`,
+    onTrace,
+    signal,
+  })
 
   if (typeof response.logs !== "string") throw Error("Coolify returned invalid log data")
   return response.logs
@@ -110,12 +243,20 @@ const serviceSubResourceNames = (service: CoolifyService): string[] => {
 const loadResourceLogs = async (
   connection: ServerData,
   resource: Pick<Resource, "uuid" | "name" | "type" | "logs" | "logsUpdatedAt">,
-  selectedSource?: string
+  selectedSource?: string,
+  onTrace?: ResourceLogRequestObserver,
+  signal?: AbortSignal
 ): Promise<ResourceLogsSnapshot> => {
   const path = logsPath(resource.type, resource.uuid)
   if (path) {
+    const resourceKind = resource.type === "application" ? "application" : "database"
     return {
-      logs: [{ source: resource.name, content: await requestLogs(connection, path) }],
+      logs: [
+        {
+          source: resource.name,
+          content: await requestLogs(connection, path, `Fetch ${resourceKind} logs`, onTrace, signal),
+        },
+      ],
       logsUpdatedAt: Date.now(),
     }
   }
@@ -127,7 +268,11 @@ const loadResourceLogs = async (
   let names = resource.logs.map(({ source }) => source)
 
   if (names.length === 0) {
-    const service = await request<CoolifyService>(connection, `services/${uuid}`)
+    const service = await request<CoolifyService>(connection, `services/${uuid}`, {
+      traceLabel: "Discover service containers",
+      onTrace,
+      signal,
+    })
     names = serviceSubResourceNames(service)
   }
 
@@ -136,7 +281,10 @@ const loadResourceLogs = async (
   const source = selectedSource && names.includes(selectedSource) ? selectedSource : names[0]
   const content = await requestLogs(
     connection,
-    `services/${uuid}/logs?sub_service_name=${encodeURIComponent(source)}`
+    `services/${uuid}/logs?sub_service_name=${encodeURIComponent(source)}`,
+    `Fetch ${source} logs`,
+    onTrace,
+    signal
   )
 
   const logs: ResourceLog[] = names.map((name) =>
@@ -149,114 +297,155 @@ const loadResourceLogs = async (
   }
 }
 
+const readApiErrorMessage = (value: unknown): string => {
+  if (!value || typeof value !== "object") return ""
+  const message = (value as { message?: unknown }).message
+  return typeof message === "string" ? message.trim().replace(/\s+/g, " ").slice(0, 240) : ""
+}
+
 const resourceLogsErrorMessage = (error: unknown): string => {
+  if (error instanceof ResourceLogRequestTimeoutError) return "Error: Runtime log request timed out"
+
   if (error instanceof FetchError) {
-    if (typeof error.status === "number") {
-      const label = HTTP_STATUS_LABELS[error.status]
-      return `Error: ${error.status}${label ? ` ${label}` : ""}`
+    if (error.status === 403) {
+      return "Logs require a Coolify API token with Read Sensitive or Root permission."
     }
 
-    return error.message.toLowerCase().includes("timeout")
-      ? "Error: Request Timeout"
-      : "Error: Network Request Failed"
+    if (typeof error.status === "number") {
+      const label = HTTP_STATUS_LABELS[error.status]
+      const apiMessage = readApiErrorMessage(error.data)
+      return `Error: ${error.status}${label ? ` ${label}` : ""}${apiMessage ? ` — ${apiMessage}` : ""}`
+    }
+
+    const causeName = error.cause instanceof Error ? error.cause.name : ""
+    const timedOut =
+      error.message.toLowerCase().includes("timeout") ||
+      causeName === "TimeoutError" ||
+      causeName === "AbortError" ||
+      Boolean(error.options?.timeout && error.options.signal?.aborted)
+
+    return timedOut ? "Error: Runtime log request timed out" : "Error: Network Request Failed"
   }
 
   if (error instanceof Error) return `Error: ${error.message.replace(/^error:\s*/i, "")}`
   return "Error: Unable to Refresh Logs"
 }
 
-const refreshCoolifyResourceLogs = async (resourceId: string, selectedSource?: string): Promise<void> => {
-  const syncKey = `${resourceId}:${selectedSource ?? ""}`
-  const activeLogSync = activeResourceLogSyncs.get(syncKey)
-  if (activeLogSync) return activeLogSync.promise
+const refreshCoolifyResourceLogs = async (
+  resourceId: string,
+  selectedSource?: string,
+  onTrace?: ResourceLogRequestObserver,
+  signal?: AbortSignal
+): Promise<void> => {
+  const state = useDataStore.getState()
+  const resource = state.resources.find((item) => item.id === resourceId)
+  if (!resource) throw Error("Resource not found")
 
-  const logSync = (async () => {
-    const state = useDataStore.getState()
-    const resource = state.resources.find((item) => item.id === resourceId)
-    if (!resource) throw Error("Resource not found")
+  const connection = state.servers.find((server) => server.id === resource.connectionId)
+  if (!connection) throw Error("Coolify connection not found")
 
-    const connection = state.servers.find((server) => server.id === resource.connectionId)
-    if (!connection) throw Error("Coolify connection not found")
-
-    const logs = await loadResourceLogs(connection, resource, selectedSource)
-    useDataStore.getState().setResourceLogs(resourceId, logs)
-  })()
-
-  const activeEntry = { promise: logSync }
-  activeResourceLogSyncs.set(syncKey, activeEntry)
-
-  try {
-    await logSync
-  } finally {
-    if (activeResourceLogSyncs.get(syncKey) === activeEntry) activeResourceLogSyncs.delete(syncKey)
-  }
+  const logs = await loadResourceLogs(connection, resource, selectedSource, onTrace, signal)
+  if (signal?.aborted) throw new ResourceLogRequestCancelledError()
+  useDataStore.getState().setResourceLogs(resourceId, logs)
 }
 
 export type CoolifyResourceLogsOptions = {
-  /** Starts or pauses polling without unmounting the consumer. */
+  /** Cancels an in-flight request when the consumer is no longer active. */
   enabled?: boolean
-  /** For services, polls only this container. */
+  /** For services, requests only this container. */
   selectedSource?: string
-  /** Delay after a successful request completes. Defaults to five seconds. */
-  refreshIntervalMs?: number
-}
-
-const resourceLogRefreshDelay = (failureCount: number, refreshIntervalMs: number): number => {
-  const baseDelay =
-    failureCount === 0
-      ? Math.max(1_000, refreshIntervalMs)
-      : (RESOURCE_LOG_FAILURE_DELAYS_MS[failureCount - 1] ?? RESOURCE_LOG_MAX_FAILURE_DELAY_MS)
-  const jitter = 1 + (Math.random() * 2 - 1) * RESOURCE_LOG_JITTER_RATIO
-
-  return Math.round(baseDelay * jitter)
 }
 
 /**
- * Provides near-realtime logs using discrete, non-overlapping snapshots.
+ * Provides guarded, non-overlapping log snapshots.
  *
- * A new request is scheduled only after the previous one has fully completed.
- * Losing screen focus or backgrounding the app stops future polls immediately,
- * but intentionally does not abort an in-flight request so Coolify/Docker can
- * finish tearing down the current log command cleanly.
+ * Runtime log requests make Coolify query Docker on the resource server, so this
+ * hook loads once when the active screen opens, but never polls or retries.
+ * Every request passes through a persisted, cross-screen gate.
  */
 export const useCoolifyResourceLogs = (
   resourceId: string | undefined,
-  {
-    enabled = true,
-    selectedSource,
-    refreshIntervalMs = RESOURCE_LOG_REFRESH_INTERVAL_MS,
-  }: CoolifyResourceLogsOptions = {}
+  { enabled = true, selectedSource }: CoolifyResourceLogsOptions = {}
 ) => {
   const resource = useDataStore((state) =>
     resourceId ? state.resources.find((item) => item.id === resourceId) : undefined
   )
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [requests, setRequests] = useState<ResourceLogRequestTrace[]>([])
+  const [requestBlockedUntil, setRequestBlockedUntil] = useState<number | null>(null)
   const refreshPromise = useRef<Promise<boolean> | null>(null)
+  const activeController = useRef<AbortController | null>(null)
   const selectedSourceRef = useRef(selectedSource)
-  const previousSelectedSourceRef = useRef(selectedSource)
 
   selectedSourceRef.current = selectedSource
+
+  const observeRequest = useCallback((trace: ResourceLogRequestTrace) => {
+    setRequests((current) => {
+      const existingIndex = current.findIndex(({ id }) => id === trace.id)
+      if (existingIndex === -1) return [...current, trace].slice(-20)
+
+      const next = [...current]
+      next[existingIndex] = trace
+      return next
+    })
+  }, [])
+
+  useEffect(() => {
+    setRequests([])
+    setError(null)
+    setRequestBlockedUntil(null)
+    if (!resourceId) return
+
+    let cancelled = false
+    void resourceLogRequestGate.getBlockedUntil(resourceId).then((blockedUntil) => {
+      if (!cancelled) setRequestBlockedUntil(blockedUntil)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [resourceId])
 
   const refresh = useCallback(
     async (source = selectedSourceRef.current): Promise<boolean> => {
       if (!resourceId) return false
       if (refreshPromise.current) return refreshPromise.current
 
+      const acquisition = await resourceLogRequestGate.acquire(resourceId)
+      if (!acquisition.acquired) {
+        setRequestBlockedUntil(acquisition.blockedUntil)
+        return false
+      }
+
+      const { lease } = acquisition
+      setRequestBlockedUntil(lease.blockedUntil)
+      const controller = new AbortController()
+      activeController.current = controller
+      setError(null)
       setIsRefreshing(true)
+      let outcome: ResourceLogRequestOutcome = "uncertain"
       let nextRefresh: Promise<boolean>
-      nextRefresh = refreshCoolifyResourceLogs(resourceId, source)
+      nextRefresh = refreshCoolifyResourceLogs(resourceId, source, observeRequest, controller.signal)
         .then(() => {
+          outcome = "success"
           setError(null)
           return true
         })
         .catch((refreshError: unknown) => {
+          if (refreshError instanceof ResourceLogRequestCancelledError) return false
+          if (refreshError instanceof FetchError && typeof refreshError.status === "number") {
+            outcome = "http-error"
+          }
           setError(resourceLogsErrorMessage(refreshError))
           return false
         })
-        .finally(() => {
+        .finally(async () => {
+          const blockedUntil = await lease.complete(outcome)
+          setRequestBlockedUntil(blockedUntil)
           if (refreshPromise.current === nextRefresh) {
             refreshPromise.current = null
+            activeController.current = null
             setIsRefreshing(false)
           }
         })
@@ -264,65 +453,31 @@ export const useCoolifyResourceLogs = (
       refreshPromise.current = nextRefresh
       return nextRefresh
     },
-    [resourceId]
+    [observeRequest, resourceId]
   )
 
   useEffect(() => {
-    if (!enabled || !resourceId) return
-
-    let cancelled = false
-    let appIsActive = AppState.currentState === "active"
-    let failureCount = 0
-    let timeout: ReturnType<typeof setTimeout> | undefined
-
-    const clearScheduledPoll = () => {
-      if (timeout) clearTimeout(timeout)
-      timeout = undefined
+    if (!enabled || !resourceId) {
+      activeController.current?.abort()
+      return
     }
 
-    const poll = async () => {
-      if (cancelled || !appIsActive) return
-
-      const succeeded = await refresh()
-      if (cancelled || !appIsActive) return
-
-      failureCount = succeeded ? 0 : failureCount + 1
-      timeout = setTimeout(poll, resourceLogRefreshDelay(failureCount, refreshIntervalMs))
-    }
-
-    void poll()
+    // Defer the initial request so React's development-only effect cleanup can
+    // cancel the timer without starting and immediately aborting a real request.
+    const initialRequest = setTimeout(() => {
+      if (AppState.currentState === "active") void refresh()
+    }, 0)
 
     const appStateSubscription = AppState.addEventListener("change", (nextState) => {
-      const wasActive = appIsActive
-      appIsActive = nextState === "active"
-
-      if (!appIsActive) {
-        clearScheduledPoll()
-      } else if (!wasActive) {
-        failureCount = 0
-        void poll()
-      }
+      if (nextState !== "active") activeController.current?.abort()
     })
 
     return () => {
-      cancelled = true
-      clearScheduledPoll()
+      clearTimeout(initialRequest)
+      activeController.current?.abort()
       appStateSubscription.remove()
     }
-  }, [enabled, refresh, refreshIntervalMs, resourceId])
-
-  // Switching between already-discovered service containers should feel
-  // immediate. Skip the initial undefined -> first-container selection because
-  // the first snapshot already fetched that source.
-  useEffect(() => {
-    const previousSource = previousSelectedSourceRef.current
-    previousSelectedSourceRef.current = selectedSource
-
-    if (!enabled || !resourceId || !selectedSource || !previousSource || selectedSource === previousSource) return
-    if (AppState.currentState !== "active") return
-
-    void refresh(selectedSource)
-  }, [enabled, refresh, resourceId, selectedSource])
+  }, [enabled, refresh, resourceId])
 
   return {
     logs: resource?.logs ?? [],
@@ -330,6 +485,8 @@ export const useCoolifyResourceLogs = (
     isLoading: isRefreshing && resource?.logsUpdatedAt == null,
     isRefreshing,
     error,
+    requests,
+    requestBlockedUntil,
     refresh,
   }
 }

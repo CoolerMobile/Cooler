@@ -470,14 +470,14 @@ const DetailCard = ({
       {/* details */}
       <ScrollView className="flex-1" alwaysBounceVertical={false} showsVerticalScrollIndicator={false}>
         <Card>
-          <CardHeader>
+          <CardHeader className="py-2">
             <CardTitle>Details</CardTitle>
           </CardHeader>
           <CardContent>
             {rows.map(([label, value], index) => (
               <View key={label}>
                 {index > 0 && <Separator />}
-                <View className="gap-1 py-4">
+                <View className="gap-1 py-3">
                   <Text className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {label}
                   </Text>

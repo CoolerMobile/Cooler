@@ -18,6 +18,8 @@ export type Deployment = {
   createdAt: number
   updatedAt: number
   logs: string
+  /** Whether Coolify included its sensitive deployment-log field in the response. */
+  logsAvailable: boolean
   isRollback: boolean
 }
 

@@ -132,6 +132,7 @@ const normalizeDeployment = (
     createdAt,
     updatedAt,
     logs: deploymentLogs(raw.logs),
+    logsAvailable: Object.prototype.hasOwnProperty.call(raw, "logs"),
     isRollback: raw.rollback === true,
   }
 }
