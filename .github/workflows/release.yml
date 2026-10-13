@@ -11,13 +11,30 @@ on:
         options:
           - release
           - nightly
+
+      platform:
+        description: Platform
+        required: true
+        default: android
+        type: choice
+        options:
+          - android
+          - ios
+
+      submit:
+        description: Submit iOS release to TestFlight
+        required: true
+        default: false
+        type: boolean
+
       bump:
         description: Version bump (auto, patch, minor, major, or x.y.z)
         required: true
         default: auto
         type: string
+
 concurrency:
-  group: cooler-${{ inputs.channel }}
+  group: cooler-${{ inputs.channel }}-${{ inputs.platform }}
   cancel-in-progress: false
 
 permissions:
@@ -28,16 +45,21 @@ jobs:
     name: Prepare release metadata
     if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     runs-on: ubuntu-latest
+
     outputs:
       channel: ${{ steps.metadata.outputs.channel }}
+      platform: ${{ steps.metadata.outputs.platform }}
+      profile: ${{ steps.metadata.outputs.profile }}
+      extension: ${{ steps.metadata.outputs.extension }}
       tag: ${{ steps.metadata.outputs.tag }}
       name: ${{ steps.metadata.outputs.name }}
       version: ${{ steps.metadata.outputs.version }}
       prerelease: ${{ steps.metadata.outputs.prerelease }}
       sha: ${{ steps.metadata.outputs.sha }}
+
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -46,19 +68,56 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Validate release options
+        env:
+          CHANNEL: ${{ inputs.channel }}
+          PLATFORM: ${{ inputs.platform }}
+          SUBMIT: ${{ inputs.submit }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$SUBMIT" == "true" && "$PLATFORM" != "ios" ]]; then
+            echo "\"submit\" is only supported for iOS releases." >&2
+            exit 1
+          fi
+
+          if [[ "$SUBMIT" == "true" && "$CHANNEL" != "release" ]]; then
+            echo "Nightly iOS builds use internal distribution and cannot be submitted to TestFlight." >&2
+            exit 1
+          fi
+
       - name: Resolve release metadata and bump version
         id: metadata
         env:
           DISPATCH_CHANNEL: ${{ inputs.channel }}
+          DISPATCH_PLATFORM: ${{ inputs.platform }}
           REQUESTED_BUMP: ${{ inputs.bump }}
         run: |
           set -euo pipefail
 
           channel="$DISPATCH_CHANNEL"
+          platform="$DISPATCH_PLATFORM"
+
           version="$(bun scripts/release.ts --bump-only "${REQUESTED_BUMP:-auto}")"
+
+          if [[ "$platform" == "ios" ]]; then
+            extension="ipa"
+
+            if [[ "$channel" == "nightly" ]]; then
+              profile="nightly"
+            else
+              profile="production"
+            fi
+          else
+            extension="apk"
+            profile="$channel"
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add package.json
+
           if [[ "$channel" == "nightly" ]]; then
             git commit -m "chore: release nightly v${version}"
             tag="nightly-v${version}"
@@ -70,10 +129,14 @@ jobs:
             name="Cooler v${version}"
             prerelease="false"
           fi
+
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
           {
             echo "channel=$channel"
+            echo "platform=$platform"
+            echo "profile=$profile"
+            echo "extension=$extension"
             echo "tag=$tag"
             echo "name=$name"
             echo "version=$version"
@@ -82,13 +145,17 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
   build:
-    name: Queue EAS Android build (${{ needs.prepare.outputs.channel }})
+    name: EAS ${{ needs.prepare.outputs.platform }} build (${{ needs.prepare.outputs.channel }})
     if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     needs: prepare
     runs-on: ubuntu-latest
+
+    outputs:
+      build_id: ${{ steps.eas-build.outputs.build_id }}
+
     steps:
       - name: Check out prepared source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ needs.prepare.outputs.sha }}
 
@@ -97,23 +164,32 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Set up Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Queue EAS cloud build and download artifact
+        id: eas-build
         env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          PLATFORM: android
-          PROFILE: ${{ needs.prepare.outputs.channel }}
+          PLATFORM: ${{ needs.prepare.outputs.platform }}
+          PROFILE: ${{ needs.prepare.outputs.profile }}
+          CHANNEL: ${{ needs.prepare.outputs.channel }}
           VERSION: ${{ needs.prepare.outputs.version }}
-          EXTENSION: apk
+          EXTENSION: ${{ needs.prepare.outputs.extension }}
         run: |
           set -euo pipefail
+
           mkdir -p artifacts
 
           for attempt in 1 2; do
-            echo "Queueing EAS ${PLATFORM} build (attempt ${attempt}/2)."
-            if bunx eas-cli@latest build \
+            echo "Queueing EAS ${PLATFORM} build using profile \"${PROFILE}\" (attempt ${attempt}/2)."
+
+            if eas build \
               --platform "$PLATFORM" \
               --profile "$PROFILE" \
               --non-interactive \
@@ -122,41 +198,109 @@ jobs:
               break
             fi
 
-            if [[ "$attempt" == 2 ]]; then
+            if [[ "$attempt" == "2" ]]; then
               echo "EAS ${PLATFORM} build failed twice; stopping without further retries." >&2
               exit 1
             fi
+
             echo "EAS ${PLATFORM} build failed; retrying once." >&2
           done
 
-          artifact_url="$(jq -er 'if type == "array" then .[0] else . end | .artifacts.applicationArchiveUrl' build.json)"
-          output="artifacts/Cooler-${PROFILE}-${VERSION}-${PLATFORM}.${EXTENSION}"
-          curl --fail --location --retry 3 --output "$output" "$artifact_url"
+          build_id="$(
+            jq -er '
+              if type == "array" then .[0] else . end
+              | .id
+            ' build.json
+          )"
+
+          artifact_url="$(
+            jq -er '
+              if type == "array" then .[0] else . end
+              | .artifacts.applicationArchiveUrl
+            ' build.json
+          )"
+
+          output="artifacts/Cooler-${CHANNEL}-${VERSION}-${PLATFORM}.${EXTENSION}"
+
+          echo "EAS build ID: ${build_id}"
+          echo "Downloading build artifact to ${output}"
+
+          curl \
+            --fail \
+            --location \
+            --retry 3 \
+            --output "$output" \
+            "$artifact_url"
+
+          echo "build_id=$build_id" >> "$GITHUB_OUTPUT"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cooler-${{ needs.prepare.outputs.channel }}-android
+          name: cooler-${{ needs.prepare.outputs.channel }}-${{ needs.prepare.outputs.platform }}
           path: artifacts/*
           if-no-files-found: error
           retention-days: 7
 
+  submit:
+    name: Submit iOS build to TestFlight
+    if: >-
+      github.actor == 'danfq' &&
+      github.triggering_actor == 'danfq' &&
+      inputs.submit &&
+      inputs.platform == 'ios' &&
+      inputs.channel == 'release'
+    needs:
+      - prepare
+      - build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out prepared source
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+
+      - name: Set up Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Submit build
+        env:
+          BUILD_ID: ${{ needs.build.outputs.build_id }}
+        run: |
+          set -euo pipefail
+
+          echo "Submitting EAS build ${BUILD_ID} to TestFlight."
+
+          eas submit \
+            --platform ios \
+            --id "$BUILD_ID" \
+            --profile production \
+            --non-interactive \
+            --wait
+
   release:
     name: Publish GitHub Release
     if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
-    needs: [prepare, build]
+    needs:
+      - prepare
+      - build
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out prepared source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ needs.prepare.outputs.sha }}
           fetch-depth: 0
 
-      - name: Download Android artifact
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: cooler-${{ needs.prepare.outputs.channel }}-android
+          name: cooler-${{ needs.prepare.outputs.channel }}-${{ needs.prepare.outputs.platform }}
           path: artifacts
 
       - name: Write release notes
@@ -166,12 +310,27 @@ jobs:
           set -euo pipefail
 
           release_parent="${RELEASE_SHA}^"
-          mapfile -t release_tags < <(git tag --merged "$release_parent" --list 'v[0-9]*' 'nightly-v[0-9]*' --sort=-creatordate)
+
+          mapfile -t release_tags < <(
+            git tag \
+              --merged "$release_parent" \
+              --list 'v[0-9]*' 'nightly-v[0-9]*' \
+              --sort=-creatordate
+          )
+
           previous_tag="${release_tags[0]:-}"
+
           if [[ -n "$previous_tag" ]]; then
             revision_range="${previous_tag}..${release_parent}"
           else
-            previous_release="$(git log "$release_parent" --format=%H --grep='^chore: release ' -n 1)"
+            previous_release="$(
+              git log \
+                "$release_parent" \
+                --format=%H \
+                --grep='^chore: release ' \
+                -n 1
+            )"
+
             if [[ -n "$previous_release" ]]; then
               revision_range="${previous_release}..${release_parent}"
             else
@@ -182,11 +341,15 @@ jobs:
           {
             echo "## Changes"
             echo
+
             if [[ "$(git rev-list --count "$revision_range")" -eq 0 ]]; then
               echo "- No commits since the previous release."
             else
-              git log "$revision_range" --format="- %s — %an ([%h](https://github.com/${GITHUB_REPOSITORY}/commit/%H))"
+              git log \
+                "$revision_range" \
+                --format="- %s - %an ([%h](https://github.com/${GITHUB_REPOSITORY}/commit/%H))"
             fi
+
             printf '\nBuilt from commit `%s`.\n' "$RELEASE_SHA"
           } > release-notes.md
 
