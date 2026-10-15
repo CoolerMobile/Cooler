@@ -1564,11 +1564,11 @@ manual:
   - name: https-proxy-agent@7.0.6
     version: '7.0.6'
     source: https://github.com/TooTallNate/proxy-agents
-    file: '../node_modules/https-proxy-agent/LICENSE'
+    body: MIT
   - name: agent-base@7.1.4
     version: '7.1.4'
     source: https://github.com/TooTallNate/proxy-agents
-    file: '../node_modules/agent-base/LICENSE'
+    body: MIT
   - name: metro-core@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro

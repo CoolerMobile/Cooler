@@ -10,6 +10,10 @@ body: MIT License
 Copyrig…
 version: 3.28.0
 
+name: RNSentry, nameSpecified: 
+body: The MIT License (MIT…
+version: 8.30.0
+
 name: @babel_code-frame@7.29.7, nameSpecified: @babel/code-frame, version: 7.29.7
 body: MIT License
 
@@ -1006,9 +1010,7 @@ body: MIT License
 Copyrig…
 
 name: agent-base@7.1.4, nameSpecified: agent-base, version: 7.1.4
-body: (The MIT License)
-
-C…
+body: MIT…
 
 name: agent-cli-detector@0.1.7, nameSpecified: agent-cli-detector, version: 0.1.7
 body: MIT License
@@ -1703,9 +1705,7 @@ body:
 The MIT License (MI…
 
 name: https-proxy-agent@7.0.6, nameSpecified: https-proxy-agent, version: 7.0.6
-body: (The MIT License)
-
-C…
+body: MIT…
 
 name: hyphenate-style-name@1.1.0, nameSpecified: hyphenate-style-name, version: 1.1.0
 body: BSD 3-Clause License…
