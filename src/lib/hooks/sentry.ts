@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/react-native"
+import { minimizeSentryEvent } from "@/lib/sentry-privacy"
 import { useEffect } from "react"
 import { AppState } from "react-native"
 
@@ -11,25 +12,63 @@ const ignoredDevelopmentErrors: Array<string | RegExp> = [
   /Unable to resolve module .* from/,
 ]
 
+const excludedIntegrations = new Set([
+  "Breadcrumbs",
+  "ExpoConstants",
+  "ExpoContext",
+  "ExpoUpdatesListener",
+  "HttpContext",
+  "ModulesLoader",
+  "TurboModuleContext",
+])
+
 const sentryOptions: Sentry.ReactNativeOptions = {
   dsn: SENTRY_DSN,
   environment: __DEV__ ? "development" : "production",
   enableAutoSessionTracking: false,
   ignoreErrors: __DEV__ ? ignoredDevelopmentErrors : [],
-  tracesSampleRate: __DEV__ ? 0 : 0.01,
+  integrations: (integrations) =>
+    integrations.filter((integration) => !excludedIntegrations.has(integration.name)),
+  beforeBreadcrumb: () => null,
+  beforeSend: minimizeSentryEvent,
+  sendClientReports: false,
   enableLogs: false,
-  maxBreadcrumbs: 50,
+  maxBreadcrumbs: 0,
+  maxValueLength: 500,
   enableNative: true,
   autoInitializeNativeSdk: true,
   enableNativeCrashHandling: !__DEV__,
   enableNdk: !__DEV__,
+  enableNdkScopeSync: false,
   enableTombstone: !__DEV__,
   enableHistoricalTombstoneReporting: false,
+  anrProfilingSampleRate: 0,
   enableWatchdogTerminationTracking: !__DEV__,
   enableAppHangTracking: !__DEV__,
-  attachStacktrace: true,
-  attachScreenshot: !__DEV__,
-  attachViewHierarchy: !__DEV__,
+  enableNdkAppHangTracking: false,
+  enableMetricKit: false,
+  enableMetricKitRawPayload: false,
+  enableAutoPerformanceTracing: false,
+  enableAppStartTracking: false,
+  enablePreWarmedAppStartTracing: false,
+  enableNativeFramesTracking: false,
+  enableStallTracking: false,
+  enableUserInteractionTracing: false,
+  enableCaptureFailedRequests: false,
+  enableNetworkBreadcrumbs: false,
+  enableNetworkEventBreadcrumbs: false,
+  enableAutoBreadcrumbTracking: false,
+  enableActivityLifecycleBreadcrumbs: false,
+  enableAppLifecycleBreadcrumbs: false,
+  enableSystemEventBreadcrumbs: false,
+  enableAppComponentBreadcrumbs: false,
+  enableMemoryIntrospection: false,
+  attachStacktrace: false,
+  attachThreads: false,
+  attachAllThreads: false,
+  attachScreenshot: false,
+  attachViewHierarchy: false,
+  reportAccessibilityIdentifier: false,
   sendDefaultPii: false,
 }
 
@@ -78,18 +117,6 @@ export const captureBackgroundException = async (
 export const useSentry = () => {
   useEffect(() => {
     let currentState = AppState.currentState
-
-    void Sentry.crashedLastRun()
-      .then((crashed) => {
-        if (!crashed) return
-
-        Sentry.addBreadcrumb({
-          category: "app.lifecycle",
-          level: "info",
-          message: "The previous app run ended in a native crash",
-        })
-      })
-      .catch(() => undefined)
 
     const subscription = AppState.addEventListener("change", (nextState) => {
       if (currentState === "active" && nextState !== "active") {
