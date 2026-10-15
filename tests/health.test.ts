@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test"
 import type { ServerData } from "@/lib/hooks/servers/connection"
 import type { Instance, Resource } from "@/lib/types/coolify"
 import { HealthStatus } from "@/lib/types/coolify"
-import { calculateIssueHealthStatus, collectHealthIssues, type HealthIssue } from "./health"
+import { calculateIssueHealthStatus, collectHealthIssues, type HealthIssue } from "@/lib/coolify/health"
 
 const connection: ServerData = {
   id: "connection-1",

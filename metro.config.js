@@ -1,10 +1,17 @@
-const { getDefaultConfig } = require("expo/metro-config");
-const { withNativeWind } = require("nativewind/metro");
+const { getDefaultConfig } = require("expo/metro-config")
+const { withSentryConfig } = require("@sentry/react-native/metro")
+const { withNativeWind } = require("nativewind/metro")
 
-const config = getDefaultConfig(__dirname);
-config.resolver.assetExts.push("md");
+const config = getDefaultConfig(__dirname)
+config.resolver.assetExts.push("md")
 
-module.exports = withNativeWind(config, {
-  input: "./global.css",
-  inlineRem: 16,
-});
+module.exports = withSentryConfig(
+  withNativeWind(config, {
+    input: "./global.css",
+    inlineRem: 16,
+  }),
+  {
+    includeWebReplay: false,
+    includeWebFeedback: false,
+  }
+)

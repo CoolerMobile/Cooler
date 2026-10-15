@@ -3,10 +3,12 @@ import { useAppTheme } from "@/components/custom/theme"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { useNotifications } from "@/lib/hooks/notifications"
+import { testSentryConnection } from "@/lib/sentry-test"
 import { NAV_THEME } from "@/lib/theme"
+import * as Sentry from "@sentry/react-native"
 import { Stack } from "expo-router"
-import { BellPlus } from "lucide-react-native"
-import { Alert } from "react-native"
+import { BellPlus, Bug } from "lucide-react-native"
+import { Alert, View } from "react-native"
 
 export default function SettingsLayout() {
   const { colorScheme } = useAppTheme()
@@ -26,13 +28,20 @@ export default function SettingsLayout() {
         name="settings"
         options={{
           title: "Cooler",
-          headerLeft: isDev ? () => <ScheduleNotif /> : undefined,
+          headerLeft: isDev ? () => <DebugActions /> : undefined,
           headerRight: () => <SettingsGitHub />,
         }}
       />
     </Stack>
   )
 }
+
+const DebugActions = () => (
+  <View className="flex-row">
+    <ScheduleNotif />
+    <TriggerSentryException />
+  </View>
+)
 
 // debug: schedule notification
 const ScheduleNotif = () => {
@@ -43,6 +52,7 @@ const ScheduleNotif = () => {
   return (
     <Button
       variant="ghost"
+      accessibilityLabel="Trigger debug notification"
       onPress={() => {
         Alert.alert("Trigger Debug Notification", "Schedule a local notification?", [
           {
@@ -80,3 +90,34 @@ const ScheduleNotif = () => {
     </Button>
   )
 }
+
+// debug: send a handled exception through the real Sentry transport
+const TriggerSentryException = () => (
+  <Button
+    variant="ghost"
+    accessibilityLabel="Trigger test exception"
+    onPress={() => {
+      Alert.alert("Trigger Test Exception", "Send a handled test exception to GlitchTip?", [
+        {
+          style: "destructive",
+          text: "Send Exception",
+          onPress: async () => {
+            try {
+              const eventId = await testSentryConnection(Sentry)
+              Alert.alert("Test exception sent", `Event ID: ${eventId}`)
+            } catch (error) {
+              Alert.alert(
+                "Exception failed",
+                error instanceof Error ? error.message : "The test exception could not be sent."
+              )
+            }
+          },
+        },
+        {
+          text: "Cancel",
+        },
+      ])
+    }}>
+    <Icon as={Bug} />
+  </Button>
+)

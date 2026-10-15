@@ -10,9 +10,13 @@ import { PortalHost } from "@rn-primitives/portal"
 import { useCoolifyMonitor } from "@/lib/hooks/data/coolify"
 import { useDeploymentMonitor } from "@/lib/hooks/data/deployments"
 import { useDeploymentBackgroundTask } from "@/lib/tasks/deployment-monitor"
+import { useSentry } from "@/lib/hooks/sentry"
 import * as Sentry from "@sentry/react-native"
 
-export default function RootLayout() {
+function RootLayout() {
+  // sentry
+  useSentry()
+
   // return navigator
   return (
     <GestureHandlerRootView>
@@ -28,22 +32,6 @@ export default function RootLayout() {
 }
 
 function RootNavigator() {
-  // sentry
-  Sentry.init({
-    dsn: "https://b891bc92b50d4ac1934b43b74fdef846@tracking.danfq.dev/1",
-    environment: __DEV__ ? "development" : "production",
-    tracesSampleRate: 0.01,
-    enableAutoSessionTracking: true,
-    enableNative: true,
-    attachStacktrace: true,
-    attachScreenshot: true,
-    attachViewHierarchy: true,
-    sendDefaultPii: false,
-  })
-
-  // sentry test
-  Sentry.captureException(new Error("test with more info"))
-
   // monitors & background tasks
   useCoolifyMonitor()
   useDeploymentMonitor()
@@ -68,3 +56,5 @@ function RootNavigator() {
     </>
   )
 }
+
+export default Sentry.wrap(RootLayout)
