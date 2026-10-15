@@ -5,11 +5,12 @@
   "version": "1.2.0",
   "scripts": {
     "dev": "expo start -c --go",
-    "dev:native-build": "expo run --device",
+    "dev:native-build": "bun run fix:licenses && expo run --device",
     "dev:native-rebuild": "bun run clean:native && expo run --device",
     "dev:native-build:eas": "eas build --profile development",
     "clean:native": "rm -rf .expo ios android",
     "clean": "rm -rf .expo node_modules && bun install",
+    "fix:licenses": "bun scripts/licenses.ts",
     "release": "bun scripts/release.ts"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "@rn-primitives/separator": "^1.5.2",
     "@rn-primitives/slot": "^1.5.2",
     "@rn-primitives/switch": "^1.5.2",
+    "@sentry/react-native": "^8.30.0",
     "@shopify/flash-list": "2.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
