@@ -116,7 +116,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add package.json
+          git add \
+            package.json \
+            app.json \
+            android/app/build.gradle \
+            ios/Cooler/Info.plist \
+            ios/Cooler.xcodeproj/project.pbxproj
 
           if [[ "$channel" == "nightly" ]]; then
             git commit -m "chore: release nightly v${version}"

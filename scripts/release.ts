@@ -9,8 +9,22 @@ type PackageJson = {
   [key: string]: unknown
 }
 
+type AppJson = {
+  expo: {
+    version: string
+    [key: string]: unknown
+  }
+  [key: string]: unknown
+}
+
 const root = join(import.meta.dir, "..")
 const packagePath = join(root, "package.json")
+const appConfigPath = join(root, "app.json")
+const androidBuildGradlePath = join(root, "android", "app", "build.gradle")
+const iosInfoPlistPath = join(root, "ios", "Cooler", "Info.plist")
+const iosProjectPath = join(root, "ios", "Cooler.xcodeproj", "project.pbxproj")
+const versionedPaths = [packagePath, appConfigPath, androidBuildGradlePath, iosInfoPlistPath, iosProjectPath]
+const versionedFiles = versionedPaths.map((path) => path.slice(root.length + 1))
 const versionPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
 
 const usage = [
@@ -22,7 +36,7 @@ const usage = [
   "  --submit      Submit the resulting iOS IPA to TestFlight",
   "  --nightly     Create a nightly/internal build",
   "  --eas         Dispatch the existing EAS GitHub workflow",
-  "  --bump-only   Only update package.json and print the new version",
+  "  --bump-only   Only update app and native versions, then print the new version",
   "",
   "Examples:",
   "  bun release",
@@ -90,6 +104,26 @@ const supportedTypes = new Set([
 
 const fail = (message: string): never => {
   throw new Error(message)
+}
+
+const replaceVersion = (
+  contents: string,
+  pattern: RegExp,
+  version: string,
+  expectedMatches: number,
+  file: string
+) => {
+  let matches = 0
+  const updated = contents.replace(pattern, (_match, prefix: string, suffix: string) => {
+    matches += 1
+    return `${prefix}${version}${suffix}`
+  })
+
+  if (matches !== expectedMatches) {
+    fail(`Expected ${expectedMatches} version field(s) in ${file}, found ${matches}.`)
+  }
+
+  return updated
 }
 
 const run = (command: string, commandArgs: string[], captureOutput = false) => {
@@ -220,19 +254,19 @@ const calculateBump = (): Bump => {
 }
 
 const prepareVersion = () => {
-  const packageChanges = Bun.spawnSync(["git", "diff", "--quiet", "--", "package.json"], {
-    cwd: root,
-  })
+  for (const file of versionedFiles) {
+    const changes = Bun.spawnSync(["git", "diff", "--quiet", "--", file], { cwd: root })
+    const stagedChanges = Bun.spawnSync(["git", "diff", "--cached", "--quiet", "--", file], {
+      cwd: root,
+    })
 
-  const stagedPackageChanges = Bun.spawnSync(["git", "diff", "--cached", "--quiet", "--", "package.json"], {
-    cwd: root,
-  })
-
-  if (!packageChanges.success || !stagedPackageChanges.success) {
-    fail("package.json has uncommitted changes. Commit or discard them before releasing.")
+    if (!changes.success || !stagedChanges.success) {
+      fail(`${file} has uncommitted changes. Commit or discard them before releasing.`)
+    }
   }
 
-  const originalPackage = readFileSync(packagePath, "utf8")
+  const originalFiles = new Map(versionedPaths.map((path) => [path, readFileSync(path, "utf8")]))
+  const originalPackage = originalFiles.get(packagePath) ?? fail("Could not read package.json.")
 
   const packageJson = JSON.parse(originalPackage) as PackageJson
 
@@ -264,13 +298,61 @@ const prepareVersion = () => {
 
   packageJson.version = version
 
+  const originalAppConfig = originalFiles.get(appConfigPath) ?? fail("Could not read app.json.")
+  const originalAndroidBuildGradle =
+    originalFiles.get(androidBuildGradlePath) ?? fail("Could not read android/app/build.gradle.")
+  const originalIosInfoPlist =
+    originalFiles.get(iosInfoPlistPath) ?? fail("Could not read ios/Cooler/Info.plist.")
+  const originalIosProject =
+    originalFiles.get(iosProjectPath) ?? fail("Could not read ios/Cooler.xcodeproj/project.pbxproj.")
+
+  const appConfig = JSON.parse(originalAppConfig) as AppJson
+
+  if (!appConfig.expo || typeof appConfig.expo.version !== "string") {
+    fail("app.json is missing expo.version.")
+  }
+
+  appConfig.expo.version = version
+
+  const androidBuildGradle = replaceVersion(
+    originalAndroidBuildGradle,
+    /(\bversionName\s+["'])[^"']+(["'])/g,
+    version,
+    1,
+    "android/app/build.gradle"
+  )
+
+  const iosInfoPlist = replaceVersion(
+    originalIosInfoPlist,
+    /(<key>CFBundleShortVersionString<\/key>\s*<string>)[^<]+(<\/string>)/g,
+    version,
+    1,
+    "ios/Cooler/Info.plist"
+  )
+
+  const iosProject = replaceVersion(
+    originalIosProject,
+    /(\bMARKETING_VERSION = )[^;]+(;)/g,
+    version,
+    2,
+    "ios/Cooler.xcodeproj/project.pbxproj"
+  )
+
   writeFileSync(packagePath, `${JSON.stringify(packageJson, null, 2)}\n`)
+  writeFileSync(appConfigPath, `${JSON.stringify(appConfig, null, 2)}\n`)
+  writeFileSync(androidBuildGradlePath, androidBuildGradle)
+  writeFileSync(iosInfoPlistPath, iosInfoPlist)
+  writeFileSync(iosProjectPath, iosProject)
 
   return {
     version,
     description,
-    originalPackage,
+    originalFiles,
   }
+}
+
+const restoreVersionFiles = (originalFiles: Map<string, string>) => {
+  for (const [path, contents] of originalFiles) writeFileSync(path, contents)
 }
 
 const currentBranch = () => {
@@ -342,7 +424,7 @@ if (useEas) {
 
 const releaseNotes = createReleaseNotes()
 
-const { version, description: releaseDescription, originalPackage } = prepareVersion()
+const { version, description: releaseDescription, originalFiles } = prepareVersion()
 
 const artifactDirectory = join(root, "artifacts")
 
@@ -399,12 +481,12 @@ try {
     fail(`Local ${platform} build failed twice; stopping without further retries.`)
   }
 } catch (error) {
-  writeFileSync(packagePath, originalPackage)
+  restoreVersionFiles(originalFiles)
 
   throw error
 }
 
-run("git", ["add", "package.json"])
+run("git", ["add", ...versionedFiles])
 
 run("git", ["commit", "-m", `chore: release ${nightly ? "nightly " : ""}v${version}`])
 
