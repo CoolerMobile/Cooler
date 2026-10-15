@@ -30,8 +30,7 @@ export default function RootLayout() {
 function RootNavigator() {
   // sentry
   Sentry.init({
-    dsn: "https://af2f993d39904a5fa3582ef63b236a72@tracking.danfq.dev/1",
-    debug: true,
+    dsn: "https://b891bc92b50d4ac1934b43b74fdef846@tracking.danfq.dev/1",
     environment: __DEV__ ? "development" : "production",
     tracesSampleRate: 0.01,
     enableAutoSessionTracking: true,
