@@ -33,6 +33,21 @@ The latest Android release is available from the [GitHub Releases](https://githu
 
 The iOS app will be available on the App Store soon. Nightly builds are created explicitly for testing the latest changes; stable releases are also created manually by project maintainers.
 
+## Privacy and diagnostics
+
+Cooler does not have user accounts and does not attach an identity or stable device identifier to diagnostic events. When an error, crash, or app hang occurs, Cooler may send the following limited technical data to Sentry:
+
+- The error type, a sanitized error message, and up to 100 stack frames. Local variables and surrounding source code are excluded.
+- The app identifier, version, build type, foreground state, and memory conditions.
+- The device family, model, hardware architecture, manufacturer, brand, simulator state, memory conditions, processor details, and display characteristics.
+- The operating system name, version, build, kernel version, and rooted or jailbroken state where available.
+- The React Native, Expo, JavaScript engine, and Hermes versions and runtime configuration.
+- Minimal event metadata needed to process and symbolicate the error, such as its timestamp, severity, platform, release, build, execution context, and source-map debug identifiers.
+
+Common identifiers in JavaScript error text—including URLs, email addresses, IP addresses, UUIDs, long secret-like values, and local usernames—are redacted before transmission. Cooler does not include names, email addresses, account or user IDs, IP addresses, device names, unique device identifiers, Coolify credentials, request URLs, headers, bodies, cookies, query parameters, breadcrumbs, screenshots, view hierarchies, console logs, session replays, analytics events, performance traces, profiles, locale, or timezone in Sentry events.
+
+These diagnostics are used only to understand errors, prevent crashes, and improve app reliability. They are not used for advertising, analytics, profiling, or tracking, and are not linked to you. In Apple's App Privacy terminology, they are categorized as **Crash Data**, **Performance Data**, and **Other Diagnostic Data** for **App Functionality**, all **not linked to the user** and never used for tracking.
+
 ## Stack
 
 - [React Native](https://reactnative.dev) and [Expo](https://expo.dev)
