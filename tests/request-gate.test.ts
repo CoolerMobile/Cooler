@@ -6,7 +6,7 @@ import {
   RESOURCE_LOG_SECOND_UNCERTAIN_COOLDOWN_MS,
   RESOURCE_LOG_SUCCESS_COOLDOWN_MS,
   ResourceLogRequestGate,
-} from "./resource-log-request-gate"
+} from "@/lib/coolify/request-gate"
 
 class MemoryStorage {
   readonly values = new Map<string, string>()

@@ -1,8 +1,5 @@
 import type { ServerData } from "@/lib/hooks/servers/connection"
-import {
-  resourceLogRequestGate,
-  type ResourceLogRequestOutcome,
-} from "@/lib/coolify/resource-log-request-gate"
+import { resourceLogRequestGate, type ResourceLogRequestOutcome } from "@/lib/coolify/request-gate"
 import { useDataStore } from "@/lib/stores/data"
 import type { Resource, ResourceLog } from "@/lib/types/coolify"
 import { FetchError, ofetch } from "ofetch"

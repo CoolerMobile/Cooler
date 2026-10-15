@@ -1,4 +1,5 @@
 import { refreshDeploymentsAndNotify } from "@/lib/hooks/data/deployments"
+import { captureBackgroundException } from "@/lib/hooks/sentry"
 import { useDataStore } from "@/lib/stores/data"
 import { useDeploymentStore } from "@/lib/stores/deployments"
 import * as BackgroundTask from "expo-background-task"
@@ -34,6 +35,7 @@ TaskManager.defineTask(DEPLOYMENT_MONITOR_TASK, async () => {
     await refreshDeploymentsAndNotify()
     return BackgroundTask.BackgroundTaskResult.Success
   } catch (error) {
+    await captureBackgroundException(DEPLOYMENT_MONITOR_TASK, error)
     console.error("[deployments] background monitor failed:", error)
     return BackgroundTask.BackgroundTaskResult.Failed
   }
