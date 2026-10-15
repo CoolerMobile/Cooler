@@ -1,6 +1,3 @@
-# sentry
-.sentryclirc
-
 # Android
 /artifacts/
 .gradle/
