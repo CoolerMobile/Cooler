@@ -32,10 +32,12 @@ const usage = [
   "  bun release [options] [patch|minor|major|x.y.z]",
   "",
   "Options:",
-  "  --ios         Build for iOS instead of Android",
-  "  --submit      Submit the resulting iOS IPA to TestFlight",
+  "  --android     Build only for Android",
+  "  --ios         Build only for iOS",
+  "  --submit      Submit iOS to TestFlight; Google Play submission is not configured",
   "  --nightly     Create a nightly/internal build",
   "  --eas         Dispatch the existing EAS GitHub workflow",
+  "  --local       Build locally (the default)",
   "  --bump-only   Only update app and native versions, then print the new version",
   "",
   "Examples:",
@@ -44,6 +46,9 @@ const usage = [
   "  bun release --nightly",
   "  bun release --ios",
   "  bun release --ios --submit",
+  "  bun release --android --submit",
+  "  bun release --eas --submit",
+  "  bun release --local --submit",
   "  bun release --ios --nightly",
 ].join("\n")
 
@@ -51,11 +56,13 @@ const args = Bun.argv.slice(2)
 
 const useEas = args.includes("--eas")
 const ios = args.includes("--ios")
+const android = args.includes("--android")
+const useLocal = args.includes("--local")
 const submit = args.includes("--submit")
 const nightly = args.includes("--nightly")
 const bumpOnly = args.includes("--bump-only")
 
-const knownFlags = new Set(["--eas", "--ios", "--submit", "--nightly", "--bump-only"])
+const knownFlags = new Set(["--eas", "--local", "--android", "--ios", "--submit", "--nightly", "--bump-only"])
 
 const unknownFlags = args.filter((arg) => arg.startsWith("--") && !knownFlags.has(arg))
 
@@ -69,13 +76,20 @@ if (useEas && bumpOnly) {
   throw new Error("--eas cannot be combined with --bump-only.\n\n" + usage)
 }
 
-if (submit && !ios) {
-  throw new Error("--submit currently only applies to iOS/TestFlight.\n\n" + usage)
+if (useEas && useLocal) {
+  throw new Error("--eas cannot be combined with --local.\n\n" + usage)
+}
+
+if (ios && android) {
+  throw new Error(
+    "--ios cannot be combined with --android. Omit both to target both with --submit.\n\n" + usage
+  )
 }
 
 if (submit && nightly) {
   throw new Error(
-    "--submit cannot be used with --nightly because nightly iOS builds use internal distribution.\n\n" + usage
+    "--submit cannot be used with --nightly because nightly builds are not submitted to app stores.\n\n" +
+      usage
   )
 }
 
@@ -374,9 +388,13 @@ const branch = currentBranch()
 
 const channel = nightly ? "nightly" : "release"
 
-const platform: Platform = ios ? "ios" : "android"
-
-const extension = platform === "ios" ? "ipa" : "apk"
+const platforms: Platform[] = ios
+  ? ["ios"]
+  : android
+    ? ["android"]
+    : submit
+      ? ["android", "ios"]
+      : ["android"]
 
 /*
  * Android keeps the current behavior:
@@ -392,10 +410,13 @@ const extension = platform === "ios" ? "ipa" : "apk"
  * This lets normal iOS releases use App Store distribution
  * while nightly IPAs remain internally signed/sideloadable.
  */
-const buildProfile = platform === "ios" ? (nightly ? "nightly" : "production") : channel
-
 if (useEas) {
   const bump = requestedBump ?? "auto"
+  // Keep workflow dispatch compatible with the already-deployed input schema.
+  // Android + submit means the workflow builds both platforms; an explicit
+  // --android release sends submit=false because there is no store submission yet.
+  const platform = ios ? "ios" : "android"
+  const workflowSubmit = submit && !android
 
   run("git", ["push", "origin", branch])
 
@@ -410,13 +431,21 @@ if (useEas) {
     "--field",
     `platform=${platform}`,
     "--field",
-    `submit=${submit}`,
+    `submit=${workflowSubmit}`,
     "--field",
     `bump=${bump}`,
   ])
 
+  const submissionDescription = !submit
+    ? ""
+    : android
+      ? ", Google Play submission skipped because a developer account is not configured"
+      : ios
+        ? ", TestFlight submission enabled"
+        : ", TestFlight submission enabled; Google Play submission skipped"
+
   console.log(
-    `EAS ${channel} ${platform} release dispatched from ${branch} (${bump} bump${submit ? ", TestFlight submission enabled" : ""}).`
+    `EAS ${channel} ${platform} release dispatched from ${branch} (${bump} bump${submissionDescription}).`
   )
 
   process.exit(0)
@@ -428,7 +457,14 @@ const { version, description: releaseDescription, originalFiles } = prepareVersi
 
 const artifactDirectory = join(root, "artifacts")
 
-const output = join(artifactDirectory, `Cooler-${channel}-${version}-${platform}.${extension}`)
+const artifacts = platforms.map((platform) => ({
+  platform,
+  buildProfile: platform === "ios" ? (nightly ? "nightly" : "production") : channel,
+  output: join(
+    artifactDirectory,
+    `Cooler-${channel}-${version}-${platform}.${platform === "ios" ? "ipa" : "apk"}`
+  ),
+}))
 
 const releaseNotesPath = join(artifactDirectory, "release-notes.md")
 
@@ -437,48 +473,50 @@ mkdirSync(artifactDirectory, {
 })
 
 try {
-  let succeeded = false
+  for (const { platform, buildProfile, output } of artifacts) {
+    let succeeded = false
 
-  for (let attempt = 1; attempt <= 2; attempt += 1) {
-    rmSync(output, {
-      force: true,
-    })
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+      rmSync(output, {
+        force: true,
+      })
 
-    console.log(`Starting local ${platform} build with profile "${buildProfile}" (attempt ${attempt}/2).`)
+      console.log(`Starting local ${platform} build with profile "${buildProfile}" (attempt ${attempt}/2).`)
 
-    const result = Bun.spawnSync(
-      [
-        "bunx",
-        "eas-cli@latest",
-        "build",
-        "--local",
-        "--platform",
-        platform,
-        "--profile",
-        buildProfile,
-        "--non-interactive",
-        "--output",
-        output,
-      ],
-      {
-        cwd: root,
-        stdout: "inherit",
-        stderr: "inherit",
+      const result = Bun.spawnSync(
+        [
+          "bunx",
+          "eas-cli@latest",
+          "build",
+          "--local",
+          "--platform",
+          platform,
+          "--profile",
+          buildProfile,
+          "--non-interactive",
+          "--output",
+          output,
+        ],
+        {
+          cwd: root,
+          stdout: "inherit",
+          stderr: "inherit",
+        }
+      )
+
+      if (result.success) {
+        succeeded = true
+        break
       }
-    )
 
-    if (result.success) {
-      succeeded = true
-      break
+      if (attempt === 1) {
+        console.error(`Local ${platform} build failed; retrying once.`)
+      }
     }
 
-    if (attempt === 1) {
-      console.error(`Local ${platform} build failed; retrying once.`)
+    if (!succeeded) {
+      fail(`Local ${platform} build failed twice; stopping without further retries.`)
     }
-  }
-
-  if (!succeeded) {
-    fail(`Local ${platform} build failed twice; stopping without further retries.`)
   }
 } catch (error) {
   restoreVersionFiles(originalFiles)
@@ -504,7 +542,7 @@ run("gh", [
   "release",
   "create",
   tag,
-  output,
+  ...artifacts.map(({ output }) => output),
   "--target",
   releaseCommit,
   "--title",
@@ -516,9 +554,11 @@ run("gh", [
 
 console.log(`${title} built and published from ${branch} (${releaseDescription}).`)
 
-console.log(`Artifact: ${output}`)
+for (const { output } of artifacts) console.log(`Artifact: ${output}`)
 
-if (submit) {
+const iosArtifact = artifacts.find(({ platform }) => platform === "ios")
+
+if (submit && iosArtifact) {
   console.log(`Submitting Cooler v${version} to App Store Connect/TestFlight...`)
 
   run("bunx", [
@@ -527,7 +567,7 @@ if (submit) {
     "--platform",
     "ios",
     "--path",
-    output,
+    iosArtifact.output,
     "--profile",
     "production",
     "--non-interactive",
@@ -535,5 +575,11 @@ if (submit) {
 
   console.log(
     `Cooler v${version} uploaded to App Store Connect. It should appear in TestFlight after Apple finishes processing it.`
+  )
+}
+
+if (submit && platforms.includes("android")) {
+  console.log(
+    `Cooler v${version} was not submitted to Google Play because a Google Play Developer account is not configured.`
   )
 }

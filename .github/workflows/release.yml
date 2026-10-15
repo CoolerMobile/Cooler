@@ -22,7 +22,7 @@ on:
           - ios
 
       submit:
-        description: Submit iOS release to TestFlight
+        description: Submit iOS to TestFlight (Google Play submission is not configured)
         required: true
         default: false
         type: boolean
@@ -48,9 +48,7 @@ jobs:
 
     outputs:
       channel: ${{ steps.metadata.outputs.channel }}
-      platform: ${{ steps.metadata.outputs.platform }}
-      profile: ${{ steps.metadata.outputs.profile }}
-      extension: ${{ steps.metadata.outputs.extension }}
+      platforms: ${{ steps.metadata.outputs.platforms }}
       tag: ${{ steps.metadata.outputs.tag }}
       name: ${{ steps.metadata.outputs.name }}
       version: ${{ steps.metadata.outputs.version }}
@@ -76,13 +74,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ "$SUBMIT" == "true" && "$PLATFORM" != "ios" ]]; then
-            echo "\"submit\" is only supported for iOS releases." >&2
-            exit 1
-          fi
-
           if [[ "$SUBMIT" == "true" && "$CHANNEL" != "release" ]]; then
-            echo "Nightly iOS builds use internal distribution and cannot be submitted to TestFlight." >&2
+            echo "Nightly builds are not submitted to app stores." >&2
             exit 1
           fi
 
@@ -91,6 +84,7 @@ jobs:
         env:
           DISPATCH_CHANNEL: ${{ inputs.channel }}
           DISPATCH_PLATFORM: ${{ inputs.platform }}
+          DISPATCH_SUBMIT: ${{ inputs.submit }}
           REQUESTED_BUMP: ${{ inputs.bump }}
         run: |
           set -euo pipefail
@@ -100,17 +94,10 @@ jobs:
 
           version="$(bun scripts/release.ts --bump-only "${REQUESTED_BUMP:-auto}")"
 
-          if [[ "$platform" == "ios" ]]; then
-            extension="ipa"
-
-            if [[ "$channel" == "nightly" ]]; then
-              profile="nightly"
-            else
-              profile="production"
-            fi
+          if [[ "$platform" == "android" && "$DISPATCH_SUBMIT" == "true" ]]; then
+            platforms='["android","ios"]'
           else
-            extension="apk"
-            profile="$channel"
+            platforms="[\"$platform\"]"
           fi
 
           git config user.name "github-actions[bot]"
@@ -139,9 +126,7 @@ jobs:
 
           {
             echo "channel=$channel"
-            echo "platform=$platform"
-            echo "profile=$profile"
-            echo "extension=$extension"
+            echo "platforms=$platforms"
             echo "tag=$tag"
             echo "name=$name"
             echo "version=$version"
@@ -150,13 +135,15 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
   build:
-    name: EAS ${{ needs.prepare.outputs.platform }} build (${{ needs.prepare.outputs.channel }})
+    name: EAS ${{ matrix.platform }} build (${{ needs.prepare.outputs.channel }})
     if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     needs: prepare
     runs-on: ubuntu-latest
 
-    outputs:
-      build_id: ${{ steps.eas-build.outputs.build_id }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: ${{ fromJSON(needs.prepare.outputs.platforms) }}
 
     steps:
       - name: Check out prepared source
@@ -179,24 +166,34 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Queue EAS cloud build and download artifact
-        id: eas-build
         env:
-          PLATFORM: ${{ needs.prepare.outputs.platform }}
-          PROFILE: ${{ needs.prepare.outputs.profile }}
+          PLATFORM: ${{ matrix.platform }}
           CHANNEL: ${{ needs.prepare.outputs.channel }}
           VERSION: ${{ needs.prepare.outputs.version }}
-          EXTENSION: ${{ needs.prepare.outputs.extension }}
         run: |
           set -euo pipefail
 
           mkdir -p artifacts
 
+          if [[ "$PLATFORM" == "ios" ]]; then
+            extension="ipa"
+
+            if [[ "$CHANNEL" == "nightly" ]]; then
+              profile="nightly"
+            else
+              profile="production"
+            fi
+          else
+            extension="apk"
+            profile="$CHANNEL"
+          fi
+
           for attempt in 1 2; do
-            echo "Queueing EAS ${PLATFORM} build using profile \"${PROFILE}\" (attempt ${attempt}/2)."
+            echo "Queueing EAS ${PLATFORM} build using profile \"${profile}\" (attempt ${attempt}/2)."
 
             if eas build \
               --platform "$PLATFORM" \
-              --profile "$PROFILE" \
+              --profile "$profile" \
               --non-interactive \
               --wait \
               --json > build.json; then
@@ -225,7 +222,7 @@ jobs:
             ' build.json
           )"
 
-          output="artifacts/Cooler-${CHANNEL}-${VERSION}-${PLATFORM}.${EXTENSION}"
+          output="artifacts/Cooler-${CHANNEL}-${VERSION}-${PLATFORM}.${extension}"
 
           echo "EAS build ID: ${build_id}"
           echo "Downloading build artifact to ${output}"
@@ -237,12 +234,10 @@ jobs:
             --output "$output" \
             "$artifact_url"
 
-          echo "build_id=$build_id" >> "$GITHUB_OUTPUT"
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: cooler-${{ needs.prepare.outputs.channel }}-${{ needs.prepare.outputs.platform }}
+          name: cooler-${{ needs.prepare.outputs.channel }}-${{ matrix.platform }}
           path: artifacts/*
           if-no-files-found: error
           retention-days: 7
@@ -253,7 +248,6 @@ jobs:
       github.actor == 'danfq' &&
       github.triggering_actor == 'danfq' &&
       inputs.submit &&
-      inputs.platform == 'ios' &&
       inputs.channel == 'release'
     needs:
       - prepare
@@ -261,10 +255,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out prepared source
-        uses: actions/checkout@v5
+      - name: Download iOS build artifact
+        uses: actions/download-artifact@v4
         with:
-          ref: ${{ needs.prepare.outputs.sha }}
+          name: cooler-${{ needs.prepare.outputs.channel }}-ios
+          path: artifacts
 
       - name: Set up Expo and EAS
         uses: expo/expo-github-action@v8
@@ -274,18 +269,36 @@ jobs:
 
       - name: Submit build
         env:
-          BUILD_ID: ${{ needs.build.outputs.build_id }}
+          PLATFORM: ${{ inputs.platform }}
         run: |
           set -euo pipefail
 
-          echo "Submitting EAS build ${BUILD_ID} to TestFlight."
+          artifact="$(find artifacts -type f -name '*.ipa' -print -quit)"
+
+          if [[ -z "$artifact" ]]; then
+            echo "No iOS IPA was downloaded." >&2
+            exit 1
+          fi
+
+          echo "Submitting ${artifact} to TestFlight."
 
           eas submit \
             --platform ios \
-            --id "$BUILD_ID" \
+            --path "$artifact" \
             --profile production \
             --non-interactive \
             --wait
+
+          if [[ "$PLATFORM" == "android" ]]; then
+            message="The iOS app was submitted to TestFlight. The Android app was not submitted to Google Play because a Google Play Developer account is not configured."
+          else
+            message="The iOS app was submitted to TestFlight."
+          fi
+
+          echo "$message"
+          echo "### App store submission" >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
+          echo "$message" >> "$GITHUB_STEP_SUMMARY"
 
   release:
     name: Publish GitHub Release
@@ -305,8 +318,9 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: cooler-${{ needs.prepare.outputs.channel }}-${{ needs.prepare.outputs.platform }}
+          pattern: cooler-${{ needs.prepare.outputs.channel }}-*
           path: artifacts
+          merge-multiple: true
 
       - name: Write release notes
         env:
