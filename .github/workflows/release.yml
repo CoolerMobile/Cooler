@@ -258,6 +258,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check out prepared source
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+
       - name: Download iOS build artifact
         uses: actions/download-artifact@v4
         with:
