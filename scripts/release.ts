@@ -473,8 +473,9 @@ mkdirSync(artifactDirectory, {
 })
 
 try {
-  for (const { platform, buildProfile, output } of artifacts) {
-    let succeeded = false
+  run("bun", ["scripts/licenses.ts"])
+
+  let succeeded = false
 
     for (let attempt = 1; attempt <= 2; attempt += 1) {
       rmSync(output, {

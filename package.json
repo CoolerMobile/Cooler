@@ -11,6 +11,7 @@
     "clean:native": "rm -rf .expo ios android",
     "clean": "rm -rf .expo node_modules && bun install",
     "fix:licenses": "bun scripts/licenses.ts",
+    "eas-build-post-install": "bun run fix:licenses",
     "release": "bun scripts/release.ts"
   },
   "dependencies": {

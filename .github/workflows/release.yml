@@ -165,6 +165,9 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Fix generated license metadata
+        run: bun run fix:licenses
+
       - name: Queue EAS cloud build and download artifact
         env:
           PLATFORM: ${{ matrix.platform }}
