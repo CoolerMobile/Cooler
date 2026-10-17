@@ -1,4 +1,4 @@
-import type { ErrorEvent, Exception, StackFrame } from "@sentry/react-native"
+import type { ErrorEvent, Exception, StackFrame, Thread } from "@sentry/react-native"
 
 const APP_CONTEXT_FIELDS = [
   "app_identifier",
@@ -54,8 +54,9 @@ const SAFE_TAGS = new Set([
   "hermes",
 ])
 
-const MAX_ERROR_MESSAGE_LENGTH = 500
+const MAX_ERROR_MESSAGE_LENGTH = 2_000
 const MAX_STACK_FRAMES = 100
+const MAX_SOURCE_CONTEXT_LINES = 5
 
 const copyFields = (
   context: Record<string, unknown> | undefined,
@@ -101,6 +102,25 @@ const minimizeFrame = (frame: StackFrame): StackFrame => ({
   instruction_addr: frame.instruction_addr,
   addr_mode: frame.addr_mode,
   debug_id: frame.debug_id,
+  // These values are source-map-derived application code, not runtime values. Keeping a small
+  // window makes a symbolicated frame actionable without collecting local variables.
+  pre_context: frame.pre_context?.slice(-MAX_SOURCE_CONTEXT_LINES),
+  context_line: frame.context_line,
+  post_context: frame.post_context?.slice(0, MAX_SOURCE_CONTEXT_LINES),
+})
+
+const minimizeThread = (thread: Thread): Thread => ({
+  id: thread.id,
+  name: thread.name,
+  crashed: thread.crashed,
+  current: thread.current,
+  main: thread.main,
+  stacktrace: thread.stacktrace
+    ? {
+        frames: thread.stacktrace.frames?.slice(-MAX_STACK_FRAMES).map(minimizeFrame),
+        frames_omitted: thread.stacktrace.frames_omitted,
+      }
+    : undefined,
 })
 
 const minimizeException = (exception: Exception): Exception => ({
@@ -160,6 +180,7 @@ export const minimizeSentryEvent = (event: ErrorEvent): ErrorEvent => {
     exception: event.exception?.values
       ? { values: event.exception.values.map(minimizeException) }
       : undefined,
+    threads: event.threads?.values ? { values: event.threads.values.map(minimizeThread) } : undefined,
     contexts: Object.values(contexts).some(Boolean) ? contexts : undefined,
     tags: Object.keys(tags).length > 0 ? tags : undefined,
     debug_meta: event.debug_meta,

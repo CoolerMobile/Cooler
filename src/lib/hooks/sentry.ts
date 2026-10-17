@@ -34,7 +34,7 @@ const sentryOptions: Sentry.ReactNativeOptions = {
   sendClientReports: false,
   enableLogs: false,
   maxBreadcrumbs: 0,
-  maxValueLength: 500,
+  maxValueLength: 2_000,
   enableNative: true,
   autoInitializeNativeSdk: true,
   enableNativeCrashHandling: !__DEV__,
@@ -63,9 +63,11 @@ const sentryOptions: Sentry.ReactNativeOptions = {
   enableSystemEventBreadcrumbs: false,
   enableAppComponentBreadcrumbs: false,
   enableMemoryIntrospection: false,
-  attachStacktrace: false,
-  attachThreads: false,
-  attachAllThreads: false,
+  // Preserve JavaScript call chains and native thread stacks. The beforeSend allowlist removes
+  // runtime locals while retaining source-map-derived function names and source context.
+  attachStacktrace: true,
+  attachThreads: true,
+  attachAllThreads: true,
   attachScreenshot: false,
   attachViewHierarchy: false,
   reportAccessibilityIdentifier: false,

@@ -67,7 +67,28 @@ describe("Sentry privacy", () => {
                   lineno: 42,
                   colno: 7,
                   vars: { token: "secret" },
+                  pre_context: ["const token = getSecret()"],
                   context_line: "fetch(server.token)",
+                  post_context: ["return response"],
+                },
+              ],
+            },
+          },
+        ],
+      },
+      threads: {
+        values: [
+          {
+            id: 1,
+            name: "main",
+            current: true,
+            stacktrace: {
+              frames: [
+                {
+                  function: "UIApplicationMain",
+                  filename: "Cooler",
+                  lineno: 10,
+                  vars: { privateRuntimeValue: "secret" },
                 },
               ],
             },
@@ -117,6 +138,41 @@ describe("Sentry privacy", () => {
                   instruction_addr: undefined,
                   addr_mode: undefined,
                   debug_id: undefined,
+                  pre_context: ["const token = getSecret()"],
+                  context_line: "fetch(server.token)",
+                  post_context: ["return response"],
+                },
+              ],
+              frames_omitted: undefined,
+            },
+          },
+        ],
+      },
+      threads: {
+        values: [
+          {
+            id: 1,
+            name: "main",
+            crashed: undefined,
+            current: true,
+            main: undefined,
+            stacktrace: {
+              frames: [
+                {
+                  filename: "Cooler",
+                  function: "UIApplicationMain",
+                  module: undefined,
+                  platform: undefined,
+                  lineno: 10,
+                  colno: undefined,
+                  abs_path: undefined,
+                  in_app: undefined,
+                  instruction_addr: undefined,
+                  addr_mode: undefined,
+                  debug_id: undefined,
+                  pre_context: undefined,
+                  context_line: undefined,
+                  post_context: undefined,
                 },
               ],
               frames_omitted: undefined,
