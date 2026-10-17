@@ -1,0 +1,1 @@
+{"artifactVersion":"1.2.0","description":"destroy a stream if possible","developers":[{"name":"Jonathan Ong","organisationUrl":""}],"licenses":["MIT_ebc01c095571f7c89f87d4164e82b0ec7e441113eeab25d6fc242b928e96497c7e5dd5034ed12c776b660b957526da5f9675ad32de3e432861215cb8b37649ce"],"name":"destroy","tag":"","uniqueId":"destroy@1.2.0","website":"stream-utils/destroy"}

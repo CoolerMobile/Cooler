@@ -711,7 +711,7 @@ manual:
   - name: '@expo_timeago.js@1.0.0'
     version: '1.0.0'
     source: https://github.com/expo/timeago.js
-    file: '../node_modules/@expo/timeago.js/LICENSE'
+    body: MIT
   - name: '@expo_ui@57.0.22'
     version: '57.0.22'
     source: https://github.com/expo/expo
@@ -719,19 +719,19 @@ manual:
   - name: sf-symbols-typescript@2.2.0
     version: '2.2.0'
     source: https://github.com/nandorojo/typescript-sf-symbols
-    file: '../node_modules/sf-symbols-typescript/LICENSE'
+    body: MIT
   - name: vaul@1.1.2
     version: '1.1.2'
     source: https://github.com/emilkowalski/vaul
-    file: '../node_modules/vaul/LICENSE.md'
+    body: MIT
   - name: '@radix-ui_react-dialog@1.2.0'
     version: '1.2.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-dialog/LICENSE'
+    body: MIT
   - name: aria-hidden@1.2.6
     version: '1.2.6'
     source: https://github.com/theKashey/aria-hidden
-    file: '../node_modules/aria-hidden/LICENSE'
+    body: MIT
   - name: tslib@2.8.1
     version: '2.8.1'
     source: https://github.com/Microsoft/tslib
@@ -739,7 +739,7 @@ manual:
   - name: react-remove-scroll@2.7.2
     version: '2.7.2'
     source: https://github.com/theKashey/react-remove-scroll
-    file: '../node_modules/react-remove-scroll/LICENSE'
+    body: MIT
   - name: react-remove-scroll-bar@2.3.8
     version: '2.3.8'
     source: https://github.com/theKashey/react-remove-scroll-bar
@@ -747,302 +747,302 @@ manual:
   - name: react-style-singleton@2.2.3
     version: '2.2.3'
     source: https://github.com/theKashey/react-style-singleton
-    file: '../node_modules/react-style-singleton/LICENSE'
+    body: MIT
   - name: get-nonce@1.0.1
     version: '1.0.1'
     source: https://github.com/theKashey/get-nonce
-    file: '../node_modules/get-nonce/LICENSE'
+    body: MIT
   - name: use-callback-ref@1.3.3
     version: '1.3.3'
     source: https://github.com/theKashey/use-callback-ref/
-    file: '../node_modules/use-callback-ref/LICENSE'
+    body: MIT
   - name: use-sidecar@1.1.3
     version: '1.1.3'
     source: https://github.com/theKashey/use-sidecar
-    file: '../node_modules/use-sidecar/LICENSE'
+    body: MIT
   - name: detect-node-es@1.1.0
     version: '1.1.0'
     source: https://github.com/thekashey/detect-node
-    file: '../node_modules/detect-node-es/LICENSE'
+    body: MIT
   - name: '@radix-ui_primitive@1.1.7'
     version: '1.1.7'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/primitive/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-compose-refs@1.1.5'
     version: '1.1.5'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-compose-refs/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-context@1.2.2'
     version: '1.2.2'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-context/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-dismissable-layer@1.1.20'
     version: '1.1.20'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-dismissable-layer/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-primitive@2.1.11'
     version: '2.1.11'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-primitive/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-slot@1.4.0'
     version: '1.4.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-slot/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-callback-ref@1.1.4'
     version: '1.1.4'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-callback-ref/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-effect-event@0.0.5'
     version: '0.0.5'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-effect-event/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-layout-effect@1.1.4'
     version: '1.1.4'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-layout-effect/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-focus-guards@1.1.6'
     version: '1.1.6'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-focus-guards/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-focus-scope@1.2.0'
     version: '1.2.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-focus-scope/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-id@1.1.4'
     version: '1.1.4'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-id/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-portal@1.1.18'
     version: '1.1.18'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-portal/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-presence@1.1.11'
     version: '1.1.11'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-presence/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-controllable-state@1.2.6'
     version: '1.2.6'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-controllable-state/LICENSE'
+    body: MIT
   - name: '@icons-pack_react-simple-icons@13.15.1'
     version: '13.15.1'
     source: https://github.com/icons-pack/react-simple-icons
-    file: '../node_modules/@icons-pack/react-simple-icons/LICENSE'
+    body: MIT
   - name: '@react-native-async-storage_async-storage@2.2.0'
     version: '2.2.0'
     source: https://github.com/react-native-async-storage/async-storage
-    file: '../node_modules/@react-native-async-storage/async-storage/LICENSE'
+    body: MIT
   - name: merge-options@3.0.4
     version: '3.0.4'
     source: schnittstabil/merge-options
-    file: '../node_modules/merge-options/LICENSE'
+    body: MIT
   - name: is-plain-obj@2.1.0
     version: '2.1.0'
     source: sindresorhus/is-plain-obj
-    file: '../node_modules/is-plain-obj/LICENSE'
+    body: MIT
   - name: '@react-native-community_datetimepicker@9.1.0'
     version: '9.1.0'
     source: https://github.com/react-native-datetimepicker/datetimepicker
-    file: '../node_modules/@react-native-community/datetimepicker/LICENSE.md'
+    body: MIT
   - name: invariant@2.2.4
     version: '2.2.4'
     source: https://github.com/zertosh/invariant
-    file: '../node_modules/invariant/LICENSE'
+    body: MIT
   - name: loose-envify@1.4.0
     version: '1.4.0'
     source: https://github.com/zertosh/loose-envify
-    file: '../node_modules/loose-envify/LICENSE'
+    body: MIT
   - name: js-tokens@4.0.0
     version: '4.0.0'
     source: lydell/js-tokens
-    file: '../node_modules/js-tokens/LICENSE'
+    body: MIT
   - name: '@rn-primitives_checkbox@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/checkbox/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-checkbox@1.3.12'
     version: '1.3.12'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-checkbox/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-size@1.1.5'
     version: '1.1.5'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-size/LICENSE'
+    body: MIT
   - name: '@rn-primitives_hooks@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/hooks/LICENSE'
+    body: MIT
   - name: '@rn-primitives_types@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/types/LICENSE'
+    body: MIT
   - name: '@rn-primitives_slot@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/slot/LICENSE'
+    body: MIT
   - name: '@rn-primitives_dialog@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/dialog/LICENSE'
+    body: MIT
   - name: '@rn-primitives_label@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/label/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-label@2.1.16'
     version: '2.1.16'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-label/LICENSE'
+    body: MIT
   - name: '@rn-primitives_select@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/select/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-select@2.3.8'
     version: '2.3.8'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-select/LICENSE'
+    body: MIT
   - name: '@radix-ui_number@1.1.3'
     version: '1.1.3'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/number/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-collection@1.1.16'
     version: '1.1.16'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-collection/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-direction@1.1.5'
     version: '1.1.5'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-direction/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-popper@1.3.8'
     version: '1.3.8'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-popper/LICENSE'
+    body: MIT
   - name: '@floating-ui_react-dom@2.1.9'
     version: '2.1.9'
     source: https://github.com/floating-ui/floating-ui
-    file: '../node_modules/@floating-ui/react-dom/LICENSE'
+    body: MIT
   - name: '@floating-ui_dom@1.8.0'
     version: '1.8.0'
     source: https://github.com/floating-ui/floating-ui
-    file: '../node_modules/@floating-ui/dom/LICENSE'
+    body: MIT
   - name: '@floating-ui_core@1.8.0'
     version: '1.8.0'
     source: https://github.com/floating-ui/floating-ui
-    file: '../node_modules/@floating-ui/core/LICENSE'
+    body: MIT
   - name: '@floating-ui_utils@0.2.12'
     version: '0.2.12'
     source: https://github.com/floating-ui/floating-ui
-    file: '../node_modules/@floating-ui/utils/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-rect@1.1.4'
     version: '1.1.4'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-rect/LICENSE'
+    body: MIT
   - name: '@radix-ui_rect@1.1.3'
     version: '1.1.3'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/rect/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-arrow@1.1.16'
     version: '1.1.16'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-arrow/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-previous@1.1.4'
     version: '1.1.4'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-previous/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-visually-hidden@1.2.12'
     version: '1.2.12'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-visually-hidden/LICENSE'
+    body: MIT
   - name: '@rn-primitives_separator@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/separator/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-separator@1.1.16'
     version: '1.1.16'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-separator/LICENSE'
+    body: MIT
   - name: '@rn-primitives_switch@1.5.2'
     version: '1.5.2'
-    file: '../node_modules/@rn-primitives/switch/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-switch@1.3.8'
     version: '1.3.8'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-switch/LICENSE'
+    body: MIT
   - name: '@sentry_react-native@8.30.0'
     version: '8.30.0'
     source: https://github.com/getsentry/sentry-react-native
-    file: '../node_modules/@sentry/react-native/LICENSE.md'
+    body: MIT
   - name: '@sentry_browser@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/browser/LICENSE'
+    body: MIT
   - name: '@sentry_browser-utils@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/browser-utils/LICENSE'
+    body: MIT
   - name: '@sentry_core@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/core/LICENSE'
+    body: MIT
   - name: '@sentry_conventions@0.16.0'
     version: '0.16.0'
     source: https://github.com/getsentry/sentry-conventions
-    file: '../node_modules/@sentry/conventions/LICENSE'
+    body: MIT
   - name: '@sentry_feedback@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/feedback/LICENSE'
+    body: MIT
   - name: '@sentry_replay@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/replay/LICENSE'
+    body: MIT
   - name: '@sentry_replay-canvas@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/replay-canvas/LICENSE'
+    body: MIT
   - name: '@sentry_bundler-plugins@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/bundler-plugins/LICENSE'
+    body: MIT
   - name: '@babel_core@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/core/LICENSE'
+    body: MIT
   - name: '@babel_code-frame@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/code-frame/LICENSE'
+    body: MIT
   - name: '@babel_helper-validator-identifier@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-validator-identifier/LICENSE'
+    body: MIT
   - name: picocolors@1.1.1
     version: '1.1.1'
     source: alexeyraspopov/picocolors
-    file: '../node_modules/picocolors/LICENSE'
+    body: ISC
   - name: '@babel_generator@7.29.8'
     version: '7.29.8'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/generator/LICENSE'
+    body: MIT
   - name: '@babel_parser@7.29.9'
     version: '7.29.9'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/parser/LICENSE'
+    body: MIT
   - name: '@babel_types@7.29.8'
     version: '7.29.8'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/types/LICENSE'
+    body: MIT
   - name: '@babel_helper-string-parser@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-string-parser/LICENSE'
+    body: MIT
   - name: '@jridgewell_gen-mapping@0.3.13'
     version: '0.3.13'
     source: https://github.com/jridgewell/sourcemaps
-    file: '../node_modules/@jridgewell/gen-mapping/LICENSE'
+    body: MIT
   - name: '@jridgewell_sourcemap-codec@1.6.0'
     version: '1.6.0'
     source: https://github.com/jridgewell/sourcemaps
-    file: '../node_modules/@jridgewell/sourcemap-codec/LICENSE'
+    body: MIT
   - name: '@jridgewell_trace-mapping@0.3.31'
     version: '0.3.31'
     source: https://github.com/jridgewell/sourcemaps
-    file: '../node_modules/@jridgewell/trace-mapping/LICENSE'
+    body: MIT
   - name: '@jridgewell_resolve-uri@3.1.2'
     version: '3.1.2'
     source: https://github.com/jridgewell/resolve-uri
-    file: '../node_modules/@jridgewell/resolve-uri/LICENSE'
+    body: MIT
   - name: jsesc@3.1.0
     version: '3.1.0'
     source: https://github.com/mathiasbynens/jsesc
@@ -1050,19 +1050,19 @@ manual:
   - name: '@babel_helper-compilation-targets@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-compilation-targets/LICENSE'
+    body: MIT
   - name: '@babel_compat-data@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/compat-data/LICENSE'
+    body: MIT
   - name: '@babel_helper-validator-option@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-validator-option/LICENSE'
+    body: MIT
   - name: browserslist@4.29.3
     version: '4.29.3'
     source: browserslist/browserslist
-    file: '../node_modules/browserslist/LICENSE'
+    body: MIT
   - name: baseline-browser-mapping@2.11.27
     version: '2.11.27'
     source: https://github.com/web-platform-dx/baseline-browser-mapping
@@ -1070,87 +1070,87 @@ manual:
   - name: caniuse-lite@1.0.30001815
     version: '1.0.30001815'
     source: browserslist/caniuse-lite
-    file: '../node_modules/caniuse-lite/LICENSE'
+    body: CC-BY-4.0
   - name: electron-to-chromium@1.5.451
     version: '1.5.451'
     source: https://github.com/Kilian/electron-to-chromium
-    file: '../node_modules/electron-to-chromium/LICENSE'
+    body: ISC
   - name: node-releases@2.0.58
     version: '2.0.58'
     source: https://github.com/chicoxyzzy/node-releases
-    file: '../node_modules/node-releases/LICENSE'
+    body: MIT
   - name: update-browserslist-db@1.3.4
     version: '1.3.4'
     source: browserslist/update-db
-    file: '../node_modules/update-browserslist-db/LICENSE'
+    body: MIT
   - name: escalade@3.2.0
     version: '3.2.0'
     source: lukeed/escalade
-    file: '../node_modules/escalade/LICENSE'
+    body: MIT
   - name: lru-cache@5.1.1
     version: '5.1.1'
     source: https://github.com/isaacs/node-lru-cache
-    file: '../node_modules/lru-cache/LICENSE'
+    body: ISC
   - name: yallist@3.1.1
     version: '3.1.1'
     source: https://github.com/isaacs/yallist
-    file: '../node_modules/yallist/LICENSE'
+    body: ISC
   - name: semver@6.3.1
     version: '6.3.1'
     source: https://github.com/npm/node-semver
-    file: '../node_modules/@babel/helper-compilation-targets/node_modules/semver/LICENSE'
+    body: ISC
   - name: '@babel_helper-module-transforms@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-module-transforms/LICENSE'
+    body: MIT
   - name: '@babel_helper-module-imports@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-module-imports/LICENSE'
+    body: MIT
   - name: '@babel_traverse@7.29.10'
     version: '7.29.10'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/traverse/LICENSE'
+    body: MIT
   - name: '@babel_helper-globals@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-globals/LICENSE'
+    body: MIT
   - name: '@babel_template@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/template/LICENSE'
+    body: MIT
   - name: debug@4.4.3
     version: '4.4.3'
     source: https://github.com/debug-js/debug
-    file: '../node_modules/debug/LICENSE'
+    body: MIT
   - name: ms@2.1.3
     version: '2.1.3'
     source: vercel/ms
-    file: '../node_modules/ms/LICENSE.md'
+    body: MIT
   - name: '@babel_helpers@7.29.10'
     version: '7.29.10'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helpers/LICENSE'
+    body: MIT
   - name: '@jridgewell_remapping@2.3.5'
     version: '2.3.5'
     source: https://github.com/jridgewell/sourcemaps
-    file: '../node_modules/@jridgewell/remapping/LICENSE'
+    body: MIT
   - name: convert-source-map@2.0.0
     version: '2.0.0'
     source: https://github.com/thlorenz/convert-source-map
-    file: '../node_modules/convert-source-map/LICENSE'
+    body: MIT
   - name: gensync@1.0.0-beta.2
     version: '1.0.0-beta.2'
     source: https://github.com/loganfsmyth/gensync
-    file: '../node_modules/gensync/LICENSE'
+    body: MIT
   - name: json5@2.2.3
     version: '2.2.3'
     source: https://github.com/json5/json5
-    file: '../node_modules/json5/LICENSE.md'
+    body: MIT
   - name: '@sentry_cli@2.58.6'
     version: '2.58.6'
     source: https://github.com/getsentry/sentry-cli
-    file: '../node_modules/@sentry/bundler-plugins/node_modules/@sentry/cli/LICENSE'
+    body: FSL-1.1-MIT
   - name: https-proxy-agent@5.0.1
     version: '5.0.1'
     source: https://github.com/TooTallNate/node-https-proxy-agent
@@ -1162,7 +1162,7 @@ manual:
   - name: node-fetch@2.7.0
     version: '2.7.0'
     source: https://github.com/bitinn/node-fetch
-    file: '../node_modules/node-fetch/LICENSE.md'
+    body: MIT
   - name: whatwg-url@5.0.0
     version: '5.0.0'
     source: jsdom/whatwg-url
@@ -1174,23 +1174,23 @@ manual:
   - name: webidl-conversions@3.0.1
     version: '3.0.1'
     source: jsdom/webidl-conversions
-    file: '../node_modules/webidl-conversions/LICENSE.md'
+    body: BSD-2-Clause
   - name: progress@2.0.3
     version: '2.0.3'
     source: https://github.com/visionmedia/node-progress
-    file: '../node_modules/progress/LICENSE'
+    body: MIT
   - name: proxy-from-env@1.1.0
     version: '1.1.0'
     source: https://github.com/Rob--W/proxy-from-env
-    file: '../node_modules/proxy-from-env/LICENSE'
+    body: MIT
   - name: which@2.0.2
     version: '2.0.2'
     source: https://github.com/isaacs/node-which
-    file: '../node_modules/which/LICENSE'
+    body: ISC
   - name: isexe@2.0.0
     version: '2.0.0'
     source: https://github.com/isaacs/isexe
-    file: '../node_modules/isexe/LICENSE'
+    body: ISC
   - name: '@sentry_cli-darwin@2.58.6'
     version: '2.58.6'
     source: https://github.com/getsentry/sentry-cli
@@ -1198,71 +1198,71 @@ manual:
   - name: dotenv@17.4.2
     version: '17.4.2'
     source: https://github.com/motdotla/dotenv
-    file: '../node_modules/dotenv/LICENSE'
+    body: BSD-2-Clause
   - name: find-up@5.0.0
     version: '5.0.0'
     source: sindresorhus/find-up
-    file: '../node_modules/find-up/LICENSE'
+    body: MIT
   - name: locate-path@6.0.0
     version: '6.0.0'
     source: sindresorhus/locate-path
-    file: '../node_modules/locate-path/LICENSE'
+    body: MIT
   - name: p-locate@5.0.0
     version: '5.0.0'
     source: sindresorhus/p-locate
-    file: '../node_modules/p-locate/LICENSE'
+    body: MIT
   - name: p-limit@3.1.0
     version: '3.1.0'
     source: sindresorhus/p-limit
-    file: '../node_modules/p-limit/LICENSE'
+    body: MIT
   - name: yocto-queue@0.1.0
     version: '0.1.0'
     source: sindresorhus/yocto-queue
-    file: '../node_modules/yocto-queue/LICENSE'
+    body: MIT
   - name: path-exists@4.0.0
     version: '4.0.0'
     source: sindresorhus/path-exists
-    file: '../node_modules/path-exists/LICENSE'
+    body: MIT
   - name: glob@13.0.6
     version: '13.0.6'
     source: https://github.com/isaacs/node-glob
-    file: '../node_modules/glob/LICENSE.md'
+    body: BlueOak-1.0.0
   - name: minimatch@10.2.6
     version: '10.2.6'
     source: https://github.com/isaacs/minimatch
-    file: '../node_modules/minimatch/LICENSE.md'
+    body: BlueOak-1.0.0
   - name: brace-expansion@5.0.12
     version: '5.0.12'
     source: https://github.com/juliangruber/brace-expansion
-    file: '../node_modules/brace-expansion/LICENSE'
+    body: MIT
   - name: balanced-match@4.0.4
     version: '4.0.4'
     source: https://github.com/juliangruber/balanced-match
-    file: '../node_modules/balanced-match/LICENSE.md'
+    body: MIT
   - name: minipass@7.1.3
     version: '7.1.3'
     source: https://github.com/isaacs/minipass
-    file: '../node_modules/minipass/LICENSE.md'
+    body: BlueOak-1.0.0
   - name: path-scurry@2.0.2
     version: '2.0.2'
     source: https://github.com/isaacs/path-scurry
-    file: '../node_modules/path-scurry/LICENSE.md'
+    body: BlueOak-1.0.0
   - name: lru-cache@11.5.3
     version: '11.5.3'
     source: https://github.com/isaacs/node-lru-cache
-    file: '../node_modules/path-scurry/node_modules/lru-cache/LICENSE.md'
+    body: ISC
   - name: magic-string@0.30.21
     version: '0.30.21'
     source: https://github.com/Rich-Harris/magic-string
-    file: '../node_modules/magic-string/LICENSE'
+    body: MIT
   - name: '@sentry_cli@3.8.0'
     version: '3.8.0'
     source: https://github.com/getsentry/sentry-cli
-    file: '../node_modules/@sentry/cli/LICENSE'
+    body: FSL-1.1-MIT
   - name: undici@6.29.0
     version: '6.29.0'
     source: https://github.com/nodejs/undici
-    file: '../node_modules/undici/LICENSE'
+    body: MIT
   - name: '@sentry_cli-darwin@3.8.0'
     version: '3.8.0'
     source: https://github.com/getsentry/sentry-cli
@@ -1270,142 +1270,142 @@ manual:
   - name: '@sentry_expo-upload-sourcemaps@8.30.0'
     version: '8.30.0'
     source: https://github.com/getsentry/sentry-react-native
-    file: '../node_modules/@sentry/expo-upload-sourcemaps/LICENSE.md'
+    body: MIT
   - name: '@sentry_react@10.76.0'
     version: '10.76.0'
     source: https://github.com/getsentry/sentry-javascript
-    file: '../node_modules/@sentry/react/LICENSE'
+    body: MIT
   - name: '@shopify_flash-list@2.0.2'
     version: '2.0.2'
     source: https://github.com/Shopify/flash-list
-    file: '../node_modules/@shopify/flash-list/LICENSE.md'
+    body: MIT
   - name: class-variance-authority@0.7.1
     version: '0.7.1'
     source: https://github.com/joe-bell/cva
-    file: '../node_modules/class-variance-authority/LICENSE'
+    body: Apache-2.0
   - name: clsx@2.1.1
     version: '2.1.1'
     source: lukeed/clsx
-    file: '../node_modules/clsx/LICENSE'
+    body: MIT
   - name: dayjs@1.11.23
     version: '1.11.23'
     source: https://github.com/iamkun/dayjs
-    file: '../node_modules/dayjs/LICENSE'
+    body: MIT
   - name: expo@57.0.27
     version: '57.0.27'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo/LICENSE'
+    body: MIT
   - name: '@babel_runtime@7.29.10'
     version: '7.29.10'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/runtime/LICENSE'
+    body: MIT
   - name: '@expo_cli@57.0.28'
     version: '57.0.28'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/cli/LICENSE'
+    body: MIT
   - name: '@expo_code-signing-certificates@0.0.6'
     version: '0.0.6'
     source: https://github.com/expo/code-signing-certificates
-    file: '../node_modules/@expo/code-signing-certificates/LICENSE'
+    body: MIT
   - name: node-forge@1.4.0
     version: '1.4.0'
     source: https://github.com/digitalbazaar/forge
-    file: '../node_modules/node-forge/LICENSE'
+    body: (BSD-3-Clause OR GPL-2.0)
   - name: '@expo_config@57.0.10'
     version: '57.0.10'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/config/LICENSE'
+    body: MIT
   - name: '@expo_config-plugins@57.0.10'
     version: '57.0.10'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/config-plugins/LICENSE'
+    body: MIT
   - name: '@expo_config-types@57.0.2'
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/config-types/LICENSE'
+    body: MIT
   - name: '@expo_json-file@11.0.1'
     version: '11.0.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/json-file/LICENSE'
+    body: MIT
   - name: '@expo_plist@0.8.1'
     version: '0.8.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/plist/LICENSE'
+    body: MIT
   - name: '@xmldom_xmldom@0.8.15'
     version: '0.8.15'
     source: https://github.com/xmldom/xmldom
-    file: '../node_modules/@xmldom/xmldom/LICENSE'
+    body: MIT
   - name: base64-js@1.5.1
     version: '1.5.1'
     source: https://github.com/beatgammit/base64-js
-    file: '../node_modules/base64-js/LICENSE'
+    body: MIT
   - name: xmlbuilder@15.1.1
     version: '15.1.1'
     source: https://github.com/oozcitak/xmlbuilder-js
-    file: '../node_modules/@expo/plist/node_modules/xmlbuilder/LICENSE'
+    body: MIT
   - name: '@expo_require-utils@57.0.6'
     version: '57.0.6'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/require-utils/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-modules-commonjs@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-modules-commonjs/LICENSE'
+    body: MIT
   - name: '@babel_helper-plugin-utils@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-plugin-utils/LICENSE'
+    body: MIT
   - name: '@expo_sdk-runtime-versions@1.0.1'
     version: '1.0.1'
-    file: '../node_modules/@expo/sdk-runtime-versions/LICENSE'
+    body: MIT
   - name: chalk@4.1.2
     version: '4.1.2'
     source: chalk/chalk
-    file: '../node_modules/chalk/LICENSE'
+    body: MIT
   - name: ansi-styles@4.3.0
     version: '4.3.0'
     source: chalk/ansi-styles
-    file: '../node_modules/chalk/node_modules/ansi-styles/LICENSE'
+    body: MIT
   - name: color-convert@2.0.1
     version: '2.0.1'
     source: Qix-/color-convert
-    file: '../node_modules/color-convert/LICENSE'
+    body: MIT
   - name: color-name@1.1.4
     version: '1.1.4'
     source: https://github.com/colorjs/color-name
-    file: '../node_modules/color-name/LICENSE'
+    body: MIT
   - name: supports-color@7.2.0
     version: '7.2.0'
     source: chalk/supports-color
-    file: '../node_modules/supports-color/LICENSE'
+    body: MIT
   - name: has-flag@4.0.0
     version: '4.0.0'
     source: sindresorhus/has-flag
-    file: '../node_modules/has-flag/LICENSE'
+    body: MIT
   - name: getenv@2.0.0
     version: '2.0.0'
     source: https://github.com/ctavan/node-getenv
-    file: '../node_modules/getenv/LICENSE.md'
+    body: MIT
   - name: semver@7.8.5
     version: '7.8.5'
     source: https://github.com/npm/node-semver
-    file: '../node_modules/semver/LICENSE'
+    body: ISC
   - name: slugify@1.6.9
     version: '1.6.9'
     source: https://github.com/simov/slugify
-    file: '../node_modules/slugify/LICENSE'
+    body: MIT
   - name: xcode@3.0.1
     version: '3.0.1'
     source: https://github.com/apache/cordova-node-xcode
-    file: '../node_modules/xcode/LICENSE'
+    body: Apache-2.0
   - name: simple-plist@1.3.1
     version: '1.3.1'
     source: https://github.com/wollardj/simple-plist
-    file: '../node_modules/simple-plist/LICENSE'
+    body: MIT
   - name: bplist-creator@0.1.0
     version: '0.1.0'
     source: https://github.com/nearinfinity/node-bplist-creator
-    file: '../node_modules/bplist-creator/LICENSE'
+    body: MIT
   - name: stream-buffers@2.2.0
     version: '2.2.0'
     source: https://github.com/samcday/node-stream-buffer
@@ -1417,31 +1417,31 @@ manual:
   - name: big-integer@1.6.52
     version: '1.6.52'
     source: https://github.com/peterolson/BigInteger.js
-    file: '../node_modules/big-integer/LICENSE'
+    body: Unlicense
   - name: plist@3.1.1
     version: '3.1.1'
     source: https://github.com/TooTallNate/node-plist
-    file: '../node_modules/plist/LICENSE'
+    body: MIT
   - name: '@xmldom_xmldom@0.9.12'
     version: '0.9.12'
     source: https://github.com/xmldom/xmldom
-    file: '../node_modules/plist/node_modules/@xmldom/xmldom/LICENSE'
+    body: MIT
   - name: uuid@7.0.3
     version: '7.0.3'
     source: https://github.com/uuidjs/uuid
-    file: '../node_modules/uuid/LICENSE.md'
+    body: MIT
   - name: xml2js@0.6.0
     version: '0.6.0'
     source: https://github.com/Leonidas-from-XIV/node-xml2js
-    file: '../node_modules/xml2js/LICENSE'
+    body: MIT
   - name: sax@1.6.1
     version: '1.6.1'
     source: https://github.com/isaacs/sax-js
-    file: '../node_modules/sax/LICENSE.md'
+    body: BlueOak-1.0.0
   - name: xmlbuilder@11.0.1
     version: '11.0.1'
     source: https://github.com/oozcitak/xmlbuilder-js
-    file: '../node_modules/xmlbuilder/LICENSE'
+    body: MIT
   - name: deepmerge@4.3.1
     version: '4.3.1'
     source: https://github.com/TehShrike/deepmerge
@@ -1449,47 +1449,47 @@ manual:
   - name: resolve-workspace-root@2.0.1
     version: '2.0.1'
     source: https://github.com/byCedric/resolve-workspace-root
-    file: '../node_modules/resolve-workspace-root/LICENSE.md'
+    body: MIT
   - name: '@expo_devcert@1.2.2'
     version: '1.2.2'
     source: https://github.com/expo/devcert
-    file: '../node_modules/@expo/devcert/LICENSE'
+    body: MIT
   - name: '@expo_sudo-prompt@9.3.2'
     version: '9.3.2'
     source: https://github.com/expo/sudo-prompt
-    file: '../node_modules/@expo/sudo-prompt/LICENSE'
+    body: MIT
   - name: debug@3.2.7
     version: '3.2.7'
     source: https://github.com/visionmedia/debug
-    file: '../node_modules/@expo/devcert/node_modules/debug/LICENSE'
+    body: MIT
   - name: '@expo_env@2.4.3'
     version: '2.4.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/env/LICENSE'
+    body: MIT
   - name: '@expo_image-utils@0.11.6'
     version: '0.11.6'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/image-utils/LICENSE'
+    body: MIT
   - name: '@expo_spawn-async@1.8.0'
     version: '1.8.0'
     source: https://github.com/expo/spawn-async
-    file: '../node_modules/@expo/spawn-async/LICENSE'
+    body: MIT
   - name: cross-spawn@7.0.6
     version: '7.0.6'
     source: https://github.com/moxystudio/node-cross-spawn
-    file: '../node_modules/cross-spawn/LICENSE'
+    body: MIT
   - name: path-key@3.1.1
     version: '3.1.1'
     source: sindresorhus/path-key
-    file: '../node_modules/path-key/LICENSE'
+    body: MIT
   - name: shebang-command@2.0.0
     version: '2.0.0'
     source: kevva/shebang-command
-    file: '../node_modules/shebang-command/LICENSE'
+    body: MIT
   - name: shebang-regex@3.0.0
     version: '3.0.0'
     source: sindresorhus/shebang-regex
-    file: '../node_modules/shebang-regex/LICENSE'
+    body: MIT
   - name: jimp-compact@0.16.1
     version: '0.16.1'
     source: nuxt-community/jimp-compact
@@ -1497,38 +1497,38 @@ manual:
   - name: parse-png@2.1.0
     version: '2.1.0'
     source: kevva/parse-png
-    file: '../node_modules/parse-png/LICENSE'
+    body: MIT
   - name: pngjs@3.4.0
     version: '3.4.0'
     source: https://github.com/lukeapage/pngjs2
-    file: '../node_modules/pngjs/LICENSE'
+    body: MIT
   - name: '@expo_inline-modules@0.1.7'
     version: '0.1.7'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/inline-modules/LICENSE'
+    body: MIT
   - name: '@expo_log-box@57.0.4'
     version: '57.0.4'
-    file: '../node_modules/@expo/log-box/LICENSE'
+    body: MIT
   - name: '@expo_dom-webview@57.0.1'
     version: '57.0.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/dom-webview/LICENSE'
+    body: MIT
   - name: anser@1.4.10
     version: '1.4.10'
     source: https://github.com/IonicaBizau/anser
-    file: '../node_modules/anser/LICENSE'
+    body: MIT
   - name: stacktrace-parser@0.1.11
     version: '0.1.11'
     source: https://github.com/errwischt/stacktrace-parser
-    file: '../node_modules/stacktrace-parser/LICENSE'
+    body: MIT
   - name: type-fest@0.7.1
     version: '0.7.1'
     source: sindresorhus/type-fest
-    file: '../node_modules/type-fest/LICENSE'
+    body: (MIT OR CC0-1.0)
   - name: '@expo_metro@56.0.2'
     version: '56.0.2'
     source: https://github.com/expo/expo-metro
-    file: '../node_modules/@expo/metro/LICENSE'
+    body: MIT
   - name: metro@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1536,171 +1536,171 @@ manual:
   - name: accepts@2.0.0
     version: '2.0.0'
     source: jshttp/accepts
-    file: '../node_modules/accepts/LICENSE'
+    body: MIT
   - name: mime-types@3.0.2
     version: '3.0.2'
     source: jshttp/mime-types
-    file: '../node_modules/mime-types/LICENSE'
+    body: MIT
   - name: mime-db@1.54.0
     version: '1.54.0'
     source: jshttp/mime-db
-    file: '../node_modules/mime-db/LICENSE'
+    body: MIT
   - name: negotiator@1.1.0
     version: '1.1.0'
     source: jshttp/negotiator
-    file: '../node_modules/negotiator/LICENSE'
+    body: MIT
   - name: content-type@2.1.0
     version: '2.1.0'
     source: jshttp/content-type
-    file: '../node_modules/content-type/LICENSE'
+    body: MIT
   - name: ci-info@2.0.0
     version: '2.0.0'
     source: https://github.com/watson/ci-info
-    file: '../node_modules/ci-info/LICENSE'
+    body: MIT
   - name: connect@3.7.0
     version: '3.7.0'
     source: senchalabs/connect
-    file: '../node_modules/connect/LICENSE'
+    body: MIT
   - name: debug@2.6.9
     version: '2.6.9'
     source: https://github.com/visionmedia/debug
-    file: '../node_modules/connect/node_modules/debug/LICENSE'
+    body: MIT
   - name: ms@2.0.0
     version: '2.0.0'
     source: zeit/ms
-    file: '../node_modules/connect/node_modules/debug/node_modules/ms/LICENSE.md'
+    body: MIT
   - name: finalhandler@1.1.2
     version: '1.1.2'
     source: pillarjs/finalhandler
-    file: '../node_modules/finalhandler/LICENSE'
+    body: MIT
   - name: encodeurl@1.0.2
     version: '1.0.2'
     source: pillarjs/encodeurl
-    file: '../node_modules/finalhandler/node_modules/encodeurl/LICENSE'
+    body: MIT
   - name: escape-html@1.0.3
     version: '1.0.3'
     source: component/escape-html
-    file: '../node_modules/escape-html/LICENSE'
+    body: MIT
   - name: on-finished@2.3.0
     version: '2.3.0'
     source: jshttp/on-finished
-    file: '../node_modules/finalhandler/node_modules/on-finished/LICENSE'
+    body: MIT
   - name: ee-first@1.1.1
     version: '1.1.1'
     source: jonathanong/ee-first
-    file: '../node_modules/ee-first/LICENSE'
+    body: MIT
   - name: parseurl@1.3.3
     version: '1.3.3'
     source: pillarjs/parseurl
-    file: '../node_modules/parseurl/LICENSE'
+    body: MIT
   - name: statuses@1.5.0
     version: '1.5.0'
     source: jshttp/statuses
-    file: '../node_modules/finalhandler/node_modules/statuses/LICENSE'
+    body: MIT
   - name: unpipe@1.0.0
     version: '1.0.0'
     source: stream-utils/unpipe
-    file: '../node_modules/unpipe/LICENSE'
+    body: MIT
   - name: utils-merge@1.0.1
     version: '1.0.1'
     source: https://github.com/jaredhanson/utils-merge
-    file: '../node_modules/utils-merge/LICENSE'
+    body: MIT
   - name: error-stack-parser@2.1.4
     version: '2.1.4'
     source: https://github.com/stacktracejs/error-stack-parser
-    file: '../node_modules/error-stack-parser/LICENSE'
+    body: MIT
   - name: stackframe@1.3.4
     version: '1.3.4'
     source: https://github.com/stacktracejs/stackframe
-    file: '../node_modules/stackframe/LICENSE'
+    body: MIT
   - name: flow-enums-runtime@0.0.6
     version: '0.0.6'
     source: https://github.com/facebook/flow
-    file: '../node_modules/flow-enums-runtime/LICENSE'
+    body: MIT
   - name: graceful-fs@4.2.11
     version: '4.2.11'
     source: https://github.com/isaacs/node-graceful-fs
-    file: '../node_modules/graceful-fs/LICENSE'
+    body: ISC
   - name: hermes-parser@0.35.0
     version: '0.35.0'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/metro/node_modules/hermes-parser/LICENSE'
+    body: MIT
   - name: hermes-estree@0.35.0
     version: '0.35.0'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/metro/node_modules/hermes-parser/node_modules/hermes-estree/LICENSE'
+    body: MIT
   - name: jest-worker@29.7.0
     version: '29.7.0'
     source: https://github.com/jestjs/jest
-    file: '../node_modules/jest-worker/LICENSE'
+    body: MIT
   - name: '@types_node@26.6.4'
     version: '26.6.4'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/node/LICENSE'
+    body: MIT
   - name: undici-types@8.9.0
     version: '8.9.0'
     source: https://github.com/nodejs/undici
-    file: '../node_modules/undici-types/LICENSE'
+    body: MIT
   - name: jest-util@29.7.0
     version: '29.7.0'
     source: https://github.com/jestjs/jest
-    file: '../node_modules/jest-util/LICENSE'
+    body: MIT
   - name: '@jest_types@29.6.3'
     version: '29.6.3'
     source: https://github.com/jestjs/jest
-    file: '../node_modules/@jest/types/LICENSE'
+    body: MIT
   - name: '@jest_schemas@29.6.3'
     version: '29.6.3'
     source: https://github.com/jestjs/jest
-    file: '../node_modules/@jest/schemas/LICENSE'
+    body: MIT
   - name: '@sinclair_typebox@0.27.12'
     version: '0.27.12'
     source: https://github.com/sinclairzx81/sinclair-typebox
-    file: '../node_modules/@sinclair/typebox/LICENSE'
+    body: MIT
   - name: '@types_istanbul-lib-coverage@2.0.6'
     version: '2.0.6'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/istanbul-lib-coverage/LICENSE'
+    body: MIT
   - name: '@types_istanbul-reports@3.0.4'
     version: '3.0.4'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/istanbul-reports/LICENSE'
+    body: MIT
   - name: '@types_istanbul-lib-report@3.0.3'
     version: '3.0.3'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/istanbul-lib-report/LICENSE'
+    body: MIT
   - name: '@types_yargs@17.0.35'
     version: '17.0.35'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/yargs/LICENSE'
+    body: MIT
   - name: '@types_yargs-parser@21.0.3'
     version: '21.0.3'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/yargs-parser/LICENSE'
+    body: MIT
   - name: ci-info@3.9.0
     version: '3.9.0'
     source: https://github.com/watson/ci-info
-    file: '../node_modules/jest-util/node_modules/ci-info/LICENSE'
+    body: MIT
   - name: picomatch@2.3.2
     version: '2.3.2'
     source: micromatch/picomatch
-    file: '../node_modules/picomatch/LICENSE'
+    body: MIT
   - name: merge-stream@2.0.0
     version: '2.0.0'
     source: grncdr/merge-stream
-    file: '../node_modules/merge-stream/LICENSE'
+    body: MIT
   - name: supports-color@8.1.1
     version: '8.1.1'
     source: chalk/supports-color
-    file: '../node_modules/jest-worker/node_modules/supports-color/LICENSE'
+    body: MIT
   - name: jsc-safe-url@0.2.4
     version: '0.2.4'
     source: https://github.com/robhogan/jsc-safe-url
-    file: '../node_modules/jsc-safe-url/LICENSE'
+    body: 0BSD
   - name: lodash.throttle@4.1.1
     version: '4.1.1'
     source: lodash/lodash
-    file: '../node_modules/lodash.throttle/LICENSE'
+    body: MIT
   - name: metro-babel-transformer@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1712,7 +1712,7 @@ manual:
   - name: nullthrows@1.1.1
     version: '1.1.1'
     source: https://github.com/zertosh/nullthrows
-    file: '../node_modules/nullthrows/LICENSE'
+    body: MIT
   - name: metro-cache@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1720,15 +1720,15 @@ manual:
   - name: exponential-backoff@3.1.3
     version: '3.1.3'
     source: https://github.com/coveooss/exponential-backoff
-    file: '../node_modules/exponential-backoff/LICENSE'
+    body: Apache-2.0
   - name: https-proxy-agent@7.0.6
     version: '7.0.6'
     source: https://github.com/TooTallNate/proxy-agents
-    file: '../node_modules/metro-cache/node_modules/https-proxy-agent/LICENSE'
+    body: MIT
   - name: agent-base@7.1.4
     version: '7.1.4'
     source: https://github.com/TooTallNate/proxy-agents
-    file: '../node_modules/metro-cache/node_modules/https-proxy-agent/node_modules/agent-base/LICENSE'
+    body: MIT
   - name: metro-core@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1744,31 +1744,31 @@ manual:
   - name: jest-validate@29.7.0
     version: '29.7.0'
     source: https://github.com/jestjs/jest
-    file: '../node_modules/jest-validate/LICENSE'
+    body: MIT
   - name: camelcase@6.3.0
     version: '6.3.0'
     source: sindresorhus/camelcase
-    file: '../node_modules/camelcase/LICENSE'
+    body: MIT
   - name: jest-get-type@29.6.3
     version: '29.6.3'
     source: https://github.com/jestjs/jest
-    file: '../node_modules/jest-get-type/LICENSE'
+    body: MIT
   - name: leven@3.1.0
     version: '3.1.0'
     source: sindresorhus/leven
-    file: '../node_modules/leven/LICENSE'
+    body: MIT
   - name: pretty-format@29.7.0
     version: '29.7.0'
     source: https://github.com/jestjs/jest
-    file: '../node_modules/pretty-format/LICENSE'
+    body: MIT
   - name: ansi-styles@5.2.0
     version: '5.2.0'
     source: chalk/ansi-styles
-    file: '../node_modules/ansi-styles/LICENSE'
+    body: MIT
   - name: react-is@18.3.1
     version: '18.3.1'
     source: https://github.com/facebook/react
-    file: '../node_modules/pretty-format/node_modules/react-is/LICENSE'
+    body: MIT
   - name: metro-runtime@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1776,7 +1776,7 @@ manual:
   - name: yaml@2.9.1
     version: '2.9.1'
     source: https://github.com/eemeli/yaml
-    file: '../node_modules/yaml/LICENSE'
+    body: ISC
   - name: metro-file-map@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1792,39 +1792,39 @@ manual:
   - name: node-int64@0.4.0
     version: '0.4.0'
     source: https://github.com/broofa/node-int64
-    file: '../node_modules/node-int64/LICENSE'
+    body: MIT
   - name: micromatch@4.0.8
     version: '4.0.8'
     source: micromatch/micromatch
-    file: '../node_modules/micromatch/LICENSE'
+    body: MIT
   - name: braces@3.0.3
     version: '3.0.3'
     source: micromatch/braces
-    file: '../node_modules/braces/LICENSE'
+    body: MIT
   - name: fill-range@7.1.1
     version: '7.1.1'
     source: jonschlinkert/fill-range
-    file: '../node_modules/fill-range/LICENSE'
+    body: MIT
   - name: to-regex-range@5.0.1
     version: '5.0.1'
     source: micromatch/to-regex-range
-    file: '../node_modules/to-regex-range/LICENSE'
+    body: MIT
   - name: is-number@7.0.0
     version: '7.0.0'
     source: jonschlinkert/is-number
-    file: '../node_modules/is-number/LICENSE'
+    body: MIT
   - name: walker@1.0.8
     version: '1.0.8'
     source: https://github.com/daaku/nodejs-walker
-    file: '../node_modules/walker/LICENSE'
+    body: Apache-2.0
   - name: makeerror@1.0.12
     version: '1.0.12'
     source: https://github.com/daaku/nodejs-makeerror
-    file: '../node_modules/makeerror/LICENSE'
+    body: BSD-3-Clause
   - name: tmpl@1.0.5
     version: '1.0.5'
     source: https://github.com/daaku/nodejs-tmpl
-    file: '../node_modules/tmpl/LICENSE'
+    body: BSD-3-Clause
   - name: metro-source-map@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1836,11 +1836,11 @@ manual:
   - name: source-map@0.5.7
     version: '0.5.7'
     source: http://github.com/mozilla/source-map
-    file: '../node_modules/source-map/LICENSE'
+    body: BSD-3-Clause
   - name: vlq@1.0.1
     version: '1.0.1'
     source: https://github.com/Rich-Harris/vlq
-    file: '../node_modules/vlq/LICENSE'
+    body: MIT
   - name: ob1@0.84.5
     version: '0.84.5'
     source: https://github.com/react/metro
@@ -1860,47 +1860,47 @@ manual:
   - name: terser@5.51.2
     version: '5.51.2'
     source: https://github.com/terser/terser
-    file: '../node_modules/terser/LICENSE'
+    body: BSD-2-Clause
   - name: '@jridgewell_source-map@0.3.11'
     version: '0.3.11'
     source: https://github.com/jridgewell/sourcemaps
-    file: '../node_modules/@jridgewell/source-map/LICENSE'
+    body: MIT
   - name: acorn@8.19.0
     version: '8.19.0'
     source: https://github.com/acornjs/acorn
-    file: '../node_modules/acorn/LICENSE'
+    body: MIT
   - name: commander@2.20.3
     version: '2.20.3'
     source: https://github.com/tj/commander.js
-    file: '../node_modules/terser/node_modules/commander/LICENSE'
+    body: MIT
   - name: source-map-support@0.5.21
     version: '0.5.21'
     source: https://github.com/evanw/node-source-map-support
-    file: '../node_modules/source-map-support/LICENSE.md'
+    body: MIT
   - name: buffer-from@1.1.2
     version: '1.1.2'
     source: LinusU/buffer-from
-    file: '../node_modules/buffer-from/LICENSE'
+    body: MIT
   - name: source-map@0.6.1
     version: '0.6.1'
     source: http://github.com/mozilla/source-map
-    file: '../node_modules/source-map-support/node_modules/source-map/LICENSE'
+    body: BSD-3-Clause
   - name: serialize-error@2.1.0
     version: '2.1.0'
     source: sindresorhus/serialize-error
-    file: '../node_modules/serialize-error/LICENSE'
+    body: MIT
   - name: throat@5.0.0
     version: '5.0.0'
     source: https://github.com/ForbesLindesay/throat
-    file: '../node_modules/throat/LICENSE'
+    body: MIT
   - name: ws@7.5.13
     version: '7.5.13'
     source: websockets/ws
-    file: '../node_modules/ws/LICENSE'
+    body: MIT
   - name: yargs@17.7.3
     version: '17.7.3'
     source: https://github.com/yargs/yargs
-    file: '../node_modules/yargs/LICENSE'
+    body: MIT
   - name: cliui@8.0.1
     version: '8.0.1'
     source: yargs/cliui
@@ -1908,7 +1908,7 @@ manual:
   - name: string-width@4.2.3
     version: '4.2.3'
     source: sindresorhus/string-width
-    file: '../node_modules/string-width/LICENSE'
+    body: MIT
   - name: emoji-regex@8.0.0
     version: '8.0.0'
     source: https://github.com/mathiasbynens/emoji-regex
@@ -1916,31 +1916,31 @@ manual:
   - name: is-fullwidth-code-point@3.0.0
     version: '3.0.0'
     source: sindresorhus/is-fullwidth-code-point
-    file: '../node_modules/is-fullwidth-code-point/LICENSE'
+    body: MIT
   - name: strip-ansi@6.0.1
     version: '6.0.1'
     source: chalk/strip-ansi
-    file: '../node_modules/string-width/node_modules/strip-ansi/LICENSE'
+    body: MIT
   - name: ansi-regex@5.0.1
     version: '5.0.1'
     source: chalk/ansi-regex
-    file: '../node_modules/ansi-regex/LICENSE'
+    body: MIT
   - name: wrap-ansi@7.0.0
     version: '7.0.0'
     source: chalk/wrap-ansi
-    file: '../node_modules/wrap-ansi/LICENSE'
+    body: MIT
   - name: get-caller-file@2.0.5
     version: '2.0.5'
     source: https://github.com/stefanpenner/get-caller-file
-    file: '../node_modules/get-caller-file/LICENSE.md'
+    body: ISC
   - name: require-directory@2.1.1
     version: '2.1.1'
     source: https://github.com/troygoode/node-require-directory
-    file: '../node_modules/require-directory/LICENSE'
+    body: MIT
   - name: y18n@5.0.8
     version: '5.0.8'
     source: yargs/y18n
-    file: '../node_modules/y18n/LICENSE'
+    body: ISC
   - name: yargs-parser@21.1.1
     version: '21.1.1'
     source: https://github.com/yargs/yargs-parser
@@ -1948,127 +1948,127 @@ manual:
   - name: '@expo_metro-config@57.0.13'
     version: '57.0.13'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/metro-config/LICENSE'
+    body: MIT
   - name: hermes-parser@0.36.1
     version: '0.36.1'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/hermes-parser/LICENSE'
+    body: MIT
   - name: hermes-estree@0.36.1
     version: '0.36.1'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/hermes-estree/LICENSE'
+    body: MIT
   - name: lightningcss@1.33.0
     version: '1.33.0'
     source: https://github.com/parcel-bundler/lightningcss
-    file: '../node_modules/lightningcss/LICENSE'
+    body: MPL-2.0
   - name: detect-libc@2.1.2
     version: '2.1.2'
     source: https://github.com/lovell/detect-libc
-    file: '../node_modules/detect-libc/LICENSE'
+    body: Apache-2.0
   - name: lightningcss-darwin-arm64@1.33.0
     version: '1.33.0'
     source: https://github.com/parcel-bundler/lightningcss
-    file: '../node_modules/lightningcss-darwin-arm64/LICENSE'
+    body: MPL-2.0
   - name: picomatch@4.0.7
     version: '4.0.7'
     source: micromatch/picomatch
-    file: '../node_modules/@expo/metro-config/node_modules/picomatch/LICENSE'
+    body: MIT
   - name: postcss@8.5.29
     version: '8.5.29'
     source: postcss/postcss
-    file: '../node_modules/postcss/LICENSE'
+    body: MIT
   - name: nanoid@3.3.20
     version: '3.3.20'
     source: ai/nanoid
-    file: '../node_modules/nanoid/LICENSE'
+    body: MIT
   - name: source-map-js@1.2.2
     version: '1.2.2'
     source: '7rulnik/source-map-js'
-    file: '../node_modules/source-map-js/LICENSE'
+    body: BSD-3-Clause
   - name: resolve-from@5.0.0
     version: '5.0.0'
     source: sindresorhus/resolve-from
-    file: '../node_modules/resolve-from/LICENSE'
+    body: MIT
   - name: '@expo_metro-file-map@57.0.4'
     version: '57.0.4'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/metro-file-map/LICENSE'
+    body: MIT
   - name: '@expo_osascript@2.7.1'
     version: '2.7.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/osascript/LICENSE'
+    body: MIT
   - name: '@expo_package-manager@1.13.1'
     version: '1.13.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/package-manager/LICENSE'
+    body: MIT
   - name: npm-package-arg@11.0.3
     version: '11.0.3'
     source: https://github.com/npm/npm-package-arg
-    file: '../node_modules/npm-package-arg/LICENSE'
+    body: ISC
   - name: hosted-git-info@7.0.2
     version: '7.0.2'
     source: https://github.com/npm/hosted-git-info
-    file: '../node_modules/hosted-git-info/LICENSE'
+    body: ISC
   - name: lru-cache@10.4.3
     version: '10.4.3'
     source: https://github.com/isaacs/node-lru-cache
-    file: '../node_modules/hosted-git-info/node_modules/lru-cache/LICENSE'
+    body: ISC
   - name: proc-log@4.2.0
     version: '4.2.0'
     source: https://github.com/npm/proc-log
-    file: '../node_modules/proc-log/LICENSE'
+    body: ISC
   - name: validate-npm-package-name@5.0.1
     version: '5.0.1'
     source: https://github.com/npm/validate-npm-package-name
-    file: '../node_modules/validate-npm-package-name/LICENSE'
+    body: ISC
   - name: ora@3.4.0
     version: '3.4.0'
     source: sindresorhus/ora
-    file: '../node_modules/ora/LICENSE'
+    body: MIT
   - name: chalk@2.4.2
     version: '2.4.2'
     source: chalk/chalk
-    file: '../node_modules/ora/node_modules/chalk/LICENSE'
+    body: MIT
   - name: ansi-styles@3.2.1
     version: '3.2.1'
     source: chalk/ansi-styles
-    file: '../node_modules/ora/node_modules/chalk/node_modules/ansi-styles/LICENSE'
+    body: MIT
   - name: color-convert@1.9.3
     version: '1.9.3'
     source: Qix-/color-convert
-    file: '../node_modules/ora/node_modules/chalk/node_modules/ansi-styles/node_modules/color-convert/LICENSE'
+    body: MIT
   - name: color-name@1.1.3
     version: '1.1.3'
     source: https://github.com/dfcreative/color-name
-    file: '../node_modules/ora/node_modules/chalk/node_modules/ansi-styles/node_modules/color-convert/node_modules/color-name/LICENSE'
+    body: MIT
   - name: escape-string-regexp@1.0.5
     version: '1.0.5'
     source: sindresorhus/escape-string-regexp
-    file: '../node_modules/ora/node_modules/chalk/node_modules/escape-string-regexp/LICENSE'
+    body: MIT
   - name: supports-color@5.5.0
     version: '5.5.0'
     source: chalk/supports-color
-    file: '../node_modules/ora/node_modules/chalk/node_modules/supports-color/LICENSE'
+    body: MIT
   - name: has-flag@3.0.0
     version: '3.0.0'
     source: sindresorhus/has-flag
-    file: '../node_modules/ora/node_modules/chalk/node_modules/supports-color/node_modules/has-flag/LICENSE'
+    body: MIT
   - name: cli-cursor@2.1.0
     version: '2.1.0'
     source: sindresorhus/cli-cursor
-    file: '../node_modules/cli-cursor/LICENSE'
+    body: MIT
   - name: restore-cursor@2.0.0
     version: '2.0.0'
     source: sindresorhus/restore-cursor
-    file: '../node_modules/restore-cursor/LICENSE'
+    body: MIT
   - name: onetime@2.0.1
     version: '2.0.1'
     source: sindresorhus/onetime
-    file: '../node_modules/onetime/LICENSE'
+    body: MIT
   - name: mimic-fn@1.2.0
     version: '1.2.0'
     source: sindresorhus/mimic-fn
-    file: '../node_modules/mimic-fn/LICENSE'
+    body: MIT
   - name: signal-exit@3.0.7
     version: '3.0.7'
     source: https://github.com/tapjs/signal-exit
@@ -2076,35 +2076,35 @@ manual:
   - name: cli-spinners@2.9.2
     version: '2.9.2'
     source: sindresorhus/cli-spinners
-    file: '../node_modules/cli-spinners/LICENSE'
+    body: MIT
   - name: log-symbols@2.2.0
     version: '2.2.0'
     source: sindresorhus/log-symbols
-    file: '../node_modules/log-symbols/LICENSE'
+    body: MIT
   - name: strip-ansi@5.2.0
     version: '5.2.0'
     source: chalk/strip-ansi
-    file: '../node_modules/strip-ansi/LICENSE'
+    body: MIT
   - name: ansi-regex@4.1.1
     version: '4.1.1'
     source: chalk/ansi-regex
-    file: '../node_modules/strip-ansi/node_modules/ansi-regex/LICENSE'
+    body: MIT
   - name: wcwidth@1.0.1
     version: '1.0.1'
     source: https://github.com/timoxley/wcwidth
-    file: '../node_modules/wcwidth/LICENSE'
+    body: MIT
   - name: defaults@1.0.4
     version: '1.0.4'
     source: https://github.com/sindresorhus/node-defaults
-    file: '../node_modules/defaults/LICENSE'
+    body: MIT
   - name: clone@1.0.4
     version: '1.0.4'
     source: https://github.com/pvorb/node-clone
-    file: '../node_modules/clone/LICENSE'
+    body: MIT
   - name: '@expo_prebuild-config@57.0.17'
     version: '57.0.17'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/prebuild-config/LICENSE'
+    body: MIT
   - name: '@react-native_normalize-colors@0.86.3'
     version: '0.86.3'
     source: https://github.com/react/react-native
@@ -2112,34 +2112,34 @@ manual:
   - name: expo-modules-autolinking@57.0.14
     version: '57.0.14'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-modules-autolinking/LICENSE'
+    body: MIT
   - name: commander@7.2.0
     version: '7.2.0'
     source: https://github.com/tj/commander.js
-    file: '../node_modules/expo-modules-autolinking/node_modules/commander/LICENSE'
+    body: MIT
   - name: '@expo_router-server@57.0.12'
     version: '57.0.12'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/router-server/LICENSE'
+    body: MIT
   - name: '@expo_schema-utils@57.0.2'
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/schema-utils/LICENSE'
+    body: MIT
   - name: '@expo_ws-tunnel@2.0.1'
     version: '2.0.1'
-    file: '../node_modules/@expo/ws-tunnel/LICENSE'
+    body: MIT
   - name: '@expo_xcpretty@4.4.6'
     version: '4.4.6'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/xcpretty/LICENSE'
+    body: MIT
   - name: js-yaml@4.3.2
     version: '4.3.2'
     source: nodeca/js-yaml
-    file: '../node_modules/js-yaml/LICENSE'
+    body: MIT
   - name: argparse@2.0.1
     version: '2.0.1'
     source: nodeca/argparse
-    file: '../node_modules/argparse/LICENSE'
+    body: Python-2.0
   - name: '@react-native_dev-middleware@0.86.3'
     version: '0.86.3'
     source: https://github.com/react/react-native
@@ -2147,7 +2147,7 @@ manual:
   - name: '@isaacs_ttlcache@1.4.1'
     version: '1.4.1'
     source: https://github.com/isaacs/ttlcache
-    file: '../node_modules/@isaacs/ttlcache/LICENSE'
+    body: ISC
   - name: '@react-native_debugger-frontend@0.86.3'
     version: '0.86.3'
     source: https://github.com/react/react-native
@@ -2163,122 +2163,122 @@ manual:
   - name: chrome-launcher@0.15.2
     version: '0.15.2'
     source: https://github.com/GoogleChrome/chrome-launcher/
-    file: '../node_modules/chrome-launcher/LICENSE'
+    body: Apache-2.0
   - name: escape-string-regexp@4.0.0
     version: '4.0.0'
     source: sindresorhus/escape-string-regexp
-    file: '../node_modules/escape-string-regexp/LICENSE'
+    body: MIT
   - name: is-wsl@2.2.0
     version: '2.2.0'
     source: sindresorhus/is-wsl
-    file: '../node_modules/is-wsl/LICENSE'
+    body: MIT
   - name: is-docker@2.2.1
     version: '2.2.1'
     source: sindresorhus/is-docker
-    file: '../node_modules/is-docker/LICENSE'
+    body: MIT
   - name: lighthouse-logger@1.4.2
     version: '1.4.2'
-    file: '../node_modules/lighthouse-logger/LICENSE'
+    body: Apache-2.0
   - name: marky@1.3.0
     version: '1.3.0'
     source: https://github.com/nolanlawson/marky
-    file: '../node_modules/marky/LICENSE'
+    body: Apache-2.0
   - name: chromium-edge-launcher@0.3.0
     version: '0.3.0'
     source: https://github.com/cezaraugusto/chromium-edge-launcher/
-    file: '../node_modules/chromium-edge-launcher/LICENSE'
+    body: Apache-2.0
   - name: mkdirp@1.0.4
     version: '1.0.4'
     source: https://github.com/isaacs/node-mkdirp
-    file: '../node_modules/mkdirp/LICENSE'
+    body: MIT
   - name: open@7.4.2
     version: '7.4.2'
     source: sindresorhus/open
-    file: '../node_modules/open/LICENSE'
+    body: MIT
   - name: serve-static@1.16.3
     version: '1.16.3'
     source: expressjs/serve-static
-    file: '../node_modules/serve-static/LICENSE'
+    body: MIT
   - name: encodeurl@2.0.0
     version: '2.0.0'
     source: pillarjs/encodeurl
-    file: '../node_modules/encodeurl/LICENSE'
+    body: MIT
   - name: send@0.19.2
     version: '0.19.2'
     source: pillarjs/send
-    file: '../node_modules/send/LICENSE'
+    body: MIT
   - name: depd@2.0.0
     version: '2.0.0'
     source: dougwilson/nodejs-depd
-    file: '../node_modules/depd/LICENSE'
+    body: MIT
   - name: destroy@1.2.0
     version: '1.2.0'
     source: stream-utils/destroy
-    file: '../node_modules/destroy/LICENSE'
+    body: MIT
   - name: etag@1.8.1
     version: '1.8.1'
     source: jshttp/etag
-    file: '../node_modules/etag/LICENSE'
+    body: MIT
   - name: fresh@0.5.2
     version: '0.5.2'
     source: jshttp/fresh
-    file: '../node_modules/fresh/LICENSE'
+    body: MIT
   - name: http-errors@2.0.1
     version: '2.0.1'
     source: jshttp/http-errors
-    file: '../node_modules/http-errors/LICENSE'
+    body: MIT
   - name: inherits@2.0.4
     version: '2.0.4'
     source: https://github.com/isaacs/inherits
-    file: '../node_modules/inherits/LICENSE'
+    body: ISC
   - name: setprototypeof@1.2.0
     version: '1.2.0'
     source: https://github.com/wesleytodd/setprototypeof
-    file: '../node_modules/setprototypeof/LICENSE'
+    body: ISC
   - name: statuses@2.0.2
     version: '2.0.2'
     source: jshttp/statuses
-    file: '../node_modules/statuses/LICENSE'
+    body: MIT
   - name: toidentifier@1.0.1
     version: '1.0.1'
     source: component/toidentifier
-    file: '../node_modules/toidentifier/LICENSE'
+    body: MIT
   - name: mime@1.6.0
     version: '1.6.0'
     source: https://github.com/broofa/node-mime
-    file: '../node_modules/mime/LICENSE'
+    body: MIT
   - name: on-finished@2.4.1
     version: '2.4.1'
     source: jshttp/on-finished
-    file: '../node_modules/on-finished/LICENSE'
+    body: MIT
   - name: range-parser@1.2.1
     version: '1.2.1'
     source: jshttp/range-parser
-    file: '../node_modules/range-parser/LICENSE'
+    body: MIT
   - name: accepts@1.3.8
     version: '1.3.8'
     source: jshttp/accepts
-    file: '../node_modules/@expo/cli/node_modules/accepts/LICENSE'
+    body: MIT
   - name: mime-types@2.1.35
     version: '2.1.35'
     source: jshttp/mime-types
-    file: '../node_modules/@expo/cli/node_modules/accepts/node_modules/mime-types/LICENSE'
+    body: MIT
   - name: mime-db@1.52.0
     version: '1.52.0'
     source: jshttp/mime-db
-    file: '../node_modules/@expo/cli/node_modules/accepts/node_modules/mime-types/node_modules/mime-db/LICENSE'
+    body: MIT
   - name: negotiator@0.6.3
     version: '0.6.3'
     source: jshttp/negotiator
-    file: '../node_modules/@expo/cli/node_modules/accepts/node_modules/negotiator/LICENSE'
+    body: MIT
   - name: agent-cli-detector@0.1.7
     version: '0.1.7'
     source: https://github.com/expo/agent-cli-detector
-    file: '../node_modules/agent-cli-detector/LICENSE'
+    body: MIT
   - name: arg@5.0.2
     version: '5.0.2'
     source: vercel/arg
-    file: '../node_modules/arg/LICENSE.md'
+    body: MIT
   - name: bplist-parser@0.3.2
     version: '0.3.2'
     source: https://github.com/nearinfinity/node-bplist-parser
@@ -2286,67 +2286,67 @@ manual:
   - name: compression@1.8.2
     version: '1.8.2'
     source: expressjs/compression
-    file: '../node_modules/compression/LICENSE'
+    body: MIT
   - name: bytes@3.1.2
     version: '3.1.2'
     source: visionmedia/bytes.js
-    file: '../node_modules/bytes/LICENSE'
+    body: MIT
   - name: compressible@2.0.18
     version: '2.0.18'
     source: jshttp/compressible
-    file: '../node_modules/compressible/LICENSE'
+    body: MIT
   - name: negotiator@0.6.4
     version: '0.6.4'
     source: jshttp/negotiator
-    file: '../node_modules/compression/node_modules/negotiator/LICENSE'
+    body: MIT
   - name: on-headers@1.1.0
     version: '1.1.0'
     source: jshttp/on-headers
-    file: '../node_modules/on-headers/LICENSE'
+    body: MIT
   - name: safe-buffer@5.2.1
     version: '5.2.1'
     source: https://github.com/feross/safe-buffer
-    file: '../node_modules/safe-buffer/LICENSE'
+    body: MIT
   - name: vary@1.1.2
     version: '1.1.2'
     source: jshttp/vary
-    file: '../node_modules/vary/LICENSE'
+    body: MIT
   - name: dnssd-advertise@1.1.6
     version: '1.1.6'
     source: https://github.com/kitten/dnssd-advertise
-    file: '../node_modules/dnssd-advertise/LICENSE.md'
+    body: MIT
   - name: expo-server@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-server/LICENSE'
+    body: MIT
   - name: fetch-nodeshim@0.4.10
     version: '0.4.10'
     source: https://github.com/kitten/fetch-nodeshim
-    file: '../node_modules/fetch-nodeshim/LICENSE.md'
+    body: MIT
   - name: lan-network@0.2.1
     version: '0.2.1'
     source: https://github.com/kitten/lan-network
-    file: '../node_modules/lan-network/LICENSE.md'
+    body: MIT
   - name: multitars@1.0.2
     version: '1.0.2'
     source: https://github.com/expo/multitars
-    file: '../node_modules/multitars/LICENSE.md'
+    body: MIT
   - name: prompts@2.4.2
     version: '2.4.2'
     source: terkelg/prompts
-    file: '../node_modules/prompts/LICENSE'
+    body: MIT
   - name: kleur@3.0.3
     version: '3.0.3'
     source: lukeed/kleur
-    file: '../node_modules/kleur/LICENSE'
+    body: MIT
   - name: sisteransi@1.0.5
     version: '1.0.5'
     source: https://github.com/terkelg/sisteransi
-    file: '../node_modules/sisteransi/LICENSE'
+    body: MIT
   - name: sandbox-cli-detector@0.2.0
     version: '0.2.0'
     source: https://github.com/davidmokos/sandbox-cli-detector
-    file: '../node_modules/sandbox-cli-detector/LICENSE'
+    body: MIT
   - name: structured-headers@0.4.1
     version: '0.4.1'
     source: https://github.com/evert/structured-header
@@ -2354,39 +2354,39 @@ manual:
   - name: terminal-link@2.1.1
     version: '2.1.1'
     source: sindresorhus/terminal-link
-    file: '../node_modules/terminal-link/LICENSE'
+    body: MIT
   - name: ansi-escapes@4.3.2
     version: '4.3.2'
     source: sindresorhus/ansi-escapes
-    file: '../node_modules/ansi-escapes/LICENSE'
+    body: MIT
   - name: type-fest@0.21.3
     version: '0.21.3'
     source: sindresorhus/type-fest
-    file: '../node_modules/ansi-escapes/node_modules/type-fest/LICENSE'
+    body: (MIT OR CC0-1.0)
   - name: supports-hyperlinks@2.3.0
     version: '2.3.0'
     source: jamestalmage/supports-hyperlinks
-    file: '../node_modules/supports-hyperlinks/LICENSE'
+    body: MIT
   - name: toqr@0.1.1
     version: '0.1.1'
     source: https://github.com/kitten/toqr
-    file: '../node_modules/toqr/LICENSE.md'
+    body: MIT
   - name: ws@8.22.0
     version: '8.22.0'
     source: https://github.com/websockets/ws
-    file: '../node_modules/@expo/cli/node_modules/ws/LICENSE'
+    body: MIT
   - name: zod@3.25.76
     version: '3.25.76'
     source: https://github.com/colinhacks/zod
-    file: '../node_modules/zod/LICENSE'
+    body: MIT
   - name: '@expo_devtools@57.0.1'
     version: '57.0.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/devtools/LICENSE'
+    body: MIT
   - name: '@expo_fingerprint@0.20.13'
     version: '0.20.13'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/fingerprint/LICENSE'
+    body: MIT
   - name: ignore@5.3.2
     version: '5.3.2'
     source: https://github.com/kaelzhang/node-ignore
@@ -2394,131 +2394,131 @@ manual:
   - name: '@expo_local-build-cache-provider@57.0.8'
     version: '57.0.8'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/local-build-cache-provider/LICENSE'
+    body: MIT
   - name: '@ungap_structured-clone@1.4.0'
     version: '1.4.0'
     source: https://github.com/ungap/structured-clone
-    file: '../node_modules/@ungap/structured-clone/LICENSE'
+    body: ISC
   - name: babel-preset-expo@57.0.14
     version: '57.0.14'
     source: https://github.com/expo/expo
-    file: '../node_modules/babel-preset-expo/LICENSE'
+    body: MIT
   - name: '@babel_plugin-proposal-decorators@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-proposal-decorators/LICENSE'
+    body: MIT
   - name: '@babel_helper-create-class-features-plugin@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-create-class-features-plugin/LICENSE'
+    body: MIT
   - name: '@babel_helper-annotate-as-pure@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-annotate-as-pure/LICENSE'
+    body: MIT
   - name: '@babel_helper-member-expression-to-functions@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-member-expression-to-functions/LICENSE'
+    body: MIT
   - name: '@babel_helper-optimise-call-expression@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-optimise-call-expression/LICENSE'
+    body: MIT
   - name: '@babel_helper-replace-supers@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-replace-supers/LICENSE'
+    body: MIT
   - name: '@babel_helper-skip-transparent-expression-wrappers@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-skip-transparent-expression-wrappers/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-decorators@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-syntax-decorators/LICENSE'
+    body: MIT
   - name: '@babel_plugin-proposal-export-default-from@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-proposal-export-default-from/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-dynamic-import@7.8.3'
     version: '7.8.3'
     source: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-dynamic-import
-    file: '../node_modules/@babel/plugin-syntax-dynamic-import/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-export-default-from@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-syntax-export-default-from/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-nullish-coalescing-operator@7.8.3'
     version: '7.8.3'
     source: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-nullish-coalescing-operator
-    file: '../node_modules/@babel/plugin-syntax-nullish-coalescing-operator/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-optional-chaining@7.8.3'
     version: '7.8.3'
     source: https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-chaining
-    file: '../node_modules/@babel/plugin-syntax-optional-chaining/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-async-generator-functions@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-async-generator-functions/LICENSE'
+    body: MIT
   - name: '@babel_helper-remap-async-to-generator@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-remap-async-to-generator/LICENSE'
+    body: MIT
   - name: '@babel_helper-wrap-function@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-wrap-function/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-async-to-generator@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-async-to-generator/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-block-scoping@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-block-scoping/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-class-properties@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-class-properties/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-class-static-block@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-class-static-block/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-classes@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-classes/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-destructuring@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-destructuring/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-export-namespace-from@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-export-namespace-from/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-flow-strip-types@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-flow-strip-types/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-flow@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-syntax-flow/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-for-of@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-for-of/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-logical-assignment-operators@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-logical-assignment-operators/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-named-capturing-groups-regex@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-named-capturing-groups-regex/LICENSE'
+    body: MIT
   - name: '@babel_helper-create-regexp-features-plugin@7.29.10'
     version: '7.29.10'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/helper-create-regexp-features-plugin/LICENSE'
+    body: MIT
   - name: regexpu-core@6.5.3
     version: '6.5.3'
     source: https://github.com/mathiasbynens/regexpu-core
@@ -2558,123 +2558,123 @@ manual:
   - name: '@babel_plugin-transform-nullish-coalescing-operator@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-nullish-coalescing-operator/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-object-rest-spread@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-object-rest-spread/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-parameters@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-parameters/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-optional-catch-binding@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-optional-catch-binding/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-optional-chaining@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-optional-chaining/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-private-methods@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-private-methods/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-private-property-in-object@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-private-property-in-object/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-react-display-name@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-react-display-name/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-react-jsx@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-react-jsx/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-jsx@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-syntax-jsx/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-react-jsx-development@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-react-jsx-development/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-react-pure-annotations@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-react-pure-annotations/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-runtime@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-runtime/LICENSE'
+    body: MIT
   - name: babel-plugin-polyfill-corejs2@0.4.17
     version: '0.4.17'
     source: https://github.com/babel/babel-polyfills
-    file: '../node_modules/babel-plugin-polyfill-corejs2/LICENSE'
+    body: MIT
   - name: '@babel_helper-define-polyfill-provider@0.6.8'
     version: '0.6.8'
     source: https://github.com/babel/babel-polyfills
-    file: '../node_modules/@babel/helper-define-polyfill-provider/LICENSE'
+    body: MIT
   - name: lodash.debounce@4.0.8
     version: '4.0.8'
     source: lodash/lodash
-    file: '../node_modules/lodash.debounce/LICENSE'
+    body: MIT
   - name: resolve@1.22.13
     version: '1.22.13'
     source: ssh://github.com/browserify/resolve
-    file: '../node_modules/resolve/LICENSE'
+    body: MIT
   - name: es-errors@1.3.0
     version: '1.3.0'
     source: https://github.com/ljharb/es-errors
-    file: '../node_modules/es-errors/LICENSE'
+    body: MIT
   - name: is-core-module@2.17.0
     version: '2.17.0'
     source: https://github.com/inspect-js/is-core-module
-    file: '../node_modules/is-core-module/LICENSE'
+    body: MIT
   - name: hasown@2.0.4
     version: '2.0.4'
     source: https://github.com/inspect-js/hasOwn
-    file: '../node_modules/hasown/LICENSE'
+    body: MIT
   - name: function-bind@1.1.2
     version: '1.1.2'
     source: https://github.com/Raynos/function-bind
-    file: '../node_modules/function-bind/LICENSE'
+    body: MIT
   - name: path-parse@1.0.7
     version: '1.0.7'
     source: https://github.com/jbgutierrez/path-parse
-    file: '../node_modules/path-parse/LICENSE'
+    body: MIT
   - name: supports-preserve-symlinks-flag@1.0.0
     version: '1.0.0'
     source: https://github.com/inspect-js/node-supports-preserve-symlinks-flag
-    file: '../node_modules/supports-preserve-symlinks-flag/LICENSE'
+    body: MIT
   - name: babel-plugin-polyfill-corejs3@0.13.0
     version: '0.13.0'
     source: https://github.com/babel/babel-polyfills
-    file: '../node_modules/babel-plugin-polyfill-corejs3/LICENSE'
+    body: MIT
   - name: core-js-compat@3.50.0
     version: '3.50.0'
     source: https://github.com/zloirock/core-js
-    file: '../node_modules/core-js-compat/LICENSE'
+    body: MIT
   - name: babel-plugin-polyfill-regenerator@0.6.8
     version: '0.6.8'
     source: https://github.com/babel/babel-polyfills
-    file: '../node_modules/babel-plugin-polyfill-regenerator/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-typescript@7.29.9'
     version: '7.29.9'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-typescript/LICENSE'
+    body: MIT
   - name: '@babel_plugin-syntax-typescript@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-syntax-typescript/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-unicode-regex@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-unicode-regex/LICENSE'
+    body: MIT
   - name: '@babel_preset-typescript@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/preset-typescript/LICENSE'
+    body: MIT
   - name: '@react-native_babel-plugin-codegen@0.86.3'
     version: '0.86.3'
     source: https://github.com/react/react-native
@@ -2686,19 +2686,19 @@ manual:
   - name: hermes-parser@0.36.0
     version: '0.36.0'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/@react-native/codegen/node_modules/hermes-parser/LICENSE'
+    body: MIT
   - name: hermes-estree@0.36.0
     version: '0.36.0'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/@react-native/codegen/node_modules/hermes-parser/node_modules/hermes-estree/LICENSE'
+    body: MIT
   - name: tinyglobby@0.2.17
     version: '0.2.17'
     source: https://github.com/SuperchupuDev/tinyglobby
-    file: '../node_modules/tinyglobby/LICENSE'
+    body: MIT
   - name: fdir@6.5.0
     version: '6.5.0'
     source: https://github.com/thecodrr/fdir
-    file: '../node_modules/fdir/LICENSE'
+    body: MIT
   - name: babel-plugin-react-compiler@1.0.0
     version: '1.0.0'
     source: https://github.com/facebook/react
@@ -2706,151 +2706,151 @@ manual:
   - name: babel-plugin-react-native-web@0.21.4
     version: '0.21.4'
     source: https://github.com/necolas/react-native-web
-    file: '../node_modules/babel-plugin-react-native-web/LICENSE'
+    body: MIT
   - name: babel-plugin-syntax-hermes-parser@0.36.1
     version: '0.36.1'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/babel-plugin-syntax-hermes-parser/LICENSE'
+    body: MIT
   - name: babel-plugin-transform-flow-enums@0.0.2
     version: '0.0.2'
     source: https://github.com/facebook/flow
-    file: '../node_modules/babel-plugin-transform-flow-enums/LICENSE'
+    body: MIT
   - name: expo-asset@57.0.19
     version: '57.0.19'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-asset/LICENSE'
+    body: MIT
   - name: expo-constants@57.0.21
     version: '57.0.21'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-constants/LICENSE'
+    body: MIT
   - name: expo-file-system@57.0.7
     version: '57.0.7'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-file-system/LICENSE'
+    body: MIT
   - name: expo-font@57.0.4
     version: '57.0.4'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-font/LICENSE'
+    body: MIT
   - name: fontfaceobserver@2.3.0
     version: '2.3.0'
     source: https://github.com/bramstein/fontfaceobserver
-    file: '../node_modules/fontfaceobserver/LICENSE'
+    body: BSD-2-Clause
   - name: expo-keep-awake@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-keep-awake/LICENSE'
+    body: MIT
   - name: expo-modules-core@57.0.21
     version: '57.0.21'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-modules-core/LICENSE'
+    body: MIT
   - name: '@expo_expo-modules-macros-plugin@0.6.1'
     version: '0.6.1'
     source: https://github.com/expo/expo-modules-macros-plugin
-    file: '../node_modules/@expo/expo-modules-macros-plugin/LICENSE'
+    body: MIT
   - name: expo-modules-jsi@57.1.1
     version: '57.1.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-modules-jsi/LICENSE'
+    body: MIT
   - name: react-refresh@0.14.2
     version: '0.14.2'
     source: https://github.com/facebook/react
-    file: '../node_modules/react-refresh/LICENSE'
+    body: MIT
   - name: whatwg-url-minimum@0.1.2
     version: '0.1.2'
     source: https://github.com/kitten/whatwg-url-minimum
-    file: '../node_modules/whatwg-url-minimum/LICENSE.md'
+    body: MIT
   - name: expo-background-task@57.0.21
     version: '57.0.21'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-background-task/LICENSE'
+    body: MIT
   - name: expo-task-manager@57.0.21
     version: '57.0.21'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-task-manager/LICENSE'
+    body: MIT
   - name: unimodules-app-loader@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/unimodules-app-loader/LICENSE'
+    body: MIT
   - name: expo-blur@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-blur/LICENSE'
+    body: MIT
   - name: expo-build-properties@57.0.22
     version: '57.0.22'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-build-properties/LICENSE'
+    body: MIT
   - name: expo-crypto@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-crypto/LICENSE'
+    body: MIT
   - name: expo-dev-client@57.0.19
     version: '57.0.19'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-dev-client/LICENSE'
+    body: MIT
   - name: expo-dev-launcher@57.0.20
     version: '57.0.20'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-dev-launcher/LICENSE'
+    body: MIT
   - name: expo-dev-menu@57.0.19
     version: '57.0.19'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-dev-menu/LICENSE'
+    body: MIT
   - name: expo-dev-menu-interface@57.0.0
     version: '57.0.0'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-dev-menu-interface/LICENSE'
+    body: MIT
   - name: expo-manifests@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-manifests/LICENSE'
+    body: MIT
   - name: expo-json-utils@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-json-utils/LICENSE'
+    body: MIT
   - name: expo-updates-interface@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-updates-interface/LICENSE'
+    body: MIT
   - name: expo-device@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-device/LICENSE'
+    body: MIT
   - name: ua-parser-js@0.7.41
     version: '0.7.41'
     source: https://github.com/faisalman/ua-parser-js
-    file: '../node_modules/ua-parser-js/LICENSE.md'
+    body: MIT
   - name: expo-glass-effect@57.0.4
     version: '57.0.4'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-glass-effect/LICENSE'
+    body: MIT
   - name: expo-image@57.0.5
     version: '57.0.5'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-image/LICENSE'
+    body: MIT
   - name: expo-linking@57.0.12
     version: '57.0.12'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-linking/LICENSE'
+    body: MIT
   - name: expo-local-authentication@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-local-authentication/LICENSE'
+    body: MIT
   - name: expo-modern-table@0.1.2
     version: '0.1.2'
     source: https://github.com/melihmuratpesmen/expo-modern-table
-    file: '../node_modules/expo-modern-table/LICENSE'
+    body: MIT
   - name: expo-notifications@57.0.22
     version: '57.0.22'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-notifications/LICENSE'
+    body: MIT
   - name: abort-controller@3.0.0
     version: '3.0.0'
     source: https://github.com/mysticatea/abort-controller
-    file: '../node_modules/abort-controller/LICENSE'
+    body: MIT
   - name: event-target-shim@5.0.1
     version: '5.0.1'
     source: https://github.com/mysticatea/event-target-shim
-    file: '../node_modules/event-target-shim/LICENSE'
+    body: MIT
   - name: badgin@1.2.3
     version: '1.2.3'
     source: https://github.com/jaulz/badgin
@@ -2858,7 +2858,7 @@ manual:
   - name: expo-application@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-application/LICENSE'
+    body: MIT
   - name: expo-router@57.0.25
     version: '57.0.25'
     source: https://github.com/expo/expo
@@ -2866,113 +2866,113 @@ manual:
   - name: '@expo_metro-runtime@57.0.16'
     version: '57.0.16'
     source: https://github.com/expo/expo
-    file: '../node_modules/@expo/metro-runtime/LICENSE'
+    body: MIT
   - name: whatwg-fetch@3.6.20
     version: '3.6.20'
     source: github/fetch
-    file: '../node_modules/whatwg-fetch/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-tabs@1.1.22'
     version: '1.1.22'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-tabs/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-roving-focus@1.1.20'
     version: '1.1.20'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-roving-focus/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-is-hydrated@0.1.3'
     version: '0.1.3'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-is-hydrated/LICENSE'
+    body: MIT
   - name: '@react-native-masked-view_masked-view@0.3.2'
     version: '0.3.2'
     source: https://github.com/react-native-masked-view/masked-view
-    file: '../node_modules/@react-native-masked-view/masked-view/LICENSE'
+    body: MIT
   - name: client-only@0.0.1
     version: '0.0.1'
     body: MIT
   - name: color@4.2.3
     version: '4.2.3'
     source: Qix-/color
-    file: '../node_modules/color/LICENSE'
+    body: MIT
   - name: color-string@1.9.1
     version: '1.9.1'
     source: Qix-/color-string
-    file: '../node_modules/color-string/LICENSE'
+    body: MIT
   - name: simple-swizzle@0.2.4
     version: '0.2.4'
     source: qix-/node-simple-swizzle
-    file: '../node_modules/simple-swizzle/LICENSE'
+    body: MIT
   - name: is-arrayish@0.3.4
     version: '0.3.4'
     source: https://github.com/qix-/node-is-arrayish
-    file: '../node_modules/is-arrayish/LICENSE'
+    body: MIT
   - name: expo-symbols@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-symbols/LICENSE'
+    body: MIT
   - name: '@expo-google-fonts_material-symbols@0.4.49'
     version: '0.4.49'
     source: https://github.com/expo/google-fonts
-    file: '../node_modules/@expo-google-fonts/material-symbols/LICENSE'
+    body: MIT AND Apache-2.0
   - name: fast-deep-equal@3.1.3
     version: '3.1.3'
     source: https://github.com/epoberezkin/fast-deep-equal
-    file: '../node_modules/fast-deep-equal/LICENSE'
+    body: MIT
   - name: query-string@7.1.3
     version: '7.1.3'
     source: sindresorhus/query-string
-    file: '../node_modules/query-string/LICENSE'
+    body: MIT
   - name: decode-uri-component@0.2.2
     version: '0.2.2'
     source: SamVerschueren/decode-uri-component
-    file: '../node_modules/decode-uri-component/LICENSE'
+    body: MIT
   - name: filter-obj@1.1.0
     version: '1.1.0'
     source: sindresorhus/filter-obj
-    file: '../node_modules/filter-obj/LICENSE'
+    body: MIT
   - name: split-on-first@1.1.0
     version: '1.1.0'
     source: sindresorhus/split-on-first
-    file: '../node_modules/split-on-first/LICENSE'
+    body: MIT
   - name: strict-uri-encode@2.0.0
     version: '2.0.0'
     source: kevva/strict-uri-encode
-    file: '../node_modules/strict-uri-encode/LICENSE'
+    body: MIT
   - name: react-fast-compare@3.2.2
     version: '3.2.2'
     source: https://github.com/FormidableLabs/react-fast-compare
-    file: '../node_modules/react-fast-compare/LICENSE'
+    body: MIT
   - name: react-is@19.3.0
     version: '19.3.0'
     source: https://github.com/react/react
-    file: '../node_modules/react-is/LICENSE'
+    body: MIT
   - name: react-native-drawer-layout@4.2.11
     version: '4.2.11'
     source: https://github.com/react-navigation/react-navigation
-    file: '../node_modules/react-native-drawer-layout/LICENSE'
+    body: MIT
   - name: use-latest-callback@0.2.6
     version: '0.2.6'
     source: https://github.com/satya164/use-latest-callback
-    file: '../node_modules/use-latest-callback/LICENSE'
+    body: MIT
   - name: react-native-screens@4.27.0
     version: '4.27.0'
     source: https://github.com/software-mansion/react-native-screens
-    file: '../node_modules/react-native-screens/LICENSE'
+    body: MIT
   - name: react-freeze@1.0.4
     version: '1.0.4'
     source: software-mansion/react-freeze
-    file: '../node_modules/react-freeze/LICENSE'
+    body: MIT
   - name: warn-once@0.1.1
     version: '0.1.1'
     source: https://github.com/satya164/warn-once
-    file: '../node_modules/warn-once/LICENSE'
+    body: MIT
   - name: server-only@0.0.1
     version: '0.0.1'
     body: MIT
   - name: shallowequal@1.1.0
     version: '1.1.0'
     source: dashed/shallowequal
-    file: '../node_modules/shallowequal/LICENSE'
+    body: MIT
   - name: standard-navigation@0.0.5
     version: '0.0.5'
     source: https://github.com/react-navigation/standard-navigation
@@ -2980,51 +2980,51 @@ manual:
   - name: expo-screen-capture@57.0.4
     version: '57.0.4'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-screen-capture/LICENSE'
+    body: MIT
   - name: expo-screen-orientation@57.0.2
     version: '57.0.2'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-screen-orientation/LICENSE'
+    body: MIT
   - name: expo-secure-store@57.0.4
     version: '57.0.4'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-secure-store/LICENSE'
+    body: MIT
   - name: expo-sensors@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-sensors/LICENSE'
+    body: MIT
   - name: expo-splash-screen@57.0.9
     version: '57.0.9'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-splash-screen/LICENSE'
+    body: MIT
   - name: expo-status-bar@57.0.1
     version: '57.0.1'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-status-bar/LICENSE'
+    body: MIT
   - name: expo-system-ui@57.0.4
     version: '57.0.4'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-system-ui/LICENSE'
+    body: MIT
   - name: expo-web-browser@57.0.3
     version: '57.0.3'
     source: https://github.com/expo/expo
-    file: '../node_modules/expo-web-browser/LICENSE'
+    body: MIT
   - name: lucide-react-native@1.53.0
     version: '1.53.0'
     source: https://github.com/lucide-icons/lucide
-    file: '../node_modules/lucide-react-native/LICENSE'
+    body: ISC
   - name: nativewind@4.2.7
     version: '4.2.7'
     source: https://github.com/nativewind/nativewind
-    file: '../node_modules/nativewind/LICENSE'
+    body: MIT
   - name: comment-json@4.6.2
     version: '4.6.2'
     source: https://github.com/kaelzhang/node-comment-json
-    file: '../node_modules/comment-json/LICENSE'
+    body: MIT
   - name: array-timsort@1.0.3
     version: '1.0.3'
     source: https://github.com/kaelzhang/node-array-timsort
-    file: '../node_modules/array-timsort/LICENSE'
+    body: MIT
   - name: esprima@4.0.1
     version: '4.0.1'
     source: https://github.com/jquery/esprima
@@ -3032,163 +3032,163 @@ manual:
   - name: react-native-css-interop@0.2.7
     version: '0.2.7'
     source: https://github.com/nativewind/nativewind
-    file: '../node_modules/react-native-css-interop/LICENSE'
+    body: MIT
   - name: lightningcss@1.27.0
     version: '1.27.0'
     source: https://github.com/parcel-bundler/lightningcss
-    file: '../node_modules/react-native-css-interop/node_modules/lightningcss/LICENSE'
+    body: MPL-2.0
   - name: detect-libc@1.0.3
     version: '1.0.3'
     source: https://github.com/lovell/detect-libc
-    file: '../node_modules/react-native-css-interop/node_modules/lightningcss/node_modules/detect-libc/LICENSE'
+    body: Apache-2.0
   - name: lightningcss-darwin-arm64@1.27.0
     version: '1.27.0'
     source: https://github.com/parcel-bundler/lightningcss
-    file: '../node_modules/react-native-css-interop/node_modules/lightningcss/node_modules/lightningcss-darwin-arm64/LICENSE'
+    body: MPL-2.0
   - name: normalize-url@9.0.1
     version: '9.0.1'
     source: sindresorhus/normalize-url
-    file: '../node_modules/normalize-url/LICENSE'
+    body: MIT
   - name: ofetch@1.5.1
     version: '1.5.1'
     source: unjs/ofetch
-    file: '../node_modules/ofetch/LICENSE'
+    body: MIT
   - name: destr@2.0.5
     version: '2.0.5'
     source: unjs/destr
-    file: '../node_modules/destr/LICENSE'
+    body: MIT
   - name: node-fetch-native@1.6.7
     version: '1.6.7'
     source: unjs/node-fetch-native
-    file: '../node_modules/node-fetch-native/LICENSE'
+    body: MIT
   - name: ufo@1.6.4
     version: '1.6.4'
     source: unjs/ufo
-    file: '../node_modules/ufo/LICENSE'
+    body: MIT
   - name: radix-ui@1.7.0
     version: '1.7.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/radix-ui/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-accessible-icon@1.1.16'
     version: '1.1.16'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-accessible-icon/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-accordion@1.2.21'
     version: '1.2.21'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-accordion/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-collapsible@1.1.21'
     version: '1.1.21'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-collapsible/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-alert-dialog@1.1.24'
     version: '1.1.24'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-alert-dialog/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-aspect-ratio@1.1.16'
     version: '1.1.16'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-aspect-ratio/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-avatar@1.2.7'
     version: '1.2.7'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-avatar/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-context-menu@2.3.8'
     version: '2.3.8'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-context-menu/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-menu@2.1.25'
     version: '2.1.25'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-menu/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-dropdown-menu@2.1.25'
     version: '2.1.25'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-dropdown-menu/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-form@0.2.0'
     version: '0.2.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-form/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-hover-card@1.1.24'
     version: '1.1.24'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-hover-card/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-menubar@1.1.25'
     version: '1.1.25'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-menubar/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-navigation-menu@1.3.0'
     version: '1.3.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-navigation-menu/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-one-time-password-field@0.1.17'
     version: '0.1.17'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-one-time-password-field/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-password-toggle-field@0.1.12'
     version: '0.1.12'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-password-toggle-field/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-popover@1.2.0'
     version: '1.2.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-popover/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-progress@1.1.17'
     version: '1.1.17'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-progress/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-radio-group@1.4.8'
     version: '1.4.8'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-radio-group/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-scroll-area@1.3.0'
     version: '1.3.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-scroll-area/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-slider@1.5.0'
     version: '1.5.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-slider/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-toast@1.2.24'
     version: '1.2.24'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-toast/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-toggle@1.1.19'
     version: '1.1.19'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-toggle/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-toggle-group@1.1.20'
     version: '1.1.20'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-toggle-group/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-toolbar@1.1.20'
     version: '1.1.20'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-toolbar/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-tooltip@1.3.0'
     version: '1.3.0'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-tooltip/LICENSE'
+    body: MIT
   - name: '@radix-ui_react-use-escape-keydown@1.1.5'
     version: '1.1.5'
     source: https://github.com/radix-ui/primitives
-    file: '../node_modules/@radix-ui/react-use-escape-keydown/LICENSE'
+    body: MIT
   - name: react@19.2.3
     version: '19.2.3'
     source: https://github.com/facebook/react
-    file: '../node_modules/react/LICENSE'
+    body: MIT
   - name: react-dom@19.2.3
     version: '19.2.3'
     source: https://github.com/facebook/react
-    file: '../node_modules/react-dom/LICENSE'
+    body: MIT
   - name: scheduler@0.27.0
     version: '0.27.0'
     source: https://github.com/facebook/react
-    file: '../node_modules/scheduler/LICENSE'
+    body: MIT
   - name: react-native@0.86.3
     version: '0.86.3'
     source: https://github.com/react/react-native
-    file: '../node_modules/react-native/LICENSE'
+    body: MIT
   - name: '@react-native_assets-registry@0.86.3'
     version: '0.86.3'
     source: https://github.com/react/react-native
@@ -3272,11 +3272,11 @@ manual:
   - name: babel-plugin-syntax-hermes-parser@0.36.0
     version: '0.36.0'
     source: https://github.com/facebook/hermes
-    file: '../node_modules/react-native/node_modules/babel-plugin-syntax-hermes-parser/LICENSE'
+    body: MIT
   - name: commander@12.1.0
     version: '12.1.0'
     source: https://github.com/tj/commander.js
-    file: '../node_modules/commander/LICENSE'
+    body: MIT
   - name: hermes-compiler@250829098.0.17
     version: '250829098.0.17'
     source: https://github.com/facebook/hermes
@@ -3284,15 +3284,15 @@ manual:
   - name: memoize-one@5.2.1
     version: '5.2.1'
     source: https://github.com/alexreardon/memoize-one
-    file: '../node_modules/memoize-one/LICENSE'
+    body: MIT
   - name: promise@8.3.0
     version: '8.3.0'
     source: https://github.com/then/promise
-    file: '../node_modules/promise/LICENSE'
+    body: MIT
   - name: asap@2.0.6
     version: '2.0.6'
     source: https://github.com/kriskowal/asap
-    file: '../node_modules/asap/LICENSE.md'
+    body: MIT
   - name: react-devtools-core@6.1.5
     version: '6.1.5'
     source: https://github.com/facebook/react
@@ -3300,75 +3300,75 @@ manual:
   - name: shell-quote@1.12.0
     version: '1.12.0'
     source: http://github.com/ljharb/shell-quote
-    file: '../node_modules/shell-quote/LICENSE'
+    body: MIT
   - name: regenerator-runtime@0.13.11
     version: '0.13.11'
     source: https://github.com/facebook/regenerator/tree/main/packages/runtime
-    file: '../node_modules/regenerator-runtime/LICENSE'
+    body: MIT
   - name: react-native-gesture-handler@2.32.0
     version: '2.32.0'
     source: https://github.com/software-mansion/react-native-gesture-handler
-    file: '../node_modules/react-native-gesture-handler/LICENSE'
+    body: MIT
   - name: '@egjs_hammerjs@2.0.17'
     version: '2.0.17'
     source: https://github.com/naver/hammer.js
-    file: '../node_modules/@egjs/hammerjs/LICENSE.md'
+    body: MIT
   - name: '@types_hammerjs@2.0.46'
     version: '2.0.46'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/hammerjs/LICENSE'
+    body: MIT
   - name: '@types_react-test-renderer@19.3.0'
     version: '19.3.0'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/react-test-renderer/LICENSE'
+    body: MIT
   - name: '@types_react@19.3.0'
     version: '19.3.0'
     source: https://github.com/DefinitelyTyped/DefinitelyTyped
-    file: '../node_modules/@types/react-test-renderer/node_modules/@types/react/LICENSE'
+    body: MIT
   - name: csstype@3.2.3
     version: '3.2.3'
     source: https://github.com/frenic/csstype
-    file: '../node_modules/csstype/LICENSE'
+    body: MIT
   - name: hoist-non-react-statics@3.3.2
     version: '3.3.2'
     source: https://github.com/mridgway/hoist-non-react-statics
-    file: '../node_modules/hoist-non-react-statics/LICENSE.md'
+    body: BSD-3-Clause
   - name: react-is@16.13.1
     version: '16.13.1'
     source: https://github.com/facebook/react
-    file: '../node_modules/hoist-non-react-statics/node_modules/react-is/LICENSE'
+    body: MIT
   - name: react-native-legal@1.8.1
     version: '1.8.1'
     source: https://github.com/callstackincubator/react-native-legal
-    file: '../node_modules/react-native-legal/LICENSE'
+    body: MIT
   - name: '@callstack_licenses@0.3.3'
     version: '0.3.3'
     source: https://github.com/callstackincubator/react-native-legal
-    file: '../node_modules/@callstack/licenses/LICENSE'
+    body: MIT
   - name: xml2js@0.6.2
     version: '0.6.2'
     source: https://github.com/Leonidas-from-XIV/node-xml2js
-    file: '../node_modules/react-native-legal/node_modules/xml2js/LICENSE'
+    body: MIT
   - name: react-native-reanimated@4.5.1
     version: '4.5.1'
     source: https://github.com/software-mansion/react-native-reanimated
-    file: '../node_modules/react-native-reanimated/LICENSE'
+    body: MIT
   - name: react-native-is-edge-to-edge@1.3.1
     version: '1.3.1'
     source: https://github.com/zoontek/react-native-edge-to-edge
-    file: '../node_modules/react-native-is-edge-to-edge/LICENSE'
+    body: MIT
   - name: react-native-safe-area-context@5.7.0
     version: '5.7.0'
     source: https://github.com/AppAndFlow/react-native-safe-area-context
-    file: '../node_modules/react-native-safe-area-context/LICENSE'
+    body: MIT
   - name: react-native-svg@15.15.4
     version: '15.15.4'
     source: https://github.com/react-native-community/react-native-svg
-    file: '../node_modules/react-native-svg/LICENSE'
+    body: MIT
   - name: css-select@5.2.2
     version: '5.2.2'
     source: https://github.com/fb55/css-select
-    file: '../node_modules/css-select/LICENSE'
+    body: BSD-2-Clause
   - name: boolbase@1.0.0
     version: '1.0.0'
     source: https://github.com/fb55/boolbase
@@ -3376,39 +3376,39 @@ manual:
   - name: css-what@6.2.2
     version: '6.2.2'
     source: https://github.com/fb55/css-what
-    file: '../node_modules/css-what/LICENSE'
+    body: BSD-2-Clause
   - name: domhandler@5.0.3
     version: '5.0.3'
     source: https://github.com/fb55/domhandler
-    file: '../node_modules/domhandler/LICENSE'
+    body: BSD-2-Clause
   - name: domelementtype@2.3.0
     version: '2.3.0'
     source: https://github.com/fb55/domelementtype
-    file: '../node_modules/domelementtype/LICENSE'
+    body: BSD-2-Clause
   - name: domutils@3.2.2
     version: '3.2.2'
     source: https://github.com/fb55/domutils
-    file: '../node_modules/domutils/LICENSE'
+    body: BSD-2-Clause
   - name: dom-serializer@2.0.0
     version: '2.0.0'
     source: https://github.com/cheeriojs/dom-serializer
-    file: '../node_modules/dom-serializer/LICENSE'
+    body: MIT
   - name: entities@4.5.0
     version: '4.5.0'
     source: https://github.com/fb55/entities
-    file: '../node_modules/entities/LICENSE'
+    body: BSD-2-Clause
   - name: nth-check@2.1.1
     version: '2.1.1'
     source: https://github.com/fb55/nth-check
-    file: '../node_modules/nth-check/LICENSE'
+    body: BSD-2-Clause
   - name: css-tree@1.1.3
     version: '1.1.3'
     source: csstree/csstree
-    file: '../node_modules/css-tree/LICENSE'
+    body: MIT
   - name: mdn-data@2.0.14
     version: '2.0.14'
     source: https://github.com/mdn/data
-    file: '../node_modules/mdn-data/LICENSE'
+    body: CC0-1.0
   - name: react-native-swipeable-actions@0.1.12
     version: '0.1.12'
     source: https://github.com/chocky335/react-native-swipeable-actions
@@ -3416,7 +3416,7 @@ manual:
   - name: react-native-web@0.21.4
     version: '0.21.4'
     source: https://github.com/necolas/react-native-web
-    file: '../node_modules/react-native-web/LICENSE'
+    body: MIT
   - name: '@react-native_normalize-colors@0.74.89'
     version: '0.74.89'
     source: https://github.com/facebook/react-native
@@ -3424,23 +3424,23 @@ manual:
   - name: fbjs@3.0.5
     version: '3.0.5'
     source: facebook/fbjs
-    file: '../node_modules/fbjs/LICENSE'
+    body: MIT
   - name: cross-fetch@3.2.0
     version: '3.2.0'
     source: https://github.com/lquixada/cross-fetch
-    file: '../node_modules/cross-fetch/LICENSE'
+    body: MIT
   - name: fbjs-css-vars@1.0.2
     version: '1.0.2'
     source: facebook/fbjs
-    file: '../node_modules/fbjs-css-vars/LICENSE'
+    body: MIT
   - name: object-assign@4.1.1
     version: '4.1.1'
     source: sindresorhus/object-assign
-    file: '../node_modules/object-assign/LICENSE'
+    body: MIT
   - name: promise@7.3.1
     version: '7.3.1'
     source: https://github.com/then/promise
-    file: '../node_modules/fbjs/node_modules/promise/LICENSE'
+    body: MIT
   - name: setimmediate@1.0.5
     version: '1.0.5'
     source: YuzuJS/setImmediate
@@ -3448,59 +3448,59 @@ manual:
   - name: ua-parser-js@1.0.41
     version: '1.0.41'
     source: https://github.com/faisalman/ua-parser-js
-    file: '../node_modules/fbjs/node_modules/ua-parser-js/LICENSE.md'
+    body: MIT
   - name: inline-style-prefixer@7.0.1
     version: '7.0.1'
     source: https://github.com/robinweser/inline-style-prefixer
-    file: '../node_modules/inline-style-prefixer/LICENSE'
+    body: MIT
   - name: css-in-js-utils@3.1.0
     version: '3.1.0'
     source: https://github.com/robinweser/css-in-js-utils
-    file: '../node_modules/css-in-js-utils/LICENSE'
+    body: MIT
   - name: hyphenate-style-name@1.1.0
     version: '1.1.0'
     source: https://github.com/rexxars/hyphenate-style-name
-    file: '../node_modules/hyphenate-style-name/LICENSE'
+    body: BSD-3-Clause
   - name: memoize-one@6.0.0
     version: '6.0.0'
     source: https://github.com/alexreardon/memoize-one
-    file: '../node_modules/react-native-web/node_modules/memoize-one/LICENSE'
+    body: MIT
   - name: postcss-value-parser@4.2.0
     version: '4.2.0'
     source: https://github.com/TrySound/postcss-value-parser
-    file: '../node_modules/postcss-value-parser/LICENSE'
+    body: MIT
   - name: styleq@0.1.3
     version: '0.1.3'
     source: https://github.com/necolas/styleq
-    file: '../node_modules/styleq/LICENSE'
+    body: MIT
   - name: react-native-worklets@0.10.1
     version: '0.10.1'
     source: https://github.com/software-mansion/react-native-reanimated
-    file: '../node_modules/react-native-worklets/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-arrow-functions@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-arrow-functions/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-shorthand-properties@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-shorthand-properties/LICENSE'
+    body: MIT
   - name: '@babel_plugin-transform-template-literals@7.29.7'
     version: '7.29.7'
     source: https://github.com/babel/babel
-    file: '../node_modules/@babel/plugin-transform-template-literals/LICENSE'
+    body: MIT
   - name: simple-icons@16.34.0
     version: '16.34.0'
     source: https://github.com/simple-icons/simple-icons
-    file: '../node_modules/simple-icons/LICENSE.md'
+    body: CC0-1.0
   - name: tailwind-merge@3.7.0
     version: '3.7.0'
     source: https://github.com/dcastil/tailwind-merge
-    file: '../node_modules/tailwind-merge/LICENSE.md'
+    body: MIT
   - name: zustand@5.0.15
     version: '5.0.15'
     source: https://github.com/pmndrs/zustand
-    file: '../node_modules/zustand/LICENSE'
+    body: MIT
 exclude:
   - name: RNCAsyncStorage
   - name: RNDateTimePicker
