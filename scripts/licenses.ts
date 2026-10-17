@@ -51,20 +51,24 @@ const packageLicense = (packageName: string) => {
   throw new Error(`Cannot find license metadata for ${packageName}`)
 }
 
-let repaired = 0
-const content = readFileSync(configPath, "utf8").replace(
-  /^(\s*)file: '([^']+)'$/gm,
-  (line, indentation: string, relativePath: string) => {
-    const license = packageLicense(packageNameFromLicensePath(relativePath))
+if (!existsSync(configPath)) {
+  console.log("Skipped license repair because the native iOS config does not exist.")
+} else {
+  let repaired = 0
+  const content = readFileSync(configPath, "utf8").replace(
+    /^(\s*)file: '([^']+)'$/gm,
+    (line, indentation: string, relativePath: string) => {
+      const license = packageLicense(packageNameFromLicensePath(relativePath))
 
-    if (!license) {
-      return line
+      if (!license) {
+        return line
+      }
+
+      repaired += 1
+      return `${indentation}body: ${license}`
     }
+  )
 
-    repaired += 1
-    return `${indentation}body: ${license}`
-  }
-)
-
-writeFileSync(configPath, content)
-console.log(`Inlined ${repaired} license reference${repaired === 1 ? "" : "s"}.`)
+  writeFileSync(configPath, content)
+  console.log(`Inlined ${repaired} license reference${repaired === 1 ? "" : "s"}.`)
+}

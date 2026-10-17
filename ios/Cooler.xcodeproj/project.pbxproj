@@ -7,33 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02ED6F0F6B584D2E8A1E2656 /* expo.icon in Resources */ = {isa = PBXBuildFile; fileRef = 36BC4AFDC0EB48908C8CD0A3 /* expo.icon */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		2CB02C7EF91A46808C047D64 /* libPods-Cooler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9308169F7367FE40207253D7 /* libPods-Cooler.a */; };
+		2D63183EA341C9B627760438 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1F503099E59CB78BCF3A94 /* ExpoModulesProvider.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		74778F0465405E26FE98DAB5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6FE088960FC94643AEEE6070 /* PrivacyInfo.xcprivacy */; };
-		8C3F34A7F9BC477DB5603B60 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4E7217314E1A4F2ABEBAFB6E /* Settings.bundle */; };
-		B34918417031A911813014D6 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77043EB4EFBDF76BCD9AEC7 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		DD67C92E29CD5FCEE103CCA6 /* libPods-Cooler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C6C5491CF65E033E20C2BD /* libPods-Cooler.a */; };
+		E7FB5C8FA46C401197C73B55 /* expo.icon in Resources */ = {isa = PBXBuildFile; fileRef = A51B1B9896214645B235E5E6 /* expo.icon */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+		F83B5426CA7C4ACA91D17F17 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2D647A61B5C1419A99F42181 /* Settings.bundle */; };
+		FAA04CEA6366579D6DFEA1DA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3C4660B657C75DE7D6A647D7 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A1F503099E59CB78BCF3A94 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Cooler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cooler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Cooler/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Cooler/Info.plist; sourceTree = "<group>"; };
-		36BC4AFDC0EB48908C8CD0A3 /* expo.icon */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = expo.icon; path = Cooler/expo.icon; sourceTree = "<group>"; };
-		4E7217314E1A4F2ABEBAFB6E /* Settings.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Settings.bundle; sourceTree = "<group>"; };
-		6FE088960FC94643AEEE6070 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Cooler/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		76C6C5491CF65E033E20C2BD /* libPods-Cooler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cooler.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D647A61B5C1419A99F42181 /* Settings.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Settings.bundle; sourceTree = "<group>"; };
+		3C4660B657C75DE7D6A647D7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Cooler/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		4945A82BD5413DE8C23F27E1 /* Pods-Cooler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.release.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.release.xcconfig"; sourceTree = "<group>"; };
+		9308169F7367FE40207253D7 /* libPods-Cooler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cooler.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A51B1B9896214645B235E5E6 /* expo.icon */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = expo.icon; path = Cooler/expo.icon; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Cooler/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		DA217A863EE6F60176C3A9DC /* Pods-Cooler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.release.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.release.xcconfig"; sourceTree = "<group>"; };
-		EB2D0BA4317A98111E4F8F37 /* Pods-Cooler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.debug.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.debug.xcconfig"; sourceTree = "<group>"; };
+		C2996133834FF6438C3CEDDA /* Pods-Cooler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.debug.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Cooler/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* Cooler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Cooler-Bridging-Header.h"; path = "Cooler/Cooler-Bridging-Header.h"; sourceTree = "<group>"; };
-		F77043EB4EFBDF76BCD9AEC7 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD67C92E29CD5FCEE103CCA6 /* libPods-Cooler.a in Frameworks */,
+				2CB02C7EF91A46808C047D64 /* libPods-Cooler.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,18 +57,28 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				36BC4AFDC0EB48908C8CD0A3 /* expo.icon */,
-				4E7217314E1A4F2ABEBAFB6E /* Settings.bundle */,
-				6FE088960FC94643AEEE6070 /* PrivacyInfo.xcprivacy */,
+				A51B1B9896214645B235E5E6 /* expo.icon */,
+				2D647A61B5C1419A99F42181 /* Settings.bundle */,
+				3C4660B657C75DE7D6A647D7 /* PrivacyInfo.xcprivacy */,
 			);
 			name = Cooler;
+			sourceTree = "<group>";
+		};
+		2287F67AD24B0D51A321B156 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C2996133834FF6438C3CEDDA /* Pods-Cooler.debug.xcconfig */,
+				4945A82BD5413DE8C23F27E1 /* Pods-Cooler.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				76C6C5491CF65E033E20C2BD /* libPods-Cooler.a */,
+				9308169F7367FE40207253D7 /* libPods-Cooler.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -87,8 +97,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				9B8CCF7710BBFB736D6A8A4B /* Pods */,
-				B3486F0E99B4B4628DAF8310 /* ExpoModulesProviders */,
+				2287F67AD24B0D51A321B156 /* Pods */,
+				D55F6DF904F90BFE28F46ADF /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -103,24 +113,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9B8CCF7710BBFB736D6A8A4B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				EB2D0BA4317A98111E4F8F37 /* Pods-Cooler.debug.xcconfig */,
-				DA217A863EE6F60176C3A9DC /* Pods-Cooler.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		B3486F0E99B4B4628DAF8310 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				FE580E63E4EA39620C12D29C /* Cooler */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,10 +122,18 @@
 			path = Cooler/Supporting;
 			sourceTree = "<group>";
 		};
-		FE580E63E4EA39620C12D29C /* Cooler */ = {
+		D55F6DF904F90BFE28F46ADF /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				F77043EB4EFBDF76BCD9AEC7 /* ExpoModulesProvider.swift */,
+				FABCB298CFA593B11C0EC489 /* Cooler */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		FABCB298CFA593B11C0EC489 /* Cooler */ = {
+			isa = PBXGroup;
+			children = (
+				0A1F503099E59CB78BCF3A94 /* ExpoModulesProvider.swift */,
 			);
 			name = Cooler;
 			sourceTree = "<group>";
@@ -146,15 +146,15 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Cooler" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				F932A7BD58A4459B8247C77D /* Generate licenses with LicensePlist */,
-				333C8EB5EA388616FB994E81 /* [Expo] Configure project */,
+				60A933B7DFFB4A7AA9711CC4 /* Generate licenses with LicensePlist */,
+				14FE0FD7B18C69B1805D27BD /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				AAEE48EA2CA341B0917C9299 /* [Expo Dev Launcher] Strip Local Network Keys for Release */,
-				0C8BDB37163A5CEA129E125C /* [CP] Embed Pods Frameworks */,
+				4D6BBCDCCBCD4CDD8FF77C26 /* [Expo Dev Launcher] Strip Local Network Keys for Release */,
+				68DD0F5A8019DE2FC678D832 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -174,9 +174,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 73H669GA5T;
 						LastSwiftMigration = 1250;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -206,9 +204,9 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				02ED6F0F6B584D2E8A1E2656 /* expo.icon in Resources */,
-				8C3F34A7F9BC477DB5603B60 /* Settings.bundle in Resources */,
-				74778F0465405E26FE98DAB5 /* PrivacyInfo.xcprivacy in Resources */,
+				E7FB5C8FA46C401197C73B55 /* expo.icon in Resources */,
+				F83B5426CA7C4ACA91D17F17 /* Settings.bundle in Resources */,
+				FAA04CEA6366579D6DFEA1DA /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,7 +252,59 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0C8BDB37163A5CEA129E125C /* [CP] Embed Pods Frameworks */ = {
+		14FE0FD7B18C69B1805D27BD /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env",
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/Cooler/Cooler.entitlements",
+				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/expo-configure-project.sh",
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Cooler/expo-configure-project.sh\"\n";
+		};
+		4D6BBCDCCBCD4CDD8FF77C26 /* [Expo Dev Launcher] Strip Local Network Keys for Release */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo Dev Launcher] Strip Local Network Keys for Release";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Strip dev-launcher-specific local network permission keys from non-Debug builds\n# This only removes _expo._tcp Bonjour services and the dev-launcher usage description.\n# Other Bonjour services and custom descriptions are preserved for production use.\n\nif [ \"$CONFIGURATION\" != \"Debug\" ]; then\n  PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n  if [ -f \"$PLIST_PATH\" ]; then\n    # Check if NSBonjourServices exists\n    if /usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" >/dev/null 2>&1; then\n      # Get the count of services\n      COUNT=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n\n      # Remove _expo._tcp\n      for ((i=COUNT-1; i>=0; i--)); do\n        SERVICE=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n        if echo \"$SERVICE\" | grep -q \"_expo._tcp\"; then\n          /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || true\n        fi\n      done\n\n      # If the array is now empty, remove it entirely\n      REMAINING=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n      if [ \"$REMAINING\" -eq \"0\" ]; then\n        /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null || true\n      fi\n    fi\n\n    # Only delete the description if it matches the dev-launcher default text\n    DESC=$(/usr/libexec/PlistBuddy -c \"Print :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n    if echo \"$DESC\" | grep -q \"Expo Dev Launcher\"; then\n      /usr/libexec/PlistBuddy -c \"Delete :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || true\n    fi\n  fi\nfi\n";
+		};
+		60A933B7DFFB4A7AA9711CC4 /* Generate licenses with LicensePlist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate licenses with LicensePlist";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nif [[ -n ${PODS_ROOT} ]]; then ${PODS_ROOT}/LicensePlist/license-plist --add-version-numbers --output-path ./Settings.bundle; else /usr/bin/env xcrun --sdk macosx swift run -c release --package-path ./build/generated/autolinking/libs/ReactNativeLegal/swift-tools license-plist --add-version-numbers --output-path ./Settings.bundle; fi\n";
+		};
+		68DD0F5A8019DE2FC678D832 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -297,30 +347,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		333C8EB5EA388616FB994E81 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env",
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/Cooler/Cooler.entitlements",
-				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/expo-configure-project.sh",
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Cooler/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -368,34 +394,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AAEE48EA2CA341B0917C9299 /* [Expo Dev Launcher] Strip Local Network Keys for Release */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo Dev Launcher] Strip Local Network Keys for Release";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Strip dev-launcher-specific local network permission keys from non-Debug builds\n# This only removes _expo._tcp Bonjour services and the dev-launcher usage description.\n# Other Bonjour services and custom descriptions are preserved for production use.\n\nif [ \"$CONFIGURATION\" != \"Debug\" ]; then\n  PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n  if [ -f \"$PLIST_PATH\" ]; then\n    # Check if NSBonjourServices exists\n    if /usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" >/dev/null 2>&1; then\n      # Get the count of services\n      COUNT=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n\n      # Remove _expo._tcp\n      for ((i=COUNT-1; i>=0; i--)); do\n        SERVICE=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n        if echo \"$SERVICE\" | grep -q \"_expo._tcp\"; then\n          /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || true\n        fi\n      done\n\n      # If the array is now empty, remove it entirely\n      REMAINING=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n      if [ \"$REMAINING\" -eq \"0\" ]; then\n        /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null || true\n      fi\n    fi\n\n    # Only delete the description if it matches the dev-launcher default text\n    DESC=$(/usr/libexec/PlistBuddy -c \"Print :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n    if echo \"$DESC\" | grep -q \"Expo Dev Launcher\"; then\n      /usr/libexec/PlistBuddy -c \"Delete :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || true\n    fi\n  fi\nfi\n";
-		};
-		F932A7BD58A4459B8247C77D /* Generate licenses with LicensePlist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate licenses with LicensePlist";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nif [[ -n ${PODS_ROOT} ]]; then ${PODS_ROOT}/LicensePlist/license-plist --add-version-numbers --output-path ./Settings.bundle; else /usr/bin/env xcrun --sdk macosx swift run -c release --package-path ./build/generated/autolinking/libs/ReactNativeLegal/swift-tools license-plist --add-version-numbers --output-path ./Settings.bundle; fi\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -404,7 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				B34918417031A911813014D6 /* ExpoModulesProvider.swift in Sources */,
+				2D63183EA341C9B627760438 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,13 +411,11 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB2D0BA4317A98111E4F8F37 /* Pods-Cooler.debug.xcconfig */;
+			baseConfigurationReference = C2996133834FF6438C3CEDDA /* Pods-Cooler.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = expo;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cooler/Cooler.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 73H669GA5T;
 				ENABLE_BITCODE = NO;
@@ -434,7 +430,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.4;
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -453,13 +449,11 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DA217A863EE6F60176C3A9DC /* Pods-Cooler.release.xcconfig */;
+			baseConfigurationReference = 4945A82BD5413DE8C23F27E1 /* Pods-Cooler.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = expo;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cooler/Cooler.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 73H669GA5T;
 				INFOPLIST_FILE = Cooler/Info.plist;
@@ -469,7 +463,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.4;
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

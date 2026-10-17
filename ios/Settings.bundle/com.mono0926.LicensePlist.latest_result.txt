@@ -10,10 +10,6 @@ body: MIT License
 Copyrig…
 version: 3.28.0
 
-name: RNSentry, nameSpecified: 
-body: The MIT License (MIT…
-version: 8.30.0
-
 name: @babel_code-frame@7.29.7, nameSpecified: @babel/code-frame, version: 7.29.7
 body: MIT License
 
@@ -892,6 +888,11 @@ body: MIT License
 
 Copyrig…
 
+name: @rn-primitives_dialog@1.5.2, nameSpecified: @rn-primitives/dialog, version: 1.5.2
+body: MIT License
+
+Copyrig…
+
 name: @rn-primitives_hooks@1.5.2, nameSpecified: @rn-primitives/hooks, version: 1.5.2
 body: MIT License
 
@@ -923,6 +924,69 @@ body: MIT License
 Copyrig…
 
 name: @rn-primitives_types@1.5.2, nameSpecified: @rn-primitives/types, version: 1.5.2
+body: MIT License
+
+Copyrig…
+
+name: @sentry_browser-utils@10.76.0, nameSpecified: @sentry/browser-utils, version: 10.76.0
+body: MIT License
+
+Copyrig…
+
+name: @sentry_browser@10.76.0, nameSpecified: @sentry/browser, version: 10.76.0
+body: MIT License
+
+Copyrig…
+
+name: @sentry_bundler-plugins@10.76.0, nameSpecified: @sentry/bundler-plugins, version: 10.76.0
+body: # MIT License
+
+Copyr…
+
+name: @sentry_cli-darwin@2.58.6, nameSpecified: @sentry/cli-darwin, version: 2.58.6
+body: FSL-1.1-MIT…
+
+name: @sentry_cli-darwin@3.8.0, nameSpecified: @sentry/cli-darwin, version: 3.8.0
+body: FSL-1.1-MIT…
+
+name: @sentry_cli@2.58.6, nameSpecified: @sentry/cli, version: 2.58.6
+body: # Functional Source …
+
+name: @sentry_cli@3.8.0, nameSpecified: @sentry/cli, version: 3.8.0
+body: # Functional Source …
+
+name: @sentry_conventions@0.16.0, nameSpecified: @sentry/conventions, version: 0.16.0
+body: MIT License
+
+Copyrig…
+
+name: @sentry_core@10.76.0, nameSpecified: @sentry/core, version: 10.76.0
+body: MIT License
+
+Copyrig…
+
+name: @sentry_expo-upload-sourcemaps@8.30.0, nameSpecified: @sentry/expo-upload-sourcemaps, version: 8.30.0
+body: The MIT License (MIT…
+
+name: @sentry_feedback@10.76.0, nameSpecified: @sentry/feedback, version: 10.76.0
+body: MIT License
+
+Copyrig…
+
+name: @sentry_react-native@8.30.0, nameSpecified: @sentry/react-native, version: 8.30.0
+body: The MIT License (MIT…
+
+name: @sentry_react@10.76.0, nameSpecified: @sentry/react, version: 10.76.0
+body: MIT License
+
+Copyrig…
+
+name: @sentry_replay-canvas@10.76.0, nameSpecified: @sentry/replay-canvas, version: 10.76.0
+body: MIT License
+
+Copyrig…
+
+name: @sentry_replay@10.76.0, nameSpecified: @sentry/replay, version: 10.76.0
 body: MIT License
 
 Copyrig…
@@ -1009,8 +1073,13 @@ body: MIT License
 
 Copyrig…
 
-name: agent-base@7.1.4, nameSpecified: agent-base, version: 7.1.4
+name: agent-base@6.0.2, nameSpecified: agent-base, version: 6.0.2
 body: MIT…
+
+name: agent-base@7.1.4, nameSpecified: agent-base, version: 7.1.4
+body: (The MIT License)
+
+C…
 
 name: agent-cli-detector@0.1.7, nameSpecified: agent-cli-detector, version: 0.1.7
 body: MIT License
@@ -1381,6 +1450,9 @@ body: Copyright (c) Felix …
 name: domutils@3.2.2, nameSpecified: domutils, version: 3.2.2
 body: Copyright (c) Felix …
 
+name: dotenv@17.4.2, nameSpecified: dotenv, version: 17.4.2
+body: Copyright (c) 2015, …
+
 name: ee-first@1.1.1, nameSpecified: ee-first, version: 1.1.1
 body: 
 The MIT License (MI…
@@ -1607,6 +1679,11 @@ body: (The MIT License)
 
 C…
 
+name: find-up@5.0.0, nameSpecified: find-up, version: 5.0.0
+body: MIT License
+
+Copyrig…
+
 name: flow-enums-runtime@0.0.6, nameSpecified: flow-enums-runtime, version: 0.0.6
 body: MIT License
 
@@ -1704,8 +1781,13 @@ name: http-errors@2.0.1, nameSpecified: http-errors, version: 2.0.1
 body: 
 The MIT License (MI…
 
-name: https-proxy-agent@7.0.6, nameSpecified: https-proxy-agent, version: 7.0.6
+name: https-proxy-agent@5.0.1, nameSpecified: https-proxy-agent, version: 5.0.1
 body: MIT…
+
+name: https-proxy-agent@7.0.6, nameSpecified: https-proxy-agent, version: 7.0.6
+body: (The MIT License)
+
+C…
 
 name: hyphenate-style-name@1.1.0, nameSpecified: hyphenate-style-name, version: 1.1.0
 body: BSD 3-Clause License…
@@ -1832,6 +1914,11 @@ body:  Mozilla Public Lice…
 name: lightningcss@1.33.0, nameSpecified: lightningcss, version: 1.33.0
 body:  Mozilla Public Lice…
 
+name: locate-path@6.0.0, nameSpecified: locate-path, version: 6.0.0
+body: MIT License
+
+Copyrig…
+
 name: lodash.debounce@4.0.8, nameSpecified: lodash.debounce, version: 4.0.8
 body: Copyright jQuery Fou…
 
@@ -1863,6 +1950,9 @@ name: lucide-react-native@1.53.0, nameSpecified: lucide-react-native, version: 1
 body: ISC License
 
 Copyrig…
+
+name: magic-string@0.30.21, nameSpecified: magic-string, version: 0.30.21
+body: Copyright 2018 Rich …
 
 name: makeerror@1.0.12, nameSpecified: makeerror, version: 1.0.12
 body: BSD License
@@ -2129,6 +2219,16 @@ body: MIT License
 
 Copyrig…
 
+name: p-limit@3.1.0, nameSpecified: p-limit, version: 3.1.0
+body: MIT License
+
+Copyrig…
+
+name: p-locate@5.0.0, nameSpecified: p-locate, version: 5.0.0
+body: MIT License
+
+Copyrig…
+
 name: parse-png@2.1.0, nameSpecified: parse-png, version: 2.1.0
 body: MIT License
 
@@ -2139,6 +2239,11 @@ body:
 (The MIT License)
 
 …
+
+name: path-exists@4.0.0, nameSpecified: path-exists, version: 4.0.0
+body: MIT License
+
+Copyrig…
 
 name: path-key@3.1.1, nameSpecified: path-key, version: 3.1.1
 body: MIT License
@@ -2201,6 +2306,11 @@ name: prompts@2.4.2, nameSpecified: prompts, version: 2.4.2
 body: MIT License
 
 Copyrig…
+
+name: proxy-from-env@1.1.0, nameSpecified: proxy-from-env, version: 1.1.0
+body: The MIT License
+
+Cop…
 
 name: query-string@7.1.3, nameSpecified: query-string, version: 7.1.3
 body: MIT License
@@ -2284,6 +2394,9 @@ body: The MIT License (MIT…
 
 name: react-native-svg@15.15.4, nameSpecified: react-native-svg, version: 15.15.4
 body: The MIT License (MIT…
+
+name: react-native-swipeable-actions@0.1.12, nameSpecified: react-native-swipeable-actions, version: 0.1.12
+body: MIT…
 
 name: react-native-web@0.21.4, nameSpecified: react-native-web, version: 0.21.4
 body: MIT License
@@ -2624,6 +2737,11 @@ body: MIT License
 
 Copyrig…
 
+name: undici@6.29.0, nameSpecified: undici, version: 6.29.0
+body: MIT License
+
+Copyrig…
+
 name: unicode-canonical-property-names-ecmascript@2.0.1, nameSpecified: unicode-canonical-property-names-ecmascript, version: 2.0.1
 body: MIT…
 
@@ -2756,6 +2874,11 @@ name: yargs-parser@21.1.1, nameSpecified: yargs-parser, version: 21.1.1
 body: ISC…
 
 name: yargs@17.7.3, nameSpecified: yargs, version: 17.7.3
+body: MIT License
+
+Copyrig…
+
+name: yocto-queue@0.1.0, nameSpecified: yocto-queue, version: 0.1.0
 body: MIT License
 
 Copyrig…

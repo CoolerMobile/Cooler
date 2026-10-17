@@ -1588,6 +1588,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/@rn-primitives_dialog@1.5.2</string>
+			<key>Title</key>
+			<string>@rn-primitives/dialog (1.5.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/@rn-primitives_hooks@1.5.2</string>
 			<key>Title</key>
 			<string>@rn-primitives/hooks (1.5.2)</string>
@@ -1639,6 +1647,126 @@
 			<string>com.mono0926.LicensePlist/@rn-primitives_types@1.5.2</string>
 			<key>Title</key>
 			<string>@rn-primitives/types (1.5.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_browser-utils@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/browser-utils (10.76.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_browser@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/browser (10.76.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_bundler-plugins@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/bundler-plugins (10.76.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_cli-darwin@2.58.6</string>
+			<key>Title</key>
+			<string>@sentry/cli-darwin (2.58.6)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_cli-darwin@3.8.0</string>
+			<key>Title</key>
+			<string>@sentry/cli-darwin (3.8.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_cli@2.58.6</string>
+			<key>Title</key>
+			<string>@sentry/cli (2.58.6)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_cli@3.8.0</string>
+			<key>Title</key>
+			<string>@sentry/cli (3.8.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_conventions@0.16.0</string>
+			<key>Title</key>
+			<string>@sentry/conventions (0.16.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_core@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/core (10.76.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_expo-upload-sourcemaps@8.30.0</string>
+			<key>Title</key>
+			<string>@sentry/expo-upload-sourcemaps (8.30.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_feedback@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/feedback (10.76.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_react-native@8.30.0</string>
+			<key>Title</key>
+			<string>@sentry/react-native (8.30.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_react@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/react (10.76.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_replay-canvas@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/replay-canvas (10.76.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/@sentry_replay@10.76.0</string>
+			<key>Title</key>
+			<string>@sentry/replay (10.76.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -1783,6 +1911,14 @@
 			<string>com.mono0926.LicensePlist/acorn@8.19.0</string>
 			<key>Title</key>
 			<string>acorn (8.19.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/agent-base@6.0.2</string>
+			<key>Title</key>
+			<string>agent-base (6.0.2)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -2540,6 +2676,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/dotenv@17.4.2</string>
+			<key>Title</key>
+			<string>dotenv (17.4.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/ee-first@1.1.1</string>
 			<key>Title</key>
 			<string>ee-first (1.1.1)</string>
@@ -3068,6 +3212,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/find-up@5.0.0</string>
+			<key>Title</key>
+			<string>find-up (5.0.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/flow-enums-runtime@0.0.6</string>
 			<key>Title</key>
 			<string>flow-enums-runtime (0.0.6)</string>
@@ -3255,6 +3407,14 @@
 			<string>com.mono0926.LicensePlist/http-errors@2.0.1</string>
 			<key>Title</key>
 			<string>http-errors (2.0.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/https-proxy-agent@5.0.1</string>
+			<key>Title</key>
+			<string>https-proxy-agent (5.0.1)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -3524,6 +3684,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/locate-path@6.0.0</string>
+			<key>Title</key>
+			<string>locate-path (6.0.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/lodash.debounce@4.0.8</string>
 			<key>Title</key>
 			<string>lodash.debounce (4.0.8)</string>
@@ -3583,6 +3751,14 @@
 			<string>com.mono0926.LicensePlist/lucide-react-native@1.53.0</string>
 			<key>Title</key>
 			<string>lucide-react-native (1.53.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/magic-string@0.30.21</string>
+			<key>Title</key>
+			<string>magic-string (0.30.21)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -4164,6 +4340,22 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/p-limit@3.1.0</string>
+			<key>Title</key>
+			<string>p-limit (3.1.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/p-locate@5.0.0</string>
+			<key>Title</key>
+			<string>p-locate (5.0.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/parse-png@2.1.0</string>
 			<key>Title</key>
 			<string>parse-png (2.1.0)</string>
@@ -4175,6 +4367,14 @@
 			<string>com.mono0926.LicensePlist/parseurl@1.3.3</string>
 			<key>Title</key>
 			<string>parseurl (1.3.3)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/path-exists@4.0.0</string>
+			<key>Title</key>
+			<string>path-exists (4.0.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -4303,6 +4503,14 @@
 			<string>com.mono0926.LicensePlist/prompts@2.4.2</string>
 			<key>Title</key>
 			<string>prompts (2.4.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/proxy-from-env@1.1.0</string>
+			<key>Title</key>
+			<string>proxy-from-env (1.1.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -4460,6 +4668,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/react-native-swipeable-actions@0.1.12</string>
+			<key>Title</key>
+			<string>react-native-swipeable-actions (0.1.12)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/react-native-web@0.21.4</string>
 			<key>Title</key>
 			<string>react-native-web (0.21.4)</string>
@@ -4607,14 +4823,6 @@
 			<string>com.mono0926.LicensePlist/restore-cursor@2.0.0</string>
 			<key>Title</key>
 			<string>restore-cursor (2.0.0)</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>com.mono0926.LicensePlist/RNSentry</string>
-			<key>Title</key>
-			<string>RNSentry (8.30.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -5116,6 +5324,14 @@
 		</dict>
 		<dict>
 			<key>File</key>
+			<string>com.mono0926.LicensePlist/undici@6.29.0</string>
+			<key>Title</key>
+			<string>undici (6.29.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
 			<string>com.mono0926.LicensePlist/unicode-canonical-property-names-ecmascript@2.0.1</string>
 			<key>Title</key>
 			<string>unicode-canonical-property-names-ecmascript (2.0.1)</string>
@@ -5407,6 +5623,14 @@
 			<string>com.mono0926.LicensePlist/yargs@17.7.3</string>
 			<key>Title</key>
 			<string>yargs (17.7.3)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>com.mono0926.LicensePlist/yocto-queue@0.1.0</string>
+			<key>Title</key>
+			<string>yocto-queue (0.1.0)</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
