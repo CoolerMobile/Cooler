@@ -42,6 +42,20 @@ export function BottomSheet({
   // top safe area rather than the full edge-to-edge window android reports
   const availableHeight = windowHeight - insets.top;
 
+  // temporary diagnostic, logs the real rendered sheet height per platform so
+  // the android fraction can be matched to ios, remove once dialed in
+  const logRendered = (height: number) => {
+    if (!__DEV__) return;
+    console.log("[bottom-sheet]", {
+      platform: Platform.OS,
+      windowHeight,
+      insetTop: insets.top,
+      insetBottom: insets.bottom,
+      renderedHeight: height,
+      percentOfWindow: Math.round((height / windowHeight) * 100),
+    });
+  };
+
   if (Platform.OS !== "android" || snapPoints?.length !== 1) {
     return (
       <ExpoBottomSheet
@@ -49,7 +63,12 @@ export function BottomSheet({
         index={index}
         snapPoints={snapPoints}
       >
-        {children}
+        <View
+          style={styles.measure}
+          onLayout={(event) => logRendered(event.nativeEvent.layout.height)}
+        >
+          {children}
+        </View>
       </ExpoBottomSheet>
     );
   }
@@ -81,6 +100,7 @@ export function BottomSheet({
           styles.androidSheet,
           { height: Math.min(Math.max(requestedHeight, 1), availableHeight) },
         ]}
+        onLayout={(event) => logRendered(event.nativeEvent.layout.height)}
       >
         <View style={styles.androidHandleContainer} pointerEvents="none">
           <View className="h-1 w-8 rounded-full bg-muted-foreground" />
@@ -92,6 +112,9 @@ export function BottomSheet({
 }
 
 const styles = StyleSheet.create({
+  measure: {
+    flex: 1,
+  },
   androidSheet: {
     width: "100%",
   },
