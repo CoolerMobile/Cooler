@@ -1,14 +1,18 @@
+import { CoolerCloudSheet } from "@/components/custom/account/cooler-cloud-sheet";
 import { SettingsAction } from "@/components/custom/settings/action";
 import { SettingsItem } from "@/components/custom/settings/item";
 import { SettingsSection } from "@/components/custom/settings/section";
 import { useBiometrics } from "@/lib/hooks/security/biometrics";
 import { useAppTheme } from "@/components/custom/theme";
+import { useAccountStore } from "@/lib/stores/account";
 import { useSettingsStore } from "@/lib/stores/settings";
 import {
   BedSingle,
   Bell,
   BellOff,
   BookOpen,
+  Cloud,
+  CloudCheck,
   CalendarClock,
   DatabaseBackup,
   EyeOff,
@@ -115,9 +119,13 @@ export default function SettingsScreen() {
   // sheets states
   const [alertOpen, setAlertOpen] = useState(false);
   const [quietOpen, setQuietOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [androidQuietPicker, setAndroidQuietPicker] = useState<
     "from" | "to" | null
   >(null);
+
+  // coolercloud account
+  const accountSession = useAccountStore((state) => state.session);
 
   // quiet hours
   const currentQuietFrom = getSetting("quietFrom");
@@ -173,6 +181,20 @@ export default function SettingsScreen() {
                 }}
               />
             }
+          />
+        </SettingsSection>
+
+        {/* account */}
+        <SettingsSection title="Account">
+          <SettingsItem
+            icon={accountSession ? CloudCheck : Cloud}
+            title="CoolerCloud"
+            description={
+              accountSession
+                ? accountSession.user.email
+                : "Sign in for push notifications"
+            }
+            action={() => setAccountOpen(true)}
           />
         </SettingsSection>
 
@@ -445,6 +467,9 @@ export default function SettingsScreen() {
           </Text>
         </View>
       </BottomSheet>
+
+      {/* coolercloud account */}
+      <CoolerCloudSheet open={accountOpen} onOpenChange={setAccountOpen} />
     </>
   );
 }

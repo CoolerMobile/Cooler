@@ -23,7 +23,7 @@ export const SettingsGitHub = () => {
         index={sourceOpen ? 0 : -1}
         onDismiss={() => setSourceOpen(false)}
         enablePanDownToClose
-        snapPoints={["42%"]}
+        snapPoints={["55%"]}
       >
         <View className="gap-4 p-4">
           <Text className="font-semibold text-lg text-center">Source Code</Text>
@@ -34,18 +34,22 @@ export const SettingsGitHub = () => {
           </Text>
           <Text className="text-muted-foreground">
             Your data is never distributed, sold, or otherwise shared with any
-            third-party entities. Every single bit of your data is handled{" "}
-            <Text className="font-semibold">100% on-device</Text>.
+            third-party entities. By default, every single bit of your data is
+            handled <Text className="font-semibold">100% on-device</Text>.
           </Text>
 
           <Text className="text-muted-foreground">
-            This means that, aside from error reporting data, which does{" "}
+            Aside from error reporting data, which does{" "}
             <Text className="font-semibold">not</Text> include any of your own
-            data, and is completely anonymised pre-flight,{" "}
-            <Text className="font-semibold">
-              nothing ever leaves your device
-            </Text>
-            .
+            data and is completely anonymised pre-flight, nothing leaves your
+            device unless you opt in.
+          </Text>
+
+          <Text className="text-muted-foreground">
+            If you sign into <Text className="font-semibold">CoolerCloud</Text>,
+            your push token and Coolify notification events pass through your
+            CoolerBridge to deliver push notifications. That integration is
+            entirely optional.
           </Text>
 
           <Spacer />
