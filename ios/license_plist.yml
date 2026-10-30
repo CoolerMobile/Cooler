@@ -2,7 +2,7 @@
 rename:
   "@expo_material-symbols@0.1.1": '@expo/material-symbols'
   "@expo_timeago.js@1.0.0": '@expo/timeago.js'
-  "@expo_ui@57.0.22": '@expo/ui'
+  "@expo_ui@57.0.26": '@expo/ui'
   "sf-symbols-typescript@2.2.0": sf-symbols-typescript
   "vaul@1.1.2": vaul
   "@radix-ui_react-dialog@1.2.0": '@radix-ui/react-dialog'
@@ -66,19 +66,53 @@ rename:
   "@radix-ui_react-separator@1.1.16": '@radix-ui/react-separator'
   "@rn-primitives_switch@1.5.2": '@rn-primitives/switch'
   "@radix-ui_react-switch@1.3.8": '@radix-ui/react-switch'
-  "@sentry_react-native@8.30.0": '@sentry/react-native'
-  "@sentry_browser@10.76.0": '@sentry/browser'
-  "@sentry_browser-utils@10.76.0": '@sentry/browser-utils'
-  "@sentry_core@10.76.0": '@sentry/core'
-  "@sentry_conventions@0.16.0": '@sentry/conventions'
-  "@sentry_feedback@10.76.0": '@sentry/feedback'
-  "@sentry_replay@10.76.0": '@sentry/replay'
-  "@sentry_replay-canvas@10.76.0": '@sentry/replay-canvas'
-  "@sentry_bundler-plugins@10.76.0": '@sentry/bundler-plugins'
-  "@babel_core@7.29.7": '@babel/core'
+  "@sentry_react-native@7.11.0": '@sentry/react-native'
+  "@sentry_babel-plugin-component-annotate@4.8.0": '@sentry/babel-plugin-component-annotate'
+  "@sentry_browser@10.37.0": '@sentry/browser'
+  "@sentry-internal_browser-utils@10.37.0": '@sentry-internal/browser-utils'
+  "@sentry_core@10.37.0": '@sentry/core'
+  "@sentry-internal_feedback@10.37.0": '@sentry-internal/feedback'
+  "@sentry-internal_replay@10.37.0": '@sentry-internal/replay'
+  "@sentry-internal_replay-canvas@10.37.0": '@sentry-internal/replay-canvas'
+  "@sentry_cli@2.58.4": '@sentry/cli'
+  "https-proxy-agent@5.0.1": https-proxy-agent
+  "agent-base@6.0.2": agent-base
+  "debug@4.4.3": debug
+  "ms@2.1.3": ms
+  "node-fetch@2.7.0": node-fetch
+  "whatwg-url@5.0.0": whatwg-url
+  "tr46@0.0.3": tr46
+  "webidl-conversions@3.0.1": webidl-conversions
+  "progress@2.0.3": progress
+  "proxy-from-env@1.1.0": proxy-from-env
+  "which@2.0.2": which
+  "isexe@2.0.0": isexe
+  "@sentry_cli-linux-x64@2.58.4": '@sentry/cli-linux-x64'
+  "@sentry_react@10.37.0": '@sentry/react'
+  "@sentry_types@10.37.0": '@sentry/types'
+  "@shopify_flash-list@2.0.2": '@shopify/flash-list'
+  "class-variance-authority@0.7.1": class-variance-authority
+  "clsx@2.1.1": clsx
+  "dayjs@1.11.23": dayjs
+  "expo@57.0.31": expo
+  "@babel_runtime@7.29.10": '@babel/runtime'
+  "@expo_cli@57.0.32": '@expo/cli'
+  "@expo_code-signing-certificates@0.0.6": '@expo/code-signing-certificates'
+  "node-forge@1.4.0": node-forge
+  "@expo_config@57.0.10": '@expo/config'
+  "@expo_config-plugins@57.0.10": '@expo/config-plugins'
+  "@expo_config-types@57.0.2": '@expo/config-types'
+  "@expo_json-file@11.0.1": '@expo/json-file'
   "@babel_code-frame@7.29.7": '@babel/code-frame'
   "@babel_helper-validator-identifier@7.29.7": '@babel/helper-validator-identifier'
   "picocolors@1.1.1": picocolors
+  "json5@2.2.3": json5
+  "@expo_plist@0.8.1": '@expo/plist'
+  "@xmldom_xmldom@0.8.15": '@xmldom/xmldom'
+  "base64-js@1.5.1": base64-js
+  "xmlbuilder@15.1.1": xmlbuilder
+  "@expo_require-utils@57.0.6": '@expo/require-utils'
+  "@babel_core@7.29.7": '@babel/core'
   "@babel_generator@7.29.8": '@babel/generator'
   "@babel_parser@7.29.9": '@babel/parser'
   "@babel_types@7.29.8": '@babel/types'
@@ -106,63 +140,10 @@ rename:
   "@babel_traverse@7.29.10": '@babel/traverse'
   "@babel_helper-globals@7.29.7": '@babel/helper-globals'
   "@babel_template@7.29.7": '@babel/template'
-  "debug@4.4.3": debug
-  "ms@2.1.3": ms
   "@babel_helpers@7.29.10": '@babel/helpers'
   "@jridgewell_remapping@2.3.5": '@jridgewell/remapping'
   "convert-source-map@2.0.0": convert-source-map
   "gensync@1.0.0-beta.2": gensync
-  "json5@2.2.3": json5
-  "@sentry_cli@2.58.6": '@sentry/cli'
-  "https-proxy-agent@5.0.1": https-proxy-agent
-  "agent-base@6.0.2": agent-base
-  "node-fetch@2.7.0": node-fetch
-  "whatwg-url@5.0.0": whatwg-url
-  "tr46@0.0.3": tr46
-  "webidl-conversions@3.0.1": webidl-conversions
-  "progress@2.0.3": progress
-  "proxy-from-env@1.1.0": proxy-from-env
-  "which@2.0.2": which
-  "isexe@2.0.0": isexe
-  "@sentry_cli-darwin@2.58.6": '@sentry/cli-darwin'
-  "dotenv@17.4.2": dotenv
-  "find-up@5.0.0": find-up
-  "locate-path@6.0.0": locate-path
-  "p-locate@5.0.0": p-locate
-  "p-limit@3.1.0": p-limit
-  "yocto-queue@0.1.0": yocto-queue
-  "path-exists@4.0.0": path-exists
-  "glob@13.0.6": glob
-  "minimatch@10.2.6": minimatch
-  "brace-expansion@5.0.12": brace-expansion
-  "balanced-match@4.0.4": balanced-match
-  "minipass@7.1.3": minipass
-  "path-scurry@2.0.2": path-scurry
-  "lru-cache@11.5.3": lru-cache
-  "magic-string@0.30.21": magic-string
-  "@sentry_cli@3.8.0": '@sentry/cli'
-  "undici@6.29.0": undici
-  "@sentry_cli-darwin@3.8.0": '@sentry/cli-darwin'
-  "@sentry_expo-upload-sourcemaps@8.30.0": '@sentry/expo-upload-sourcemaps'
-  "@sentry_react@10.76.0": '@sentry/react'
-  "@shopify_flash-list@2.0.2": '@shopify/flash-list'
-  "class-variance-authority@0.7.1": class-variance-authority
-  "clsx@2.1.1": clsx
-  "dayjs@1.11.23": dayjs
-  "expo@57.0.27": expo
-  "@babel_runtime@7.29.10": '@babel/runtime'
-  "@expo_cli@57.0.28": '@expo/cli'
-  "@expo_code-signing-certificates@0.0.6": '@expo/code-signing-certificates'
-  "node-forge@1.4.0": node-forge
-  "@expo_config@57.0.10": '@expo/config'
-  "@expo_config-plugins@57.0.10": '@expo/config-plugins'
-  "@expo_config-types@57.0.2": '@expo/config-types'
-  "@expo_json-file@11.0.1": '@expo/json-file'
-  "@expo_plist@0.8.1": '@expo/plist'
-  "@xmldom_xmldom@0.8.15": '@xmldom/xmldom'
-  "base64-js@1.5.1": base64-js
-  "xmlbuilder@15.1.1": xmlbuilder
-  "@expo_require-utils@57.0.6": '@expo/require-utils'
   "@babel_plugin-transform-modules-commonjs@7.29.7": '@babel/plugin-transform-modules-commonjs'
   "@babel_helper-plugin-utils@7.29.7": '@babel/helper-plugin-utils'
   "@expo_sdk-runtime-versions@1.0.1": '@expo/sdk-runtime-versions'
@@ -173,6 +154,13 @@ rename:
   "supports-color@7.2.0": supports-color
   "has-flag@4.0.0": has-flag
   "getenv@2.0.0": getenv
+  "glob@13.0.6": glob
+  "minimatch@10.2.6": minimatch
+  "brace-expansion@5.0.12": brace-expansion
+  "balanced-match@4.0.4": balanced-match
+  "minipass@7.1.3": minipass
+  "path-scurry@2.0.2": path-scurry
+  "lru-cache@11.5.3": lru-cache
   "semver@7.8.5": semver
   "slugify@1.6.9": slugify
   "xcode@3.0.1": xcode
@@ -189,6 +177,8 @@ rename:
   "xmlbuilder@11.0.1": xmlbuilder
   "deepmerge@4.3.1": deepmerge
   "resolve-workspace-root@2.0.1": resolve-workspace-root
+  "@expo_config-plugins@57.0.11": '@expo/config-plugins'
+  "xcode@4.0.0": xcode
   "@expo_devcert@1.2.2": '@expo/devcert'
   "@expo_sudo-prompt@9.3.2": '@expo/sudo-prompt'
   "debug@3.2.7": debug
@@ -202,7 +192,7 @@ rename:
   "jimp-compact@0.16.1": jimp-compact
   "parse-png@2.1.0": parse-png
   "pngjs@3.4.0": pngjs
-  "@expo_inline-modules@0.1.7": '@expo/inline-modules'
+  "@expo_inline-modules@0.1.8": '@expo/inline-modules'
   "@expo_log-box@57.0.4": '@expo/log-box'
   "@expo_dom-webview@57.0.1": '@expo/dom-webview'
   "anser@1.4.10": anser
@@ -318,7 +308,8 @@ rename:
   "hermes-estree@0.36.1": hermes-estree
   "lightningcss@1.33.0": lightningcss
   "detect-libc@2.1.2": detect-libc
-  "lightningcss-darwin-arm64@1.33.0": lightningcss-darwin-arm64
+  "lightningcss-linux-x64-gnu@1.33.0": lightningcss-linux-x64-gnu
+  "lightningcss-linux-x64-musl@1.33.0": lightningcss-linux-x64-musl
   "picomatch@4.0.7": picomatch
   "postcss@8.5.29": postcss
   "nanoid@3.3.20": nanoid
@@ -352,11 +343,11 @@ rename:
   "wcwidth@1.0.1": wcwidth
   "defaults@1.0.4": defaults
   "clone@1.0.4": clone
-  "@expo_prebuild-config@57.0.17": '@expo/prebuild-config'
+  "@expo_prebuild-config@57.0.19": '@expo/prebuild-config'
   "@react-native_normalize-colors@0.86.3": '@react-native/normalize-colors'
-  "expo-modules-autolinking@57.0.14": expo-modules-autolinking
+  "expo-modules-autolinking@57.0.16": expo-modules-autolinking
   "commander@7.2.0": commander
-  "@expo_router-server@57.0.12": '@expo/router-server'
+  "@expo_router-server@57.0.14": '@expo/router-server'
   "@expo_schema-utils@57.0.2": '@expo/schema-utils'
   "@expo_ws-tunnel@2.0.1": '@expo/ws-tunnel'
   "@expo_xcpretty@4.4.6": '@expo/xcpretty'
@@ -423,11 +414,11 @@ rename:
   "ws@8.22.0": ws
   "zod@3.25.76": zod
   "@expo_devtools@57.0.1": '@expo/devtools'
-  "@expo_fingerprint@0.20.13": '@expo/fingerprint'
+  "@expo_fingerprint@0.20.14": '@expo/fingerprint'
   "ignore@5.3.2": ignore
-  "@expo_local-build-cache-provider@57.0.8": '@expo/local-build-cache-provider'
+  "@expo_local-build-cache-provider@57.0.9": '@expo/local-build-cache-provider'
   "@ungap_structured-clone@1.4.0": '@ungap/structured-clone'
-  "babel-preset-expo@57.0.14": babel-preset-expo
+  "babel-preset-expo@57.0.16": babel-preset-expo
   "@babel_plugin-proposal-decorators@7.29.7": '@babel/plugin-proposal-decorators'
   "@babel_helper-create-class-features-plugin@7.29.7": '@babel/helper-create-class-features-plugin'
   "@babel_helper-annotate-as-pure@7.29.7": '@babel/helper-annotate-as-pure'
@@ -506,15 +497,15 @@ rename:
   "babel-plugin-react-native-web@0.21.4": babel-plugin-react-native-web
   "babel-plugin-syntax-hermes-parser@0.36.1": babel-plugin-syntax-hermes-parser
   "babel-plugin-transform-flow-enums@0.0.2": babel-plugin-transform-flow-enums
-  "expo-asset@57.0.19": expo-asset
-  "expo-constants@57.0.21": expo-constants
+  "expo-asset@57.0.20": expo-asset
+  "expo-constants@57.0.22": expo-constants
   "expo-file-system@57.0.7": expo-file-system
   "expo-font@57.0.4": expo-font
   "fontfaceobserver@2.3.0": fontfaceobserver
   "expo-keep-awake@57.0.2": expo-keep-awake
-  "expo-modules-core@57.0.21": expo-modules-core
+  "expo-modules-core@57.0.24": expo-modules-core
   "@expo_expo-modules-macros-plugin@0.6.1": '@expo/expo-modules-macros-plugin'
-  "expo-modules-jsi@57.1.1": expo-modules-jsi
+  "expo-modules-jsi@57.1.3": expo-modules-jsi
   "react-refresh@0.14.2": react-refresh
   "whatwg-url-minimum@0.1.2": whatwg-url-minimum
   "expo-background-task@57.0.21": expo-background-task
@@ -522,10 +513,16 @@ rename:
   "unimodules-app-loader@57.0.2": unimodules-app-loader
   "expo-blur@57.0.3": expo-blur
   "expo-build-properties@57.0.22": expo-build-properties
-  "expo-crypto@57.0.3": expo-crypto
-  "expo-dev-client@57.0.19": expo-dev-client
-  "expo-dev-launcher@57.0.20": expo-dev-launcher
-  "expo-dev-menu@57.0.19": expo-dev-menu
+  "expo-camera@57.0.6": expo-camera
+  "barcode-detector@3.2.3": barcode-detector
+  "zxing-wasm@3.1.6": zxing-wasm
+  "@types_emscripten@1.41.6": '@types/emscripten'
+  "type-fest@5.10.0": type-fest
+  "tagged-tag@1.0.0": tagged-tag
+  "expo-crypto@57.0.4": expo-crypto
+  "expo-dev-client@57.0.20": expo-dev-client
+  "expo-dev-launcher@57.0.21": expo-dev-launcher
+  "expo-dev-menu@57.0.20": expo-dev-menu
   "expo-dev-menu-interface@57.0.0": expo-dev-menu-interface
   "expo-manifests@57.0.2": expo-manifests
   "expo-json-utils@57.0.2": expo-json-utils
@@ -534,16 +531,16 @@ rename:
   "ua-parser-js@0.7.41": ua-parser-js
   "expo-glass-effect@57.0.4": expo-glass-effect
   "expo-image@57.0.5": expo-image
-  "expo-linking@57.0.12": expo-linking
+  "expo-linking@57.0.13": expo-linking
   "expo-local-authentication@57.0.3": expo-local-authentication
   "expo-modern-table@0.1.2": expo-modern-table
-  "expo-notifications@57.0.22": expo-notifications
+  "expo-notifications@57.0.24": expo-notifications
   "abort-controller@3.0.0": abort-controller
   "event-target-shim@5.0.1": event-target-shim
   "badgin@1.2.3": badgin
   "expo-application@57.0.3": expo-application
-  "expo-router@57.0.25": expo-router
-  "@expo_metro-runtime@57.0.16": '@expo/metro-runtime'
+  "expo-router@57.0.29": expo-router
+  "@expo_metro-runtime@57.0.17": '@expo/metro-runtime'
   "whatwg-fetch@3.6.20": whatwg-fetch
   "@radix-ui_react-tabs@1.1.22": '@radix-ui/react-tabs'
   "@radix-ui_react-roving-focus@1.1.20": '@radix-ui/react-roving-focus'
@@ -564,7 +561,7 @@ rename:
   "strict-uri-encode@2.0.0": strict-uri-encode
   "react-fast-compare@3.2.2": react-fast-compare
   "react-is@19.3.0": react-is
-  "react-native-drawer-layout@4.2.11": react-native-drawer-layout
+  "react-native-drawer-layout@4.2.12": react-native-drawer-layout
   "use-latest-callback@0.2.6": use-latest-callback
   "react-native-screens@4.27.0": react-native-screens
   "react-freeze@1.0.4": react-freeze
@@ -573,10 +570,10 @@ rename:
   "shallowequal@1.1.0": shallowequal
   "standard-navigation@0.0.5": standard-navigation
   "expo-screen-capture@57.0.4": expo-screen-capture
-  "expo-screen-orientation@57.0.2": expo-screen-orientation
+  "expo-screen-orientation@57.0.3": expo-screen-orientation
   "expo-secure-store@57.0.4": expo-secure-store
   "expo-sensors@57.0.3": expo-sensors
-  "expo-splash-screen@57.0.9": expo-splash-screen
+  "expo-splash-screen@57.0.10": expo-splash-screen
   "expo-status-bar@57.0.1": expo-status-bar
   "expo-system-ui@57.0.4": expo-system-ui
   "expo-web-browser@57.0.3": expo-web-browser
@@ -588,7 +585,8 @@ rename:
   "react-native-css-interop@0.2.7": react-native-css-interop
   "lightningcss@1.27.0": lightningcss
   "detect-libc@1.0.3": detect-libc
-  "lightningcss-darwin-arm64@1.27.0": lightningcss-darwin-arm64
+  "lightningcss-linux-x64-gnu@1.27.0": lightningcss-linux-x64-gnu
+  "lightningcss-linux-x64-musl@1.27.0": lightningcss-linux-x64-musl
   "normalize-url@9.0.1": normalize-url
   "ofetch@1.5.1": ofetch
   "destr@2.0.5": destr
@@ -712,8 +710,8 @@ manual:
     version: '1.0.0'
     source: https://github.com/expo/timeago.js
     body: MIT
-  - name: '@expo_ui@57.0.22'
-    version: '57.0.22'
+  - name: '@expo_ui@57.0.26'
+    version: '57.0.26'
     source: https://github.com/expo/expo
     body: MIT
   - name: sf-symbols-typescript@2.2.0
@@ -959,45 +957,153 @@ manual:
     version: '1.3.8'
     source: https://github.com/radix-ui/primitives
     body: MIT
-  - name: '@sentry_react-native@8.30.0'
-    version: '8.30.0'
+  - name: '@sentry_react-native@7.11.0'
+    version: '7.11.0'
     source: https://github.com/getsentry/sentry-react-native
     body: MIT
-  - name: '@sentry_browser@10.76.0'
-    version: '10.76.0'
+  - name: '@sentry_babel-plugin-component-annotate@4.8.0'
+    version: '4.8.0'
+    source: https://github.com/getsentry/sentry-javascript-bundler-plugins
+    body: MIT
+  - name: '@sentry_browser@10.37.0'
+    version: '10.37.0'
     source: https://github.com/getsentry/sentry-javascript
     body: MIT
-  - name: '@sentry_browser-utils@10.76.0'
-    version: '10.76.0'
+  - name: '@sentry-internal_browser-utils@10.37.0'
+    version: '10.37.0'
     source: https://github.com/getsentry/sentry-javascript
     body: MIT
-  - name: '@sentry_core@10.76.0'
-    version: '10.76.0'
+  - name: '@sentry_core@10.37.0'
+    version: '10.37.0'
     source: https://github.com/getsentry/sentry-javascript
     body: MIT
-  - name: '@sentry_conventions@0.16.0'
-    version: '0.16.0'
-    source: https://github.com/getsentry/sentry-conventions
-    body: MIT
-  - name: '@sentry_feedback@10.76.0'
-    version: '10.76.0'
+  - name: '@sentry-internal_feedback@10.37.0'
+    version: '10.37.0'
     source: https://github.com/getsentry/sentry-javascript
     body: MIT
-  - name: '@sentry_replay@10.76.0'
-    version: '10.76.0'
+  - name: '@sentry-internal_replay@10.37.0'
+    version: '10.37.0'
     source: https://github.com/getsentry/sentry-javascript
     body: MIT
-  - name: '@sentry_replay-canvas@10.76.0'
-    version: '10.76.0'
+  - name: '@sentry-internal_replay-canvas@10.37.0'
+    version: '10.37.0'
     source: https://github.com/getsentry/sentry-javascript
     body: MIT
-  - name: '@sentry_bundler-plugins@10.76.0'
-    version: '10.76.0'
+  - name: '@sentry_cli@2.58.4'
+    version: '2.58.4'
+    source: https://github.com/getsentry/sentry-cli
+    body: FSL-1.1-MIT
+  - name: https-proxy-agent@5.0.1
+    version: '5.0.1'
+    source: https://github.com/TooTallNate/node-https-proxy-agent
+    body: MIT
+  - name: agent-base@6.0.2
+    version: '6.0.2'
+    source: https://github.com/TooTallNate/node-agent-base
+    body: MIT
+  - name: debug@4.4.3
+    version: '4.4.3'
+    source: https://github.com/debug-js/debug
+    body: MIT
+  - name: ms@2.1.3
+    version: '2.1.3'
+    source: vercel/ms
+    body: MIT
+  - name: node-fetch@2.7.0
+    version: '2.7.0'
+    source: https://github.com/bitinn/node-fetch
+    body: MIT
+  - name: whatwg-url@5.0.0
+    version: '5.0.0'
+    source: jsdom/whatwg-url
+    body: MIT
+  - name: tr46@0.0.3
+    version: '0.0.3'
+    source: https://github.com/Sebmaster/tr46.js
+    body: MIT
+  - name: webidl-conversions@3.0.1
+    version: '3.0.1'
+    source: jsdom/webidl-conversions
+    body: BSD-2-Clause
+  - name: progress@2.0.3
+    version: '2.0.3'
+    source: https://github.com/visionmedia/node-progress
+    body: MIT
+  - name: proxy-from-env@1.1.0
+    version: '1.1.0'
+    source: https://github.com/Rob--W/proxy-from-env
+    body: MIT
+  - name: which@2.0.2
+    version: '2.0.2'
+    source: https://github.com/isaacs/node-which
+    body: ISC
+  - name: isexe@2.0.0
+    version: '2.0.0'
+    source: https://github.com/isaacs/isexe
+    body: ISC
+  - name: '@sentry_cli-linux-x64@2.58.4'
+    version: '2.58.4'
+    source: https://github.com/getsentry/sentry-cli
+    body: FSL-1.1-MIT
+  - name: '@sentry_react@10.37.0'
+    version: '10.37.0'
     source: https://github.com/getsentry/sentry-javascript
     body: MIT
-  - name: '@babel_core@7.29.7'
-    version: '7.29.7'
+  - name: '@sentry_types@10.37.0'
+    version: '10.37.0'
+    source: https://github.com/getsentry/sentry-javascript
+    body: MIT
+  - name: '@shopify_flash-list@2.0.2'
+    version: '2.0.2'
+    source: https://github.com/Shopify/flash-list
+    body: MIT
+  - name: class-variance-authority@0.7.1
+    version: '0.7.1'
+    source: https://github.com/joe-bell/cva
+    body: Apache-2.0
+  - name: clsx@2.1.1
+    version: '2.1.1'
+    source: lukeed/clsx
+    body: MIT
+  - name: dayjs@1.11.23
+    version: '1.11.23'
+    source: https://github.com/iamkun/dayjs
+    body: MIT
+  - name: expo@57.0.31
+    version: '57.0.31'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: '@babel_runtime@7.29.10'
+    version: '7.29.10'
     source: https://github.com/babel/babel
+    body: MIT
+  - name: '@expo_cli@57.0.32'
+    version: '57.0.32'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: '@expo_code-signing-certificates@0.0.6'
+    version: '0.0.6'
+    source: https://github.com/expo/code-signing-certificates
+    body: MIT
+  - name: node-forge@1.4.0
+    version: '1.4.0'
+    source: https://github.com/digitalbazaar/forge
+    body: (BSD-3-Clause OR GPL-2.0)
+  - name: '@expo_config@57.0.10'
+    version: '57.0.10'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: '@expo_config-plugins@57.0.10'
+    version: '57.0.10'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: '@expo_config-types@57.0.2'
+    version: '57.0.2'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: '@expo_json-file@11.0.1'
+    version: '11.0.1'
+    source: https://github.com/expo/expo
     body: MIT
   - name: '@babel_code-frame@7.29.7'
     version: '7.29.7'
@@ -1011,6 +1117,34 @@ manual:
     version: '1.1.1'
     source: alexeyraspopov/picocolors
     body: ISC
+  - name: json5@2.2.3
+    version: '2.2.3'
+    source: https://github.com/json5/json5
+    body: MIT
+  - name: '@expo_plist@0.8.1'
+    version: '0.8.1'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: '@xmldom_xmldom@0.8.15'
+    version: '0.8.15'
+    source: https://github.com/xmldom/xmldom
+    body: MIT
+  - name: base64-js@1.5.1
+    version: '1.5.1'
+    source: https://github.com/beatgammit/base64-js
+    body: MIT
+  - name: xmlbuilder@15.1.1
+    version: '15.1.1'
+    source: https://github.com/oozcitak/xmlbuilder-js
+    body: MIT
+  - name: '@expo_require-utils@57.0.6'
+    version: '57.0.6'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: '@babel_core@7.29.7'
+    version: '7.29.7'
+    source: https://github.com/babel/babel
+    body: MIT
   - name: '@babel_generator@7.29.8'
     version: '7.29.8'
     source: https://github.com/babel/babel
@@ -1119,14 +1253,6 @@ manual:
     version: '7.29.7'
     source: https://github.com/babel/babel
     body: MIT
-  - name: debug@4.4.3
-    version: '4.4.3'
-    source: https://github.com/debug-js/debug
-    body: MIT
-  - name: ms@2.1.3
-    version: '2.1.3'
-    source: vercel/ms
-    body: MIT
   - name: '@babel_helpers@7.29.10'
     version: '7.29.10'
     source: https://github.com/babel/babel
@@ -1142,210 +1268,6 @@ manual:
   - name: gensync@1.0.0-beta.2
     version: '1.0.0-beta.2'
     source: https://github.com/loganfsmyth/gensync
-    body: MIT
-  - name: json5@2.2.3
-    version: '2.2.3'
-    source: https://github.com/json5/json5
-    body: MIT
-  - name: '@sentry_cli@2.58.6'
-    version: '2.58.6'
-    source: https://github.com/getsentry/sentry-cli
-    body: FSL-1.1-MIT
-  - name: https-proxy-agent@5.0.1
-    version: '5.0.1'
-    source: https://github.com/TooTallNate/node-https-proxy-agent
-    body: MIT
-  - name: agent-base@6.0.2
-    version: '6.0.2'
-    source: https://github.com/TooTallNate/node-agent-base
-    body: MIT
-  - name: node-fetch@2.7.0
-    version: '2.7.0'
-    source: https://github.com/bitinn/node-fetch
-    body: MIT
-  - name: whatwg-url@5.0.0
-    version: '5.0.0'
-    source: jsdom/whatwg-url
-    body: MIT
-  - name: tr46@0.0.3
-    version: '0.0.3'
-    source: https://github.com/Sebmaster/tr46.js
-    body: MIT
-  - name: webidl-conversions@3.0.1
-    version: '3.0.1'
-    source: jsdom/webidl-conversions
-    body: BSD-2-Clause
-  - name: progress@2.0.3
-    version: '2.0.3'
-    source: https://github.com/visionmedia/node-progress
-    body: MIT
-  - name: proxy-from-env@1.1.0
-    version: '1.1.0'
-    source: https://github.com/Rob--W/proxy-from-env
-    body: MIT
-  - name: which@2.0.2
-    version: '2.0.2'
-    source: https://github.com/isaacs/node-which
-    body: ISC
-  - name: isexe@2.0.0
-    version: '2.0.0'
-    source: https://github.com/isaacs/isexe
-    body: ISC
-  - name: '@sentry_cli-darwin@2.58.6'
-    version: '2.58.6'
-    source: https://github.com/getsentry/sentry-cli
-    body: FSL-1.1-MIT
-  - name: dotenv@17.4.2
-    version: '17.4.2'
-    source: https://github.com/motdotla/dotenv
-    body: BSD-2-Clause
-  - name: find-up@5.0.0
-    version: '5.0.0'
-    source: sindresorhus/find-up
-    body: MIT
-  - name: locate-path@6.0.0
-    version: '6.0.0'
-    source: sindresorhus/locate-path
-    body: MIT
-  - name: p-locate@5.0.0
-    version: '5.0.0'
-    source: sindresorhus/p-locate
-    body: MIT
-  - name: p-limit@3.1.0
-    version: '3.1.0'
-    source: sindresorhus/p-limit
-    body: MIT
-  - name: yocto-queue@0.1.0
-    version: '0.1.0'
-    source: sindresorhus/yocto-queue
-    body: MIT
-  - name: path-exists@4.0.0
-    version: '4.0.0'
-    source: sindresorhus/path-exists
-    body: MIT
-  - name: glob@13.0.6
-    version: '13.0.6'
-    source: https://github.com/isaacs/node-glob
-    body: BlueOak-1.0.0
-  - name: minimatch@10.2.6
-    version: '10.2.6'
-    source: https://github.com/isaacs/minimatch
-    body: BlueOak-1.0.0
-  - name: brace-expansion@5.0.12
-    version: '5.0.12'
-    source: https://github.com/juliangruber/brace-expansion
-    body: MIT
-  - name: balanced-match@4.0.4
-    version: '4.0.4'
-    source: https://github.com/juliangruber/balanced-match
-    body: MIT
-  - name: minipass@7.1.3
-    version: '7.1.3'
-    source: https://github.com/isaacs/minipass
-    body: BlueOak-1.0.0
-  - name: path-scurry@2.0.2
-    version: '2.0.2'
-    source: https://github.com/isaacs/path-scurry
-    body: BlueOak-1.0.0
-  - name: lru-cache@11.5.3
-    version: '11.5.3'
-    source: https://github.com/isaacs/node-lru-cache
-    body: ISC
-  - name: magic-string@0.30.21
-    version: '0.30.21'
-    source: https://github.com/Rich-Harris/magic-string
-    body: MIT
-  - name: '@sentry_cli@3.8.0'
-    version: '3.8.0'
-    source: https://github.com/getsentry/sentry-cli
-    body: FSL-1.1-MIT
-  - name: undici@6.29.0
-    version: '6.29.0'
-    source: https://github.com/nodejs/undici
-    body: MIT
-  - name: '@sentry_cli-darwin@3.8.0'
-    version: '3.8.0'
-    source: https://github.com/getsentry/sentry-cli
-    body: FSL-1.1-MIT
-  - name: '@sentry_expo-upload-sourcemaps@8.30.0'
-    version: '8.30.0'
-    source: https://github.com/getsentry/sentry-react-native
-    body: MIT
-  - name: '@sentry_react@10.76.0'
-    version: '10.76.0'
-    source: https://github.com/getsentry/sentry-javascript
-    body: MIT
-  - name: '@shopify_flash-list@2.0.2'
-    version: '2.0.2'
-    source: https://github.com/Shopify/flash-list
-    body: MIT
-  - name: class-variance-authority@0.7.1
-    version: '0.7.1'
-    source: https://github.com/joe-bell/cva
-    body: Apache-2.0
-  - name: clsx@2.1.1
-    version: '2.1.1'
-    source: lukeed/clsx
-    body: MIT
-  - name: dayjs@1.11.23
-    version: '1.11.23'
-    source: https://github.com/iamkun/dayjs
-    body: MIT
-  - name: expo@57.0.27
-    version: '57.0.27'
-    source: https://github.com/expo/expo
-    body: MIT
-  - name: '@babel_runtime@7.29.10'
-    version: '7.29.10'
-    source: https://github.com/babel/babel
-    body: MIT
-  - name: '@expo_cli@57.0.28'
-    version: '57.0.28'
-    source: https://github.com/expo/expo
-    body: MIT
-  - name: '@expo_code-signing-certificates@0.0.6'
-    version: '0.0.6'
-    source: https://github.com/expo/code-signing-certificates
-    body: MIT
-  - name: node-forge@1.4.0
-    version: '1.4.0'
-    source: https://github.com/digitalbazaar/forge
-    body: (BSD-3-Clause OR GPL-2.0)
-  - name: '@expo_config@57.0.10'
-    version: '57.0.10'
-    source: https://github.com/expo/expo
-    body: MIT
-  - name: '@expo_config-plugins@57.0.10'
-    version: '57.0.10'
-    source: https://github.com/expo/expo
-    body: MIT
-  - name: '@expo_config-types@57.0.2'
-    version: '57.0.2'
-    source: https://github.com/expo/expo
-    body: MIT
-  - name: '@expo_json-file@11.0.1'
-    version: '11.0.1'
-    source: https://github.com/expo/expo
-    body: MIT
-  - name: '@expo_plist@0.8.1'
-    version: '0.8.1'
-    source: https://github.com/expo/expo
-    body: MIT
-  - name: '@xmldom_xmldom@0.8.15'
-    version: '0.8.15'
-    source: https://github.com/xmldom/xmldom
-    body: MIT
-  - name: base64-js@1.5.1
-    version: '1.5.1'
-    source: https://github.com/beatgammit/base64-js
-    body: MIT
-  - name: xmlbuilder@15.1.1
-    version: '15.1.1'
-    source: https://github.com/oozcitak/xmlbuilder-js
-    body: MIT
-  - name: '@expo_require-utils@57.0.6'
-    version: '57.0.6'
-    source: https://github.com/expo/expo
     body: MIT
   - name: '@babel_plugin-transform-modules-commonjs@7.29.7'
     version: '7.29.7'
@@ -1386,6 +1308,34 @@ manual:
     version: '2.0.0'
     source: https://github.com/ctavan/node-getenv
     body: MIT
+  - name: glob@13.0.6
+    version: '13.0.6'
+    source: https://github.com/isaacs/node-glob
+    body: BlueOak-1.0.0
+  - name: minimatch@10.2.6
+    version: '10.2.6'
+    source: https://github.com/isaacs/minimatch
+    body: BlueOak-1.0.0
+  - name: brace-expansion@5.0.12
+    version: '5.0.12'
+    source: https://github.com/juliangruber/brace-expansion
+    body: MIT
+  - name: balanced-match@4.0.4
+    version: '4.0.4'
+    source: https://github.com/juliangruber/balanced-match
+    body: MIT
+  - name: minipass@7.1.3
+    version: '7.1.3'
+    source: https://github.com/isaacs/minipass
+    body: BlueOak-1.0.0
+  - name: path-scurry@2.0.2
+    version: '2.0.2'
+    source: https://github.com/isaacs/path-scurry
+    body: BlueOak-1.0.0
+  - name: lru-cache@11.5.3
+    version: '11.5.3'
+    source: https://github.com/isaacs/node-lru-cache
+    body: ISC
   - name: semver@7.8.5
     version: '7.8.5'
     source: https://github.com/npm/node-semver
@@ -1450,6 +1400,14 @@ manual:
     version: '2.0.1'
     source: https://github.com/byCedric/resolve-workspace-root
     body: MIT
+  - name: '@expo_config-plugins@57.0.11'
+    version: '57.0.11'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: xcode@4.0.0
+    version: '4.0.0'
+    source: https://github.com/apache/cordova-node-xcode
+    body: Apache-2.0
   - name: '@expo_devcert@1.2.2'
     version: '1.2.2'
     source: https://github.com/expo/devcert
@@ -1502,8 +1460,8 @@ manual:
     version: '3.4.0'
     source: https://github.com/lukeapage/pngjs2
     body: MIT
-  - name: '@expo_inline-modules@0.1.7'
-    version: '0.1.7'
+  - name: '@expo_inline-modules@0.1.8'
+    version: '0.1.8'
     source: https://github.com/expo/expo
     body: MIT
   - name: '@expo_log-box@57.0.4'
@@ -1965,7 +1923,11 @@ manual:
     version: '2.1.2'
     source: https://github.com/lovell/detect-libc
     body: Apache-2.0
-  - name: lightningcss-darwin-arm64@1.33.0
+  - name: lightningcss-linux-x64-gnu@1.33.0
+    version: '1.33.0'
+    source: https://github.com/parcel-bundler/lightningcss
+    body: MPL-2.0
+  - name: lightningcss-linux-x64-musl@1.33.0
     version: '1.33.0'
     source: https://github.com/parcel-bundler/lightningcss
     body: MPL-2.0
@@ -2101,24 +2063,24 @@ manual:
     version: '1.0.4'
     source: https://github.com/pvorb/node-clone
     body: MIT
-  - name: '@expo_prebuild-config@57.0.17'
-    version: '57.0.17'
+  - name: '@expo_prebuild-config@57.0.19'
+    version: '57.0.19'
     source: https://github.com/expo/expo
     body: MIT
   - name: '@react-native_normalize-colors@0.86.3'
     version: '0.86.3'
     source: https://github.com/react/react-native
     body: MIT
-  - name: expo-modules-autolinking@57.0.14
-    version: '57.0.14'
+  - name: expo-modules-autolinking@57.0.16
+    version: '57.0.16'
     source: https://github.com/expo/expo
     body: MIT
   - name: commander@7.2.0
     version: '7.2.0'
     source: https://github.com/tj/commander.js
     body: MIT
-  - name: '@expo_router-server@57.0.12'
-    version: '57.0.12'
+  - name: '@expo_router-server@57.0.14'
+    version: '57.0.14'
     source: https://github.com/expo/expo
     body: MIT
   - name: '@expo_schema-utils@57.0.2'
@@ -2383,24 +2345,24 @@ manual:
     version: '57.0.1'
     source: https://github.com/expo/expo
     body: MIT
-  - name: '@expo_fingerprint@0.20.13'
-    version: '0.20.13'
+  - name: '@expo_fingerprint@0.20.14'
+    version: '0.20.14'
     source: https://github.com/expo/expo
     body: MIT
   - name: ignore@5.3.2
     version: '5.3.2'
     source: https://github.com/kaelzhang/node-ignore
     body: MIT
-  - name: '@expo_local-build-cache-provider@57.0.8'
-    version: '57.0.8'
+  - name: '@expo_local-build-cache-provider@57.0.9'
+    version: '57.0.9'
     source: https://github.com/expo/expo
     body: MIT
   - name: '@ungap_structured-clone@1.4.0'
     version: '1.4.0'
     source: https://github.com/ungap/structured-clone
     body: ISC
-  - name: babel-preset-expo@57.0.14
-    version: '57.0.14'
+  - name: babel-preset-expo@57.0.16
+    version: '57.0.16'
     source: https://github.com/expo/expo
     body: MIT
   - name: '@babel_plugin-proposal-decorators@7.29.7'
@@ -2715,12 +2677,12 @@ manual:
     version: '0.0.2'
     source: https://github.com/facebook/flow
     body: MIT
-  - name: expo-asset@57.0.19
-    version: '57.0.19'
+  - name: expo-asset@57.0.20
+    version: '57.0.20'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-constants@57.0.21
-    version: '57.0.21'
+  - name: expo-constants@57.0.22
+    version: '57.0.22'
     source: https://github.com/expo/expo
     body: MIT
   - name: expo-file-system@57.0.7
@@ -2739,16 +2701,16 @@ manual:
     version: '57.0.2'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-modules-core@57.0.21
-    version: '57.0.21'
+  - name: expo-modules-core@57.0.24
+    version: '57.0.24'
     source: https://github.com/expo/expo
     body: MIT
   - name: '@expo_expo-modules-macros-plugin@0.6.1'
     version: '0.6.1'
     source: https://github.com/expo/expo-modules-macros-plugin
     body: MIT
-  - name: expo-modules-jsi@57.1.1
-    version: '57.1.1'
+  - name: expo-modules-jsi@57.1.3
+    version: '57.1.3'
     source: https://github.com/expo/expo
     body: MIT
   - name: react-refresh@0.14.2
@@ -2779,20 +2741,44 @@ manual:
     version: '57.0.22'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-crypto@57.0.3
-    version: '57.0.3'
+  - name: expo-camera@57.0.6
+    version: '57.0.6'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-dev-client@57.0.19
-    version: '57.0.19'
+  - name: barcode-detector@3.2.3
+    version: '3.2.3'
+    source: https://github.com/Sec-ant/barcode-detector
+    body: MIT
+  - name: zxing-wasm@3.1.6
+    version: '3.1.6'
+    source: https://github.com/Sec-ant/zxing-wasm
+    body: MIT
+  - name: '@types_emscripten@1.41.6'
+    version: '1.41.6'
+    source: https://github.com/DefinitelyTyped/DefinitelyTyped
+    body: MIT
+  - name: type-fest@5.10.0
+    version: '5.10.0'
+    source: sindresorhus/type-fest
+    body: '(MIT OR CC0-1.0)'
+  - name: tagged-tag@1.0.0
+    version: '1.0.0'
+    source: sindresorhus/tagged-tag
+    body: MIT
+  - name: expo-crypto@57.0.4
+    version: '57.0.4'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-dev-launcher@57.0.20
+  - name: expo-dev-client@57.0.20
     version: '57.0.20'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-dev-menu@57.0.19
-    version: '57.0.19'
+  - name: expo-dev-launcher@57.0.21
+    version: '57.0.21'
+    source: https://github.com/expo/expo
+    body: MIT
+  - name: expo-dev-menu@57.0.20
+    version: '57.0.20'
     source: https://github.com/expo/expo
     body: MIT
   - name: expo-dev-menu-interface@57.0.0
@@ -2827,8 +2813,8 @@ manual:
     version: '57.0.5'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-linking@57.0.12
-    version: '57.0.12'
+  - name: expo-linking@57.0.13
+    version: '57.0.13'
     source: https://github.com/expo/expo
     body: MIT
   - name: expo-local-authentication@57.0.3
@@ -2839,8 +2825,8 @@ manual:
     version: '0.1.2'
     source: https://github.com/melihmuratpesmen/expo-modern-table
     body: MIT
-  - name: expo-notifications@57.0.22
-    version: '57.0.22'
+  - name: expo-notifications@57.0.24
+    version: '57.0.24'
     source: https://github.com/expo/expo
     body: MIT
   - name: abort-controller@3.0.0
@@ -2859,12 +2845,12 @@ manual:
     version: '57.0.3'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-router@57.0.25
-    version: '57.0.25'
+  - name: expo-router@57.0.29
+    version: '57.0.29'
     source: https://github.com/expo/expo
     body: MIT
-  - name: '@expo_metro-runtime@57.0.16'
-    version: '57.0.16'
+  - name: '@expo_metro-runtime@57.0.17'
+    version: '57.0.17'
     source: https://github.com/expo/expo
     body: MIT
   - name: whatwg-fetch@3.6.20
@@ -2946,8 +2932,8 @@ manual:
     version: '19.3.0'
     source: https://github.com/react/react
     body: MIT
-  - name: react-native-drawer-layout@4.2.11
-    version: '4.2.11'
+  - name: react-native-drawer-layout@4.2.12
+    version: '4.2.12'
     source: https://github.com/react-navigation/react-navigation
     body: MIT
   - name: use-latest-callback@0.2.6
@@ -2981,8 +2967,8 @@ manual:
     version: '57.0.4'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-screen-orientation@57.0.2
-    version: '57.0.2'
+  - name: expo-screen-orientation@57.0.3
+    version: '57.0.3'
     source: https://github.com/expo/expo
     body: MIT
   - name: expo-secure-store@57.0.4
@@ -2993,8 +2979,8 @@ manual:
     version: '57.0.3'
     source: https://github.com/expo/expo
     body: MIT
-  - name: expo-splash-screen@57.0.9
-    version: '57.0.9'
+  - name: expo-splash-screen@57.0.10
+    version: '57.0.10'
     source: https://github.com/expo/expo
     body: MIT
   - name: expo-status-bar@57.0.1
@@ -3041,7 +3027,11 @@ manual:
     version: '1.0.3'
     source: https://github.com/lovell/detect-libc
     body: Apache-2.0
-  - name: lightningcss-darwin-arm64@1.27.0
+  - name: lightningcss-linux-x64-gnu@1.27.0
+    version: '1.27.0'
+    source: https://github.com/parcel-bundler/lightningcss
+    body: MPL-2.0
+  - name: lightningcss-linux-x64-musl@1.27.0
     version: '1.27.0'
     source: https://github.com/parcel-bundler/lightningcss
     body: MPL-2.0
