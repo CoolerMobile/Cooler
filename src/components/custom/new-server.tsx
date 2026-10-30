@@ -63,7 +63,7 @@ export const NewServerSheet = ({ open, onOpenChange, server }: Props) => {
       }
       const saved = server ? await update(server.id, details) : await create(details)
 
-      if (!saved) throw Error(server ? "server could not be updated" : "server could not be added")
+      if (!saved) throw Error(server ? "Server could not be updated" : "Server could not be added")
       resetNewServerForm()
     } catch (error) {
       Alert.alert(
