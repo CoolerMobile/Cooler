@@ -16,6 +16,8 @@ deploymentTargetDropDown.xml
 render.experimental.xml
 *.jks
 *.keystore
+# track the android debug keystore so debug builds share one stable signature
+!android/app/debug.keystore
 google-services.json
 *.hprof
 gen-external-apklibs
@@ -164,3 +166,6 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 iOSInjectionProject/
+
+# coolercloud emulation signing keys
+dev/coolercloud/keys/
