@@ -19,6 +19,10 @@ dev:
 check:
     bunx tsc --noEmit
 
+# Run the test suite.
+test:
+    bun test
+
 # Build an installable Android APK locally without creating a release.
 build-android profile="release":
     mkdir -p "{{ artifact_dir }}"

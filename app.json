@@ -13,23 +13,24 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "associatedDomains": [
-        "applinks:getcooler.app"
-      ],
-      "appleTeamId": "73H669GA5T"
+      "associatedDomains": ["applinks:getcooler.app"],
+      "appleTeamId": "73H669GA5T",
+      "entitlements": {
+        "aps-environment": "development"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
+        "backgroundColor": "#0B1220",
+        "foregroundImage": "./assets/images/icon.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
       "package": "dev.danfq.cooler",
       "permissions": [
         "android.permission.USE_BIOMETRIC",
-        "android.permission.USE_FINGERPRINT"
+        "android.permission.USE_FINGERPRINT",
+        "android.permission.CAMERA"
       ]
     },
     "web": {
@@ -41,9 +42,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#0B1220",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "imageWidth": 200
         }
       ],
       "expo-image",
@@ -68,6 +69,14 @@
       ],
       "react-native-legal",
       "expo-background-task",
+      "expo-notifications",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to scan your CoolerCloud sign in code.",
+          "recordAudioAndroid": false
+        }
+      ],
       "@react-native-community/datetimepicker",
       [
         "expo-build-properties",
