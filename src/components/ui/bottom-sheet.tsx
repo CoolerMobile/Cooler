@@ -3,6 +3,7 @@ import ExpoBottomSheet, {
   type BottomSheetProps,
 } from "@expo/ui/community/bottom-sheet";
 import { Platform, StyleSheet, useWindowDimensions, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const PERCENTAGE_SNAP_POINT = /^(\d+(?:\.\d+)?)%$/;
 
@@ -35,6 +36,11 @@ export function BottomSheet({
   ...props
 }: BottomSheetProps) {
   const { height: windowHeight } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
+
+  // match the native iOS detent, which measures the fraction from below the
+  // top safe area rather than the full edge-to-edge window android reports
+  const availableHeight = windowHeight - insets.top;
 
   if (Platform.OS !== "android" || snapPoints?.length !== 1) {
     return (
@@ -48,7 +54,7 @@ export function BottomSheet({
     );
   }
 
-  const requestedHeight = resolveSnapPoint(snapPoints[0], windowHeight);
+  const requestedHeight = resolveSnapPoint(snapPoints[0], availableHeight);
 
   if (requestedHeight === undefined) {
     return (
@@ -73,7 +79,7 @@ export function BottomSheet({
       <View
         style={[
           styles.androidSheet,
-          { height: Math.min(Math.max(requestedHeight, 1), windowHeight) },
+          { height: Math.min(Math.max(requestedHeight, 1), availableHeight) },
         ]}
       >
         <View style={styles.androidHandleContainer} pointerEvents="none">
