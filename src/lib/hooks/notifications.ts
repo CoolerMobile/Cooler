@@ -1,3 +1,5 @@
+import Constants from "expo-constants"
+import * as Device from "expo-device"
 import * as Notifications from "expo-notifications"
 import { Platform } from "react-native"
 import {
@@ -6,6 +8,9 @@ import {
   saveNotification,
 } from "@/lib/storage/notifications"
 import { useSettingsStore } from "@/lib/stores/settings"
+
+// Expo's push service endpoint used to deliver remote notifications.
+const EXPO_PUSH_ENDPOINT = "https://exp.host/--/api/v2/push/send"
 
 // notification data
 type NotificationData = {
@@ -127,22 +132,19 @@ Notifications.setNotificationHandler({
   },
 })
 
-/**
- * Requests permission to present notifications created by this app.
- * This intentionally does not register for remote notifications or request
- * an Expo push token, so iOS does not require the APS entitlement.
- */
-export const enableLocalNotifications = async () => {
-  await prepareNotificationStorageForBackground()
+// registers the Android notification channels Coolify's event groups map to
+const registerNotificationChannels = async () => {
+  if (Platform.OS !== "android") return
 
-  if (Platform.OS === "android") {
-    await Promise.all(
-      Object.entries(notificationChannels).map(([id, channel]) =>
-        Notifications.setNotificationChannelAsync(id, channel)
-      )
+  await Promise.all(
+    Object.entries(notificationChannels).map(([id, channel]) =>
+      Notifications.setNotificationChannelAsync(id, channel)
     )
-  }
+  )
+}
 
+/** Returns true when the user has granted (or already granted) alert permission. */
+const ensureNotificationPermissions = async () => {
   const permissions = await Notifications.getPermissionsAsync()
   if (permissions.status === "granted" && (Platform.OS !== "ios" || permissions.ios?.allowsAlert !== false)) {
     return true
@@ -159,6 +161,145 @@ export const enableLocalNotifications = async () => {
     requestedPermissions.status === "granted" &&
     (Platform.OS !== "ios" || requestedPermissions.ios?.allowsAlert !== false)
   )
+}
+
+/**
+ * requests permission to present notifications created by this app
+ *
+ * this only prepares local presentation (permission + Android channels); use
+ * {@link registerForExpoPushNotifications} to additionally obtain an Expo push
+ * token for remote delivery
+ */
+export const enableLocalNotifications = async () => {
+  await prepareNotificationStorageForBackground()
+  await registerNotificationChannels()
+  return ensureNotificationPermissions()
+}
+
+/**
+ * Resolves the EAS project id used to scope the Expo push token. Expo requires
+ * this for `getExpoPushTokenAsync` outside of the legacy classic build service.
+ */
+const getExpoProjectId = () => {
+  const projectId = Constants.expoConfig?.extra?.eas?.projectId ?? Constants.easConfig?.projectId
+  if (!projectId) {
+    throw Error("Missing EAS project id; an Expo push token cannot be requested.")
+  }
+  return projectId
+}
+
+// Expo push tokens are stable per install, so we cache the value once obtained.
+let cachedExpoPushToken: string | null = null
+
+/**
+ * Registers the device for remote notifications and returns its Expo push token
+ * (`ExponentPushToken[...]`). Requires a physical device, notification
+ * permission, and the iOS `aps-environment` entitlement.
+ */
+export const registerForExpoPushNotifications = async () => {
+  await prepareNotificationStorageForBackground()
+  await registerNotificationChannels()
+
+  if (!Device.isDevice) {
+    throw Error("Expo push tokens are only available on a physical device.")
+  }
+
+  const granted = await ensureNotificationPermissions()
+  if (!granted) {
+    throw Error("Notification alerts are disabled in system settings.")
+  }
+
+  const token = await Notifications.getExpoPushTokenAsync({ projectId: getExpoProjectId() })
+  cachedExpoPushToken = token.data
+  return token.data
+}
+
+/** Returns the cached Expo push token, registering for one if needed. */
+export const getExpoPushToken = async () => cachedExpoPushToken ?? (await registerForExpoPushNotifications())
+
+type ExpoPushContent = {
+  title: string
+  body: string
+  data?: Record<string, unknown>
+  channelId?: NotificationChannelId
+}
+
+/**
+ * Sends a notification to this device through Expo's push service, exercising
+ * the full remote delivery path (device token → Expo → APNs/FCM → device).
+ */
+export const sendExpoPushToSelf = async (content: ExpoPushContent) => {
+  const token = await getExpoPushToken()
+  const channelId = content.channelId ?? "deployments"
+
+  const response = await fetch(EXPO_PUSH_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      to: token,
+      title: content.title,
+      body: content.body,
+      sound: "default",
+      priority: "high",
+      channelId,
+      data: { ...content.data },
+    }),
+  })
+
+  if (!response.ok) {
+    throw Error(`Expo push request failed with status ${response.status}.`)
+  }
+
+  const payload = (await response.json()) as {
+    data?: ExpoPushTicket | ExpoPushTicket[]
+    errors?: { message: string }[]
+  }
+
+  if (payload.errors?.length) {
+    throw Error(payload.errors.map((error) => error.message).join("; "))
+  }
+
+  // a single-message request returns one ticket; an array request returns many
+  const ticket = Array.isArray(payload.data) ? payload.data[0] : payload.data
+  if (ticket?.status === "error") {
+    throw Error(ticket.message ?? "Expo rejected the push notification.")
+  }
+}
+
+type ExpoPushTicket = {
+  status: "ok" | "error"
+  message?: string
+  details?: { error?: string }
+}
+
+/**
+ * Sends an Expo push to this device, optionally deferred until `fireDate`.
+ *
+ * The token/permission handshake happens up front so failures surface
+ * immediately rather than inside the timer. A deferred send relies on an
+ * in-process timer, so the app must stay running until it fires. it is meant
+ * for short debug delays, not durable scheduling.
+ */
+export const scheduleExpoPushToSelf = async (content: ExpoPushContent, fireDate?: Date | null) => {
+  // surface token/permission errors before scheduling anything
+  await getExpoPushToken()
+
+  const delayMs = fireDate ? fireDate.getTime() - Date.now() : 0
+  if (delayMs <= 0) {
+    await sendExpoPushToSelf(content)
+    return { scheduledFor: null as Date | null }
+  }
+
+  setTimeout(() => {
+    void sendExpoPushToSelf(content).catch((error) =>
+      console.error("[notifications] deferred Expo push failed:", error)
+    )
+  }, delayMs)
+
+  return { scheduledFor: fireDate ?? null }
 }
 
 /** Creates and archives a notification generated by local polling. */
@@ -211,5 +352,12 @@ export const createLocalNotification = async (data: NotificationData) => {
 }
 
 export const useNotifications = () => {
-  return { enableLocalNotifications, createLocalNotification }
+  return {
+    enableLocalNotifications,
+    createLocalNotification,
+    registerForExpoPushNotifications,
+    getExpoPushToken,
+    sendExpoPushToSelf,
+    scheduleExpoPushToSelf,
+  }
 }

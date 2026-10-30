@@ -1,5 +1,6 @@
 import type { ServerData } from "@/lib/hooks/servers/connection"
 import { createLocalNotification } from "@/lib/hooks/notifications"
+import { useAccountStore } from "@/lib/stores/account"
 import { useDataStore } from "@/lib/stores/data"
 import { useDeploymentStore } from "@/lib/stores/deployments"
 import type { Deployment, DeploymentStatus, DeploymentTrigger } from "@/lib/types/deployment"
@@ -365,7 +366,13 @@ export const refreshDeploymentsAndNotify = async (): Promise<number> => {
     )
     let notificationCount = 0
 
+    // when signed into coolercloud the bridge delivers push, so the local
+    // polling notifications are suppressed to avoid duplicates
+    const signedIn = useAccountStore.getState().session !== null
+
     for (const deployment of deploymentsById.values()) {
+      if (signedIn) break
+
       const isFinished = ["success", "failed", "cancelled"].includes(deployment.status)
       const currentWatches = useDeploymentStore.getState().watchedDeploymentIds
       const serverStillExists = useDataStore
