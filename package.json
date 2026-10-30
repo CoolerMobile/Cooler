@@ -12,7 +12,11 @@
     "clean": "rm -rf .expo node_modules && bun install",
     "fix:licenses": "bun scripts/licenses.ts",
     "eas-build-post-install": "bun run fix:licenses",
-    "release": "bun scripts/release.ts"
+    "release": "bun scripts/release.ts",
+    "test": "bun test",
+    "cloud:keys": "bun dev/coolercloud/keys.ts",
+    "cloud:serve": "bun dev/coolercloud/server.ts",
+    "cloud:emulate": "bun dev/coolercloud/emulate.ts"
   },
   "dependencies": {
     "@expo/material-symbols": "^0.1.1",
@@ -37,6 +41,7 @@
     "expo-background-task": "~57.0.21",
     "expo-blur": "~57.0.3",
     "expo-build-properties": "~57.0.22",
+    "expo-camera": "~57.0.6",
     "expo-constants": "~57.0.22",
     "expo-crypto": "~57.0.4",
     "expo-dev-client": "~57.0.20",
@@ -82,11 +87,14 @@
   },
   "devDependencies": {
     "@types/bun": "^1.4.2",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "~19.2.18",
     "babel-preset-expo": "^57.0.14",
+    "jose": "^6.2.14",
     "prettier": "^3.9.9",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^3.4.19",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "~6.0.3"
