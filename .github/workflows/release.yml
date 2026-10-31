@@ -46,6 +46,15 @@ jobs:
     if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     runs-on: ubuntu-latest
 
+    # Serialize the version bump across every release run, regardless of
+    # channel or platform. Two runs bumping and pushing at once would each
+    # compute a version from the same base and produce a double bump; queuing
+    # them (cancel-in-progress: false) makes the second run bump on top of the
+    # first. Builds still run in parallel — only this job is serialized.
+    concurrency:
+      group: cooler-release-prepare
+      cancel-in-progress: false
+
     outputs:
       channel: ${{ steps.metadata.outputs.channel }}
       platforms: ${{ steps.metadata.outputs.platforms }}
