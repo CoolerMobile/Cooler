@@ -34,7 +34,7 @@ const usage = [
   "Options:",
   "  --android     Build only for Android",
   "  --ios         Build only for iOS",
-  "  --submit      Submit iOS to TestFlight; Google Play submission is not configured",
+  "  --submit      Submit iOS to TestFlight and Google Play",
   "  --nightly     Create a nightly/internal build",
   "  --eas         Dispatch the existing EAS GitHub workflow",
   "  --local       Build locally (the default)",
