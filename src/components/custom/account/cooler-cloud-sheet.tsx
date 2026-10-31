@@ -1,4 +1,3 @@
-import { QrScanner } from "@/components/custom/account/qr-scanner"
 import { BottomSheet, BottomSheetTextInput } from "@/components/ui/bottom-sheet"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
@@ -7,7 +6,8 @@ import { Text } from "@/components/ui/text"
 import { codeFromScan } from "@/lib/cooler-cloud/session-utils"
 import { useAccount } from "@/lib/hooks/account/session"
 import { useAccountStore } from "@/lib/stores/account"
-import { CloudCheck, KeyRound, QrCode } from "lucide-react-native"
+import { CameraView, useCameraPermissions } from "expo-camera"
+import { CloudCheck, KeyRound, QrCode, X } from "lucide-react-native"
 import { useState } from "react"
 import { ActivityIndicator, Alert, View } from "react-native"
 
@@ -23,20 +23,29 @@ const errorMessage = (error: unknown, fallback: string) => (error instanceof Err
  *
  * offers the browser oauth flow with manual code entry and qr scanning as
  * alternatives, or the signed in account with a sign out action
+ *
+ * the qr scanner renders inline inside this native sheet rather than in a
+ * separate react-native modal: stacking an rn modal on top of the native
+ * sheet silently fails to present on ios and leaves a touch-blocking layer
+ * behind once dismissed
  */
 export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) => {
   const { signInWithBrowser, completeSignInWithCode, signOut } = useAccount()
   const session = useAccountStore((state) => state.session)
 
+  const [permission, requestPermission] = useCameraPermissions()
+
   const [busy, setBusy] = useState(false)
   const [manualOpen, setManualOpen] = useState(false)
   const [codeValue, setCodeValue] = useState("")
   const [scannerOpen, setScannerOpen] = useState(false)
+  const [scanHandled, setScanHandled] = useState(false)
 
   const close = () => {
     onOpenChange(false)
     setManualOpen(false)
     setCodeValue("")
+    setScannerOpen(false)
   }
 
   const runSignIn = async (action: () => Promise<unknown>) => {
@@ -51,8 +60,32 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     }
   }
 
+  const openScanner = async () => {
+    if (busy) return
+
+    let granted = permission?.granted ?? false
+    if (!granted) {
+      const result = await requestPermission()
+      granted = result.granted
+    }
+
+    if (!granted) {
+      Alert.alert(
+        "Camera access needed",
+        "Enable camera access in Settings to scan your CoolerCloud sign in code."
+      )
+      return
+    }
+
+    setScanHandled(false)
+    setScannerOpen(true)
+  }
+
   const handleScan = (scanned: string) => {
+    if (scanHandled) return
+    setScanHandled(true)
     setScannerOpen(false)
+
     const code = codeFromScan(scanned)
     if (!code) {
       Alert.alert("Invalid code", "That QR code did not contain a CoolerCloud sign in code.")
@@ -74,13 +107,36 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
   }
 
   return (
-    <>
-      <BottomSheet
-        key="cooler-cloud-sheet"
-        index={open ? 0 : -1}
-        onDismiss={close}
-        enablePanDownToClose
-        snapPoints={["60%"]}>
+    <BottomSheet
+      key="cooler-cloud-sheet"
+      index={open ? 0 : -1}
+      onDismiss={close}
+      enablePanDownToClose
+      snapPoints={["60%"]}>
+      {scannerOpen ? (
+        <View className="gap-5 p-4">
+          <View className="gap-1">
+            <Text className="text-xl font-semibold">Scan QR</Text>
+            <Text className="text-sm text-muted-foreground">
+              Point your camera at the CoolerCloud sign in QR code.
+            </Text>
+          </View>
+
+          <View className="h-64 w-full overflow-hidden rounded-2xl bg-black">
+            <CameraView
+              style={{ flex: 1 }}
+              facing="back"
+              barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
+              onBarcodeScanned={({ data }) => handleScan(data)}
+            />
+          </View>
+
+          <Button variant="outline" onPress={() => setScannerOpen(false)} disabled={busy}>
+            <Icon as={X} />
+            <Text>Cancel</Text>
+          </Button>
+        </View>
+      ) : (
         <View className="gap-5 p-4">
           <View className="gap-1">
             <Text className="text-xl font-semibold">CoolerCloud</Text>
@@ -121,11 +177,7 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
                   <Icon as={KeyRound} />
                   <Text>Enter code</Text>
                 </Button>
-                <Button
-                  className="flex-1"
-                  variant="outline"
-                  onPress={() => setScannerOpen(true)}
-                  disabled={busy}>
+                <Button className="flex-1" variant="outline" onPress={openScanner} disabled={busy}>
                   <Icon as={QrCode} />
                   <Text>Scan QR</Text>
                 </Button>
@@ -153,9 +205,7 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
             </View>
           )}
         </View>
-      </BottomSheet>
-
-      <QrScanner visible={scannerOpen} onScan={handleScan} onCancel={() => setScannerOpen(false)} />
-    </>
+      )}
+    </BottomSheet>
   )
 }
