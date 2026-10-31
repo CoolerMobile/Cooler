@@ -23,6 +23,17 @@ if [[ -z "${GIT_CRYPT_KEY:-}" ]]; then
   exit 1
 fi
 
+# EAS clones the repo with git-crypt still locked. Because the git-crypt
+# filters cannot run without the key, the encrypted files show up as modified
+# and make `git-crypt unlock` abort with "Working directory not clean".
+# Neutralize the filters, reset the tree to HEAD so git re-stats the files and
+# the clean check passes, then let `git-crypt unlock` restore the real filters
+# and decrypt.
+git config filter.git-crypt.smudge cat
+git config filter.git-crypt.clean cat
+git config filter.git-crypt.required false
+git reset --hard HEAD
+
 git-crypt unlock "$GIT_CRYPT_KEY"
 
 echo "Repository secrets decrypted."
