@@ -2,7 +2,7 @@
   "expo": {
     "name": "Cooler",
     "slug": "cooler",
-    "version": "1.2.5",
+    "version": "1.2.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "cooler",
@@ -13,7 +13,9 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "associatedDomains": ["applinks:getcooler.app"],
+      "associatedDomains": [
+        "applinks:getcooler.app"
+      ],
       "appleTeamId": "73H669GA5T",
       "entitlements": {
         "aps-environment": "development"
