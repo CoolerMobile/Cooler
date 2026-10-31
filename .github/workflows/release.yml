@@ -20,6 +20,7 @@ on:
         options:
           - android
           - ios
+          - both
 
       submit:
         description: Submit iOS to TestFlight (Google Play submission is not configured)
@@ -103,7 +104,7 @@ jobs:
 
           version="$(bun scripts/release.ts --bump-only "${REQUESTED_BUMP:-auto}")"
 
-          if [[ "$platform" == "android" && "$DISPATCH_SUBMIT" == "true" ]]; then
+          if [[ "$platform" == "both" || ( "$platform" == "android" && "$DISPATCH_SUBMIT" == "true" ) ]]; then
             platforms='["android","ios"]'
           else
             platforms="[\"$platform\"]"
@@ -332,7 +333,7 @@ jobs:
             --non-interactive \
             --wait
 
-          if [[ "$PLATFORM" == "android" ]]; then
+          if [[ "$PLATFORM" == "android" || "$PLATFORM" == "both" ]]; then
             message="The iOS app was submitted to TestFlight. The Android app was not submitted to Google Play because a Google Play Developer account is not configured."
           else
             message="The iOS app was submitted to TestFlight."

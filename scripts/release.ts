@@ -47,6 +47,9 @@ const usage = [
   "  bun release --ios",
   "  bun release --ios --submit",
   "  bun release --android --submit",
+  "  bun release --android --ios",
+  "  bun release --android --ios --submit",
+  "  bun release --eas --android --ios",
   "  bun release --eas --submit",
   "  bun release --local --submit",
   "  bun release --ios --nightly",
@@ -61,6 +64,9 @@ const useLocal = args.includes("--local")
 const submit = args.includes("--submit")
 const nightly = args.includes("--nightly")
 const bumpOnly = args.includes("--bump-only")
+
+// --android --ios (in either order) targets both platforms in one run
+const both = ios && android
 
 const knownFlags = new Set(["--eas", "--local", "--android", "--ios", "--submit", "--nightly", "--bump-only"])
 
@@ -78,12 +84,6 @@ if (useEas && bumpOnly) {
 
 if (useEas && useLocal) {
   throw new Error("--eas cannot be combined with --local.\n\n" + usage)
-}
-
-if (ios && android) {
-  throw new Error(
-    "--ios cannot be combined with --android. Omit both to target both with --submit.\n\n" + usage
-  )
 }
 
 if (submit && nightly) {
@@ -388,13 +388,15 @@ const branch = currentBranch()
 
 const channel = nightly ? "nightly" : "release"
 
-const platforms: Platform[] = ios
-  ? ["ios"]
-  : android
-    ? ["android"]
-    : submit
-      ? ["android", "ios"]
-      : ["android"]
+const platforms: Platform[] = both
+  ? ["android", "ios"]
+  : ios
+    ? ["ios"]
+    : android
+      ? ["android"]
+      : submit
+        ? ["android", "ios"]
+        : ["android"]
 
 /*
  * Android keeps the current behavior:
@@ -412,11 +414,12 @@ const platforms: Platform[] = ios
  */
 if (useEas) {
   const bump = requestedBump ?? "auto"
-  // Keep workflow dispatch compatible with the already-deployed input schema.
-  // Android + submit means the workflow builds both platforms; an explicit
-  // --android release sends submit=false because there is no store submission yet.
-  const platform = ios ? "ios" : "android"
-  const workflowSubmit = submit && !android
+  // Keep workflow dispatch compatible with the deployed input schema. "both"
+  // builds both platforms; android + submit also expands to both so a plain
+  // --submit still ships iOS, while an explicit --android release sends
+  // submit=false because there is no store submission yet.
+  const platform = both ? "both" : ios ? "ios" : "android"
+  const workflowSubmit = submit && (both || !android)
 
   run("git", ["push", "origin", branch])
 
@@ -438,11 +441,13 @@ if (useEas) {
 
   const submissionDescription = !submit
     ? ""
-    : android
-      ? ", Google Play submission skipped because a developer account is not configured"
-      : ios
-        ? ", TestFlight submission enabled"
-        : ", TestFlight submission enabled; Google Play submission skipped"
+    : both
+      ? ", TestFlight submission enabled; Google Play submission skipped"
+      : android
+        ? ", Google Play submission skipped because a developer account is not configured"
+        : ios
+          ? ", TestFlight submission enabled"
+          : ", TestFlight submission enabled; Google Play submission skipped"
 
   console.log(
     `EAS ${channel} ${platform} release dispatched from ${branch} (${bump} bump${submissionDescription}).`
