@@ -1,3 +1,4 @@
+import { CloudAccount } from "@/components/custom/settings/cloud-account"
 import { SettingsGitHub } from "@/components/custom/settings/github"
 import { useAppTheme } from "@/components/custom/theme"
 import { BottomSheet } from "@/components/ui/bottom-sheet"
@@ -33,8 +34,13 @@ export default function SettingsLayout() {
         name="settings"
         options={{
           title: "Cooler",
-          headerLeft: isDev ? () => <DebugActions /> : undefined,
-          headerRight: () => <SettingsGitHub />,
+          headerLeft: () => <CloudAccount />,
+          headerRight: () => (
+            <View className="flex-row items-center">
+              {isDev ? <DebugActions /> : null}
+              <SettingsGitHub />
+            </View>
+          ),
         }}
       />
     </Stack>
