@@ -46,6 +46,15 @@ jobs:
     if: github.actor == 'danfq' && github.triggering_actor == 'danfq'
     runs-on: ubuntu-latest
 
+    # Serialize the version bump across every release run, regardless of
+    # channel or platform. Two runs bumping and pushing at once would each
+    # compute a version from the same base and produce a double bump; queuing
+    # them (cancel-in-progress: false) makes the second run bump on top of the
+    # first. Builds still run in parallel — only this job is serialized.
+    concurrency:
+      group: cooler-release-prepare
+      cancel-in-progress: false
+
     outputs:
       channel: ${{ steps.metadata.outputs.channel }}
       platforms: ${{ steps.metadata.outputs.platforms }}
@@ -122,7 +131,33 @@ jobs:
             prerelease="false"
           fi
 
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          # The branch can advance between checkout and push — an unrelated
+          # merge, or a concurrent release run for the other platform/channel —
+          # which makes a plain push fail as non-fast-forward. Rebase the
+          # release commit onto the latest remote tip and retry to close the
+          # race window.
+          push_attempts=5
+
+          for attempt in $(seq 1 "$push_attempts"); do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              break
+            fi
+
+            if [[ "$attempt" == "$push_attempts" ]]; then
+              echo "Push to ${GITHUB_REF_NAME} rejected ${push_attempts} times; giving up." >&2
+              exit 1
+            fi
+
+            echo "Push rejected (attempt ${attempt}/${push_attempts}); rebasing onto origin/${GITHUB_REF_NAME} and retrying." >&2
+
+            git fetch origin "$GITHUB_REF_NAME"
+
+            if ! git rebase "origin/${GITHUB_REF_NAME}"; then
+              echo "Automatic rebase onto origin/${GITHUB_REF_NAME} failed — a concurrent change touched a version-bumped file. Resolve manually and re-run." >&2
+              git rebase --abort || true
+              exit 1
+            fi
+          done
 
           {
             echo "channel=$channel"
