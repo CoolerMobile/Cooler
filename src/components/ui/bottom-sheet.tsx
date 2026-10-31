@@ -1,26 +1,20 @@
-import ExpoBottomSheet, {
-  BottomSheetTextInput,
-  type BottomSheetProps,
-} from "@expo/ui/community/bottom-sheet";
-import { Platform, StyleSheet, useWindowDimensions, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ExpoBottomSheet, { BottomSheetTextInput, type BottomSheetProps } from "@expo/ui/community/bottom-sheet"
+import { Platform, StyleSheet, useWindowDimensions, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-const PERCENTAGE_SNAP_POINT = /^(\d+(?:\.\d+)?)%$/;
+const PERCENTAGE_SNAP_POINT = /^(\d+(?:\.\d+)?)%$/
 
-function resolveSnapPoint(
-  snapPoint: string | number | undefined,
-  windowHeight: number,
-) {
+function resolveSnapPoint(snapPoint: string | number | undefined, windowHeight: number) {
   if (typeof snapPoint === "number") {
-    return snapPoint;
+    return snapPoint
   }
 
-  const percentage = snapPoint?.match(PERCENTAGE_SNAP_POINT);
+  const percentage = snapPoint?.match(PERCENTAGE_SNAP_POINT)
   if (!percentage) {
-    return undefined;
+    return undefined
   }
 
-  return (windowHeight * Number(percentage[1])) / 100;
+  return (windowHeight * Number(percentage[1])) / 100
 }
 
 /**
@@ -29,62 +23,30 @@ function resolveSnapPoint(
  * expanded states, so @expo/ui otherwise maps a single snap point to full
  * height regardless of its value.
  */
-export function BottomSheet({
-  children,
-  index = 0,
-  snapPoints,
-  ...props
-}: BottomSheetProps) {
-  const { height: windowHeight } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
+export function BottomSheet({ children, index = 0, snapPoints, ...props }: BottomSheetProps) {
+  const { height: windowHeight } = useWindowDimensions()
+  const insets = useSafeAreaInsets()
 
   // match the native iOS detent, which measures the fraction from below the
   // top safe area rather than the full edge-to-edge window android reports
-  const availableHeight = windowHeight - insets.top;
-
-  // temporary diagnostic, logs the real rendered sheet height per platform so
-  // the android fraction can be matched to ios, remove once dialed in
-  const logRendered = (height: number) => {
-    if (!__DEV__) return;
-    console.log("[bottom-sheet]", {
-      platform: Platform.OS,
-      windowHeight,
-      insetTop: insets.top,
-      insetBottom: insets.bottom,
-      renderedHeight: height,
-      percentOfWindow: Math.round((height / windowHeight) * 100),
-    });
-  };
+  const availableHeight = windowHeight - insets.top
 
   if (Platform.OS !== "android" || snapPoints?.length !== 1) {
     return (
-      <ExpoBottomSheet
-        {...props}
-        index={index}
-        snapPoints={snapPoints}
-      >
-        <View
-          style={styles.measure}
-          onLayout={(event) => logRendered(event.nativeEvent.layout.height)}
-        >
-          {children}
-        </View>
+      <ExpoBottomSheet {...props} index={index} snapPoints={snapPoints}>
+        <View style={styles.measure}>{children}</View>
       </ExpoBottomSheet>
-    );
+    )
   }
 
-  const requestedHeight = resolveSnapPoint(snapPoints[0], availableHeight);
+  const requestedHeight = resolveSnapPoint(snapPoints[0], availableHeight)
 
   if (requestedHeight === undefined) {
     return (
-      <ExpoBottomSheet
-        {...props}
-        index={index}
-        snapPoints={snapPoints}
-      >
+      <ExpoBottomSheet {...props} index={index} snapPoints={snapPoints}>
         {children}
       </ExpoBottomSheet>
-    );
+    )
   }
 
   return (
@@ -93,22 +55,15 @@ export function BottomSheet({
       index={index}
       snapPoints={undefined}
       enableDynamicSizing
-      handleComponent={null}
-    >
-      <View
-        style={[
-          styles.androidSheet,
-          { height: Math.min(Math.max(requestedHeight, 1), availableHeight) },
-        ]}
-        onLayout={(event) => logRendered(event.nativeEvent.layout.height)}
-      >
+      handleComponent={null}>
+      <View style={[styles.androidSheet, { height: Math.min(Math.max(requestedHeight, 1), availableHeight) }]}>
         <View style={styles.androidHandleContainer} pointerEvents="none">
           <View className="h-1 w-8 rounded-full bg-muted-foreground" />
         </View>
         <View style={styles.androidContent}>{children}</View>
       </View>
     </ExpoBottomSheet>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -126,7 +81,7 @@ const styles = StyleSheet.create({
   androidContent: {
     flex: 1,
   },
-});
+})
 
-export default BottomSheet;
-export { BottomSheetTextInput };
+export default BottomSheet
+export { BottomSheetTextInput }
