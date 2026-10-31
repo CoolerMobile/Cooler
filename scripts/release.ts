@@ -165,17 +165,32 @@ const parseVersion = (version: string): [number, number, number] => {
 }
 
 const bumpVersion = (currentVersion: string, bump: Bump) => {
-  const [major, minor, patch] = parseVersion(currentVersion)
+  let [major, minor, patch] = parseVersion(currentVersion)
 
   if (bump === "major") {
     return `${major + 1}.0.0`
   }
 
   if (bump === "minor") {
-    return `${major}.${minor + 1}.0`
+    minor += 1
+    patch = 0
+  } else {
+    patch += 1
   }
 
-  return `${major}.${minor}.${patch + 1}`
+  // Roll a saturated segment (9) over into the next one up. Patch 9 -> 0 carries
+  // into minor, minor 9 -> 0 carries into major. Major is never capped.
+  if (patch > 9) {
+    patch = 0
+    minor += 1
+  }
+
+  if (minor > 9) {
+    minor = 0
+    major += 1
+  }
+
+  return `${major}.${minor}.${patch}`
 }
 
 const isGreaterVersion = (candidate: string, current: string) => {
