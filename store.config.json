@@ -1,0 +1,60 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "version": "1.3.2",
+    "copyright": "2026 DanFQ",
+    "release": {
+      "automaticRelease": true
+    },
+    "info": {
+      "en-US": {
+        "description": "Monitor instances, restart services, and tail logs directly from your pocket.",
+        "keywords": [
+          "coolify",
+          "dashboard",
+          "pocket",
+          "companion"
+        ],
+        "marketingUrl": "https://getcooler.app",
+        "supportUrl": "https://getcooler.app",
+        "promoText": "Because self-hosting from your phone shouldn't feel like wrestling a desktop web dashboard.",
+        "title": "Cooler for Coolify",
+        "subtitle": "Coolify, in your pocket.",
+        "releaseNotes": "New in Cooler:\n\n• CoolerCloud sign-in: create an account to pair and sync your Coolify connection.\n• Real-time push notifications for Coolify events, delivered through CoolerBridge.\n• Scan a CoolerCloud QR code right inside the connect sheet.\n\nWe also polished connection error messages and made the experience more consistent across iOS and Android.",
+        "privacyPolicyUrl": "https://getcooler.app/legal/privacy"
+      }
+    },
+    "categories": [
+      "DEVELOPER_TOOLS"
+    ],
+    "advisory": {
+      "ageRatingOverride": "NONE",
+      "alcoholTobaccoOrDrugUseOrReferences": "NONE",
+      "contests": "NONE",
+      "gambling": false,
+      "gamblingSimulated": "NONE",
+      "horrorOrFearThemes": "NONE",
+      "kidsAgeBand": null,
+      "koreaAgeRatingOverride": "NONE",
+      "lootBox": false,
+      "matureOrSuggestiveThemes": "NONE",
+      "medicalOrTreatmentInformation": "NONE",
+      "profanityOrCrudeHumor": "NONE",
+      "sexualContentGraphicAndNudity": "NONE",
+      "sexualContentOrNudity": "NONE",
+      "unrestrictedWebAccess": false,
+      "violenceCartoonOrFantasy": "NONE",
+      "violenceRealistic": "NONE",
+      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
+      "advertising": false,
+      "ageAssurance": false,
+      "ageRatingOverrideV2": "NONE",
+      "developerAgeRatingInfoUrl": null,
+      "gunsOrOtherWeapons": "NONE",
+      "healthOrWellnessTopics": false,
+      "messagingAndChat": false,
+      "parentalControls": false,
+      "userGeneratedContent": false
+    }
+  }
+}
