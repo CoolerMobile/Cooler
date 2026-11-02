@@ -10,10 +10,13 @@
       "en-US": {
         "description": "Monitor instances, restart services, and tail logs directly from your pocket.",
         "keywords": [
-          "coolify",
           "dashboard",
-          "pocket",
-          "companion"
+          "companion",
+          "self-hosting",
+          "devops",
+          "server",
+          "docker",
+          "deploy"
         ],
         "marketingUrl": "https://getcooler.app",
         "supportUrl": "https://getcooler.app",
