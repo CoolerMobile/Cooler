@@ -16,10 +16,7 @@
       "associatedDomains": [
         "applinks:getcooler.app"
       ],
-      "appleTeamId": "73H669GA5T",
-      "entitlements": {
-        "aps-environment": "development"
-      }
+      "appleTeamId": "73H669GA5T"
     },
     "android": {
       "adaptiveIcon": {
@@ -88,7 +85,8 @@
           }
         }
       ],
-      "@sentry/react-native"
+      "@sentry/react-native",
+      "./plugins/withApsEnvironment"
     ],
     "experiments": {
       "typedRoutes": true,
