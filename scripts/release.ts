@@ -17,12 +17,21 @@ type AppJson = {
   [key: string]: unknown
 }
 
+type StoreConfig = {
+  apple?: {
+    version?: string
+    [key: string]: unknown
+  }
+  [key: string]: unknown
+}
+
 const root = join(import.meta.dir, "..")
 const packagePath = join(root, "package.json")
 const appConfigPath = join(root, "app.json")
 const androidBuildGradlePath = join(root, "android", "app", "build.gradle")
 const iosInfoPlistPath = join(root, "ios", "Cooler", "Info.plist")
 const iosProjectPath = join(root, "ios", "Cooler.xcodeproj", "project.pbxproj")
+const storeConfigPath = join(root, "store.config.json")
 const versionedPaths = [packagePath, appConfigPath, androidBuildGradlePath, iosInfoPlistPath, iosProjectPath]
 const versionedFiles = versionedPaths.map((path) => path.slice(root.length + 1))
 const versionPattern = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/
@@ -36,9 +45,16 @@ const usage = [
   "  --ios         Build only for iOS",
   "  --submit      Submit iOS to TestFlight and Google Play",
   "  --nightly     Create a nightly/internal build",
-  "  --eas         Dispatch the existing EAS GitHub workflow",
-  "  --local       Build locally (the default)",
-  "  --bump-only   Only update app and native versions, then print the new version",
+  "  --eas           Dispatch the existing EAS GitHub workflow",
+  "  --local         Build locally (the default)",
+  "  --bump-only     Only update app and native versions, then print the new version",
+  "  --push-metadata Also push the store listing + What's New to App Store Connect",
+  "",
+  "Store metadata (listing text + App Store \"What's New\") is pushed only on demand:",
+  "add --push-metadata to an iOS store submission (--ios --submit --push-metadata).",
+  "When pushing, the \"What's New\" is shown for review and must be confirmed before",
+  "building. It reuses releaseNotes from store.config.json if set, else drafts them",
+  "from commits. Set WHATS_NEW_YES=1 to skip the prompt (non-interactive).",
   "",
   "Examples:",
   "  bun release",
@@ -46,6 +62,7 @@ const usage = [
   "  bun release --nightly",
   "  bun release --ios",
   "  bun release --ios --submit",
+  "  bun release --ios --submit --push-metadata",
   "  bun release --android --submit",
   "  bun release --android --ios",
   "  bun release --android --ios --submit",
@@ -64,11 +81,21 @@ const useLocal = args.includes("--local")
 const submit = args.includes("--submit")
 const nightly = args.includes("--nightly")
 const bumpOnly = args.includes("--bump-only")
+const pushMetadata = args.includes("--push-metadata")
 
 // --android --ios (in either order) targets both platforms in one run
 const both = ios && android
 
-const knownFlags = new Set(["--eas", "--local", "--android", "--ios", "--submit", "--nightly", "--bump-only"])
+const knownFlags = new Set([
+  "--eas",
+  "--local",
+  "--android",
+  "--ios",
+  "--submit",
+  "--nightly",
+  "--bump-only",
+  "--push-metadata",
+])
 
 const unknownFlags = args.filter((arg) => arg.startsWith("--") && !knownFlags.has(arg))
 
@@ -89,6 +116,17 @@ if (useEas && useLocal) {
 if (submit && nightly) {
   throw new Error(
     "--submit cannot be used with --nightly because nightly builds are not submitted to app stores.\n\n" +
+      usage
+  )
+}
+
+if (pushMetadata && bumpOnly) {
+  throw new Error("--push-metadata cannot be combined with --bump-only.\n\n" + usage)
+}
+
+if (pushMetadata && !submit) {
+  throw new Error(
+    "--push-metadata only applies to a store submission; add --submit (store metadata pushes alongside the iOS submission).\n\n" +
       usage
   )
 }
@@ -373,6 +411,23 @@ const prepareVersion = () => {
   writeFileSync(iosInfoPlistPath, iosInfoPlist)
   writeFileSync(iosProjectPath, iosProject)
 
+  // bump the App Store version string (apple.version) in store.config.json so the
+  // listing tracks the same version as git. kept out of the clean-check above because
+  // store.config.json also carries releaseNotes that reviewWhatsNew may touch in the
+  // same run; captured in originalFiles so a failed build restores it too.
+  try {
+    const originalStoreConfig = readFileSync(storeConfigPath, "utf8")
+    const storeConfig = JSON.parse(originalStoreConfig) as StoreConfig
+
+    if (storeConfig.apple && typeof storeConfig.apple.version === "string") {
+      originalFiles.set(storeConfigPath, originalStoreConfig)
+      storeConfig.apple.version = version
+      writeFileSync(storeConfigPath, `${JSON.stringify(storeConfig, null, 2)}\n`)
+    }
+  } catch {
+    // store.config.json is optional; skip the bump when it is absent
+  }
+
   return {
     version,
     description,
@@ -413,6 +468,92 @@ const platforms: Platform[] = both
         ? ["android", "ios"]
         : ["android"]
 
+// ── App Store "What's New": generate (or reuse), SHOW, and confirm ──
+// Only when metadata will actually be pushed (--push-metadata) for a store-submitted
+// iOS release — there is no point reviewing notes we are not going to publish. Reuses
+// existing releaseNotes in store.config.json if present (e.g. notes already polished by
+// the app-store-submit skill); otherwise drafts them from commits. No em-dashes.
+// Returns whether store.config.json was modified (so the --eas path can commit it).
+// Aborts the whole run (exit 0) if the notes are not approved.
+const reviewWhatsNew = (): { wroteStoreConfig: boolean } => {
+  const storeConfigPath = join(root, "store.config.json")
+
+  let originalStoreConfig = ""
+  try {
+    originalStoreConfig = readFileSync(storeConfigPath, "utf8")
+  } catch {
+    fail("store.config.json not found. Run `eas metadata:pull` first (What's New lives there).")
+  }
+
+  const storeConfig = JSON.parse(originalStoreConfig) as {
+    apple?: { info?: Record<string, { releaseNotes?: string } | undefined> }
+  }
+
+  const info = storeConfig.apple?.info ?? {}
+  const locales = Object.keys(info)
+
+  if (locales.length === 0) {
+    fail("store.config.json has no apple.info locales. Run `eas metadata:pull` first.")
+  }
+
+  // Never emit em/en dashes in user-facing copy.
+  const stripDashes = (text: string) => text.replace(/\s*[—–]\s*/g, ": ")
+
+  const primaryLocale = locales.includes("en-US") ? "en-US" : locales[0]
+  const existing = (info[primaryLocale]?.releaseNotes ?? "").trim()
+
+  let notes: string
+  let source: string
+  let wroteStoreConfig = false
+
+  if (existing) {
+    notes = stripDashes(existing)
+    source = `existing store.config.json (${primaryLocale})`
+  } else {
+    const reference = latestReleaseReference()
+    const range = reference ? `${reference}..HEAD` : "HEAD"
+    const script = join(root, ".claude", "skills", "app-store-submit", "whats-new.sh")
+    notes = stripDashes(run("bash", [script, "--notes", range], true).trim())
+    for (const locale of locales) info[locale] = { ...info[locale], releaseNotes: notes }
+    writeFileSync(storeConfigPath, `${JSON.stringify(storeConfig, null, 2)}\n`)
+    wroteStoreConfig = true
+    source = `generated from commits (${range})`
+  }
+
+  console.log(`\n===== App Store "What's New"  [${source}] =====\n`)
+  console.log(notes)
+  console.log(`\n==============================================\n`)
+
+  const assumeYes = process.env.WHATS_NEW_YES === "1"
+  let approved = assumeYes
+
+  if (assumeYes) {
+    console.log("WHATS_NEW_YES=1 set; continuing without a prompt.")
+  } else if (!process.stdin.isTTY) {
+    fail(
+      "Cannot confirm release notes without a terminal. Re-run `bun release` interactively, " +
+        "or review store.config.json and set WHATS_NEW_YES=1."
+    )
+  } else {
+    const answer = (prompt("Proceed with these release notes? [y/N]") ?? "").trim().toLowerCase()
+    approved = answer === "y" || answer === "yes"
+  }
+
+  if (!approved) {
+    if (wroteStoreConfig) writeFileSync(storeConfigPath, originalStoreConfig)
+    console.log(
+      "Aborted. Edit store.config.json (or run the app-store-submit skill to polish the notes), then re-run."
+    )
+    process.exit(0)
+  }
+
+  if (wroteStoreConfig) {
+    run("bunx", ["eas-cli@latest", "metadata:lint"])
+  }
+
+  return { wroteStoreConfig }
+}
+
 /*
  * Android keeps the current behavior:
  *
@@ -435,6 +576,27 @@ if (useEas) {
   // submit=false because there is no store submission yet.
   const platform = both ? "both" : ios ? "ios" : "android"
   const workflowSubmit = submit && (both || !android)
+  const pushMetadataRemote = pushMetadata && workflowSubmit
+
+  // Review the What's New here in the terminal BEFORE dispatching to CI, then
+  // commit store.config.json so the CI run (which checks out this branch) pushes
+  // exactly what you saw. CI itself has no interactive prompt. We commit whenever
+  // the file has uncommitted content — whether reviewWhatsNew regenerated it or it
+  // was just never tracked — otherwise the CI metadata job would not see it.
+  if (pushMetadataRemote && platforms.includes("ios")) {
+    reviewWhatsNew()
+
+    run("git", ["add", "store.config.json"])
+
+    const staged = Bun.spawnSync(["git", "diff", "--cached", "--quiet", "--", "store.config.json"], {
+      cwd: root,
+    })
+
+    // diff --cached --quiet exits non-zero when there are staged changes to commit.
+    if (!staged.success) {
+      run("git", ["commit", "-m", "chore: update App Store What's New"])
+    }
+  }
 
   run("git", ["push", "origin", branch])
 
@@ -451,6 +613,8 @@ if (useEas) {
     "--field",
     `submit=${workflowSubmit}`,
     "--field",
+    `push_metadata=${pushMetadataRemote}`,
+    "--field",
     `bump=${bump}`,
   ])
 
@@ -464,11 +628,21 @@ if (useEas) {
           ? ", TestFlight submission enabled"
           : ", TestFlight submission enabled; Google Play submission skipped"
 
+  const metadataDescription = pushMetadataRemote
+    ? ", store metadata (listing + What's New) reviewed and queued for CI push"
+    : ""
+
   console.log(
-    `EAS ${channel} ${platform} release dispatched from ${branch} (${bump} bump${submissionDescription}).`
+    `EAS ${channel} ${platform} release dispatched from ${branch} (${bump} bump${submissionDescription}${metadataDescription}).`
   )
 
   process.exit(0)
+}
+
+// Local build path: review the What's New before building. (The --eas path above
+// already reviewed and committed it before dispatching to CI.)
+if (submit && pushMetadata && platforms.includes("ios")) {
+  reviewWhatsNew()
 }
 
 const releaseNotes = createReleaseNotes()
@@ -546,7 +720,7 @@ try {
   throw error
 }
 
-run("git", ["add", ...versionedFiles])
+run("git", ["add", ...versionedFiles, "store.config.json"])
 
 run("git", ["commit", "-m", `chore: release ${nightly ? "nightly " : ""}v${version}`])
 
@@ -598,6 +772,20 @@ if (submit && iosArtifact) {
   console.log(
     `Cooler v${version} uploaded to App Store Connect. It should appear in TestFlight after Apple finishes processing it.`
   )
+
+  if (pushMetadata) {
+    // Sync the store listing + the "What's New" (store.config.json) that was
+    // reviewed and confirmed earlier in this run. Only on demand (--push-metadata).
+    console.log("Pushing store metadata (listing + What's New) to App Store Connect...")
+    run("bunx", ["eas-cli@latest", "metadata:push", "--non-interactive"])
+    console.log("Store listing and What's New synced to App Store Connect.")
+  } else {
+    console.log(
+      "Store metadata (listing + What's New) was not pushed. Push it on demand with " +
+        "`bun release --ios --submit --push-metadata`, or directly with `eas metadata:push` " +
+        "after reviewing store.config.json (`eas metadata:lint`)."
+    )
+  }
 }
 
 if (submit && platforms.includes("android")) {

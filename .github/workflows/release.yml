@@ -28,6 +28,14 @@ on:
         default: false
         type: boolean
 
+      push_metadata:
+        description: >-
+          Push store listing + What's New to App Store Connect (uses the
+          committed store.config.json; requires submit + release channel)
+        required: true
+        default: false
+        type: boolean
+
       bump:
         description: Version bump (auto, patch, minor, major, or x.y.z)
         required: true
@@ -81,11 +89,17 @@ jobs:
           CHANNEL: ${{ inputs.channel }}
           PLATFORM: ${{ inputs.platform }}
           SUBMIT: ${{ inputs.submit }}
+          PUSH_METADATA: ${{ inputs.push_metadata }}
         run: |
           set -euo pipefail
 
           if [[ "$SUBMIT" == "true" && "$CHANNEL" != "release" ]]; then
             echo "Nightly builds are not submitted to app stores." >&2
+            exit 1
+          fi
+
+          if [[ "$PUSH_METADATA" == "true" && "$SUBMIT" != "true" ]]; then
+            echo "push_metadata requires submit=true (store metadata pushes alongside the iOS submission)." >&2
             exit 1
           fi
 
@@ -343,6 +357,59 @@ jobs:
           echo "### App store submission" >> "$GITHUB_STEP_SUMMARY"
           echo >> "$GITHUB_STEP_SUMMARY"
           echo "$message" >> "$GITHUB_STEP_SUMMARY"
+
+  metadata:
+    name: Push store metadata to App Store Connect
+    if: >-
+      github.actor == 'danfq' &&
+      github.triggering_actor == 'danfq' &&
+      inputs.submit &&
+      inputs.push_metadata &&
+      inputs.channel == 'release'
+    needs:
+      - prepare
+      - submit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out prepared source
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Set up Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # The remote path pushes the store.config.json committed on the release
+      # commit. The human review of the "What's New" happens locally (polish the
+      # notes, commit them) before dispatching with push_metadata=true, since CI
+      # has no interactive confirmation.
+      - name: Validate and push store metadata
+        run: |
+          set -euo pipefail
+
+          if [[ ! -f store.config.json ]]; then
+            echo "store.config.json not found; cannot push store metadata." >&2
+            exit 1
+          fi
+
+          eas metadata:lint
+          eas metadata:push --non-interactive
+
+          echo "### Store metadata" >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
+          echo "Store listing and What's New were pushed to App Store Connect from the committed store.config.json." >> "$GITHUB_STEP_SUMMARY"
 
   release:
     name: Publish GitHub Release

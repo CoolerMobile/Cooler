@@ -1,37 +1,49 @@
-set dotenv-load
+# Cooler task recipes. Run `just` (no args) to see this list.
+#
+# Most recipes take an optional version at the end, e.g.
+#   just release patch        -> auto-bump to next patch
+#   just release-store 1.3.3  -> explicit version
 
-artifact_dir := "artifacts"
-version := `bun -e 'console.log(require("./package.json").version)'`
-
-# Show the available development commands.
+# Show every recipe with its description
 default:
-    @just --list
+    @just --list --unsorted
 
-# Install dependencies from the lockfile.
-install:
-    bun install --frozen-lockfile
+# ───────────────────────── Releasing (iOS → TestFlight) ─────────────────────────
 
-# Start the Expo development server.
+# Build locally, submit to TestFlight. The everyday release.
+release *args:
+    bun run release:ios {{args}}
+
+# Local release + push the App Store listing & What's New (you review it first).
+release-store *args:
+    bun run release:store {{args}}
+
+# Build remotely in CI (EAS GitHub workflow), submit to TestFlight.
+release-ci *args:
+    bun run release:eas {{args}}
+
+# CI release + metadata push. Review the What's New locally before it dispatches.
+release-ci-store *args:
+    bun run release:eas:store {{args}}
+
+# Internal nightly build (never submitted to a store).
+nightly *args:
+    bun run release:nightly {{args}}
+
+# Just compute and write the next version, no build.
+bump *args:
+    bun run release:bump {{args}}
+
+# ─────────────────────────────── Everyday dev ───────────────────────────────
+
+# Start the Expo dev server (cleared cache, Expo Go).
 dev:
     bun run dev
 
-# Type-check the app without emitting files.
-check:
-    bunx tsc --noEmit
+# Build and run the dev client on a connected device.
+dev-device:
+    bun run dev:native-build
 
 # Run the test suite.
-test:
-    bun test
-
-# Build an installable Android APK locally without creating a release.
-build-android profile="release":
-    mkdir -p "{{ artifact_dir }}"
-    bunx eas-cli@latest build --local --platform android --profile "{{ profile }}" --non-interactive --output "{{ artifact_dir }}/Cooler-local-{{ version }}-android.apk"
-
-# Build an installable iOS IPA locally without creating or submitting a release.
-build-ios profile="production":
-    mkdir -p "{{ artifact_dir }}"
-    bunx eas-cli@latest build --local --platform ios --profile "{{ profile }}" --non-interactive --output "{{ artifact_dir }}/Cooler-local-{{ version }}-ios.ipa"
-
-# Build local artifacts for both platforms (requires macOS for the iOS build).
-build-all: build-android build-ios
+test *args:
+    bun run test {{args}}
