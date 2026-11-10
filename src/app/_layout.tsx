@@ -10,6 +10,7 @@ import { PortalHost } from "@rn-primitives/portal"
 import { useCoolifyMonitor } from "@/lib/hooks/data/coolify"
 import { useDeploymentMonitor } from "@/lib/hooks/data/deployments"
 import { useDeploymentBackgroundTask } from "@/lib/tasks/deployment-monitor"
+import { useDeepLinks } from "@/lib/hooks/account/deep-links"
 import { useSentry } from "@/lib/hooks/sentry"
 import * as Sentry from "@sentry/react-native"
 
@@ -36,6 +37,9 @@ function RootNavigator() {
   useCoolifyMonitor()
   useDeploymentMonitor()
   useDeploymentBackgroundTask()
+
+  // handle cooler:// deep links (bridge pairing)
+  useDeepLinks()
 
   // theme
   const { colorScheme } = useAppTheme()

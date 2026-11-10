@@ -1,4 +1,10 @@
-import { codeFromScan, extractAuthCode, isBridgeSessionExpired } from "@/lib/cooler-cloud/session-utils"
+import {
+  codeFromScan,
+  extractAuthCode,
+  isBridgeSessionExpired,
+  isPairLink,
+  parsePairLink,
+} from "@/lib/cooler-cloud/session-utils"
 import { describe, expect, test } from "bun:test"
 
 describe("extractAuthCode", () => {
@@ -53,5 +59,47 @@ describe("codeFromScan", () => {
 
   test("returns empty string for a deep link without a code", () => {
     expect(codeFromScan("cooler://auth?state=xyz")).toBe("")
+  })
+})
+
+describe("isPairLink", () => {
+  const link = `cooler://pair?bridge=cb_1&url=${encodeURIComponent("https://bridge.example.com")}`
+
+  test("is true for a bridge pairing link", () => {
+    expect(isPairLink(link)).toBe(true)
+  })
+
+  test("is false for a sign in redirect", () => {
+    expect(isPairLink("cooler://auth?code=ABC123&state=xyz")).toBe(false)
+  })
+
+  test("is false for a raw code", () => {
+    expect(isPairLink("CLD-1234-5678")).toBe(false)
+  })
+})
+
+describe("parsePairLink", () => {
+  test("extracts the bridge id, url and name", () => {
+    const link =
+      `cooler://pair?bridge=cb_1&url=${encodeURIComponent("https://bridge.example.com")}` +
+      `&name=${encodeURIComponent("Prod Coolify")}`
+    expect(parsePairLink(link)).toEqual({
+      cloudBridgeId: "cb_1",
+      baseUrl: "https://bridge.example.com",
+      name: "Prod Coolify",
+    })
+  })
+
+  test("leaves the name undefined when absent", () => {
+    const link = `cooler://pair?bridge=cb_1&url=${encodeURIComponent("https://bridge.example.com")}`
+    expect(parsePairLink(link)).toEqual({
+      cloudBridgeId: "cb_1",
+      baseUrl: "https://bridge.example.com",
+      name: undefined,
+    })
+  })
+
+  test("throws when the pairing params are missing", () => {
+    expect(() => parsePairLink("cooler://auth?code=ABC123")).toThrow("valid bridge pairing link")
   })
 })

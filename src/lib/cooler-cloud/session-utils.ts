@@ -63,3 +63,33 @@ export const codeFromScan = (scanned: string): string => {
   }
   return scanned.trim()
 }
+
+/**
+ * whether a scanned value or url is a cooler bridge pairing deep link
+ *
+ * @param value raw scanned string or url
+ *
+ * @returns whether it carries the pairing params
+ */
+export const isPairLink = (value: string): boolean => {
+  if (!value.includes("://")) return false
+  const params = parseQuery(value)
+  return Boolean(params.bridge && params.url)
+}
+
+/**
+ * parse a cooler bridge pairing deep link
+ *
+ * @param url the cooler://pair deep link
+ *
+ * @returns the cloud bridge id, bridge base url, and optional name
+ */
+export const parsePairLink = (url: string): { cloudBridgeId: string; baseUrl: string; name?: string } => {
+  const params = parseQuery(url)
+  const cloudBridgeId = params.bridge
+  const baseUrl = params.url
+
+  if (!cloudBridgeId || !baseUrl) throw Error("That link is not a valid bridge pairing link")
+
+  return { cloudBridgeId, baseUrl, name: params.name || undefined }
+}

@@ -5,7 +5,7 @@ import {
   BRIDGE_SESSION_REFRESH_BUFFER_MS,
   COOLER_CLOUD_REDIRECT,
 } from "@/lib/cooler-cloud/config"
-import { extractAuthCode, isBridgeSessionExpired } from "@/lib/cooler-cloud/session-utils"
+import { extractAuthCode, isBridgeSessionExpired, parsePairLink } from "@/lib/cooler-cloud/session-utils"
 import { getExpoPushToken } from "@/lib/hooks/notifications"
 import { getNotifications, saveNotification } from "@/lib/storage/notifications"
 import { useAccountStore } from "@/lib/stores/account"
@@ -82,6 +82,58 @@ export const registerDevice = async (link: BridgeLink) => {
   const session = await ensureBridgeSession(link)
   const device = await bridge.registerDevice(link.baseUrl, session.accessToken, { platform, pushToken })
   useAccountStore.getState().setDeviceId(link.cloudBridgeId, device.id)
+}
+
+/**
+ * pair a bridge to the signed in account, then register this device
+ *
+ * runs the bridge-orchestrated flow: create a challenge on the bridge, have the
+ * cloud sign a pairing assertion for it, complete the link, then store the
+ * bridge and register this device so push can reach it
+ *
+ * @param input the cloud bridge id, bridge base url, and optional name
+ *
+ * @returns the linked bridge
+ */
+export const pairBridge = async (input: {
+  cloudBridgeId: string
+  baseUrl: string
+  name?: string
+}): Promise<BridgeLink> => {
+  const store = useAccountStore.getState()
+  const session = store.session
+  if (!session) throw Error("Sign in to CoolerCloud before pairing a bridge")
+
+  // challenge on the bridge, assertion from the cloud, then complete the link
+  const challenge = await bridge.createPairing(input.baseUrl)
+  const { assertion } = await cloud.requestPairAssertion(session.token, input.cloudBridgeId, challenge.id)
+  const result = await bridge.completePairing(input.baseUrl, { code: challenge.code, assertion })
+
+  const link: BridgeLink = {
+    cloudBridgeId: result.cloudBridgeId,
+    name: input.name ?? "Coolify",
+    baseUrl: input.baseUrl,
+  }
+
+  // store the bridge, replacing any existing entry for the same id
+  const others = store.bridges.filter((existing) => existing.cloudBridgeId !== link.cloudBridgeId)
+  store.setBridges([...others, link])
+
+  // register this device, a failure here shouldn't undo a successful link
+  await registerDevice(link).catch((error) => console.error("[account] device registration failed:", error))
+
+  return link
+}
+
+/**
+ * complete pairing from a scanned or opened deep link
+ *
+ * @param url the cooler://pair deep link
+ *
+ * @returns the linked bridge
+ */
+export const completePairingFromLink = async (url: string): Promise<BridgeLink> => {
+  return pairBridge(parsePairLink(url))
 }
 
 /** archive bridge events that are not already stored, oldest first */
@@ -197,5 +249,13 @@ export const syncBridgeEvents = async () => {
 
 /** coolercloud account hook exposing the sign in lifecycle */
 export const useAccount = () => {
-  return { signInWithBrowser, completeSignInWithCode, signOut, syncBridgeEvents, registerDevice }
+  return {
+    signInWithBrowser,
+    completeSignInWithCode,
+    signOut,
+    syncBridgeEvents,
+    registerDevice,
+    pairBridge,
+    completePairingFromLink,
+  }
 }
