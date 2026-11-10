@@ -62,6 +62,8 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+# env backups and variants, only the git-crypt encrypted .env is committed
+.env.*
 .cache
 .parcel-cache
 .next
