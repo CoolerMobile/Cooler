@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
-import { codeFromScan } from "@/lib/cooler-cloud/session-utils"
+import { codeFromScan, isPairLink } from "@/lib/cooler-cloud/session-utils"
 import { useAccount } from "@/lib/hooks/account/session"
 import { useAccountStore } from "@/lib/stores/account"
 import { CameraView, useCameraPermissions } from "expo-camera"
@@ -30,7 +30,7 @@ const errorMessage = (error: unknown, fallback: string) => (error instanceof Err
  * behind once dismissed
  */
 export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) => {
-  const { signInWithBrowser, completeSignInWithCode, signOut } = useAccount()
+  const { signInWithBrowser, completeSignInWithCode, signOut, completePairingFromLink } = useAccount()
   const session = useAccountStore((state) => state.session)
 
   const [permission, requestPermission] = useCameraPermissions()
@@ -40,6 +40,8 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
   const [codeValue, setCodeValue] = useState("")
   const [scannerOpen, setScannerOpen] = useState(false)
   const [scanHandled, setScanHandled] = useState(false)
+  // what the scanner is scanning for: a sign in code or a bridge pairing link
+  const [scanMode, setScanMode] = useState<"signin" | "pair">("signin")
 
   const close = () => {
     onOpenChange(false)
@@ -60,7 +62,20 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     }
   }
 
-  const openScanner = async () => {
+  const runPairing = async (scanned: string) => {
+    try {
+      setBusy(true)
+      const link = await completePairingFromLink(scanned)
+      close()
+      Alert.alert("Bridge paired", `${link.name} is linked, and this device will receive its notifications.`)
+    } catch (error) {
+      Alert.alert("Pairing failed", errorMessage(error, "Could not pair the bridge."))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const openScanner = async (mode: "signin" | "pair" = "signin") => {
     if (busy) return
 
     let granted = permission?.granted ?? false
@@ -72,11 +87,14 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     if (!granted) {
       Alert.alert(
         "Camera access needed",
-        "Enable camera access in Settings to scan your CoolerCloud sign in code."
+        mode === "pair"
+          ? "Enable camera access in Settings to scan a bridge pairing code."
+          : "Enable camera access in Settings to scan your CoolerCloud sign in code."
       )
       return
     }
 
+    setScanMode(mode)
     setScanHandled(false)
     setScannerOpen(true)
   }
@@ -85,6 +103,16 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     if (scanHandled) return
     setScanHandled(true)
     setScannerOpen(false)
+
+    // pairing mode expects a bridge deep link
+    if (scanMode === "pair") {
+      if (!isPairLink(scanned)) {
+        Alert.alert("Invalid code", "That QR code is not a bridge pairing code.")
+        return
+      }
+      void runPairing(scanned)
+      return
+    }
 
     const code = codeFromScan(scanned)
     if (!code) {
@@ -118,7 +146,9 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
           <View className="gap-1">
             <Text className="text-xl font-semibold">Scan QR</Text>
             <Text className="text-sm text-muted-foreground">
-              Point your camera at the CoolerCloud sign in QR code.
+              {scanMode === "pair"
+                ? "Point your camera at the bridge pairing QR code from CoolerCloud."
+                : "Point your camera at the CoolerCloud sign in QR code."}
             </Text>
           </View>
 
@@ -156,6 +186,10 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
                   <Text className="text-sm text-muted-foreground">{session.user.email}</Text>
                 </View>
               </View>
+              <Button variant="outline" onPress={() => openScanner("pair")} disabled={busy}>
+                <Icon as={QrCode} />
+                <Text>Pair a Bridge</Text>
+              </Button>
               <Button variant="destructive" onPress={handleSignOut} disabled={busy}>
                 {busy ? <ActivityIndicator /> : null}
                 <Text>Sign out</Text>
@@ -177,7 +211,7 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
                   <Icon as={KeyRound} />
                   <Text>Enter code</Text>
                 </Button>
-                <Button className="flex-1" variant="outline" onPress={openScanner} disabled={busy}>
+                <Button className="flex-1" variant="outline" onPress={() => openScanner("signin")} disabled={busy}>
                   <Icon as={QrCode} />
                   <Text>Scan QR</Text>
                 </Button>
