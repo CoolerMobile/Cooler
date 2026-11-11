@@ -61,6 +61,13 @@ export const createPairing = (baseUrl: string) =>
 export const completePairing = (baseUrl: string, body: { code: string; assertion: string }) =>
   call<{ linked: boolean; cloudBridgeId: string }>(baseUrl, "pairing/complete", { method: "POST", body })
 
+/** read a pairing challenge's status, and the assertion that consumed it */
+export const getPairing = (baseUrl: string, id: string) =>
+  call<{ id: string; status: "pending" | "completed" | "expired"; jti: string | null }>(
+    baseUrl,
+    `pairing/${id}`
+  )
+
 /** exchange a cloud access assertion for a bridge session */
 export const exchange = (baseUrl: string, assertion: string) =>
   call<{ accessToken: string; tokenType: string; expiresAt: string; scopes: string[] }>(

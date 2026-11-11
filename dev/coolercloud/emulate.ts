@@ -38,11 +38,19 @@ const linkBridge = async (privateKey: Awaited<ReturnType<typeof loadPrivateKey>>
   const pairing = await bridge.createPairing(BRIDGE_URL)
   step("create pairing challenge", pairing.ok, `status ${pairing.status}`)
 
-  const assertion = await signPairAssertion(privateKey, created.data.id, pairing.data.id)
+  const { assertion, jti } = await signPairAssertion(privateKey, created.data.id, pairing.data.id)
   const completed = await bridge.completePairing(BRIDGE_URL, { code: pairing.data.code, assertion })
   step("complete pairing", completed.ok && completed.data.linked === true, `status ${completed.status}`)
 
-  return { bridgeId: created.data.id, webhookUrl: created.data.webhookUrl, pairing }
+  // the cloud confirms the round trip by matching the jti the bridge reports
+  const status = await bridge.getPairing(BRIDGE_URL, pairing.data.id)
+  step(
+    "bridge reports the consuming assertion",
+    status.ok && status.data.status === "completed" && status.data.jti === jti,
+    `status ${status.data?.status}`
+  )
+
+  return { bridgeId: created.data.id, webhookUrl: created.data.webhookUrl, pairing, assertion }
 }
 
 /** run the happy path from pairing through to a delivered event */
@@ -79,7 +87,11 @@ const runSuccess = async () => {
 /** run flows that must be rejected and assert the bridge refuses them */
 const runFailures = async () => {
   const privateKey = await loadPrivateKey()
-  const { bridgeId, pairing } = await linkBridge(privateKey)
+  const { bridgeId, pairing, assertion: pairAssertion } = await linkBridge(privateKey)
+
+  // a pairing assertion can never pass as an access assertion
+  const confused = await bridge.exchange(BRIDGE_URL, pairAssertion)
+  step("pairing assertion rejected for access", confused.status === 401, `status ${confused.status}`)
 
   const tampered = await bridge.exchange(
     BRIDGE_URL,
@@ -115,7 +127,7 @@ const runFailures = async () => {
   // reusing a consumed pairing code fails
   const reused = await bridge.completePairing(BRIDGE_URL, {
     code: pairing.data.code,
-    assertion: await signPairAssertion(privateKey, bridgeId, pairing.data.id),
+    assertion: (await signPairAssertion(privateKey, bridgeId, pairing.data.id)).assertion,
   })
   step("reused pairing code rejected", reused.status === 400, `status ${reused.status}`)
 }

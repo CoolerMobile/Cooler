@@ -5,6 +5,12 @@ const ISSUER = "https://cloud.getcooler.app"
 const AUDIENCE = "coolerbridge"
 const ASSERTION_TTL = "5m"
 
+// explicit typ per token kind, mirrored by coolerbridge so one kind never passes as another
+const TOKEN_TYPES = {
+  pair: "cooler-pair+jwt",
+  access: "cooler-access+jwt",
+} as const
+
 const PRIVATE_KEY_PATH = "./dev/coolercloud/keys/cooler-private.pem"
 
 /** development account the emulated cloud signs for */
@@ -41,7 +47,8 @@ type CloudKey = Awaited<ReturnType<typeof loadPrivateKey>>
  */
 export const signAccessAssertion = (privateKey: CloudKey, bridgeId: string, scope: string[]) =>
   new SignJWT({ bridgeId, scope })
-    .setProtectedHeader({ alg: "Ed25519", typ: "JWT" })
+    .setProtectedHeader({ alg: "Ed25519", typ: TOKEN_TYPES.access })
+    .setJti(crypto.randomUUID())
     .setSubject(CLOUD_USER.id)
     .setIssuer(ISSUER)
     .setAudience(AUDIENCE)
@@ -56,17 +63,22 @@ export const signAccessAssertion = (privateKey: CloudKey, bridgeId: string, scop
  * @param bridgeId real bridge uuid
  * @param pairingId bridge pairing challenge id
  *
- * @returns signed jwt
+ * @returns signed jwt and its jti, which the bridge reports back on confirmation
  */
-export const signPairAssertion = (privateKey: CloudKey, bridgeId: string, pairingId: string) =>
-  new SignJWT({ bridgeId, pairingId })
-    .setProtectedHeader({ alg: "Ed25519", typ: "JWT" })
+export const signPairAssertion = async (privateKey: CloudKey, bridgeId: string, pairingId: string) => {
+  const jti = crypto.randomUUID()
+  const assertion = await new SignJWT({ bridgeId, pairingId })
+    .setProtectedHeader({ alg: "Ed25519", typ: TOKEN_TYPES.pair })
+    .setJti(jti)
     .setSubject(CLOUD_USER.id)
     .setIssuer(ISSUER)
     .setAudience(AUDIENCE)
     .setIssuedAt()
     .setExpirationTime(ASSERTION_TTL)
     .sign(privateKey)
+
+  return { assertion, jti }
+}
 
 /**
  * sign an assertion with a tampered body to emulate a rejected request
@@ -96,7 +108,8 @@ export const signTamperedAssertion = async (privateKey: CloudKey, bridgeId: stri
  */
 export const signExpiredAssertion = (privateKey: CloudKey, bridgeId: string, scope: string[]) =>
   new SignJWT({ bridgeId, scope })
-    .setProtectedHeader({ alg: "Ed25519", typ: "JWT" })
+    .setProtectedHeader({ alg: "Ed25519", typ: TOKEN_TYPES.access })
+    .setJti(crypto.randomUUID())
     .setSubject(CLOUD_USER.id)
     .setIssuer(ISSUER)
     .setAudience(AUDIENCE)

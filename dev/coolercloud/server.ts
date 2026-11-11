@@ -21,6 +21,9 @@ const authCodes = new Map<string, { used: boolean }>()
 const sessions = new Set<string>()
 let bridges: LinkedBridge[] = []
 
+// signed pairing assertions by jti, awaiting the bridge's confirmation
+const pairings = new Map<string, { bridgeId: string; pairingId: string }>()
+
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json" } })
 
@@ -42,7 +45,7 @@ const provisionBridge = async () => {
     const pairing = await bridgeAdmin.createPairing(BRIDGE_URL)
     if (!pairing.ok) throw new Error(`pairing create failed (${pairing.status})`)
 
-    const assertion = await signPairAssertion(privateKey, bridgeId, pairing.data.id)
+    const { assertion } = await signPairAssertion(privateKey, bridgeId, pairing.data.id)
     const completed = await bridgeAdmin.completePairing(BRIDGE_URL, {
       code: pairing.data.code,
       assertion,
@@ -155,8 +158,31 @@ Bun.serve({
       const body = (await req.json().catch(() => null)) as { pairingId?: string } | null
       if (!body?.pairingId) return json({ error: "pairingId is required" }, 400)
 
-      const assertion = await signPairAssertion(privateKey, pairMatch[1], body.pairingId)
+      const { assertion, jti } = await signPairAssertion(privateKey, pairMatch[1], body.pairingId)
+      pairings.set(jti, { bridgeId: pairMatch[1], pairingId: body.pairingId })
       return json({ assertion })
+    }
+
+    // pairing confirmation, checked with the bridge itself like the real cloud
+    const confirmMatch = pathname.match(/^\/v1\/bridges\/(.+)\/assertions\/pair\/confirm$/)
+    if (req.method === "POST" && confirmMatch) {
+      const token = bearer(req)
+      if (!token || !sessions.has(token)) return json({ error: "Unauthorized" }, 401)
+
+      const body = (await req.json().catch(() => null)) as { pairingId?: string } | null
+      if (!body?.pairingId) return json({ error: "pairingId is required" }, 400)
+
+      const reported = await bridgeAdmin.getPairing(BRIDGE_URL, body.pairingId)
+      const signed = reported.ok && reported.data.jti ? pairings.get(reported.data.jti) : undefined
+      if (
+        reported.data?.status !== "completed" ||
+        signed?.bridgeId !== confirmMatch[1] ||
+        signed.pairingId !== body.pairingId
+      ) {
+        return json({ error: "This pairing couldn't be confirmed" }, 409)
+      }
+
+      return json({ paired: true })
     }
 
     // logout
