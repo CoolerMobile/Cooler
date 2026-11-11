@@ -7,6 +7,9 @@ mock.module("react-native", () => ({
 }))
 mock.module("expo-constants", () => ({ default: { expoConfig: { extra: {} }, easConfig: null } }))
 
+// the default cloud url is under test, so a local .env override must not leak in
+delete process.env.EXPO_PUBLIC_COOLER_CLOUD_URL
+
 const bridge = await import("@/lib/cooler-cloud/bridge")
 const cloud = await import("@/lib/cooler-cloud/cloud")
 
