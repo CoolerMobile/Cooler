@@ -319,11 +319,20 @@ jobs:
           name: cooler-${{ needs.prepare.outputs.channel }}-ios
           path: artifacts
 
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
       - name: Set up Expo and EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+
+      # eas submit evaluates the app config, whose plugins resolve from node_modules
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
       - name: Submit build
         env:
