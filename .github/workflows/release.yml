@@ -324,19 +324,21 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Set up Expo and EAS
-        uses: expo/expo-github-action@v8
+      # uploads straight to app store connect, no build service queue
+      - name: Set up asc
+        uses: rudrankriyam/setup-asc@v1
         with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-
-      # eas submit evaluates the app config, whose plugins resolve from node_modules
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+          version: latest
 
       - name: Submit build
         env:
           PLATFORM: ${{ inputs.platform }}
+          # app store connect api key, the same auth asc uses locally
+          ASC_BYPASS_KEYCHAIN: "1"
+          ASC_NO_UPDATE: "1"
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY_B64: ${{ secrets.ASC_PRIVATE_KEY_B64 }}
         run: |
           set -euo pipefail
 
@@ -349,12 +351,8 @@ jobs:
 
           echo "Submitting ${artifact} to TestFlight."
 
-          eas submit \
-            --platform ios \
-            --path "$artifact" \
-            --profile production \
-            --non-interactive \
-            --wait
+          # the shared submit step, the same one local releases run
+          bun scripts/submit-ios.ts "$artifact"
 
           if [[ "$PLATFORM" == "android" || "$PLATFORM" == "both" ]]; then
             message="The iOS app was submitted to TestFlight. The Android app was not submitted to Google Play because a Google Play Developer account is not configured."

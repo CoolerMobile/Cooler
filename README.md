@@ -125,6 +125,16 @@ With `--eas`, the local command only pushes the selected branch and dispatches `
 
 The Android build is retried at most once if it fails. Release profiles produce installable `.apk` files named `Cooler-<channel>-<version>-android.apk`. Cloud builds require the repository's `EXPO_TOKEN` secret and EAS signing credentials; local builds require locally configured signing credentials.
 
+### Submitting to TestFlight
+
+iOS submissions (`--ios --submit`) upload the `.ipa` straight to App Store Connect with [`asc`](https://asccli.sh), the same way for local and EAS builds, so they never wait in a build service queue. The shared step is `scripts/submit-ios.ts`, which can also upload an existing build:
+
+```bash
+bun scripts/submit-ios.ts artifacts/Cooler-release-1.3.4-ios.ipa
+```
+
+Locally it uses the signed-in `asc` profile (`asc auth login`). The EAS workflow authenticates with an App Store Connect API key stored as the repository secrets `ASC_KEY_ID`, `ASC_ISSUER_ID`, and `ASC_PRIVATE_KEY_B64` (the base64-encoded `.p8` file).
+
 ## Contributing
 
 Contributions and bug reports are welcome. For a large change, open an issue first so implementation decisions and scope can be aligned before work begins.

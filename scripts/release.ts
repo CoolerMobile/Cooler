@@ -757,21 +757,8 @@ const iosArtifact = artifacts.find(({ platform }) => platform === "ios")
 if (submit && iosArtifact) {
   console.log(`Submitting Cooler v${version} to App Store Connect/TestFlight...`)
 
-  run("bunx", [
-    "eas-cli@latest",
-    "submit",
-    "--platform",
-    "ios",
-    "--path",
-    iosArtifact.output,
-    "--profile",
-    "production",
-    "--non-interactive",
-  ])
-
-  console.log(
-    `Cooler v${version} uploaded to App Store Connect. It should appear in TestFlight after Apple finishes processing it.`
-  )
+  // the shared submit step, the same one the eas workflow runs
+  run("bun", ["scripts/submit-ios.ts", iosArtifact.output])
 
   if (pushMetadata) {
     // Sync the store listing + the "What's New" (store.config.json) that was
