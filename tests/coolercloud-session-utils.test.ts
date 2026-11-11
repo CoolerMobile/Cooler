@@ -18,12 +18,12 @@ describe("extractAuthCode", () => {
 
   test("throws when the state does not match", () => {
     expect(() => extractAuthCode("cooler://auth?code=ABC123&state=xyz", "other")).toThrow(
-      "sign in could not be verified"
+      "Sign in could not be verified"
     )
   })
 
   test("throws when no code is present", () => {
-    expect(() => extractAuthCode("cooler://auth?state=xyz")).toThrow("sign in did not return a code")
+    expect(() => extractAuthCode("cooler://auth?state=xyz")).toThrow("Sign in did not return a code")
   })
 
   test("decodes percent encoded values", () => {
