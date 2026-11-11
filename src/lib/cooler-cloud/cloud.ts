@@ -20,7 +20,7 @@ export type CloudAccount = {
 }
 
 type RequestOptions = {
-  method?: "GET" | "POST"
+  method?: "GET" | "POST" | "DELETE"
   token?: string
   body?: unknown
 }
@@ -103,6 +103,10 @@ export const confirmPairing = (token: string, cloudBridgeId: string, pairingId: 
     token,
     body: { pairingId },
   })
+
+/** unpair a bridge from the account, the cloud stops vouching for it */
+export const unlinkBridge = (token: string, cloudBridgeId: string) =>
+  request<{ revoked: boolean }>(`bridges/${cloudBridgeId}`, { method: "DELETE", token })
 
 /** revoke the cloud session */
 export const cloudLogout = (token: string) =>

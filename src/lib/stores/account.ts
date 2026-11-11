@@ -33,6 +33,18 @@ export const useAccountStore = create<AccountState>()(
         }),
       setDeviceId: (cloudBridgeId, deviceId) =>
         setState((state) => ({ deviceIds: { ...state.deviceIds, [cloudBridgeId]: deviceId } })),
+      removeBridge: (cloudBridgeId) =>
+        setState((state) => {
+          const bridgeSessions = { ...state.bridgeSessions }
+          const deviceIds = { ...state.deviceIds }
+          delete bridgeSessions[cloudBridgeId]
+          delete deviceIds[cloudBridgeId]
+          return {
+            bridges: state.bridges.filter((link) => link.cloudBridgeId !== cloudBridgeId),
+            bridgeSessions,
+            deviceIds,
+          }
+        }),
       reset: () => setState({ session: null, bridges: [], bridgeSessions: {}, deviceIds: {} }),
       setHasHydrated: (hasHydrated) => setState({ hasHydrated }),
     }),

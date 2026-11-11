@@ -155,6 +155,54 @@ const runPairing = async (input: {
 }
 
 /**
+ * unpair a bridge from the account
+ *
+ * stops push to this device and ends the bridge session first, best effort since
+ * the bridge may be offline, then has the cloud revoke it; a bridge the cloud no
+ * longer lists (unlinked from the dashboard) counts as unpaired
+ *
+ * @param link the bridge to unpair
+ */
+export const unpairBridge = async (link: BridgeLink) => {
+  const store = useAccountStore.getState()
+  const session = store.session
+  if (!session) throw Error("Not signed in")
+
+  try {
+    const bridgeSession = await ensureBridgeSession(link)
+    const deviceId = store.deviceIds[link.cloudBridgeId]
+    if (deviceId) {
+      await bridge.deleteDevice(link.baseUrl, bridgeSession.accessToken, deviceId).catch(() => undefined)
+    }
+    await bridge.bridgeLogout(link.baseUrl, bridgeSession.accessToken).catch(() => undefined)
+  } catch (error) {
+    console.error("[account] bridge deregistration failed:", error)
+  }
+
+  try {
+    await cloud.unlinkBridge(session.token, link.cloudBridgeId)
+  } catch (error) {
+    const account = await cloud.getAccount(session.token)
+    if (account.bridges.some((existing) => existing.cloudBridgeId === link.cloudBridgeId)) throw error
+  }
+
+  useAccountStore.getState().removeBridge(link.cloudBridgeId)
+}
+
+/**
+ * reload the account's bridges from the cloud
+ *
+ * picks up bridges paired or unlinked elsewhere, such as from the dashboard
+ */
+export const refreshBridges = async () => {
+  const session = useAccountStore.getState().session
+  if (!session) return
+
+  const account = await cloud.getAccount(session.token)
+  useAccountStore.getState().setBridges(account.bridges)
+}
+
+/**
  * complete pairing from a scanned or opened deep link
  *
  * @param url the cooler://pair deep link
@@ -285,6 +333,8 @@ export const useAccount = () => {
     syncBridgeEvents,
     registerDevice,
     pairBridge,
+    unpairBridge,
+    refreshBridges,
     completePairingFromLink,
   }
 }

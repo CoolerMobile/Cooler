@@ -63,6 +63,27 @@ describe("account store", () => {
     expect(useAccountStore.getState().deviceIds["bridge-1"]).toBe("device-1")
   })
 
+  test("removes one bridge with its session and device id, keeping the rest", () => {
+    const store = useAccountStore.getState()
+    store.setSession(session)
+    store.setBridges([
+      { cloudBridgeId: "bridge-1", name: "Prod", baseUrl: "https://bridge.test" },
+      { cloudBridgeId: "bridge-2", name: "Staging", baseUrl: "https://staging.test" },
+    ])
+    store.setBridgeSession({ cloudBridgeId: "bridge-1", accessToken: "cbt_1", expiresAt: "x", scopes: [] })
+    store.setBridgeSession({ cloudBridgeId: "bridge-2", accessToken: "cbt_2", expiresAt: "x", scopes: [] })
+    store.setDeviceId("bridge-1", "device-1")
+    store.setDeviceId("bridge-2", "device-2")
+
+    store.removeBridge("bridge-1")
+
+    const next = useAccountStore.getState()
+    expect(next.session).toEqual(session)
+    expect(next.bridges.map((link) => link.cloudBridgeId)).toEqual(["bridge-2"])
+    expect(Object.keys(next.bridgeSessions)).toEqual(["bridge-2"])
+    expect(next.deviceIds).toEqual({ "bridge-2": "device-2" })
+  })
+
   test("reset clears account data", () => {
     const store = useAccountStore.getState()
     store.setSession(session)

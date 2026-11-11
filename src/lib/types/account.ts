@@ -47,6 +47,8 @@ export type AccountState = {
   setBridgeSession: (session: BridgeSession) => void
   clearBridgeSession: (cloudBridgeId: string) => void
   setDeviceId: (cloudBridgeId: string, deviceId: string) => void
+  /** forget a bridge along with its session and device id */
+  removeBridge: (cloudBridgeId: string) => void
   reset: () => void
   setHasHydrated: (value: boolean) => void
 }

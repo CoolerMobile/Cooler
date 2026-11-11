@@ -6,9 +6,10 @@ import { Text } from "@/components/ui/text"
 import { codeFromScan, isPairLink } from "@/lib/cooler-cloud/session-utils"
 import { useAccount } from "@/lib/hooks/account/session"
 import { useAccountStore } from "@/lib/stores/account"
+import type { BridgeLink } from "@/lib/types/account"
 import { CameraView, useCameraPermissions } from "expo-camera"
-import { CloudCheck, KeyRound, QrCode, X } from "lucide-react-native"
-import { useRef, useState } from "react"
+import { CloudCheck, KeyRound, QrCode, Server, Unlink, X } from "lucide-react-native"
+import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, View } from "react-native"
 
 type CoolerCloudSheetProps = {
@@ -22,7 +23,8 @@ const errorMessage = (error: unknown, fallback: string) => (error instanceof Err
  * coolercloud sign in sheet
  *
  * offers the browser oauth flow with manual code entry and qr scanning as
- * alternatives, or the signed in account with a sign out action
+ * alternatives, or the signed in account with its paired bridges, pairing,
+ * unpairing and sign out
  *
  * the qr scanner renders inline inside this native sheet rather than in a
  * separate react-native modal: stacking an rn modal on top of the native
@@ -30,8 +32,23 @@ const errorMessage = (error: unknown, fallback: string) => (error instanceof Err
  * behind once dismissed
  */
 export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) => {
-  const { signInWithBrowser, completeSignInWithCode, signOut, completePairingFromLink } = useAccount()
+  const {
+    signInWithBrowser,
+    completeSignInWithCode,
+    signOut,
+    completePairingFromLink,
+    unpairBridge,
+    refreshBridges,
+  } = useAccount()
   const session = useAccountStore((state) => state.session)
+  const bridges = useAccountStore((state) => state.bridges)
+  const token = session?.token
+
+  // pick up bridges paired or unlinked elsewhere whenever the sheet opens
+  useEffect(() => {
+    if (!open || !token) return
+    refreshBridges().catch((error) => console.error("[account] bridge refresh failed:", error))
+  }, [open, token, refreshBridges])
 
   const [permission, requestPermission] = useCameraPermissions()
 
@@ -74,6 +91,28 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     } finally {
       setBusy(false)
     }
+  }
+
+  const runUnpair = async (link: BridgeLink) => {
+    try {
+      setBusy(true)
+      await unpairBridge(link)
+    } catch (error) {
+      Alert.alert("Unpair failed", errorMessage(error, "Could not unpair the bridge."))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const confirmUnpair = (link: BridgeLink) => {
+    Alert.alert(
+      "Unpair bridge",
+      `${link.name} will stop sending notifications to this device and leave your account.`,
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Unpair", style: "destructive", onPress: () => void runUnpair(link) },
+      ]
+    )
   }
 
   const openScanner = async (mode: "signin" | "pair" = "signin") => {
@@ -187,6 +226,38 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
                   <Text className="text-sm text-muted-foreground">{session.user.email}</Text>
                 </View>
               </View>
+              {/* paired bridges */}
+              <View className="gap-2">
+                <Text className="text-sm font-medium">Bridges</Text>
+                {bridges.length === 0 ? (
+                  <Text className="text-sm text-muted-foreground">No bridges paired yet.</Text>
+                ) : (
+                  bridges.map((link) => (
+                    <View
+                      key={link.cloudBridgeId}
+                      className="flex-row items-center gap-3 rounded-md border border-input bg-card py-2 pl-4 pr-2">
+                      <Icon as={Server} />
+                      <View className="flex-1">
+                        <Text className="font-medium" numberOfLines={1}>
+                          {link.name}
+                        </Text>
+                        <Text className="text-sm text-muted-foreground" numberOfLines={1}>
+                          {link.baseUrl}
+                        </Text>
+                      </View>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onPress={() => confirmUnpair(link)}
+                        disabled={busy}
+                        accessibilityLabel={`Unpair ${link.name}`}>
+                        <Icon as={Unlink} className="text-destructive" />
+                      </Button>
+                    </View>
+                  ))
+                )}
+              </View>
+
               <Button variant="outline" onPress={() => openScanner("pair")} disabled={busy}>
                 <Icon as={QrCode} />
                 <Text>Pair a Bridge</Text>
