@@ -22,7 +22,22 @@ const excludedIntegrations = new Set([
   "TurboModuleContext",
 ])
 
-const sentryOptions: Sentry.ReactNativeOptions = {
+/**
+ * cocoa options the react native types don't declare
+ *
+ * the sdk forwards keys it doesn't know to the native init, and the ios sdk reads
+ * these from that dictionary; android ignores them
+ */
+type CocoaOptions = {
+  enableAutoBreadcrumbTracking?: boolean
+  enableNetworkBreadcrumbs?: boolean
+  enableMetricKit?: boolean
+  enableMetricKitRawPayload?: boolean
+  enablePreWarmedAppStartTracing?: boolean
+  reportAccessibilityIdentifier?: boolean
+}
+
+const sentryOptions: Sentry.ReactNativeOptions & CocoaOptions = {
   dsn: SENTRY_DSN,
   environment: __DEV__ ? "development" : "production",
   enableAutoSessionTracking: false,
@@ -40,12 +55,8 @@ const sentryOptions: Sentry.ReactNativeOptions = {
   enableNativeCrashHandling: !__DEV__,
   enableNdk: !__DEV__,
   enableNdkScopeSync: false,
-  enableTombstone: !__DEV__,
-  enableHistoricalTombstoneReporting: false,
-  anrProfilingSampleRate: 0,
   enableWatchdogTerminationTracking: !__DEV__,
   enableAppHangTracking: !__DEV__,
-  enableNdkAppHangTracking: false,
   enableMetricKit: false,
   enableMetricKitRawPayload: false,
   enableAutoPerformanceTracing: false,
@@ -56,18 +67,11 @@ const sentryOptions: Sentry.ReactNativeOptions = {
   enableUserInteractionTracing: false,
   enableCaptureFailedRequests: false,
   enableNetworkBreadcrumbs: false,
-  enableNetworkEventBreadcrumbs: false,
   enableAutoBreadcrumbTracking: false,
-  enableActivityLifecycleBreadcrumbs: false,
-  enableAppLifecycleBreadcrumbs: false,
-  enableSystemEventBreadcrumbs: false,
-  enableAppComponentBreadcrumbs: false,
-  enableMemoryIntrospection: false,
   // Preserve JavaScript call chains and native thread stacks. The beforeSend allowlist removes
   // runtime locals while retaining source-map-derived function names and source context.
   attachStacktrace: true,
   attachThreads: true,
-  attachAllThreads: true,
   attachScreenshot: false,
   attachViewHierarchy: false,
   reportAccessibilityIdentifier: false,
