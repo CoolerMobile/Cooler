@@ -92,6 +92,18 @@ export const requestPairAssertion = (token: string, cloudBridgeId: string, pairi
     body: { pairingId },
   })
 
+/**
+ * confirm a pairing once the bridge has consumed its assertion
+ *
+ * the cloud checks with the bridge itself, the app only asks it to
+ */
+export const confirmPairing = (token: string, cloudBridgeId: string, pairingId: string) =>
+  request<{ paired: boolean }>(`bridges/${cloudBridgeId}/assertions/pair/confirm`, {
+    method: "POST",
+    token,
+    body: { pairingId },
+  })
+
 /** revoke the cloud session */
 export const cloudLogout = (token: string) =>
   request<{ loggedOut: boolean }>("auth/logout", { method: "POST", token })

@@ -88,8 +88,9 @@ export const registerDevice = async (link: BridgeLink) => {
  * pair a bridge to the signed in account, then register this device
  *
  * runs the bridge-orchestrated flow: create a challenge on the bridge, have the
- * cloud sign a pairing assertion for it, complete the link, then store the
- * bridge and register this device so push can reach it
+ * cloud sign a pairing assertion for it, complete the link, have the cloud
+ * confirm the round trip with the bridge, then store the bridge and register
+ * this device so push can reach it
  *
  * @param input the cloud bridge id, bridge base url, and optional name
  *
@@ -108,6 +109,9 @@ export const pairBridge = async (input: {
   const challenge = await bridge.createPairing(input.baseUrl)
   const { assertion } = await cloud.requestPairAssertion(session.token, input.cloudBridgeId, challenge.id)
   const result = await bridge.completePairing(input.baseUrl, { code: challenge.code, assertion })
+
+  // the cloud only counts the bridge as paired once it confirms with the bridge
+  await cloud.confirmPairing(session.token, input.cloudBridgeId, challenge.id)
 
   const link: BridgeLink = {
     cloudBridgeId: result.cloudBridgeId,

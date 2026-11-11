@@ -109,6 +109,18 @@ describe("cloud client", () => {
     expect(captured?.body).toEqual({ scope: ["events:read"] })
   })
 
+  test("confirmPairing asks the cloud to confirm the bridge's pairing", async () => {
+    stubFetch(jsonResponse({ paired: true }))
+
+    const result = await cloud.confirmPairing("ccs_x", "bridge-uuid", "pairing-uuid")
+
+    expect(result.paired).toBe(true)
+    expect(captured?.url).toBe("https://cloud.getcooler.app/v1/bridges/bridge-uuid/assertions/pair/confirm")
+    expect(captured?.method).toBe("POST")
+    expect(captured?.headers.get("authorization")).toBe("Bearer ccs_x")
+    expect(captured?.body).toEqual({ pairingId: "pairing-uuid" })
+  })
+
   test("authorizeUrl carries the redirect and state", () => {
     const url = cloud.authorizeUrl("state-123")
 
