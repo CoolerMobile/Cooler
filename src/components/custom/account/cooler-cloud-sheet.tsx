@@ -8,7 +8,7 @@ import { useAccount } from "@/lib/hooks/account/session"
 import { useAccountStore } from "@/lib/stores/account"
 import { CameraView, useCameraPermissions } from "expo-camera"
 import { CloudCheck, KeyRound, QrCode, X } from "lucide-react-native"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { ActivityIndicator, Alert, View } from "react-native"
 
 type CoolerCloudSheetProps = {
@@ -39,7 +39,8 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
   const [manualOpen, setManualOpen] = useState(false)
   const [codeValue, setCodeValue] = useState("")
   const [scannerOpen, setScannerOpen] = useState(false)
-  const [scanHandled, setScanHandled] = useState(false)
+  // a ref, not state, so the camera's rapid repeat callbacks see it flip at once
+  const scanHandled = useRef(false)
   // what the scanner is scanning for: a sign in code or a bridge pairing link
   const [scanMode, setScanMode] = useState<"signin" | "pair">("signin")
 
@@ -95,13 +96,13 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     }
 
     setScanMode(mode)
-    setScanHandled(false)
+    scanHandled.current = false
     setScannerOpen(true)
   }
 
   const handleScan = (scanned: string) => {
-    if (scanHandled) return
-    setScanHandled(true)
+    if (scanHandled.current) return
+    scanHandled.current = true
     setScannerOpen(false)
 
     // pairing mode expects a bridge deep link
@@ -211,7 +212,11 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
                   <Icon as={KeyRound} />
                   <Text>Enter code</Text>
                 </Button>
-                <Button className="flex-1" variant="outline" onPress={() => openScanner("signin")} disabled={busy}>
+                <Button
+                  className="flex-1"
+                  variant="outline"
+                  onPress={() => openScanner("signin")}
+                  disabled={busy}>
                   <Icon as={QrCode} />
                   <Text>Scan QR</Text>
                 </Button>

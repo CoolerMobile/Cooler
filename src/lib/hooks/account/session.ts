@@ -17,6 +17,9 @@ import { Platform } from "react-native"
 // oauth state kept between opening the browser and handling the redirect
 let pendingAuthState: string | null = null
 
+// pairings running right now, by cloud bridge id
+const pairingsInFlight = new Map<string, Promise<BridgeLink>>()
+
 /** map the runtime platform to a bridge device platform */
 const devicePlatform = (): DevicePlatform | null => {
   if (Platform.OS === "ios") return "ios"
@@ -96,7 +99,29 @@ export const registerDevice = async (link: BridgeLink) => {
  *
  * @returns the linked bridge
  */
-export const pairBridge = async (input: {
+export const pairBridge = (input: {
+  cloudBridgeId: string
+  baseUrl: string
+  name?: string
+}): Promise<BridgeLink> => {
+  // a bridge already pairing shares that run, so a double scan or a scan plus a
+  // deep link never pairs twice
+  const running = pairingsInFlight.get(input.cloudBridgeId)
+  if (running) return running
+
+  const run = runPairing(input).finally(() => pairingsInFlight.delete(input.cloudBridgeId))
+  pairingsInFlight.set(input.cloudBridgeId, run)
+  return run
+}
+
+/**
+ * one full pairing run, see pairBridge
+ *
+ * @param input the cloud bridge id, bridge base url, and optional name
+ *
+ * @returns the linked bridge
+ */
+const runPairing = async (input: {
   cloudBridgeId: string
   baseUrl: string
   name?: string
