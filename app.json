@@ -68,7 +68,12 @@
       ],
       "react-native-legal",
       "expo-background-task",
-      "expo-notifications",
+      [
+        "expo-notifications",
+        {
+          "enableBackgroundRemoteNotifications": true
+        }
+      ],
       [
         "expo-camera",
         {
