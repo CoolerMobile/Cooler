@@ -2,6 +2,7 @@ import Constants from "expo-constants"
 import * as Device from "expo-device"
 import * as Notifications from "expo-notifications"
 import { Platform } from "react-native"
+import { readBridgeEventPush } from "@/lib/cooler-cloud/push"
 import {
   markNotificationDelivery,
   prepareNotificationStorageForBackground,
@@ -14,6 +15,8 @@ const EXPO_PUSH_ENDPOINT = "https://exp.host/--/api/v2/push/send"
 
 // notification data
 type NotificationData = {
+  // stable id that keeps a later archive sync from storing it twice
+  requestId?: string
   title: string
   body: string
   data?: Record<string, unknown>
@@ -47,7 +50,7 @@ const notificationChannels = {
   },
 } satisfies Record<string, Notifications.NotificationChannelInput>
 
-type NotificationChannelId = keyof typeof notificationChannels
+export type NotificationChannelId = keyof typeof notificationChannels
 
 // calculate minutes since midnight
 const minutesSinceMidnight = (date: Date) => date.getHours() * 60 + date.getMinutes()
@@ -84,6 +87,17 @@ Notifications.setNotificationHandler({
     const { content, identifier, trigger } = notification.request
     const isWebhook = trigger !== null && "type" in trigger && trigger.type === "push"
     const storedLocalId = content.data?.[LOCAL_NOTIFICATION_ID_KEY]
+
+    // bridge pushes carry only ids, the background task fetches the event and
+    // presents it as a local notification, so the empty push is never shown
+    if (isWebhook && readBridgeEventPush(content.data)) {
+      return {
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+        shouldShowBanner: false,
+        shouldShowList: false,
+      }
+    }
 
     try {
       // persist before presentation so an unsaved
@@ -315,6 +329,7 @@ export const createLocalNotification = async (data: NotificationData) => {
 
   // Save before scheduling, including notifications dropped because of quiet hours.
   const storedNotificationId = await saveNotification({
+    requestId: data.requestId,
     title: data.title,
     body: data.body,
     data: data.data,
