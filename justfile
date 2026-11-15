@@ -47,3 +47,28 @@ dev-device:
 # Run the test suite.
 test *args:
     bun run test {{args}}
+
+# ─────────────────────────────── Maintenance ───────────────────────────────
+
+# Remove everything generated: JS deps, Expo/Metro caches, native projects, Xcode build data.
+clean:
+    rm -rf node_modules .expo ios android
+    rm -rf "${TMPDIR:-/tmp}"/metro-* "${TMPDIR:-/tmp}"/haste-map-*
+    rm -rf ~/Library/Developer/Xcode/DerivedData/Cooler-*
+    @echo "Clean. Run 'just sync' to restore as is, or 'just update' to also update dependencies."
+
+# Install deps, regenerate ios/android from app.json + plugins, repair licenses, install pods.
+# Restores everything after `just clean` without bumping any version.
+sync:
+    bun install
+    EXPO_NO_GIT_STATUS=1 bunx expo prebuild --clean --no-install
+    bun run fix:licenses
+    cd ios && pod install --repo-update
+    bunx expo install --check
+    @echo "Synced. Review the native diff (git status ios android) before committing."
+
+# Update deps within their ranges, align Expo SDK packages, then sync native projects and pods.
+update:
+    bun update
+    bunx expo install --fix
+    just sync
