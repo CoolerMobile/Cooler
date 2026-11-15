@@ -4,7 +4,9 @@ Cooler ships an iOS notification service extension (`NotificationService`, bundl
 
 ## One time
 
-- [ ] **Sync the native project.** Run `just sync`, then review `git status ios android` before committing. The committed `ios/Podfile.lock` predates the last dependency update, and `pod install` fails until it is regenerated.
+- [ ] **Sync the native project, then commit it.** Run `just sync`, review `git status ios android` and commit the result. EAS builds the committed tree, not your working copy, so an uncommitted `ios/Podfile.lock` still fails with "CocoaPods could not find compatible versions".
+  - `ios/Settings.bundle` license files may show as deleted. They are build output that the LicensePlist build phase regenerates, so `git checkout -- ios/Settings.bundle` keeps the commit focused.
+  - Check that `ios/sentry.properties` and `android/sentry.properties` still point at `https://tracking.danfq.dev/` (they come from the `@sentry/react-native` plugin options in `app.json`).
   - Expect `ios/Cooler/Info.plist` to change. Check `NSMicrophoneUsageDescription`: `expo-camera` adds it by default, but Cooler never records audio. To drop it, set `"microphonePermission": false` in the `expo-camera` plugin options in `app.json` and sync again.
   - Confirm `ios/Cooler.xcodeproj/project.pbxproj` still has a `NotificationService` target and four `MARKETING_VERSION` entries (the release script checks for exactly four).
 - [ ] **Create the extension's credentials.** Run one interactive build so EAS can register the new bundle ID and generate its provisioning profile:
