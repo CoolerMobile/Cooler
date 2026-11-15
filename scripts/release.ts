@@ -308,8 +308,10 @@ const calculateBump = (): Bump => {
       return "major"
     }
 
+    // commits are read newest first, so a feat has to outrank a patch an
+    // earlier (newer) fix or docs commit already set
     if (type === "feat") {
-      bump = bump ?? "minor"
+      bump = "minor"
     }
 
     if (supportedTypes.has(type ?? "") && !bump) {
