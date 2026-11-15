@@ -16,7 +16,13 @@
       "associatedDomains": [
         "applinks:getcooler.app"
       ],
-      "appleTeamId": "73H669GA5T"
+      "appleTeamId": "73H669GA5T",
+      "entitlements": {
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)app.getcooler.Cooler",
+          "$(AppIdentifierPrefix)app.getcooler.Cooler.push"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -91,7 +97,8 @@
         }
       ],
       "@sentry/react-native",
-      "./plugins/withApsEnvironment"
+      "./plugins/withApsEnvironment",
+      "./plugins/withNotificationService"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -397,11 +397,12 @@ const prepareVersion = () => {
     "ios/Cooler/Info.plist"
   )
 
+  // debug and release of the app and of the notification service extension
   const iosProject = replaceVersion(
     originalIosProject,
     /(\bMARKETING_VERSION = )[^;]+(;)/g,
     version,
-    2,
+    4,
     "ios/Cooler.xcodeproj/project.pbxproj"
   )
 

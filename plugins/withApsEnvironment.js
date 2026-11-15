@@ -16,9 +16,10 @@ const path = require("path")
  *   - Debug  -> <App>.entitlements         (aps-environment: development)
  *   - Release-> <App>Release.entitlements  (aps-environment: production)
  *
- * The Release file mirrors the entitlements the Debug file carries (currently
- * just associated domains). If you add a new entitlement in app.json, make sure
- * it is reflected here too, or add it to `releaseEntitlements` below.
+ * The Release file mirrors the entitlements the Debug file carries: everything
+ * under `ios.entitlements` in app.json (currently the keychain groups shared
+ * with the notification service extension) plus associated domains. If you add
+ * an entitlement some other way, add it to `releaseEntitlements` below too.
  */
 
 const RELEASE_SUFFIX = "Release.entitlements"
@@ -40,6 +41,7 @@ const withReleaseApsEnvironment = (config) =>
 
     // Release entitlements = everything Debug has, but production APNs.
     const releaseEntitlements = {
+      ...cfg.ios?.entitlements,
       "aps-environment": "production",
     }
     const associatedDomains = cfg.ios?.associatedDomains
@@ -51,12 +53,18 @@ const withReleaseApsEnvironment = (config) =>
     fs.writeFileSync(path.join(appDir, releaseFileName), build(releaseEntitlements))
 
     // Repoint only the app target's Release configuration. Project-level and
-    // Pods configurations have no CODE_SIGN_ENTITLEMENTS, so they are skipped.
+    // Pods configurations have no CODE_SIGN_ENTITLEMENTS, and extensions sign
+    // with their own entitlements, so both are skipped.
+    const appEntitlements = [
+      `${projectName}/${projectName}.entitlements`,
+      `${projectName}/${releaseFileName}`,
+    ]
     const configurations = project.pbxXCBuildConfigurationSection()
     for (const key of Object.keys(configurations)) {
       const entry = configurations[key]
       if (typeof entry !== "object" || !entry.buildSettings) continue
-      if (entry.name === "Release" && entry.buildSettings.CODE_SIGN_ENTITLEMENTS) {
+      const entitlements = String(entry.buildSettings.CODE_SIGN_ENTITLEMENTS ?? "").replace(/"/g, "")
+      if (entry.name === "Release" && appEntitlements.includes(entitlements)) {
         entry.buildSettings.CODE_SIGN_ENTITLEMENTS = `${projectName}/${releaseFileName}`
       }
     }

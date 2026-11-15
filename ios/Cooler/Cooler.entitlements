@@ -8,5 +8,10 @@
     <array>
       <string>applinks:getcooler.app</string>
     </array>
+    <key>keychain-access-groups</key>
+    <array>
+      <string>$(AppIdentifierPrefix)app.getcooler.Cooler</string>
+      <string>$(AppIdentifierPrefix)app.getcooler.Cooler.push</string>
+    </array>
   </dict>
 </plist>
