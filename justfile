@@ -3,6 +3,9 @@
 # Most recipes take an optional version at the end, e.g.
 #   just release patch        -> auto-bump to next patch
 #   just release-store 1.3.3  -> explicit version
+#
+# Every build first checks that the tree is clean and in step with origin, and
+# offers to push unpushed commits. PREFLIGHT_YES=1 accepts without prompting.
 
 # Show every recipe with its description
 default:
@@ -43,6 +46,10 @@ dev:
 # Build and run the dev client on a connected device.
 dev-device:
     bun run dev:native-build
+
+# Build the dev client on EAS, both platforms unless --android or --ios.
+dev-build-cloud *args:
+    bun run dev:native-build:eas {{args}}
 
 # Run the test suite.
 test *args:

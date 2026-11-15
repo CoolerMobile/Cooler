@@ -1,5 +1,6 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
+import { ensureSynced } from "./preflight"
 
 type Bump = "major" | "minor" | "patch"
 type Platform = "android" | "ios"
@@ -49,6 +50,10 @@ const usage = [
   "  --local         Build locally (the default)",
   "  --bump-only     Only update app and native versions, then print the new version",
   "  --push-metadata Also push the store listing + What's New to App Store Connect",
+  "",
+  "Every build first checks that the working tree is clean and in step with origin,",
+  "offering to push unpushed commits (or fast-forward a branch that is behind).",
+  "Set PREFLIGHT_YES=1 to accept those offers without a prompt.",
   "",
   "Store metadata (listing text + App Store \"What's New\") is pushed only on demand:",
   "add --push-metadata to an iOS store submission (--ios --submit --push-metadata).",
@@ -454,6 +459,10 @@ if (bumpOnly) {
   process.stdout.write(prepareVersion().version)
   process.exit(0)
 }
+
+// builds only see what is committed and ci only sees what is pushed, so make
+// sure both match before anything is reviewed, bumped or dispatched
+ensureSynced()
 
 const branch = currentBranch()
 
