@@ -11,66 +11,73 @@ const path = require("path")
  * TestFlight/App Store builds (Release) must use `production` or push silently
  * breaks, while local dev-client builds (Debug) need `development`.
  *
- * This plugin re-creates the split on every prebuild so it survives
- * `bun clean:native`:
+ * This plugin re-creates the split on every prebuild, clean or not, so it
+ * survives `just clean`:
  *   - Debug  -> <App>.entitlements         (aps-environment: development)
  *   - Release-> <App>Release.entitlements  (aps-environment: production)
  *
- * The Release file mirrors the entitlements the Debug file carries: everything
- * under `ios.entitlements` in app.json (currently the keychain groups shared
- * with the notification service extension) plus associated domains. If you add
- * an entitlement some other way, add it to `releaseEntitlements` below too.
+ * Expo always writes the final entitlements into the file the Release
+ * configuration points at, after every other mod. So the Release file is left
+ * to Expo with `production`, and the Debug file is written here from the same
+ * final entitlements with `development`. Both files therefore always carry the
+ * same entitlements apart from the APNs environment.
  */
 
 const RELEASE_SUFFIX = "Release.entitlements"
 
-/** force the shared (Debug) entitlements onto the development APNs environment */
-const withDebugApsEnvironment = (config) =>
-  withEntitlementsPlist(config, (cfg) => {
-    cfg.modResults["aps-environment"] = "development"
+const entitlementsFiles = (cfg) => {
+  const projectName = cfg.modRequest.projectName
+  const appDir = path.join(cfg.modRequest.platformProjectRoot, projectName)
+
+  return {
+    projectName,
+    debug: {
+      relative: `${projectName}/${projectName}.entitlements`,
+      absolute: path.join(appDir, `${projectName}.entitlements`),
+    },
+    release: {
+      relative: `${projectName}/${projectName}${RELEASE_SUFFIX}`,
+      absolute: path.join(appDir, `${projectName}${RELEASE_SUFFIX}`),
+    },
+  }
+}
+
+/** point the app target's configurations at their own entitlements file */
+const withEntitlementsFiles = (config) =>
+  withXcodeProject(config, (cfg) => {
+    const project = cfg.modResults
+    const files = entitlementsFiles(cfg)
+
+    // Expo only writes into a Release file that already exists
+    const build = plist.default?.build ?? plist.build
+    if (!fs.existsSync(files.release.absolute)) fs.writeFileSync(files.release.absolute, build({}))
+
+    // Set both explicitly. On a clean prebuild Expo has not set them yet, and
+    // extensions and Pods have their own configuration lists, so they are
+    // never touched.
+    const appTarget = project.getFirstTarget().firstTarget
+    const configurationList = project.pbxXCConfigurationList()[appTarget.buildConfigurationList]
+    const configurations = project.pbxXCBuildConfigurationSection()
+    for (const { value } of configurationList.buildConfigurations) {
+      const entry = configurations[value]
+      entry.buildSettings.CODE_SIGN_ENTITLEMENTS =
+        entry.name === "Release" ? files.release.relative : files.debug.relative
+    }
+
     return cfg
   })
 
-/** build a parallel Release entitlements file and point the Release config at it */
-const withReleaseApsEnvironment = (config) =>
-  withXcodeProject(config, (cfg) => {
-    const project = cfg.modResults
-    const projectName = cfg.modRequest.projectName
-    const appDir = path.join(cfg.modRequest.platformProjectRoot, projectName)
-    const releaseFileName = `${projectName}${RELEASE_SUFFIX}`
-
-    // Release entitlements = everything Debug has, but production APNs.
-    const releaseEntitlements = {
-      ...cfg.ios?.entitlements,
-      "aps-environment": "production",
-    }
-    const associatedDomains = cfg.ios?.associatedDomains
-    if (associatedDomains?.length) {
-      releaseEntitlements["com.apple.developer.associated-domains"] = associatedDomains
-    }
-
+/** production APNs in the Release file Expo writes, a development copy for Debug */
+const withSplitApsEnvironment = (config) =>
+  withEntitlementsPlist(config, (cfg) => {
+    const files = entitlementsFiles(cfg)
     const build = plist.default?.build ?? plist.build
-    fs.writeFileSync(path.join(appDir, releaseFileName), build(releaseEntitlements))
 
-    // Repoint only the app target's Release configuration. Project-level and
-    // Pods configurations have no CODE_SIGN_ENTITLEMENTS, and extensions sign
-    // with their own entitlements, so both are skipped.
-    const appEntitlements = [
-      `${projectName}/${projectName}.entitlements`,
-      `${projectName}/${releaseFileName}`,
-    ]
-    const configurations = project.pbxXCBuildConfigurationSection()
-    for (const key of Object.keys(configurations)) {
-      const entry = configurations[key]
-      if (typeof entry !== "object" || !entry.buildSettings) continue
-      const entitlements = String(entry.buildSettings.CODE_SIGN_ENTITLEMENTS ?? "").replace(/"/g, "")
-      if (entry.name === "Release" && appEntitlements.includes(entitlements)) {
-        entry.buildSettings.CODE_SIGN_ENTITLEMENTS = `${projectName}/${releaseFileName}`
-      }
-    }
+    fs.writeFileSync(files.debug.absolute, build({ ...cfg.modResults, "aps-environment": "development" }))
+    cfg.modResults["aps-environment"] = "production"
 
     return cfg
   })
 
 /** @param {import('@expo/config-plugins').ExpoConfig} config */
-module.exports = (config) => withReleaseApsEnvironment(withDebugApsEnvironment(config))
+module.exports = (config) => withSplitApsEnvironment(withEntitlementsFiles(config))
