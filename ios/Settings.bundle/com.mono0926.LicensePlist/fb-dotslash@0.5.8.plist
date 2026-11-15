@@ -6,7 +6,7 @@
 	<array>
 		<dict>
 			<key>FooterText</key>
-			<string>(MIT OR Apache-2.0)</string>
+			<string>MIT OR Apache-2.0</string>
 			<key>License</key>
 			<string>unknown</string>
 			<key>Type</key>
