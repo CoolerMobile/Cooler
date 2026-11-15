@@ -91,8 +91,9 @@ Notifications.setNotificationHandler({
     const bridgePush = isWebhook ? readBridgeEventPush(content.data) : null
 
     // android bridge pushes carry only ids, the background task fetches the
-    // event and presents it as a local notification, so the empty push is never shown
-    if (bridgePush && Platform.OS !== "ios") {
+    // event and presents it as a local notification, so the empty push is never
+    // shown, older bridges still send the content and are shown as is
+    if (bridgePush && Platform.OS !== "ios" && !content.title) {
       return {
         shouldPlaySound: false,
         shouldSetBadge: false,

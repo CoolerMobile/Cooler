@@ -34,7 +34,12 @@ TaskManager.defineTask<Notifications.NotificationTaskPayload>(BRIDGE_EVENT_TASK,
   if (Platform.OS === "ios") return Notifications.BackgroundNotificationTaskResult.NoData
 
   // taps on a notification are not new events
-  const push = data && !("actionIdentifier" in data) ? readTaskPayload(data.data) : null
+  if (!data || "actionIdentifier" in data) return Notifications.BackgroundNotificationTaskResult.NoData
+
+  // older bridges send the content themselves and it is already shown
+  if (data.data.title) return Notifications.BackgroundNotificationTaskResult.NoData
+
+  const push = readTaskPayload(data.data)
   if (!push) return Notifications.BackgroundNotificationTaskResult.NoData
 
   try {

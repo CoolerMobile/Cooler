@@ -92,8 +92,11 @@ export const registerDevice = async (link: BridgeLink) => {
   const device = await bridge.registerDevice(link.baseUrl, session.accessToken, { platform, pushToken })
   useAccountStore.getState().setDeviceId(link.cloudBridgeId, device.id)
 
-  // lets pushes be presented without a live bridge session
-  await setPushCredential(link.cloudBridgeId, { baseUrl: link.baseUrl, eventToken: device.eventToken })
+  // lets pushes be presented without a live bridge session, older bridges
+  // issue no token and keep sending the content in the push themselves
+  if (typeof device.eventToken === "string") {
+    await setPushCredential(link.cloudBridgeId, { baseUrl: link.baseUrl, eventToken: device.eventToken })
+  }
 }
 
 /**
