@@ -13,9 +13,7 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "associatedDomains": [
-        "applinks:getcooler.app"
-      ],
+      "associatedDomains": ["applinks:getcooler.app"],
       "appleTeamId": "73H669GA5T",
       "entitlements": {
         "keychain-access-groups": [
@@ -84,7 +82,8 @@
         "expo-camera",
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to scan your CoolerCloud sign in code.",
-          "recordAudioAndroid": false
+          "recordAudioAndroid": false,
+          "microphonePermission": false
         }
       ],
       "@react-native-community/datetimepicker",

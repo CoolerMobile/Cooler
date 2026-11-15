@@ -7,37 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		053F20BD96634C18B76C734F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7B3D6E79424A91B724AB0F /* NotificationService.swift */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		175ADF7D467F4CDDA77CA6D9 /* NotificationService.appex in Copy Files */ = {isa = PBXBuildFile; fileRef = 82C038DF8017488F85644ACA /* NotificationService.appex */; };
+		3148BDFA3F96CA3416857367 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509E4BFCEDD42F67D6950AE2 /* ExpoModulesProvider.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		4C19240DE5F9BC41449D5352 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 719C89DB69BFF6E37E8900E5 /* PrivacyInfo.xcprivacy */; };
-		93A5CFF902A26D8500907413 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88248F8C433F4D8F7E18A9C8 /* ExpoModulesProvider.swift */; };
+		9A50D37930FA4A29AAF03093 /* expo.icon in Resources */ = {isa = PBXBuildFile; fileRef = 65E369AF446548BBB8E1B328 /* expo.icon */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		CB0DE01BFE7C45CF8DB027B9 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D79DD52DBC6487D88E8E5D8 /* NotificationService.swift */; };
-		CD7BDE42ABE14859A383427F /* NotificationService.appex in Copy Files */ = {isa = PBXBuildFile; fileRef = A001403A41A74214903A165C /* NotificationService.appex */; };
-		DC702408578D455C8503F431 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 82AE3854E7144891AB528F47 /* Settings.bundle */; };
-		E5D304FDCA0E3537C9FBFAC9 /* libPods-Cooler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F00A5CBBD6FFA500C3254421 /* libPods-Cooler.a */; };
-		E8D8C10D7E5F46C08BE0C662 /* expo.icon in Resources */ = {isa = PBXBuildFile; fileRef = 3F768A611E3948CD9B4E8532 /* expo.icon */; };
+		BC912F02F254473BA91C51DF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8AB9156AE8F64E60A32E6D5F /* Settings.bundle */; };
+		C3FF8D779F0A428FE28CC8F1 /* libPods-Cooler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4B55767D94B9A18106D046 /* libPods-Cooler.a */; };
+		CD46EE1EEE7B193EFC5BC42B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3E7DBB0074B7757004978DF1 /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E62A99C464AF4EC9B0EFF0AA /* PBXContainerItemProxy */ = {
+		769C1472674642AD93349A30 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F09FC2FAA4A9444F8994F259;
+			remoteGlobalIDString = CAE85C6C047146BCB8BA8ADF;
 			remoteInfo = NotificationService;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		759589555E414450A30D4F73 /* Copy Files */ = {
+		0F1A9CD7637247439CBD2918 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				CD7BDE42ABE14859A383427F /* NotificationService.appex in Copy Files */,
+				175ADF7D467F4CDDA77CA6D9 /* NotificationService.appex in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,25 +45,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		01926C1A189E7DC6F3E4FDBC /* Pods-Cooler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.debug.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.debug.xcconfig"; sourceTree = "<group>"; };
+		0512BC58DE4D4EE0BEBB9E60 /* Pods-Cooler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.debug.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Cooler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cooler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Cooler/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Cooler/Info.plist; sourceTree = "<group>"; };
-		3F768A611E3948CD9B4E8532 /* expo.icon */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 506690692009; includeInIndex = 0; lastKnownFileType = unknown; name = expo.icon; path = Cooler/expo.icon; sourceTree = "<group>"; };
-		40CB6444D981464B9DC785F6 /* NotificationService.entitlements */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NotificationService.entitlements; path = NotificationService.entitlements; sourceTree = "<group>"; };
-		6BD7BE067C5B17B7A8407581 /* Pods-Cooler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.release.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.release.xcconfig"; sourceTree = "<group>"; };
-		719C89DB69BFF6E37E8900E5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Cooler/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		82AE3854E7144891AB528F47 /* Settings.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 506690692009; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		88248F8C433F4D8F7E18A9C8 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		9D79DD52DBC6487D88E8E5D8 /* NotificationService.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = NotificationService.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		A001403A41A74214903A165C /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = undefined; name = NotificationService.appex; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E7DBB0074B7757004978DF1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Cooler/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		406B4EBF67E643828F1C10FD /* NotificationService.entitlements */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NotificationService.entitlements; path = NotificationService.entitlements; sourceTree = "<group>"; };
+		509E4BFCEDD42F67D6950AE2 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		65E369AF446548BBB8E1B328 /* expo.icon */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = expo.icon; path = Cooler/expo.icon; sourceTree = "<group>"; };
+		82C038DF8017488F85644ACA /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = undefined; name = NotificationService.appex; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AB9156AE8F64E60A32E6D5F /* Settings.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = Settings.bundle; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Cooler/SplashScreen.storyboard; sourceTree = "<group>"; };
+		AEA0DA1B3DA2495EAC7B0482 /* NotificationService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "NotificationService-Info.plist"; path = "NotificationService-Info.plist"; sourceTree = "<group>"; };
+		BA4B55767D94B9A18106D046 /* libPods-Cooler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cooler.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		CF4BCAEDDAF04E1B923CDD14 /* NotificationService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "NotificationService-Info.plist"; path = "NotificationService-Info.plist"; sourceTree = "<group>"; };
+		CF7B3D6E79424A91B724AB0F /* NotificationService.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = NotificationService.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F00A5CBBD6FFA500C3254421 /* libPods-Cooler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cooler.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Cooler/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* Cooler-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Cooler-Bridging-Header.h"; path = "Cooler/Cooler-Bridging-Header.h"; sourceTree = "<group>"; };
+		F1BAEA385FEF5EB6365B03C3 /* Pods-Cooler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cooler.release.xcconfig"; path = "Target Support Files/Pods-Cooler/Pods-Cooler.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,11 +71,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5D304FDCA0E3537C9FBFAC9 /* libPods-Cooler.a in Frameworks */,
+				C3FF8D779F0A428FE28CC8F1 /* libPods-Cooler.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A5A6D5152B2B4C86B39A903B /* Frameworks */ = {
+		5361227BB90A46248D0600C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -85,6 +85,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E20330260E1134B3A5D26F0 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				D39245B65E7CFC7F57AA54D5 /* Cooler */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* Cooler */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,9 +102,9 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				3F768A611E3948CD9B4E8532 /* expo.icon */,
-				82AE3854E7144891AB528F47 /* Settings.bundle */,
-				719C89DB69BFF6E37E8900E5 /* PrivacyInfo.xcprivacy */,
+				65E369AF446548BBB8E1B328 /* expo.icon */,
+				8AB9156AE8F64E60A32E6D5F /* Settings.bundle */,
+				3E7DBB0074B7757004978DF1 /* PrivacyInfo.xcprivacy */,
 			);
 			name = Cooler;
 			sourceTree = "<group>";
@@ -105,26 +113,17 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				F00A5CBBD6FFA500C3254421 /* libPods-Cooler.a */,
+				BA4B55767D94B9A18106D046 /* libPods-Cooler.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		450EE03F27868344F55F4522 /* Pods */ = {
+		34B4D60C8E034E59AF01924B /* NotificationService */ = {
 			isa = PBXGroup;
 			children = (
-				01926C1A189E7DC6F3E4FDBC /* Pods-Cooler.debug.xcconfig */,
-				6BD7BE067C5B17B7A8407581 /* Pods-Cooler.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		6A08492F398D45EA8CCD875D /* NotificationService */ = {
-			isa = PBXGroup;
-			children = (
-				9D79DD52DBC6487D88E8E5D8 /* NotificationService.swift */,
-				CF4BCAEDDAF04E1B923CDD14 /* NotificationService-Info.plist */,
-				40CB6444D981464B9DC785F6 /* NotificationService.entitlements */,
+				CF7B3D6E79424A91B724AB0F /* NotificationService.swift */,
+				AEA0DA1B3DA2495EAC7B0482 /* NotificationService-Info.plist */,
+				406B4EBF67E643828F1C10FD /* NotificationService.entitlements */,
 			);
 			name = NotificationService;
 			path = NotificationService;
@@ -144,9 +143,9 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				450EE03F27868344F55F4522 /* Pods */,
-				8E4F2A4EE5B872AC2FCEC8F4 /* ExpoModulesProviders */,
-				6A08492F398D45EA8CCD875D /* NotificationService */,
+				34B4D60C8E034E59AF01924B /* NotificationService */,
+				F52A15BB23DBFA268F36178D /* Pods */,
+				0E20330260E1134B3A5D26F0 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -157,17 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* Cooler.app */,
-				A001403A41A74214903A165C /* NotificationService.appex */,
+				82C038DF8017488F85644ACA /* NotificationService.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		8E4F2A4EE5B872AC2FCEC8F4 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				D4B2AC98D49CF1E067935DEA /* Cooler */,
-			);
-			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -179,12 +170,22 @@
 			path = Cooler/Supporting;
 			sourceTree = "<group>";
 		};
-		D4B2AC98D49CF1E067935DEA /* Cooler */ = {
+		D39245B65E7CFC7F57AA54D5 /* Cooler */ = {
 			isa = PBXGroup;
 			children = (
-				88248F8C433F4D8F7E18A9C8 /* ExpoModulesProvider.swift */,
+				509E4BFCEDD42F67D6950AE2 /* ExpoModulesProvider.swift */,
 			);
 			name = Cooler;
+			sourceTree = "<group>";
+		};
+		F52A15BB23DBFA268F36178D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0512BC58DE4D4EE0BEBB9E60 /* Pods-Cooler.debug.xcconfig */,
+				F1BAEA385FEF5EB6365B03C3 /* Pods-Cooler.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,35 +196,35 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Cooler" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				E8927BCC735B4E0CAF8B6D55 /* Generate licenses with LicensePlist */,
-				03F3D377CB92C06CC7A684C9 /* [Expo] Configure project */,
+				28389CA2D27F43DF972EC3BD /* Generate licenses with LicensePlist */,
+				94DB132F37DD37D1FAADB506 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				AAAE17F6FFC441F689F373CF /* [Expo Dev Launcher] Strip Local Network Keys for Release */,
-				B2907EF478634BD59E8C6CF5 /* Upload Debug Symbols to Sentry */,
-				D5EE2F2C43E53A1D7364657E /* [CP] Embed Pods Frameworks */,
-				759589555E414450A30D4F73 /* Copy Files */,
+				B731CFBC76F444EA98A0CDE7 /* [Expo Dev Launcher] Strip Local Network Keys for Release */,
+				0F1A9CD7637247439CBD2918 /* Copy Files */,
+				4721CFC0B1BB41A6A9CECB64 /* Upload Debug Symbols to Sentry */,
+				1B353293D3DDB1422522D881 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AC62E479D8B548D081F7EE8D /* PBXTargetDependency */,
+				93E50E09EA8F42F9A75158DC /* PBXTargetDependency */,
 			);
 			name = Cooler;
 			productName = Cooler;
 			productReference = 13B07F961A680F5B00A75B9A /* Cooler.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F09FC2FAA4A9444F8994F259 /* NotificationService */ = {
+		CAE85C6C047146BCB8BA8ADF /* NotificationService */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 752154ACAD6A4003B1FE1D34 /* Build configuration list for PBXNativeTarget "NotificationService" */;
+			buildConfigurationList = C25A7B9E419F40CB98A946CA /* Build configuration list for PBXNativeTarget "NotificationService" */;
 			buildPhases = (
-				EA5B6A35931F46E8B4F50085 /* Sources */,
-				A2EE6A5673054DA58F567A41 /* Resources */,
-				A5A6D5152B2B4C86B39A903B /* Frameworks */,
+				7C16E8500F614C0F9EDB1545 /* Sources */,
+				56B78296B2E64056A12197B1 /* Resources */,
+				5361227BB90A46248D0600C1 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -231,7 +232,7 @@
 			);
 			name = NotificationService;
 			productName = NotificationService;
-			productReference = A001403A41A74214903A165C /* NotificationService.appex */;
+			productReference = 82C038DF8017488F85644ACA /* NotificationService.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -245,7 +246,7 @@
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1250;
 					};
-					F09FC2FAA4A9444F8994F259 = {
+					CAE85C6C047146BCB8BA8ADF = {
 						DevelopmentTeam = 73H669GA5T;
 					};
 				};
@@ -264,7 +265,7 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* Cooler */,
-				F09FC2FAA4A9444F8994F259 /* NotificationService */,
+				CAE85C6C047146BCB8BA8ADF /* NotificationService */,
 			);
 		};
 /* End PBXProject section */
@@ -277,13 +278,13 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				E8D8C10D7E5F46C08BE0C662 /* expo.icon in Resources */,
-				DC702408578D455C8503F431 /* Settings.bundle in Resources */,
-				4C19240DE5F9BC41449D5352 /* PrivacyInfo.xcprivacy in Resources */,
+				9A50D37930FA4A29AAF03093 /* expo.icon in Resources */,
+				BC912F02F254473BA91C51DF /* Settings.bundle in Resources */,
+				CD46EE1EEE7B193EFC5BC42B /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A2EE6A5673054DA58F567A41 /* Resources */ = {
+		56B78296B2E64056A12197B1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -310,30 +311,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n/bin/sh `\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('@sentry/react-native/package.json')) + '/scripts/sentry-xcode.sh'\"` `\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
 		};
-		03F3D377CB92C06CC7A684C9 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/.xcode.env",
-				"$(SRCROOT)/.xcode.env.local",
-				"$(SRCROOT)/Cooler/Cooler.entitlements",
-				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/expo-configure-project.sh",
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Cooler/expo-configure-project.sh\"\n";
-		};
 		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -356,83 +333,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/EXApplication/ExpoApplication_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoDevice/ExpoDevice_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoNotifications/ExpoNotifications_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoSystemUI/ExpoSystemUI_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoTaskManager/ExpoTaskManager_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-timing/React-timing_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/Sentry/Sentry.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-launcher/EXDevLauncher.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-menu/EXDevMenu.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoApplication_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoDevice_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoNotifications_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoSystemUI_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoTaskManager_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-timing_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sentry.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevLauncher.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevMenu.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AAAE17F6FFC441F689F373CF /* [Expo Dev Launcher] Strip Local Network Keys for Release */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo Dev Launcher] Strip Local Network Keys for Release";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Strip dev-launcher-specific local network permission keys from non-Debug builds\n# This only removes _expo._tcp Bonjour services and the dev-launcher usage description.\n# Other Bonjour services and custom descriptions are preserved for production use.\n\nif [ \"$CONFIGURATION\" != \"Debug\" ]; then\n  PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n  if [ -f \"$PLIST_PATH\" ]; then\n    # Check if NSBonjourServices exists\n    if /usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" >/dev/null 2>&1; then\n      # Get the count of services\n      COUNT=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n\n      # Remove _expo._tcp\n      for ((i=COUNT-1; i>=0; i--)); do\n        SERVICE=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n        if echo \"$SERVICE\" | grep -q \"_expo._tcp\"; then\n          /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || true\n        fi\n      done\n\n      # If the array is now empty, remove it entirely\n      REMAINING=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n      if [ \"$REMAINING\" -eq \"0\" ]; then\n        /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null || true\n      fi\n    fi\n\n    # Only delete the description if it matches the dev-launcher default text\n    DESC=$(/usr/libexec/PlistBuddy -c \"Print :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n    if echo \"$DESC\" | grep -q \"Expo Dev Launcher\"; then\n      /usr/libexec/PlistBuddy -c \"Delete :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || true\n    fi\n  fi\nfi\n";
-		};
-		B2907EF478634BD59E8C6CF5 /* Upload Debug Symbols to Sentry */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Upload Debug Symbols to Sentry";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh `${NODE_BINARY:-node} --print \"require('path').dirname(require.resolve('@sentry/react-native/package.json')) + '/scripts/sentry-xcode-debug-files.sh'\"`";
-		};
-		D5EE2F2C43E53A1D7364657E /* [CP] Embed Pods Frameworks */ = {
+		1B353293D3DDB1422522D881 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -482,7 +383,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E8927BCC735B4E0CAF8B6D55 /* Generate licenses with LicensePlist */ = {
+		28389CA2D27F43DF972EC3BD /* Generate licenses with LicensePlist */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -496,6 +397,106 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nif [[ -n ${PODS_ROOT} ]]; then ${PODS_ROOT}/LicensePlist/license-plist --add-version-numbers --output-path ./Settings.bundle; else /usr/bin/env xcrun --sdk macosx swift run -c release --package-path ./build/generated/autolinking/libs/ReactNativeLegal/swift-tools license-plist --add-version-numbers --output-path ./Settings.bundle; fi\n";
 		};
+		4721CFC0B1BB41A6A9CECB64 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh `${NODE_BINARY:-node} --print \"require('path').dirname(require.resolve('@sentry/react-native/package.json')) + '/scripts/sentry-xcode-debug-files.sh'\"`";
+		};
+		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXApplication/ExpoApplication_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoDevice/ExpoDevice_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoNotifications/ExpoNotifications_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoSystemUI/ExpoSystemUI_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoTaskManager/ExpoTaskManager_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-timing/React-timing_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Sentry/Sentry.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-launcher/EXDevLauncher.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/expo-dev-menu/EXDevMenu.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoApplication_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoDevice_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoNotifications_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoSystemUI_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoTaskManager_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-timing_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Sentry.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevLauncher.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXDevMenu.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cooler/Pods-Cooler-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		94DB132F37DD37D1FAADB506 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env",
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/Cooler/Cooler.entitlements",
+				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/expo-configure-project.sh",
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Pods/Target Support Files/Pods-Cooler/ExpoModulesProvider.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Cooler/expo-configure-project.sh\"\n";
+		};
+		B731CFBC76F444EA98A0CDE7 /* [Expo Dev Launcher] Strip Local Network Keys for Release */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo Dev Launcher] Strip Local Network Keys for Release";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Strip dev-launcher-specific local network permission keys from non-Debug builds\n# This only removes _expo._tcp Bonjour services and the dev-launcher usage description.\n# Other Bonjour services and custom descriptions are preserved for production use.\n\nif [ \"$CONFIGURATION\" != \"Debug\" ]; then\n  PLIST_PATH=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n  if [ -f \"$PLIST_PATH\" ]; then\n    # Check if NSBonjourServices exists\n    if /usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" >/dev/null 2>&1; then\n      # Get the count of services\n      COUNT=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n\n      # Remove _expo._tcp\n      for ((i=COUNT-1; i>=0; i--)); do\n        SERVICE=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n        if echo \"$SERVICE\" | grep -q \"_expo._tcp\"; then\n          /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices:$i\" \"$PLIST_PATH\" 2>/dev/null || true\n        fi\n      done\n\n      # If the array is now empty, remove it entirely\n      REMAINING=$(/usr/libexec/PlistBuddy -c \"Print :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null | grep \"^    \" | wc -l | tr -d ' ')\n      if [ \"$REMAINING\" -eq \"0\" ]; then\n        /usr/libexec/PlistBuddy -c \"Delete :NSBonjourServices\" \"$PLIST_PATH\" 2>/dev/null || true\n      fi\n    fi\n\n    # Only delete the description if it matches the dev-launcher default text\n    DESC=$(/usr/libexec/PlistBuddy -c \"Print :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || echo \"\")\n    if echo \"$DESC\" | grep -q \"Expo Dev Launcher\"; then\n      /usr/libexec/PlistBuddy -c \"Delete :NSLocalNetworkUsageDescription\" \"$PLIST_PATH\" 2>/dev/null || true\n    fi\n  fi\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -504,63 +505,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				93A5CFF902A26D8500907413 /* ExpoModulesProvider.swift in Sources */,
+				3148BDFA3F96CA3416857367 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EA5B6A35931F46E8B4F50085 /* Sources */ = {
+		7C16E8500F614C0F9EDB1545 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB0DE01BFE7C45CF8DB027B9 /* NotificationService.swift in Sources */,
+				053F20BD96634C18B76C734F /* NotificationService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AC62E479D8B548D081F7EE8D /* PBXTargetDependency */ = {
+		93E50E09EA8F42F9A75158DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F09FC2FAA4A9444F8994F259 /* NotificationService */;
-			targetProxy = E62A99C464AF4EC9B0EFF0AA /* PBXContainerItemProxy */;
+			target = CAE85C6C047146BCB8BA8ADF /* NotificationService */;
+			targetProxy = 769C1472674642AD93349A30 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		040ECCAA21B4442596D11C79 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = NotificationService/NotificationService.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 73H669GA5T;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "NotificationService/NotificationService-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.3.5;
-				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = app.getcooler.Cooler.NotificationService;
-				PRODUCT_NAME = NotificationService;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01926C1A189E7DC6F3E4FDBC /* Pods-Cooler.debug.xcconfig */;
+			baseConfigurationReference = 0512BC58DE4D4EE0BEBB9E60 /* Pods-Cooler.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = expo;
 				CLANG_ENABLE_MODULES = YES;
@@ -573,8 +543,6 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = Cooler/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Cooler;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -600,7 +568,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6BD7BE067C5B17B7A8407581 /* Pods-Cooler.release.xcconfig */;
+			baseConfigurationReference = F1BAEA385FEF5EB6365B03C3 /* Pods-Cooler.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = expo;
 				CLANG_ENABLE_MODULES = YES;
@@ -608,8 +576,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 73H669GA5T;
 				INFOPLIST_FILE = Cooler/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Cooler;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -632,7 +598,7 @@
 			};
 			name = Release;
 		};
-		6548D7BC24DC430D975E6FE4 /* Release */ = {
+		7CECB3C34FB54A69A1668EF4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -795,6 +761,37 @@
 			};
 			name = Release;
 		};
+		B2F1024EFC514847AED60898 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = NotificationService/NotificationService.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73H669GA5T;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "NotificationService/NotificationService-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.3.5;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = app.getcooler.Cooler.NotificationService;
+				PRODUCT_NAME = NotificationService;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -807,20 +804,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		752154ACAD6A4003B1FE1D34 /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				040ECCAA21B4442596D11C79 /* Debug */,
-				6548D7BC24DC430D975E6FE4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Cooler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C25A7B9E419F40CB98A946CA /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2F1024EFC514847AED60898 /* Debug */,
+				7CECB3C34FB54A69A1668EF4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

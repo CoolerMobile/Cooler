@@ -2,16 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>keychain-access-groups</key>
-    <array>
-      <string>$(AppIdentifierPrefix)app.getcooler.Cooler</string>
-      <string>$(AppIdentifierPrefix)app.getcooler.Cooler.push</string>
-    </array>
     <key>aps-environment</key>
     <string>production</string>
     <key>com.apple.developer.associated-domains</key>
     <array>
       <string>applinks:getcooler.app</string>
+    </array>
+    <key>keychain-access-groups</key>
+    <array>
+      <string>$(AppIdentifierPrefix)app.getcooler.Cooler</string>
+      <string>$(AppIdentifierPrefix)app.getcooler.Cooler.push</string>
     </array>
   </dict>
 </plist>
