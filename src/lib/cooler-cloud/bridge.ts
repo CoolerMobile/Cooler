@@ -1,5 +1,6 @@
 import { REQUEST_TIMEOUT_MS } from "@/lib/cooler-cloud/config"
 import { requestError } from "@/lib/cooler-cloud/errors"
+import type { PushPreferences } from "@/lib/cooler-cloud/preferences"
 import type { DevicePlatform } from "@/lib/types/account"
 import { ofetch } from "ofetch"
 
@@ -51,7 +52,7 @@ export type PairingChallenge = {
 }
 
 type RequestOptions = {
-  method?: "GET" | "POST" | "DELETE"
+  method?: "GET" | "POST" | "PUT" | "DELETE"
   token?: string
   body?: unknown
 }
@@ -136,6 +137,10 @@ export const listEvents = (baseUrl: string, token: string) =>
 /** read a single event by id */
 export const getEvent = (baseUrl: string, token: string, id: string) =>
   request<BridgeEvent>(baseUrl, `events/${id}`, { token })
+
+/** replace this device's notification preferences with the device event token */
+export const updatePreferences = (baseUrl: string, eventToken: string, preferences: PushPreferences) =>
+  request<PushPreferences>(baseUrl, "preferences", { method: "PUT", token: eventToken, body: preferences })
 
 /** read a pushed event by id with the device event token */
 export const getPushedEvent = (baseUrl: string, eventToken: string, id: string) =>

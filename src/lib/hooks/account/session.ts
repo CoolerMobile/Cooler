@@ -15,6 +15,8 @@ import {
   setPushCredential,
 } from "@/lib/storage/push-credentials"
 import { useAccountStore } from "@/lib/stores/account"
+import { useSettingsStore } from "@/lib/stores/settings"
+import { buildPushPreferences } from "@/lib/cooler-cloud/preferences"
 import type { BridgeLink, BridgeSession, DevicePlatform } from "@/lib/types/account"
 import * as Crypto from "expo-crypto"
 import * as WebBrowser from "expo-web-browser"
@@ -96,7 +98,50 @@ export const registerDevice = async (link: BridgeLink) => {
   // issue no token and keep sending the content in the push themselves
   if (typeof device.eventToken === "string") {
     await setPushCredential(link.cloudBridgeId, { baseUrl: link.baseUrl, eventToken: device.eventToken })
+    await sendPushPreferences(link).catch((error) =>
+      console.error("[account] preference sync failed:", error)
+    )
   }
+}
+
+/** push preferences built from the current settings and time zone */
+const currentPushPreferences = async () => {
+  // background launches can run before the settings store rehydrates
+  if (!useSettingsStore.persist.hasHydrated()) await useSettingsStore.persist.rehydrate()
+
+  return buildPushPreferences(
+    useSettingsStore.getState().settings,
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  )
+}
+
+/**
+ * send this device's notification preferences to one bridge
+ *
+ * @param link linked bridge
+ */
+const sendPushPreferences = async (link: BridgeLink) => {
+  const credential = await getPushCredential(link.cloudBridgeId)
+  if (!credential) return
+
+  await bridge.updatePreferences(credential.baseUrl, credential.eventToken, await currentPushPreferences())
+}
+
+/**
+ * send this device's notification preferences to every linked bridge
+ *
+ * bridges hold back pushes during quiet hours and for muted alert categories,
+ * so they need the latest settings and time zone; a bridge that is offline or
+ * too old to accept them is retried on the next sync
+ */
+export const syncPushPreferences = async () => {
+  const { bridges } = useAccountStore.getState()
+
+  await Promise.allSettled(
+    bridges.map((link) =>
+      sendPushPreferences(link).catch((error) => console.error("[account] preference sync failed:", error))
+    )
+  )
 }
 
 /**
@@ -372,6 +417,7 @@ export const useAccount = () => {
     syncBridgeEvents,
     registerDevice,
     ensurePushRegistration,
+    syncPushPreferences,
     pairBridge,
     unpairBridge,
     refreshBridges,
