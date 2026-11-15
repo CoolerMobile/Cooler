@@ -21,11 +21,11 @@ release *args:
 release-store *args:
     bun run release:store {{args}}
 
-# Build remotely in CI (EAS GitHub workflow), submit to TestFlight.
+# Build remotely in CI (EAS GitHub workflow), both platforms unless --android or --ios, submit to TestFlight.
 release-ci *args:
     bun run release:eas {{args}}
 
-# CI release + metadata push. Review the What's New locally before it dispatches.
+# CI release + metadata push, both platforms unless --android or --ios. Review the What's New before it dispatches.
 release-ci-store *args:
     bun run release:eas:store {{args}}
 

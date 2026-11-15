@@ -46,7 +46,7 @@ const usage = [
   "  --ios         Build only for iOS",
   "  --submit      Submit iOS to TestFlight and Google Play",
   "  --nightly     Create a nightly/internal build",
-  "  --eas           Dispatch the existing EAS GitHub workflow",
+  "  --eas           Dispatch the existing EAS GitHub workflow (both platforms unless --android or --ios)",
   "  --local         Build locally (the default)",
   "  --bump-only     Only update app and native versions, then print the new version",
   "  --push-metadata Also push the store listing + What's New to App Store Connect",
@@ -71,8 +71,9 @@ const usage = [
   "  bun release --android --submit",
   "  bun release --android --ios",
   "  bun release --android --ios --submit",
-  "  bun release --eas --android --ios",
+  "  bun release --eas",
   "  bun release --eas --submit",
+  "  bun release --eas --ios --submit",
   "  bun release --local --submit",
   "  bun release --ios --nightly",
 ].join("\n")
@@ -88,8 +89,9 @@ const nightly = args.includes("--nightly")
 const bumpOnly = args.includes("--bump-only")
 const pushMetadata = args.includes("--push-metadata")
 
-// --android --ios (in either order) targets both platforms in one run
-const both = ios && android
+// --android --ios (in either order) targets both platforms in one run, and an
+// --eas release builds both unless --android or --ios narrows it
+const both = (ios && android) || (useEas && !ios && !android)
 
 const knownFlags = new Set([
   "--eas",
