@@ -96,7 +96,14 @@
           }
         }
       ],
-      "@sentry/react-native",
+      [
+        "@sentry/react-native",
+        {
+          "url": "https://tracking.danfq.dev/",
+          "organization": "personal",
+          "project": "cooler"
+        }
+      ],
       "./plugins/withApsEnvironment",
       "./plugins/withNotificationService"
     ],
