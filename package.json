@@ -5,8 +5,8 @@
   "version": "1.3.6",
   "scripts": {
     "dev": "expo start -c --go",
-    "dev:native-build": "bun run fix:licenses && expo run --device",
-    "dev:native-rebuild": "bun run clean:native && expo run --device",
+    "dev:native-build": "bun run fix:licenses && bun scripts/provision-ios.ts && expo run --device",
+    "dev:native-rebuild": "bun run clean:native && bun scripts/provision-ios.ts && expo run --device",
     "dev:native-build:eas": "bun scripts/dev-build.ts",
     "clean:native": "rm -rf .expo ios android",
     "clean": "rm -rf .expo node_modules && bun install",
