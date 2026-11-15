@@ -88,9 +88,11 @@ Notifications.setNotificationHandler({
     const isWebhook = trigger !== null && "type" in trigger && trigger.type === "push"
     const storedLocalId = content.data?.[LOCAL_NOTIFICATION_ID_KEY]
 
-    // bridge pushes carry only ids, the background task fetches the event and
-    // presents it as a local notification, so the empty push is never shown
-    if (isWebhook && readBridgeEventPush(content.data)) {
+    const bridgePush = isWebhook ? readBridgeEventPush(content.data) : null
+
+    // android bridge pushes carry only ids, the background task fetches the
+    // event and presents it as a local notification, so the empty push is never shown
+    if (bridgePush && Platform.OS !== "ios") {
       return {
         shouldPlaySound: false,
         shouldSetBadge: false,
@@ -98,6 +100,11 @@ Notifications.setNotificationHandler({
         shouldShowList: false,
       }
     }
+
+    // on ios the notification service extension already swapped in the event,
+    // archiving it under the event id keeps a later sync from storing it twice
+    // while a placeholder it could not replace is still filled in by that sync
+    const requestId = bridgePush && content.data?.presented === true ? bridgePush.eventId : identifier
 
     try {
       // persist before presentation so an unsaved
@@ -113,7 +120,7 @@ Notifications.setNotificationHandler({
         )
       } else {
         await saveNotification({
-          requestId: identifier,
+          requestId,
           title: content.title ?? undefined,
           body: content.body ?? undefined,
           data: content.data,
