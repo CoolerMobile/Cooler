@@ -109,12 +109,21 @@ export const bridgeLogout = (baseUrl: string, token: string) =>
 export const listDevices = (baseUrl: string, token: string) =>
   request<BridgeDevice[]>(baseUrl, "devices", { token })
 
-/** register this device push token with the bridge */
+/**
+ * register this device push token with the bridge
+ *
+ * the response carries the device event token, rotated on every registration
+ */
 export const registerDevice = (
   baseUrl: string,
   token: string,
   deviceData: { platform: DevicePlatform; pushToken: string }
-) => request<BridgeDevice>(baseUrl, "devices", { method: "POST", token, body: { deviceData } })
+) =>
+  request<BridgeDevice & { eventToken: string }>(baseUrl, "devices", {
+    method: "POST",
+    token,
+    body: { deviceData },
+  })
 
 /** deregister a device by id */
 export const deleteDevice = (baseUrl: string, token: string, id: string) =>
@@ -127,3 +136,7 @@ export const listEvents = (baseUrl: string, token: string) =>
 /** read a single event by id */
 export const getEvent = (baseUrl: string, token: string, id: string) =>
   request<BridgeEvent>(baseUrl, `events/${id}`, { token })
+
+/** read a pushed event by id with the device event token */
+export const getPushedEvent = (baseUrl: string, eventToken: string, id: string) =>
+  request<BridgeEvent>(baseUrl, `push/events/${id}`, { token: eventToken })

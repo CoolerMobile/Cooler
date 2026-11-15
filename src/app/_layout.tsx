@@ -12,6 +12,7 @@ import { useDeploymentMonitor } from "@/lib/hooks/data/deployments"
 import { useDeploymentBackgroundTask } from "@/lib/tasks/deployment-monitor"
 import "@/lib/tasks/bridge-events"
 import { useDeepLinks } from "@/lib/hooks/account/deep-links"
+import { useBridgeSync } from "@/lib/hooks/account/bridge-sync"
 import { useSentry } from "@/lib/hooks/sentry"
 import * as Sentry from "@sentry/react-native"
 
@@ -41,6 +42,9 @@ function RootNavigator() {
 
   // handle cooler:// deep links (bridge pairing)
   useDeepLinks()
+
+  // keep push registration and the event archive in sync with linked bridges
+  useBridgeSync()
 
   // theme
   const { colorScheme } = useAppTheme()

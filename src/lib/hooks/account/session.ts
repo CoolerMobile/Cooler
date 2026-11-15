@@ -8,6 +8,12 @@ import {
 import { extractAuthCode, isBridgeSessionExpired, parsePairLink } from "@/lib/cooler-cloud/session-utils"
 import { getExpoPushToken } from "@/lib/hooks/notifications"
 import { getNotifications, saveNotification } from "@/lib/storage/notifications"
+import {
+  clearPushCredentials,
+  getPushCredential,
+  removePushCredential,
+  setPushCredential,
+} from "@/lib/storage/push-credentials"
 import { useAccountStore } from "@/lib/stores/account"
 import type { BridgeLink, BridgeSession, DevicePlatform } from "@/lib/types/account"
 import * as Crypto from "expo-crypto"
@@ -85,6 +91,28 @@ export const registerDevice = async (link: BridgeLink) => {
   const session = await ensureBridgeSession(link)
   const device = await bridge.registerDevice(link.baseUrl, session.accessToken, { platform, pushToken })
   useAccountStore.getState().setDeviceId(link.cloudBridgeId, device.id)
+
+  // lets pushes be presented without a live bridge session
+  await setPushCredential(link.cloudBridgeId, { baseUrl: link.baseUrl, eventToken: device.eventToken })
+}
+
+/**
+ * register this device with every linked bridge it holds no push credential for
+ *
+ * covers installs that registered before event tokens existed and bridges
+ * paired from another device or the dashboard
+ */
+export const ensurePushRegistration = async () => {
+  const { bridges } = useAccountStore.getState()
+
+  await Promise.allSettled(
+    bridges.map(async (link) => {
+      if (await getPushCredential(link.cloudBridgeId)) return
+      await registerDevice(link).catch((error) =>
+        console.error("[account] device registration failed:", error)
+      )
+    })
+  )
 }
 
 /**
@@ -186,6 +214,7 @@ export const unpairBridge = async (link: BridgeLink) => {
     if (account.bridges.some((existing) => existing.cloudBridgeId === link.cloudBridgeId)) throw error
   }
 
+  await removePushCredential(link.cloudBridgeId).catch(() => undefined)
   useAccountStore.getState().removeBridge(link.cloudBridgeId)
 }
 
@@ -199,6 +228,12 @@ export const refreshBridges = async () => {
   if (!session) return
 
   const account = await cloud.getAccount(session.token)
+
+  // bridges unlinked elsewhere stop being readable from pushes
+  const listed = new Set(account.bridges.map((link) => link.cloudBridgeId))
+  const unlinked = useAccountStore.getState().bridges.filter((link) => !listed.has(link.cloudBridgeId))
+  await Promise.allSettled(unlinked.map((link) => removePushCredential(link.cloudBridgeId)))
+
   useAccountStore.getState().setBridges(account.bridges)
 }
 
@@ -302,6 +337,7 @@ export const signOut = async () => {
 
   if (session) await cloud.cloudLogout(session.token).catch(() => undefined)
 
+  await clearPushCredentials().catch(() => undefined)
   store.reset()
 }
 
@@ -332,6 +368,7 @@ export const useAccount = () => {
     signOut,
     syncBridgeEvents,
     registerDevice,
+    ensurePushRegistration,
     pairBridge,
     unpairBridge,
     refreshBridges,
