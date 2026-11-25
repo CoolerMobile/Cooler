@@ -84,6 +84,10 @@ jobs:
         with:
           bun-version: latest
 
+      # the version bump is resolved by @danfq/nextver
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
       - name: Validate release options
         env:
           CHANNEL: ${{ inputs.channel }}
