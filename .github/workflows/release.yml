@@ -134,6 +134,7 @@ jobs:
           git add \
             package.json \
             app.json \
+            store.config.json \
             android/app/build.gradle \
             ios/Cooler/Info.plist \
             ios/Cooler.xcodeproj/project.pbxproj
