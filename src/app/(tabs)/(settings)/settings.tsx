@@ -1,9 +1,11 @@
+import { CoolerCloudSheet } from "@/components/custom/account/cooler-cloud-sheet";
 import { SettingsAction } from "@/components/custom/settings/action";
 import { SettingsItem } from "@/components/custom/settings/item";
 import { SettingsSection } from "@/components/custom/settings/section";
 import { useDemoMode } from "@/lib/hooks/demo/mode";
 import { useBiometrics } from "@/lib/hooks/security/biometrics";
 import { useAppTheme } from "@/components/custom/theme";
+import { useAccountStore } from "@/lib/stores/account";
 import { useSettingsStore } from "@/lib/stores/settings";
 import {
   BedSingle,
@@ -11,6 +13,8 @@ import {
   BellOff,
   BookOpen,
   CalendarClock,
+  Cloud,
+  CloudCheck,
   DatabaseBackup,
   EyeOff,
   File,
@@ -118,6 +122,8 @@ export default function SettingsScreen() {
   };
 
   // sheets states
+  const [cloudOpen, setCloudOpen] = useState(false);
+  const cloudSession = useAccountStore((state) => state.session);
   const [alertOpen, setAlertOpen] = useState(false);
   const [quietOpen, setQuietOpen] = useState(false);
   const [androidQuietPicker, setAndroidQuietPicker] = useState<
@@ -170,6 +176,19 @@ export default function SettingsScreen() {
             />
           </SettingsSection>
         )}
+
+        {/* account */}
+        <SettingsSection title="Account">
+          {/* coolercloud, reachable with or without a server */}
+          <SettingsItem
+            icon={cloudSession ? CloudCheck : Cloud}
+            title="CoolerCloud"
+            description={
+              cloudSession?.user.email ?? "Sign in for push notifications"
+            }
+            action={() => setCloudOpen(true)}
+          />
+        </SettingsSection>
 
         {/* visuals */}
         <SettingsSection title="Visuals">
@@ -462,6 +481,8 @@ export default function SettingsScreen() {
           </Text>
         </View>
       </BottomSheet>
+      {/* coolercloud sheet */}
+      <CoolerCloudSheet open={cloudOpen} onOpenChange={setCloudOpen} />
     </>
   );
 }
