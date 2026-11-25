@@ -8,7 +8,7 @@
     },
     "info": {
       "en-US": {
-        "description": "Monitor instances, restart services, and tail logs directly from your pocket.",
+        "description": "Cooler is a native companion for your Coolify instances. Check on your servers, restart services, follow deployments and read logs, right from your iPhone.\n\nAT A GLANCE\n• See every server and resource with its live status\n• A health summary flags anything that needs your attention\n\nRESOURCES\n• Start, stop and restart applications, databases and services\n• Follow logs as they come in\n\nDEPLOYMENTS\n• Browse deployment history and watch deployments in progress\n• Cancel, redeploy or roll back in a couple of taps\n\nNOTIFICATIONS\n• Alerts for deployments, backups, scheduled tasks and servers\n• Quiet hours, so alerts wait until you're ready\n• Real-time push notifications through CoolerBridge, an open source service you host next to Coolify, linked with a CoolerCloud account\n\nPRIVACY AND SECURITY\n• Lock the app with Face ID\n• Protected actions ask before anything risky runs\n• Hide sensitive values, or flip or shake your phone to hide them instantly\n• Your Coolify API token stays on your device, in the iOS Keychain\n\nTRY IT FIRST\nNo Coolify instance yet? Start the built-in demo to explore everything Cooler can do.\n\nCooler is open source. Connecting your own instance needs Coolify and an API token.\n\nCooler is an independent app and is not affiliated with or endorsed by Coolify.",
         "keywords": [
           "dashboard",
           "companion",
@@ -23,7 +23,6 @@
         "promoText": "Because self-hosting from your phone shouldn't feel like wrestling a desktop web dashboard.",
         "title": "Cooler for Coolify",
         "subtitle": "Coolify, in your pocket.",
-        "releaseNotes": "New in Cooler:\n\n• CoolerCloud sign-in: create an account to pair and sync your Coolify connection.\n• Real-time push notifications for Coolify events, delivered through CoolerBridge.\n• Scan a CoolerCloud QR code right inside the connect sheet.\n\nWe also polished connection error messages and made the experience more consistent across iOS and Android.",
         "privacyPolicyUrl": "https://getcooler.app/legal/privacy"
       }
     },
