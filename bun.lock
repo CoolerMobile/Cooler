@@ -72,6 +72,7 @@
         "zustand": "^5.1.0",
       },
       "devDependencies": {
+        "@danfq/nextver": "^1.0.0",
         "@types/bun": "^1.4.4",
         "@types/qrcode": "^1.5.6",
         "@types/react": "~19.2.18",
@@ -244,6 +245,8 @@
     "@babel/types": ["@babel/types@7.29.14", "", { "dependencies": { "@babel/helper-string-parser": "^7.29.14", "@babel/helper-validator-identifier": "^7.29.7" } }, "sha512-UjI/dKmwJwT9pOszJitq2G6EObZPnsZUfdCr92z2TlF3EZK9J3EdfOKUrCzHl6wFthbzwhzl1Soc/UIwxRiq6w=="],
 
     "@callstack/licenses": ["@callstack/licenses@1.0.0", "", { "dependencies": { "glob": "^13.0.0", "spdx-exceptions": "^2.1.0", "spdx-expression-parse": "^5.0.0", "spdx-license-ids": "^3.0.24" } }, "sha512-W7j5qlFEJVHSC7LDeDagvJx9yUtGLlKwSERG1+19Ci6tvQGt5YgtnNjyW1Kqg0bzxnJ52BD2dkOtuQZMSYZegA=="],
+
+    "@danfq/nextver": ["@danfq/nextver@1.0.0", "", { "bin": { "nextver": "dist/cli.js" } }, "sha512-UC2tS2zSmuntKr/DISwY11yqI8c06ZJZ4njO6hKzkg6VVhvbAZ5XDEZNJ6iGFeNtou6qHPEI77ssMbLKYAwYZQ=="],
 
     "@egjs/hammerjs": ["@egjs/hammerjs@2.0.17", "", { "dependencies": { "@types/hammerjs": "^2.0.36" } }, "sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A=="],
 

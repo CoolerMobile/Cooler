@@ -1,8 +1,8 @@
+import { applyBump, commitsSince, releasable, resolveBump, type Bump } from "@danfq/nextver"
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
 import { ensureSynced } from "./preflight"
 
-type Bump = "major" | "minor" | "patch"
 type Platform = "android" | "ios"
 
 type PackageJson = {
@@ -148,19 +148,6 @@ if (
   throw new Error(usage)
 }
 
-const supportedTypes = new Set([
-  "build",
-  "chore",
-  "ci",
-  "docs",
-  "fix",
-  "perf",
-  "refactor",
-  "revert",
-  "style",
-  "test",
-])
-
 const fail = (message: string): never => {
   throw new Error(message)
 }
@@ -209,35 +196,6 @@ const parseVersion = (version: string): [number, number, number] => {
   return match.slice(1).map(Number) as [number, number, number]
 }
 
-const bumpVersion = (currentVersion: string, bump: Bump) => {
-  let [major, minor, patch] = parseVersion(currentVersion)
-
-  if (bump === "major") {
-    return `${major + 1}.0.0`
-  }
-
-  if (bump === "minor") {
-    minor += 1
-    patch = 0
-  } else {
-    patch += 1
-  }
-
-  // Roll a saturated segment (9) over into the next one up. Patch 9 -> 0 carries
-  // into minor, minor 9 -> 0 carries into major. Major is never capped.
-  if (patch > 9) {
-    patch = 0
-    minor += 1
-  }
-
-  if (minor > 9) {
-    minor = 0
-    major += 1
-  }
-
-  return `${major}.${minor}.${patch}`
-}
-
 const isGreaterVersion = (candidate: string, current: string) => {
   const candidateParts = parseVersion(candidate)
   const currentParts = parseVersion(current)
@@ -283,53 +241,29 @@ const createReleaseNotes = () => {
   return `## Changes\n\n${changes}\n`
 }
 
-const calculateBump = (): Bump => {
+/**
+ * picks the bump from every commit since the last release, through nextver
+ *
+ * breaking wins, then feat, everything else is a patch
+ *
+ * @returns {Promise<Bump>} the bump to apply
+ */
+const calculateBump = async (): Promise<Bump> => {
   const previousRelease = latestReleaseReference()
 
-  const revisionRange = previousRelease ? `${previousRelease}..HEAD` : "HEAD"
+  const commits = releasable(await commitsSince(previousRelease ?? null, root))
 
-  const commits = run("git", ["log", revisionRange, "--format=%B%x00"], true)
-    .split("\0")
-    .map((message) => message.trim())
-    .filter(Boolean)
-
-  let bump: Bump | undefined
-
-  for (const message of commits) {
-    const subject = message.split("\n", 1)[0]
-
-    const typeMatch = /^(?<type>[a-z]+)(?:\([^)]*\))?(?<breaking>!)?:/.exec(subject)
-
-    const type = typeMatch?.groups?.type
-
-    const isBreaking = Boolean(typeMatch?.groups?.breaking) || /\nBREAKING CHANGE:/.test(message)
-
-    if (isBreaking) {
-      return "major"
-    }
-
-    // commits are read newest first, so a feat has to outrank a patch an
-    // earlier (newer) fix or docs commit already set
-    if (type === "feat") {
-      bump = "minor"
-    }
-
-    if (supportedTypes.has(type ?? "") && !bump) {
-      bump = "patch"
-    }
+  if (commits.length === 0) {
+    throw new Error(
+      `No commits found since ${previousRelease ?? "the first commit"}. ` +
+        "Use bun release <patch|minor|major|x.y.z> to override."
+    )
   }
 
-  if (bump) {
-    return bump
-  }
-
-  throw new Error(
-    `No releasable conventional commits found since ${previousRelease ?? "the first commit"}. ` +
-      "Use bun release <patch|minor|major|x.y.z> to override."
-  )
+  return resolveBump(commits)
 }
 
-const prepareVersion = () => {
+const prepareVersion = async () => {
   for (const file of versionedFiles) {
     const changes = Bun.spawnSync(["git", "diff", "--quiet", "--", file], { cwd: root })
     const stagedChanges = Bun.spawnSync(["git", "diff", "--cached", "--quiet", "--", file], {
@@ -354,13 +288,13 @@ const prepareVersion = () => {
   let description: string
 
   if (!requestedBump) {
-    const calculatedBump = calculateBump()
+    const calculatedBump = await calculateBump()
 
-    version = bumpVersion(packageJson.version, calculatedBump)
+    version = applyBump(packageJson.version, calculatedBump)
 
     description = `calculated ${calculatedBump} bump`
   } else if (["major", "minor", "patch"].includes(requestedBump)) {
-    version = bumpVersion(packageJson.version, requestedBump as Bump)
+    version = applyBump(packageJson.version, requestedBump as Bump)
 
     description = `manual ${requestedBump} bump`
   } else {
@@ -460,7 +394,7 @@ const currentBranch = () => {
 }
 
 if (bumpOnly) {
-  process.stdout.write(prepareVersion().version)
+  process.stdout.write((await prepareVersion()).version)
   process.exit(0)
 }
 
@@ -661,7 +595,7 @@ if (submit && pushMetadata && platforms.includes("ios")) {
 
 const releaseNotes = createReleaseNotes()
 
-const { version, description: releaseDescription, originalFiles } = prepareVersion()
+const { version, description: releaseDescription, originalFiles } = await prepareVersion()
 
 const artifactDirectory = join(root, "artifacts")
 
