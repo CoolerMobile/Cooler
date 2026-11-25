@@ -8,7 +8,7 @@ import { useAccount } from "@/lib/hooks/account/session"
 import { useAccountStore } from "@/lib/stores/account"
 import type { BridgeLink } from "@/lib/types/account"
 import { CameraView, useCameraPermissions } from "expo-camera"
-import { CloudCheck, KeyRound, QrCode, Server, Unlink, X } from "lucide-react-native"
+import { CloudCheck, KeyRound, QrCode, Server, Trash2, Unlink, X } from "lucide-react-native"
 import { useEffect, useRef, useState } from "react"
 import { ActivityIndicator, Alert, View } from "react-native"
 
@@ -24,7 +24,7 @@ const errorMessage = (error: unknown, fallback: string) => (error instanceof Err
  *
  * offers the browser oauth flow with manual code entry and qr scanning as
  * alternatives, or the signed in account with its paired bridges, pairing,
- * unpairing and sign out
+ * unpairing, sign out and account deletion
  *
  * the qr scanner renders inline inside this native sheet rather than in a
  * separate react-native modal: stacking an rn modal on top of the native
@@ -36,6 +36,7 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     signInWithBrowser,
     completeSignInWithCode,
     signOut,
+    deleteAccount,
     completePairingFromLink,
     unpairBridge,
     refreshBridges,
@@ -174,6 +175,30 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
     }
   }
 
+  const runDeleteAccount = async () => {
+    try {
+      setBusy(true)
+      await deleteAccount()
+      close()
+      Alert.alert("Account deleted", "Your CoolerCloud account and its bridges have been deleted.")
+    } catch (error) {
+      Alert.alert("Delete failed", errorMessage(error, "Could not delete your CoolerCloud account."))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const confirmDeleteAccount = () => {
+    Alert.alert(
+      "Delete account",
+      "Your CoolerCloud account will be permanently deleted. Every paired bridge is unpaired and removed, and any active subscription is cancelled right away. This can't be undone.",
+      [
+        { text: "Cancel", style: "cancel" },
+        { text: "Delete", style: "destructive", onPress: () => void runDeleteAccount() },
+      ]
+    )
+  }
+
   return (
     <BottomSheet
       key="cooler-cloud-sheet"
@@ -265,6 +290,10 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
               <Button variant="destructive" onPress={handleSignOut} disabled={busy}>
                 {busy ? <ActivityIndicator /> : null}
                 <Text>Sign out</Text>
+              </Button>
+              <Button variant="ghost" onPress={confirmDeleteAccount} disabled={busy}>
+                <Icon as={Trash2} className="text-destructive" />
+                <Text className="text-destructive">Delete account</Text>
               </Button>
             </View>
           ) : (

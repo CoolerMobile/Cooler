@@ -129,4 +129,21 @@ describe("cloud client", () => {
     expect(url).toContain("state=state-123")
     expect(url).toContain("response_type=code")
   })
+
+  test("deleteAccount deletes the signed in account with a bearer token", async () => {
+    stubFetch(jsonResponse({ deleted: true }))
+
+    const result = await cloud.deleteAccount("ccs_x")
+
+    expect(result.deleted).toBe(true)
+    expect(captured?.url).toBe("https://cloud.getcooler.app/v1/me")
+    expect(captured?.method).toBe("DELETE")
+    expect(captured?.headers.get("authorization")).toBe("Bearer ccs_x")
+  })
+
+  test("deleteAccount surfaces why the cloud refused", async () => {
+    stubFetch(jsonResponse({ error: "Could not close billing for this account, nothing was deleted." }, 502))
+
+    await expect(cloud.deleteAccount("ccs_x")).rejects.toThrow("nothing was deleted")
+  })
 })

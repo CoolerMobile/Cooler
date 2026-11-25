@@ -111,3 +111,6 @@ export const unlinkBridge = (token: string, cloudBridgeId: string) =>
 /** revoke the cloud session */
 export const cloudLogout = (token: string) =>
   request<{ loggedOut: boolean }>("auth/logout", { method: "POST", token })
+
+/** permanently delete the account, its billing and every bridge linked to it */
+export const deleteAccount = (token: string) => request<{ deleted: boolean }>("me", { method: "DELETE", token })

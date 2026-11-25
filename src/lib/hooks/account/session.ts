@@ -365,10 +365,9 @@ export const signInWithBrowser = async () => {
   return completeSignInWithCode(code)
 }
 
-/** deregister devices, revoke sessions and clear the account */
-export const signOut = async () => {
-  const store = useAccountStore.getState()
-  const { bridges, bridgeSessions, deviceIds, session } = store
+/** deregister this device from every bridge and end its bridge sessions, best effort */
+const deregisterBridges = async () => {
+  const { bridges, bridgeSessions, deviceIds } = useAccountStore.getState()
 
   await Promise.allSettled(
     bridges.map(async (link) => {
@@ -382,8 +381,35 @@ export const signOut = async () => {
       await bridge.bridgeLogout(link.baseUrl, bridgeSession.accessToken).catch(() => undefined)
     })
   )
+}
+
+/** deregister devices, revoke sessions and clear the account */
+export const signOut = async () => {
+  const store = useAccountStore.getState()
+  const { session } = store
+
+  await deregisterBridges()
 
   if (session) await cloud.cloudLogout(session.token).catch(() => undefined)
+
+  await clearPushCredentials().catch(() => undefined)
+  store.reset()
+}
+
+/**
+ * permanently delete the coolercloud account
+ *
+ * deregisters this device while the bridge sessions still work, then has the
+ * cloud delete the account, its billing and every bridge, and clears the account
+ * locally; nothing local is cleared when the cloud refuses
+ */
+export const deleteAccount = async () => {
+  const store = useAccountStore.getState()
+  const { session } = store
+  if (!session) throw Error("Not signed in")
+
+  await deregisterBridges()
+  await cloud.deleteAccount(session.token)
 
   await clearPushCredentials().catch(() => undefined)
   store.reset()
@@ -414,6 +440,7 @@ export const useAccount = () => {
     signInWithBrowser,
     completeSignInWithCode,
     signOut,
+    deleteAccount,
     syncBridgeEvents,
     registerDevice,
     ensurePushRegistration,
