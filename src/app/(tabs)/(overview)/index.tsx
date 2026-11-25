@@ -1,7 +1,11 @@
+import { NewServerSheet } from "@/components/custom/new-server"
+import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
 import { Separator } from "@/components/ui/separator"
 import { Text } from "@/components/ui/text"
 import { HealthStatus, useOverview } from "@/lib/hooks/data/overview"
+import { useDemoMode } from "@/lib/hooks/demo/mode"
+import { useDataStore } from "@/lib/stores/data"
 import { router } from "expo-router"
 import {
   CircleAlert,
@@ -9,12 +13,15 @@ import {
   CircleHelp,
   ChevronRight,
   Component,
+  FlaskConical,
   Library,
   LucideIcon,
+  Plus,
   Server,
   TriangleAlert,
 } from "lucide-react-native"
-import { Pressable, View } from "react-native"
+import { useState } from "react"
+import { ActivityIndicator, Pressable, View } from "react-native"
 
 const HEALTH_PRESENTATION: Record<
   HealthStatus,
@@ -63,10 +70,50 @@ export default function OverviewScreen() {
         : health.description
   const showHealthDetails = overviewData.healthIssues.length > 0
 
+  // demo
+  const hasHydrated = useDataStore((state) => state.hasHydrated)
+  const { isDemo, busy: demoBusy, startDemo } = useDemoMode()
+  const [newServerOpen, setNewServerOpen] = useState(false)
+  const showGetStarted = hasHydrated && !isDemo && overviewData.servers.length === 0
+
   // ui
   return (
     <>
       <View className="flex-1 gap-8 p-4">
+        {isDemo && (
+          <View className="flex-row items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3">
+            <Icon as={FlaskConical} size={18} className="text-muted-foreground" />
+            <Text className="flex-1 text-sm text-muted-foreground">
+              You're exploring the demo with sample data. Exit it anytime in Settings.
+            </Text>
+          </View>
+        )}
+
+        {showGetStarted && (
+          <View className="gap-4 rounded-2xl border border-border bg-card p-5">
+            <View className="gap-1">
+              <Text className="text-lg font-semibold">Connect your first server</Text>
+              <Text className="leading-5 text-muted-foreground">
+                Add a Coolify server to start monitoring, or try the demo to explore Cooler with sample data.
+              </Text>
+            </View>
+            <View className="flex-row gap-3">
+              <Button className="flex-1" onPress={() => setNewServerOpen(true)} disabled={demoBusy}>
+                <Icon as={Plus} />
+                <Text>Add a server</Text>
+              </Button>
+              <Button
+                className="flex-1"
+                variant="outline"
+                onPress={() => void startDemo()}
+                disabled={demoBusy}>
+                {demoBusy ? <ActivityIndicator /> : <Icon as={FlaskConical} />}
+                <Text>Try demo</Text>
+              </Button>
+            </View>
+          </View>
+        )}
+
         <Pressable
           accessible
           accessibilityRole={showHealthDetails ? "button" : undefined}
@@ -130,6 +177,8 @@ export default function OverviewScreen() {
           </View>
         </View>
       </View>
+
+      <NewServerSheet open={newServerOpen} onOpenChange={setNewServerOpen} />
     </>
   )
 }

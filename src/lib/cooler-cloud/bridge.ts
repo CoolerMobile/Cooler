@@ -1,6 +1,7 @@
 import { REQUEST_TIMEOUT_MS } from "@/lib/cooler-cloud/config"
 import { requestError } from "@/lib/cooler-cloud/errors"
 import type { PushPreferences } from "@/lib/cooler-cloud/preferences"
+import { demoBridgeRequest, shouldUseDemoBridge } from "@/lib/demo/runtime"
 import type { DevicePlatform } from "@/lib/types/account"
 import { ofetch } from "ofetch"
 
@@ -70,6 +71,9 @@ const request = async <T>(baseUrl: string, path: string, options: RequestOptions
   const { method = "GET", token, body } = options
 
   try {
+    // demo mode answers in memory and never reaches a bridge
+    if (shouldUseDemoBridge(baseUrl, token)) return await demoBridgeRequest<T>(baseUrl, path, options)
+
     return await ofetch<T>(`${baseUrl}/${API_PREFIX}/${path}`, {
       method,
       body: body as Record<string, unknown> | undefined,

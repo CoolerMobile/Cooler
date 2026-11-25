@@ -9,6 +9,10 @@ import { Button as NativeButton, Host as NativeHost } from "@expo/ui"
 import { fillMaxWidth } from "@expo/ui/jetpack-compose/modifiers"
 import { useAppTheme } from "@/components/custom/theme"
 import Spacer from "@/components/custom/spacer"
+import { Icon } from "@/components/ui/icon"
+import { useDemoMode } from "@/lib/hooks/demo/mode"
+import { useDataStore } from "@/lib/stores/data"
+import { FlaskConical } from "lucide-react-native"
 
 type Props = {
   open: boolean
@@ -36,6 +40,11 @@ export const NewServerSheet = ({ open, onOpenChange, server }: Props) => {
 
   const { validate, create, update } = useServer()
   const [validating, setValidating] = useState(false)
+
+  // demo
+  const hasServers = useDataStore((state) => state.servers.length > 0)
+  const { isDemo, busy: demoBusy, startDemo } = useDemoMode()
+  const canTryDemo = !isEditing && !isDemo && !hasServers
 
   useEffect(() => {
     if (!open) return
@@ -185,7 +194,9 @@ export const NewServerSheet = ({ open, onOpenChange, server }: Props) => {
           <Text className="text-sm text-muted-foreground">
             {isEditing
               ? "Update the connection details for this Coolify server."
-              : "Connect Cooler to an existing Coolify server."}
+              : isDemo
+                ? "You're in the demo. Exit it in Settings to connect your own Coolify server."
+                : "Connect Cooler to an existing Coolify server."}
           </Text>
         </View>
 
@@ -280,6 +291,20 @@ export const NewServerSheet = ({ open, onOpenChange, server }: Props) => {
               }}
             />
           </NativeHost>
+
+          {/* demo, only offered before any server is connected */}
+          {canTryDemo && (
+            <Button
+              variant="ghost"
+              disabled={demoBusy || validating}
+              onPress={() => {
+                onOpenChange(false)
+                void startDemo()
+              }}>
+              <Icon as={FlaskConical} />
+              <Text>No server handy? Try the demo</Text>
+            </Button>
+          )}
         </View>
       </View>
     </BottomSheet>

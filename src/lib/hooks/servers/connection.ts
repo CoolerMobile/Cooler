@@ -1,3 +1,4 @@
+import { demoConnectionCheck, isDemoModeActive } from "@/lib/demo/runtime"
 import { normalizeUrl, parseError } from "@/lib/utils"
 import { ofetch } from "ofetch"
 import { useSecureStorage } from "@/lib/hooks/secure"
@@ -83,13 +84,18 @@ export const useServer = () => {
 
     // attempt to validate connection
     try {
+      // demo mode answers in memory and only accepts demo hosts
+      const demoCheck = isDemoModeActive() ? await demoConnectionCheck(endpoint) : null
+
       // checks
-      const healthResponse = await ofetch(`${endpoint}/${HEALTH_ENDPOINT}`)
-      const versionResponse = await ofetch(`${endpoint}/${VERSION_ENDPOINT}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const healthResponse = demoCheck ? demoCheck.health : await ofetch(`${endpoint}/${HEALTH_ENDPOINT}`)
+      const versionResponse = demoCheck
+        ? demoCheck.version
+        : await ofetch(`${endpoint}/${VERSION_ENDPOINT}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
 
       // validation data
       const data: Omit<ServerData, "id"> = {

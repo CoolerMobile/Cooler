@@ -4,6 +4,7 @@ import { Icon } from "@/components/ui/icon"
 import { Label } from "@/components/ui/label"
 import { Text } from "@/components/ui/text"
 import { codeFromScan, isPairLink } from "@/lib/cooler-cloud/session-utils"
+import { isDemoToken } from "@/lib/demo/fixtures"
 import { useAccount } from "@/lib/hooks/account/session"
 import { useAccountStore } from "@/lib/stores/account"
 import type { BridgeLink } from "@/lib/types/account"
@@ -291,10 +292,13 @@ export const CoolerCloudSheet = ({ open, onOpenChange }: CoolerCloudSheetProps) 
                 {busy ? <ActivityIndicator /> : null}
                 <Text>Sign out</Text>
               </Button>
-              <Button variant="ghost" onPress={confirmDeleteAccount} disabled={busy}>
-                <Icon as={Trash2} className="text-destructive" />
-                <Text className="text-destructive">Delete account</Text>
-              </Button>
+              {/* the demo account is sample data, there is nothing to delete */}
+              {isDemoToken(token) ? null : (
+                <Button variant="ghost" onPress={confirmDeleteAccount} disabled={busy}>
+                  <Icon as={Trash2} className="text-destructive" />
+                  <Text className="text-destructive">Delete account</Text>
+                </Button>
+              )}
             </View>
           ) : (
             <View className="gap-4">

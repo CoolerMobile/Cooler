@@ -13,6 +13,7 @@ import { useDeploymentBackgroundTask } from "@/lib/tasks/deployment-monitor"
 import "@/lib/tasks/bridge-events"
 import { useDeepLinks } from "@/lib/hooks/account/deep-links"
 import { useBridgeSync } from "@/lib/hooks/account/bridge-sync"
+import { useDemoMonitor } from "@/lib/hooks/demo/mode"
 import { useSentry } from "@/lib/hooks/sentry"
 import * as Sentry from "@sentry/react-native"
 
@@ -45,6 +46,9 @@ function RootNavigator() {
 
   // keep push registration and the event archive in sync with linked bridges
   useBridgeSync()
+
+  // move the demo forward and deliver its simulated pushes
+  useDemoMonitor()
 
   // theme
   const { colorScheme } = useAppTheme()

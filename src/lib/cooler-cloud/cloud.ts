@@ -1,5 +1,6 @@
 import { COOLER_CLOUD_REDIRECT, COOLER_CLOUD_URL, REQUEST_TIMEOUT_MS } from "@/lib/cooler-cloud/config"
 import { requestError } from "@/lib/cooler-cloud/errors"
+import { demoCloudRequest, shouldUseDemoCloud } from "@/lib/demo/runtime"
 import type { BridgeLink, CoolerCloudUser } from "@/lib/types/account"
 import { ofetch } from "ofetch"
 
@@ -37,6 +38,9 @@ const request = async <T>(path: string, options: RequestOptions = {}): Promise<T
   const { method = "GET", token, body } = options
 
   try {
+    // demo mode answers in memory and never reaches coolercloud
+    if (shouldUseDemoCloud(token)) return await demoCloudRequest<T>(path, options)
+
     return await ofetch<T>(`${COOLER_CLOUD_URL}/${API_PREFIX}/${path}`, {
       method,
       body: body as Record<string, unknown> | undefined,

@@ -1,3 +1,4 @@
+import { demoCoolifyRequest, isDemoServer } from "@/lib/demo/runtime"
 import type { ServerData } from "@/lib/hooks/servers/connection"
 import { createLocalNotification } from "@/lib/hooks/notifications"
 import { useAccountStore } from "@/lib/stores/account"
@@ -142,8 +143,11 @@ const deploymentRequest = async <T>(
   server: ServerData,
   path: string,
   options: { method?: "GET" | "POST" | "PATCH"; body?: Record<string, unknown> } = {}
-): Promise<T> =>
-  ofetch<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
+): Promise<T> => {
+  // demo connections are answered in memory and never reach the network
+  if (isDemoServer(server)) return demoCoolifyRequest<T>(server, path, options)
+
+  return ofetch<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
     cache: "no-store",
     headers: {
       Authorization: `Bearer ${server.token}`,
@@ -155,6 +159,7 @@ const deploymentRequest = async <T>(
     retry: 0,
     timeout: REQUEST_TIMEOUT_MS,
   })
+}
 
 const asDeploymentArray = (value: unknown): CoolifyDeployment[] => {
   if (Array.isArray(value)) return value as CoolifyDeployment[]

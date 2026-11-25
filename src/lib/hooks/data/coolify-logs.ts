@@ -1,5 +1,6 @@
 import type { ServerData } from "@/lib/hooks/servers/connection"
 import { resourceLogRequestGate, type ResourceLogRequestOutcome } from "@/lib/coolify/request-gate"
+import { demoCoolifyRequest, isDemoServer } from "@/lib/demo/runtime"
 import { useDataStore } from "@/lib/stores/data"
 import type { Resource, ResourceLog } from "@/lib/types/coolify"
 import { FetchError, ofetch } from "ofetch"
@@ -146,16 +147,19 @@ const request = async <T>(
   else signal?.addEventListener("abort", cancelRequest, { once: true })
 
   try {
-    const response = await ofetch.raw<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
-      cache: "no-store",
-      headers: {
-        Authorization: `Bearer ${server.token}`,
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-      },
-      retry: 0,
-      signal: controller.signal,
-    })
+    // demo connections are answered in memory and never reach the network
+    const response = isDemoServer(server)
+      ? { status: 200, _data: await demoCoolifyRequest<T>(server, path, { signal: controller.signal }) }
+      : await ofetch.raw<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
+          cache: "no-store",
+          headers: {
+            Authorization: `Bearer ${server.token}`,
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+          },
+          retry: 0,
+          signal: controller.signal,
+        })
     const data = response._data as T
 
     onTrace?.({

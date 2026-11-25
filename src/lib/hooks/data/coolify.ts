@@ -1,5 +1,6 @@
 import type { ServerData } from "@/lib/hooks/servers/connection"
 import { normalizeResourceStatus } from "@/lib/coolify/status"
+import { demoCoolifyRequest, isDemoServer } from "@/lib/demo/runtime"
 import { useDataStore } from "@/lib/stores/data"
 import type { Instance, Resource, ResourceLog } from "@/lib/types/coolify"
 import { FetchError, ofetch } from "ofetch"
@@ -191,6 +192,9 @@ const request = async <T>(
   { method = "GET", signal }: { method?: "GET" | "POST"; signal?: AbortSignal } = {}
 ): Promise<T> => {
   assertWithinRateLimit(server.id)
+
+  // demo connections are answered in memory and never reach the network
+  if (isDemoServer(server)) return demoCoolifyRequest<T>(server, path, { method, signal })
 
   return ofetch<T>(`${server.endpoint}/${API_PREFIX}/${path}`, {
     cache: "no-store",

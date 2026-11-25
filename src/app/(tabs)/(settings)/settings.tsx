@@ -1,6 +1,7 @@
 import { SettingsAction } from "@/components/custom/settings/action";
 import { SettingsItem } from "@/components/custom/settings/item";
 import { SettingsSection } from "@/components/custom/settings/section";
+import { useDemoMode } from "@/lib/hooks/demo/mode";
 import { useBiometrics } from "@/lib/hooks/security/biometrics";
 import { useAppTheme } from "@/components/custom/theme";
 import { useSettingsStore } from "@/lib/stores/settings";
@@ -13,6 +14,7 @@ import {
   DatabaseBackup,
   EyeOff,
   File,
+  FlaskConical,
   GitFork,
   Lock,
   Rocket,
@@ -60,6 +62,9 @@ export default function SettingsScreen() {
       isMounted = false;
     };
   }, [checkBioSupport]);
+
+  // demo
+  const { isDemo, busy: demoBusy, confirmExitDemo } = useDemoMode();
 
   // settings store
   const settings = useSettingsStore((state) => state.settings);
@@ -154,6 +159,18 @@ export default function SettingsScreen() {
   return (
     <>
       <View className="py-2 px-4 flex flex-col gap-4">
+        {/* demo */}
+        {isDemo && (
+          <SettingsSection title="Demo">
+            <SettingsItem
+              icon={FlaskConical}
+              title="Exit Demo"
+              description="Remove sample data and start fresh"
+              action={demoBusy ? undefined : confirmExitDemo}
+            />
+          </SettingsSection>
+        )}
+
         {/* visuals */}
         <SettingsSection title="Visuals">
           {/* theme toggle */}

@@ -6,6 +6,8 @@ import {
   COOLER_CLOUD_REDIRECT,
 } from "@/lib/cooler-cloud/config"
 import { extractAuthCode, isBridgeSessionExpired, parsePairLink } from "@/lib/cooler-cloud/session-utils"
+import { DEMO_SIGN_IN_CODE } from "@/lib/demo/fixtures"
+import { isDemoModeActive } from "@/lib/demo/runtime"
 import { getExpoPushToken } from "@/lib/hooks/notifications"
 import { getNotifications, saveNotification } from "@/lib/storage/notifications"
 import {
@@ -352,6 +354,9 @@ export const completeSignInWithCode = async (code: string) => {
  * @returns the signed in account
  */
 export const signInWithBrowser = async () => {
+  // demo mode signs into the sample account without opening coolercloud
+  if (isDemoModeActive()) return completeSignInWithCode(DEMO_SIGN_IN_CODE)
+
   const state = Crypto.randomUUID()
   pendingAuthState = state
 
