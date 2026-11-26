@@ -21,7 +21,7 @@ import {
   TriangleAlert,
 } from "lucide-react-native"
 import { useState } from "react"
-import { ActivityIndicator, Pressable, View } from "react-native"
+import { ActivityIndicator, Pressable, ScrollView, View } from "react-native"
 
 const HEALTH_PRESENTATION: Record<
   HealthStatus,
@@ -79,7 +79,8 @@ export default function OverviewScreen() {
   // ui
   return (
     <>
-      <View className="flex-1 gap-8 p-4">
+      {/* scrolls, so the demo banner or a get started card never pushes content under the tab bar */}
+      <ScrollView className="flex-1" contentContainerClassName="gap-8 p-4 pb-32">
         {isDemo && (
           <View className="flex-row items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3">
             <Icon as={FlaskConical} size={18} className="text-muted-foreground" />
@@ -176,7 +177,7 @@ export default function OverviewScreen() {
             />
           </View>
         </View>
-      </View>
+      </ScrollView>
 
       <NewServerSheet open={newServerOpen} onOpenChange={setNewServerOpen} />
     </>
