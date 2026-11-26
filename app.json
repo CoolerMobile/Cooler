@@ -10,6 +10,7 @@
     "ios": {
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "app.getcooler.Cooler",
+      "usesAppleSignIn": true,
       "config": {
         "usesNonExemptEncryption": false
       },
